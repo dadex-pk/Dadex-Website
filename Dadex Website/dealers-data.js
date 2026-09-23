@@ -1,0 +1,1 @@
+window.DADEX_DEALERS = [];
