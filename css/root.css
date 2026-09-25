@@ -1,0 +1,49 @@
+/* ============================================================
+   ROOT — Design tokens, reset, base elements
+   Load first. All other stylesheets depend on these tokens.
+   ============================================================ */
+
+:root{
+  /* Brand */
+  --dadex-red:#c90000;
+  --dadex-red-dark:#a80000;
+  --dadex-red-hover:#ec1717;
+
+  /* Legacy aliases (kept for compatibility) */
+  --d-red:#c90000;
+  --d-red-dark:#a90000;
+
+  /* Ink / text */
+  --ink:#151719;
+  --d-ink:#101214;
+  --d-ink-2:#171a1d;
+  --d-text:#24272a;
+  --muted:#62666b;
+  --d-muted:#6f7479;
+  --d-muted-light:#8f969d;
+
+  /* Surfaces */
+  --white:#fff;
+  --d-white:#fff;
+  --surface:#f5f6f7;
+  --d-paper:#f5f6f7;
+  --d-mist:#f4f5f6;
+  --d-steel:#eef1f3;
+  --paper:#ffffff;
+
+  /* Lines */
+  --line:#e4e6e8;
+  --d-line:#e6e8ea;
+
+  /* Layout */
+  --max:1240px;
+  --d-max:1240px;
+
+  /* Radii */
+  --radius:14px;
+  --d-radius:2px;
+
+  /* Shadows */
+  --shadow-soft:0 14px 40px rgba(18,24,30,.08);
+  --d-shadow:0 18px 45px rgba(16,18,20,.10);
+}
