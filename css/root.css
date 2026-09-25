@@ -1,39 +1,39 @@
 /* ============================================================
    ROOT — Design tokens, reset, base elements
-   Load first. All other stylesheets depend on these tokens.
+   Consolidated from all :root blocks and foundation rules.
+   Load first. Every other stylesheet depends on these tokens.
    ============================================================ */
 
 :root{
   /* Brand */
   --dadex-red:#c90000;
-  --dadex-red-dark:#a80000;
-  --dadex-red-hover:#ec1717;
-
-  /* Legacy aliases (kept for compatibility) */
+  --dadex-red-dark:#9f0000;
   --d-red:#c90000;
   --d-red-dark:#a90000;
 
   /* Ink / text */
-  --ink:#151719;
-  --d-ink:#101214;
+  --ink:#17191c;
+  --d-ink:#17191c;
   --d-ink-2:#171a1d;
   --d-text:#24272a;
-  --muted:#62666b;
-  --d-muted:#6f7479;
+  --muted:#687078;
+  --d-muted:#687078;
   --d-muted-light:#8f969d;
 
   /* Surfaces */
   --white:#fff;
   --d-white:#fff;
   --surface:#f5f6f7;
-  --d-paper:#f5f6f7;
+  --d-paper:#ffffff;
   --d-mist:#f4f5f6;
   --d-steel:#eef1f3;
   --paper:#ffffff;
+  --mist:#f4f5f6;
+  --steel:#eef1f3;
 
   /* Lines */
-  --line:#e4e6e8;
-  --d-line:#e6e8ea;
+  --line:#e4e7ea;
+  --d-line:#e4e7ea;
 
   /* Layout */
   --max:1240px;
@@ -41,9 +41,91 @@
 
   /* Radii */
   --radius:14px;
-  --d-radius:2px;
+  --d-radius:14px;
 
   /* Shadows */
   --shadow-soft:0 14px 40px rgba(18,24,30,.08);
-  --d-shadow:0 18px 45px rgba(16,18,20,.10);
+  --d-shadow:0 14px 40px rgba(18,24,30,.08);
+}
+
+/* ---------- Reset ---------- */
+*,*::before,*::after{box-sizing:border-box}
+
+/* ---------- Document ---------- */
+html{
+  scroll-behavior:smooth;
+  overflow-x:hidden;
+  text-rendering:optimizeLegibility;
+}
+body{
+  margin:0;
+  overflow-x:hidden;
+  background:#f6f7f8;
+  color:var(--d-text);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* ---------- Base elements ---------- */
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block;height:auto}
+svg,video,iframe{max-width:100%;height:auto}
+
+h1,h2,h3,h4,h5,h6{
+  font-weight:700;
+  line-height:1.2;
+  color:var(--d-ink);
+}
+main p,main li{color:var(--d-muted)}
+main strong,main b{color:var(--d-text)}
+small{color:var(--d-muted)}
+
+button,input,select,textarea{font:inherit}
+button,a,input,select,textarea{touch-action:manipulation}
+
+/* ---------- Global focus ---------- */
+:focus-visible{
+  outline:3px solid rgba(201,0,0,.35);
+  outline-offset:3px;
+}
+:where(a,button,input,select,textarea):focus-visible{
+  outline:3px solid rgba(204,0,0,.42);
+  outline-offset:3px;
+}
+
+/* ---------- Utilities ---------- */
+[hidden]{display:none!important}
+.sr-only{
+  position:absolute!important;width:1px!important;height:1px!important;
+  padding:0!important;margin:-1px!important;overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;
+}
+.text-red{color:var(--dadex-red)!important}
+.text-gray,.text-muted,.muted-small{color:var(--d-muted)!important}
+.bg-dark{background:#17191b!important}
+.muted-kicker{color:#6b7379!important}
+.section-note{margin-top:14px!important}
+
+/* ---------- Container ---------- */
+.container{width:min(100% - 40px,var(--max));margin-inline:auto}
+@media(max-width:640px){.container{padding-left:18px;padding-right:18px}}
+
+/* ---------- Overflow protection ---------- */
+.report-table-wrap,.table-responsive,.data-table-wrap{
+  max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;
+}
+table{max-width:100%}
+
+/* ---------- Reduced motion ---------- */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    transition:none!important;
+    animation:none!important;
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+  }
+  html{scroll-behavior:auto}
 }
