@@ -1,16 +1,7 @@
 /* ============================================================
    MAIN — CSS entry point
-   Load this one file in every page instead of individual sheets.
-
-   Load order matters:
-     1. root.css          → tokens, reset, base elements, utilities
-     2. design-system.css → components, layouts, page systems
-     3. shell.css         → header, footer, DEXPERT (must win cascade)
-
-   Usage in HTML:
-     <link rel="stylesheet" href="css/main.css">
    ============================================================ */
 
-@import url("css/root.css");
-@import url("css/design.css");
-@import url("css/shell.css");
+@import url("root.css");
+@import url("design.css");
+@import url("shell.css");
