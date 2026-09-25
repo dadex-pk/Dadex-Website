@@ -1,6 +1,201 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Our History – Dadex Eternit Limited</title>
+<meta content="Explore the Dadex Eternit timeline: from the 1959 fibre cement plant in Hyderabad through collaborations with Eternit, Wavin and Marley, to modern PP-RCT, low-noise SWV and large-diameter PE systems." name="description"/>
+<link href="https://www.dadex.com/history.html" rel="canonical"/>
+<meta content="#c90000" name="theme-color"/>
+<meta content="index, follow" name="robots"/>
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
 
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Our History – Dadex Eternit Limited</title><meta content="Our History — Dadex Eternit Limited." name="description"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="css/design-system.css" rel="stylesheet"/></head><body><div data-component="header"></div><main>
+<!-- Open Graph -->
+<meta content="website" property="og:type"/>
+<meta content="Our History – Dadex Eternit Limited" property="og:title"/>
+<meta content="Explore the Dadex Eternit timeline: from the 1959 fibre cement plant in Hyderabad through collaborations with Eternit, Wavin and Marley, to modern PP-RCT, low-noise SWV and large-diameter PE systems." property="og:description"/>
+<meta content="https://www.dadex.com/history.html" property="og:url"/>
+<meta content="Dadex Eternit Limited" property="og:site_name"/>
+<meta content="en_PK" property="og:locale"/>
+<meta content="https://www.dadex.com/assets/images/dadex-logo.png" property="og:image"/>
+<meta content="Dadex Eternit Limited" property="og:image:alt"/>
+
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Our History – Dadex Eternit Limited" name="twitter:title"/>
+<meta content="Explore the Dadex Eternit timeline: from the 1959 fibre cement plant in Hyderabad through collaborations with Eternit, Wavin and Marley, to modern PP-RCT, low-noise SWV and large-diameter PE systems." name="twitter:description"/>
+<meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+
+<!-- Styles -->
+<link href="css/design-system.css" rel="stylesheet"/>
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "Our History — Dadex Eternit Limited",
+  "url": "https://www.dadex.com/history.html",
+  "about": {
+    "@type": "Organization",
+    "name": "Dadex Eternit Limited",
+    "foundingDate": "1959",
+    "foundingLocation": {
+      "@type": "Place",
+      "name": "Hyderabad, Pakistan"
+    },
+    "url": "https://www.dadex.com/"
+  }
+}
+</script>
+
+<!-- Page-scoped additions for the decade strip, event lists, and h3 sizing -->
+<style>
+.history-decades{
+  position:sticky;
+  top:158px;
+  z-index:20;
+  padding:14px 0;
+  background:rgba(247,247,245,.94);
+  backdrop-filter:blur(10px) saturate(160%);
+  -webkit-backdrop-filter:blur(10px) saturate(160%);
+  border-bottom:1px solid rgba(0,0,0,.055);
+}
+.history-decades-inner{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+}
+.history-decade-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 15px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid #e1e4e7;
+  color:#383d42;
+  font:700 12px/1 'Inter',system-ui,sans-serif;
+  letter-spacing:.02em;
+  text-decoration:none;
+  transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease,box-shadow .18s ease;
+}
+@media (hover: hover) and (pointer: fine){
+  .history-decade-chip:hover{
+    border-color:var(--dadex-red);
+    color:var(--dadex-red);
+    background:#fff6f6;
+    transform:translateY(-1px);
+    box-shadow:0 8px 20px -8px rgba(201,0,0,.22);
+  }
+}
+.history-decade-chip:focus-visible{
+  outline:2px solid var(--dadex-red);
+  outline-offset:2px;
+}
+.history-decade-chip.is-active{
+  background:var(--dadex-red);
+  border-color:var(--dadex-red);
+  color:#fff;
+}
+
+/* Event headings use h3 (semantically nested under the section heading) */
+.history-card h3{
+  font-size:24px;
+  line-height:1.18;
+  margin:0 0 10px;
+  letter-spacing:-.02em;
+  color:#17191c;
+  font-weight:700;
+}
+
+/* Grouped multi-event years render as a compact list inside one card */
+.history-events{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.history-events li{
+  position:relative;
+  padding:18px 0 0;
+  margin:0;
+}
+.history-events li+li{
+  margin-top:16px;
+  border-top:1px solid #eef0f2;
+  padding-top:20px;
+}
+.history-events li:first-child{padding-top:0}
+.history-events li::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:6px;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--dadex-red);
+  opacity:.65;
+}
+.history-events li:first-child::before{top:-4px;display:none}
+.history-events h3{
+  font-size:19px;
+  line-height:1.25;
+  margin:0 0 6px;
+  letter-spacing:-.015em;
+}
+.history-events p{margin:0}
+
+/* Anchor targets account for the sticky header + decade strip */
+.history-event{scroll-margin-top:230px}
+
+@media(max-width:1100px){
+  .history-decades{top:158px}
+  .history-event{scroll-margin-top:210px}
+}
+@media(max-width:900px){
+  .history-decades{
+    position:static;
+    padding:12px 0;
+    background:transparent;
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+    border-bottom:0;
+  }
+  .history-decades-inner{
+    justify-content:flex-start;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    padding-bottom:6px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+  }
+  .history-decade-chip{flex:0 0 auto}
+  .history-event{scroll-margin-top:30px}
+}
+@media(max-width:640px){
+  .history-card h3{font-size:21px}
+  .history-events h3{font-size:17px}
+  .history-decades{padding:10px 0}
+  .history-decade-chip{padding:7px 12px;font-size:11px}
+}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div data-component="header"></div>
+
+<main id="main-content">
+
 <section class="page-hero history-hero">
 <div class="container">
 <div class="eyebrow">OUR HISTORY</div>
@@ -8,6 +203,7 @@
 <p>From a fibre cement plant in Hyderabad in 1959 to a diversified portfolio of piping, drainage, utility and roofing systems, Dadex has grown through product innovation, technical collaboration and a long-standing commitment to quality.</p>
 </div>
 </section>
+
 <section class="history-intro">
 <div class="container history-intro-grid">
 <div>
@@ -20,160 +216,377 @@
 </div>
 </div>
 </section>
-<section aria-label="Dadex historical timeline" class="history-timeline-section">
+
+<nav aria-label="Jump to decade" class="history-decades">
+<div class="container history-decades-inner">
+<a class="history-decade-chip" href="#year-1959">1959–1969</a>
+<a class="history-decade-chip" href="#year-1981">1980s</a>
+<a class="history-decade-chip" href="#year-1990">1990s</a>
+<a class="history-decade-chip" href="#year-2001">2000s</a>
+<a class="history-decade-chip" href="#year-2015">2010s</a>
+<a class="history-decade-chip" href="#year-2021">2020s</a>
+</div>
+</nav>
+
+<section class="history-timeline-section">
+<h2 class="sr-only">Dadex historical timeline</h2>
 <div class="container">
 <div class="history-timeline">
-<article class="history-event history-event-left">
-<div class="history-marker"><span>1959</span></div>
-<div class="history-card"><div class="history-year">1959</div><h2>Dadex Begins in Hyderabad</h2><p>Opening of Dadex's fibre cement plant in Hyderabad.</p></div>
+
+<!-- 1959 — grouped: 2 events -->
+<article class="history-event history-event-left" id="year-1959">
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1959</div>
+<ul class="history-events">
+<li>
+<h3>Dadex Begins in Hyderabad</h3>
+<p>Opening of Dadex's fibre cement plant in Hyderabad.</p>
+</li>
+<li>
+<h3>FC Decorative &amp; Corrugated Sheets</h3>
+<p>Dadex launches fibre cement decorative and corrugated sheets.</p>
+</li>
+</ul>
+</div>
 </article>
+
+<!-- 1962 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>1959</span></div>
-<div class="history-card"><div class="history-year">1959</div><h2>FC Decorative &amp; Corrugated Sheets</h2><p>Dadex launches fibre cement decorative and corrugated sheets.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1962</div>
+<h3>Eternit Collaboration</h3>
+<p>Collaboration with the Eternit group of Belgium.</p>
+</div>
 </article>
+
+<!-- 1964 -->
 <article class="history-event history-event-left">
-<div class="history-marker"><span>1962</span></div>
-<div class="history-card"><div class="history-year">1962</div><h2>Eternit Collaboration</h2><p>Collaboration with the Eternit group of Belgium.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1964</div>
+<h3>FC Building Pipes</h3>
+<p>Launch of fibre cement building pipes.</p>
+</div>
 </article>
+
+<!-- 1965 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>1964</span></div>
-<div class="history-card"><div class="history-year">1964</div><h2>FC Building Pipes</h2><p>Launch of fibre cement building pipes.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1965</div>
+<h3>Chittagong Plant</h3>
+<p>Plant opens in Chittagong, East Pakistan. The plant was lost in 1971 following the independence of Bangladesh.</p>
+</div>
 </article>
+
+<!-- 1966 -->
 <article class="history-event history-event-left">
-<div class="history-marker"><span>1965</span></div>
-<div class="history-card"><div class="history-year">1965</div><h2>Chittagong Plant</h2><p>Plant opens in Chittagong, East Pakistan. The plant was lost in 1971 with the loss of East Pakistan.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1966</div>
+<h3>Karachi Plant</h3>
+<p>Plant opens in Karachi.</p>
+</div>
 </article>
+
+<!-- 1967 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>1966</span></div>
-<div class="history-card"><div class="history-year">1966</div><h2>Karachi Plant</h2><p>Plant opens in Karachi.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1967</div>
+<h3>ACIL Identity</h3>
+<p>Creation of the ACIL logo.</p>
+</div>
 </article>
-<article class="history-event history-event-left">
-<div class="history-marker"><span>1967</span></div>
-<div class="history-card"><div class="history-year">1967</div><h2>ACIL Identity</h2><p>Creation of the ACIL logo.</p></div>
+
+<!-- 1981 -->
+<article class="history-event history-event-left" id="year-1981">
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1981</div>
+<h3>ACIL Sheets &amp; Pipes</h3>
+<p>Expansion of the ACIL sheets and pipes business.</p>
+</div>
 </article>
+
+<!-- 1984 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>1981</span></div>
-<div class="history-card"><div class="history-year">1981</div><h2>ACIL Sheets &amp; Pipes</h2><p>Expansion of the ACIL sheets and pipes business.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1984</div>
+<h3>ACIL Cottage</h3>
+<p>ACIL Cottage is presented at an international exhibition.</p>
+</div>
 </article>
+
+<!-- 1987 -->
 <article class="history-event history-event-left">
-<div class="history-marker"><span>1984</span></div>
-<div class="history-card"><div class="history-year">1984</div><h2>ACIL Cottage</h2><p>ACIL Cottage is presented at an international exhibition.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1987</div>
+<h3>Pakistan Standard License</h3>
+<p>First Pakistan Standard license for fibre cement sheets received from PSI.</p>
+</div>
 </article>
+
+<!-- 1989 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>1987</span></div>
-<div class="history-card"><div class="history-year">1987</div><h2>Pakistan Standard License</h2><p>First Pakistan Standard license for fibre cement sheets received from PSI.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1989</div>
+<h3>New Leadership</h3>
+<p>Mr. Sikander Dada is appointed Chief Executive and Managing Director.</p>
+</div>
 </article>
-<article class="history-event history-event-left">
-<div class="history-marker"><span>1989</span></div>
-<div class="history-card"><div class="history-year">1989</div><h2>New Leadership</h2><p>Mr. Sikander Dada is appointed Chief Executive and Managing Director.</p></div>
+
+<!-- 1990 -->
+<article class="history-event history-event-left" id="year-1990">
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1990</div>
+<h3>New Name, New Logo</h3>
+<p>Dadex adopts a new name and visual identity.</p>
+</div>
 </article>
+
+<!-- 1991 — grouped: 2 events -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>1990</span></div>
-<div class="history-card"><div class="history-year">1990</div><h2>New Name, New Logo</h2><p>Dadex adopts a new name and visual identity.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1991</div>
+<ul class="history-events">
+<li>
+<h3>Wavin Technical Collaboration</h3>
+<p>Technical collaboration with Wavin, Netherlands, for the production of thermoplastic piping systems in Pakistan.</p>
+</li>
+<li>
+<h3>UPVC Pressure Pipes</h3>
+<p>Launch of the UPVC pressure piping system.</p>
+</li>
+</ul>
+</div>
 </article>
+
+<!-- 1993 -->
 <article class="history-event history-event-left">
-<div class="history-marker"><span>1991</span></div>
-<div class="history-card"><div class="history-year">1991</div><h2>Wavin Technical Collaboration</h2><p>Technical collaboration with Wavin, Netherlands, for the production of thermoplastic piping systems in Pakistan.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1993</div>
+<h3>PE Pipes for Water &amp; Gas</h3>
+<p>Launch of PE pipes for water and gas applications, including the T-Flex range.</p>
+</div>
 </article>
+
+<!-- 1997 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>1991</span></div>
-<div class="history-card"><div class="history-year">1991</div><h2>uPVC Pressure Pipes</h2><p>Launch of the uPVC pressure piping system.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1997</div>
+<h3>Nikasi</h3>
+<p>Launch of Nikasi, the UPVC SWV piping system.</p>
+</div>
 </article>
+
+<!-- 1998 -->
 <article class="history-event history-event-left">
-<div class="history-marker"><span>1993</span></div>
-<div class="history-card"><div class="history-year">1993</div><h2>PE Pipes for Water &amp; Gas</h2><p>Launch of PE pipes for water and gas applications, including the T-Flex range.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1998</div>
+<h3>ISO Certification</h3>
+<p>Dadex achieves ISO certification.</p>
+</div>
 </article>
+
+<!-- 1999 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>1997</span></div>
-<div class="history-card"><div class="history-year">1997</div><h2>Nikasi</h2><p>Launch of Nikasi, the uPVC SWV piping system.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">1999</div>
+<h3>Polydex</h3>
+<p>Launch of Polydex, the PPR hot and cold water piping system.</p>
+</div>
 </article>
-<article class="history-event history-event-left">
-<div class="history-marker"><span>1998</span></div>
-<div class="history-card"><div class="history-year">1998</div><h2>ISO Certification</h2><p>Dadex achieves ISO certification.</p></div>
+
+<!-- 2001 -->
+<article class="history-event history-event-left" id="year-2001">
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2001</div>
+<h3>Dadex House</h3>
+<p>Dadex House is established on Shahrah-e-Faisal, Karachi.</p>
+</div>
 </article>
+
+<!-- 2002 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>1999</span></div>
-<div class="history-card"><div class="history-year">1999</div><h2>Polydex</h2><p>Launch of Polydex, the PPR hot and cold water piping system.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2002</div>
+<h3>PE Cable Duct &amp; UPVC Electrical Conduits</h3>
+<p>Launch of PE Cable Duct and UPVC Electrical Conduits.</p>
+</div>
 </article>
+
+<!-- 2003 -->
 <article class="history-event history-event-left">
-<div class="history-marker"><span>2001</span></div>
-<div class="history-card"><div class="history-year">2001</div><h2>Dadex House</h2><p>Dadex House is established on Shahrah-e-Faisal, Karachi.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2003</div>
+<h3>Values, Vision &amp; Mission</h3>
+<p>Dadex establishes its Values, Vision and Mission statements.</p>
+</div>
 </article>
+
+<!-- 2004 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>2002</span></div>
-<div class="history-card"><div class="history-year">2002</div><h2>PE Cable Duct &amp; uPVC Electrical Conduits</h2><p>Launch of PE Cable Duct and uPVC Electrical Conduits.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2004</div>
+<h3>New Name, New Identity</h3>
+<p>Dadex introduces a new name and identity.</p>
+</div>
 </article>
+
+<!-- 2005 — grouped: 3 events -->
 <article class="history-event history-event-left">
-<div class="history-marker"><span>2003</span></div>
-<div class="history-card"><div class="history-year">2003</div><h2>Values, Vision &amp; Mission</h2><p>Dadex establishes its Values, Vision and Mission statements.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2005</div>
+<ul class="history-events">
+<li>
+<h3>American Petroleum Institute Certification</h3>
+<p>The American Petroleum Institute certifies Dadex to use its official monogram on manufactured PE gas pipes. Dadex is the only company outside the US to achieve this distinction.</p>
+</li>
+<li>
+<h3>Investor in People</h3>
+<p>Dadex is certified as an Investor in People (IIP) company on meeting the best HR practices and standards.</p>
+</li>
+<li>
+<h3>Aluminium Composite Panels</h3>
+<p>Launch of Aluminium Composite Panels (ACP).</p>
+</li>
+</ul>
+</div>
 </article>
+
+<!-- 2006 — grouped: 3 events -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>2004</span></div>
-<div class="history-card"><div class="history-year">2004</div><h2>New Name, New Identity</h2><p>Dadex introduces a new name and identity.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2006</div>
+<ul class="history-events">
+<li>
+<h3>Flowline</h3>
+<p>Launch of Flowline, the complete underground UPVC sewer pipe system.</p>
+</li>
+<li>
+<h3>UPVC Tubewell Casing &amp; Screen Pipes</h3>
+<p>Launch of the UPVC Tubewell Casing &amp; Screen Pipes system.</p>
+</li>
+<li>
+<h3>SAP Solutions</h3>
+<p>Dadex embraces SAP solutions.</p>
+</li>
+</ul>
+</div>
 </article>
+
+<!-- 2007 -->
 <article class="history-event history-event-left">
-<div class="history-marker"><span>2005</span></div>
-<div class="history-card"><div class="history-year">2005</div><h2>American Petroleum Institute Certification</h2><p>The American Petroleum Institute certifies Dadex to use its official monogram on manufactured PE gas pipes. Dadex is the only company outside the US to achieve this distinction.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2007</div>
+<h3>Lahore Plant</h3>
+<p>Plant opens in Lahore.</p>
+</div>
 </article>
+
+<!-- 2008 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>2005</span></div>
-<div class="history-card"><div class="history-year">2005</div><h2>Investor in People</h2><p>Dadex is certified as an Investor in People (IIP) company on meeting the best H.R. practices and standards.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2008</div>
+<h3>Speciality Piping Systems</h3>
+<p>Launch of speciality piping systems.</p>
+</div>
 </article>
-<article class="history-event history-event-left">
-<div class="history-marker"><span>2005</span></div>
-<div class="history-card"><div class="history-year">2005</div><h2>Aluminum Composite Panels</h2><p>Launch of Aluminum Composite Panels (ACP).</p></div>
+
+<!-- 2015 -->
+<article class="history-event history-event-left" id="year-2015">
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2015</div>
+<h3>ECO &amp; Thermoline</h3>
+<p>Launch of ECO, the UPVC SWV piping system, and Thermoline, the PPR hot and cold water piping system.</p>
+</div>
 </article>
+
+<!-- 2016 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>2006</span></div>
-<div class="history-card"><div class="history-year">2006</div><h2>Flowline</h2><p>Launch of Flowline, the complete underground uPVC sewer pipe system.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2016</div>
+<h3>Large-Diameter PE</h3>
+<p>Launch of large-diameter PE pipes up to 630 mm.</p>
+</div>
 </article>
+
+<!-- 2017 -->
 <article class="history-event history-event-left">
-<div class="history-marker"><span>2006</span></div>
-<div class="history-card"><div class="history-year">2006</div><h2>uPVC Tubewell Casing &amp; Screen Pipes</h2><p>Launch of the uPVC Tubewell Casing &amp; Screen Pipes system.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2017</div>
+<h3>Pakistan's First Antimicrobial Pipes</h3>
+<p>Launch of Pakistan's first antimicrobial pipes.</p>
+</div>
 </article>
+
+<!-- 2018 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>2006</span></div>
-<div class="history-card"><div class="history-year">2006</div><h2>SAP Solutions</h2><p>Dadex embraces SAP solutions.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2018</div>
+<h3>International Collaborations</h3>
+<p>Technical collaboration with Marley Plumbing and Drainage, UK, and collaboration with Effast, Italy, for UPVC pressure piping systems.</p>
+</div>
 </article>
-<article class="history-event history-event-left">
-<div class="history-marker"><span>2007</span></div>
-<div class="history-card"><div class="history-year">2007</div><h2>Lahore Plant</h2><p>Plant opens in Lahore.</p></div>
+
+<!-- 2021 -->
+<article class="history-event history-event-left" id="year-2021">
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2021</div>
+<h3>Polydex PP-RCT</h3>
+<p>Launch of the Polydex PP-RCT piping system.</p>
+</div>
 </article>
+
+<!-- 2023 -->
 <article class="history-event history-event-right">
-<div class="history-marker"><span>2008</span></div>
-<div class="history-card"><div class="history-year">2008</div><h2>Speciality Piping Systems</h2><p>Launch of speciality piping systems.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2023</div>
+<h3>Magnaplast Collaboration</h3>
+<p>Collaboration with Magnaplast, Poland.</p>
+</div>
 </article>
+
+<!-- 2024 -->
 <article class="history-event history-event-left">
-<div class="history-marker"><span>2015</span></div>
-<div class="history-card"><div class="history-year">2015</div><h2>ECO &amp; Thermoline</h2><p>Launch of ECO, the uPVC SWV piping system, and Thermoline, the PPR hot and cold water piping system.</p></div>
+<div aria-hidden="true" class="history-marker"></div>
+<div class="history-card">
+<div class="history-year">2024</div>
+<h3>UltraDB Low-Noise SWV</h3>
+<p>Launch of the UltraDB low-noise SWV system.</p>
+</div>
 </article>
-<article class="history-event history-event-right">
-<div class="history-marker"><span>2016</span></div>
-<div class="history-card"><div class="history-year">2016</div><h2>Large-Diameter PE</h2><p>Launch of large-diameter PE pipes up to 630 mm.</p></div>
-</article>
-<article class="history-event history-event-left">
-<div class="history-marker"><span>2017</span></div>
-<div class="history-card"><div class="history-year">2017</div><h2>Pakistan's First Antimicrobial Pipes</h2><p>Launch of Pakistan's first antimicrobial pipes.</p></div>
-</article>
-<article class="history-event history-event-right">
-<div class="history-marker"><span>2018</span></div>
-<div class="history-card"><div class="history-year">2018</div><h2>International Collaborations</h2><p>Technical collaboration with Marley Plumbing and Drainage, UK, and collaboration with Effast, Italy, for UPVC pressure piping systems.</p></div>
-</article>
-<article class="history-event history-event-left">
-<div class="history-marker"><span>2021</span></div>
-<div class="history-card"><div class="history-year">2021</div><h2>Polydex PP-RCT</h2><p>Launch of the Polydex PP-RCT piping system.</p></div>
-</article>
-<article class="history-event history-event-right">
-<div class="history-marker"><span>2023</span></div>
-<div class="history-card"><div class="history-year">2023</div><h2>Magnaplast Collaboration</h2><p>Collaboration with Magnaplast, Poland.</p></div>
-</article>
-<article class="history-event history-event-left">
-<div class="history-marker"><span>2024</span></div>
-<div class="history-card"><div class="history-year">2024</div><h2>UltraDB Low-Noise SWV</h2><p>Launch of the UltraDB low-noise SWV system.</p></div>
-</article>
+
 </div>
 </div>
 </section>
+
 <section class="history-legacy">
 <div class="container history-legacy-grid">
 <div>
@@ -182,8 +595,65 @@
 </div>
 <div>
 <p>Across the decades, Dadex has expanded from fibre cement manufacturing into a broad portfolio of piping, drainage, ducting and roofing solutions, supported by technical capability and long-term customer relationships.</p>
-<a class="btn btn-primary" href="products.html">Explore Products <i class="fas fa-arrow-right"></i></a>
+<a class="btn btn-primary" href="products.html">Explore Products <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
 </div>
 </div>
 </section>
-</main><div data-component="footer"></div><script src="js/main.js"></script></body></html>
+
+</main>
+
+<div data-component="footer"></div>
+
+<script src="js/main.js"></script>
+
+<!-- Decade chip active-state observer (progressive enhancement) -->
+<script>
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.history-decade-chip'));
+  if (!chips.length) return;
+
+  var map = {};
+  var targets = [];
+
+  chips.forEach(function(chip){
+    var id = chip.getAttribute('href').slice(1);
+    var el = document.getElementById(id);
+    if (!el) return;
+    map[id] = chip;
+    targets.push(el);
+  });
+
+  if (!targets.length) return;
+
+  var setActive = function(id){
+    chips.forEach(function(c){ c.classList.toggle('is-active', c === map[id]); });
+  };
+
+  var observer = new IntersectionObserver(function(entries){
+    var best = null;
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      if (!best || e.intersectionRatio > best.intersectionRatio){
+        best = e;
+      }
+    });
+    if (best && best.target.id) setActive(best.target.id);
+  }, {
+    rootMargin: '-220px 0px -60% 0px',
+    threshold: [0, .25, .5, .75, 1]
+  });
+
+  targets.forEach(function(t){ observer.observe(t); });
+
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      setActive(chip.getAttribute('href').slice(1));
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
