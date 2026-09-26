@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Our Projects – Dadex Eternit Limited</title>
-<meta content="Representative applications of Dadex piping, drainage, ducting and roofing systems across water utilities, gas infrastructure, industrial, housing and building projects in Pakistan." name="description"/>
+<meta content="Project references, applications and sectors served by Dadex systems: water supply, gas infrastructure, sewerage and drainage, cable ducting, industrial piping and building services." name="description"/>
 <link href="https://www.dadex.com/projects.html" rel="canonical"/>
 <meta content="#c90000" name="theme-color"/>
 <meta content="index, follow" name="robots"/>
@@ -13,7 +13,7 @@
 <!-- Open Graph -->
 <meta content="website" property="og:type"/>
 <meta content="Our Projects – Dadex Eternit Limited" property="og:title"/>
-<meta content="Representative applications of Dadex piping, drainage, ducting and roofing systems across water utilities, gas infrastructure, industrial, housing and building projects in Pakistan." property="og:description"/>
+<meta content="Project references, applications and sectors served by Dadex systems: water supply, gas infrastructure, sewerage and drainage, cable ducting, industrial piping and building services." property="og:description"/>
 <meta content="https://www.dadex.com/projects.html" property="og:url"/>
 <meta content="Dadex Eternit Limited" property="og:site_name"/>
 <meta content="en_PK" property="og:locale"/>
@@ -23,7 +23,7 @@
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Our Projects – Dadex Eternit Limited" name="twitter:title"/>
-<meta content="Representative applications of Dadex piping, drainage, ducting and roofing systems across water utilities, gas infrastructure, industrial, housing and building projects in Pakistan." name="twitter:description"/>
+<meta content="Project references, applications and sectors served by Dadex systems: water supply, gas infrastructure, sewerage and drainage, cable ducting, industrial piping and building services." name="twitter:description"/>
 <meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
 
 <!-- Fonts -->
@@ -44,240 +44,294 @@
   "@type": "CollectionPage",
   "name": "Our Projects — Dadex Eternit Limited",
   "url": "https://www.dadex.com/projects.html",
-  "about": {
-    "@type": "Organization",
+  "description": "Project references, applications and sectors served by Dadex piping, drainage, ducting and roofing systems.",
+  "isPartOf": {
+    "@type": "WebSite",
     "name": "Dadex Eternit Limited",
     "url": "https://www.dadex.com/"
   }
 }
 </script>
 
-<!-- Page-scoped additions -->
+<!-- Page-scoped additions: filters, project cards, sectors, client directory -->
 <style>
-/* Verification / scope notice */
-.projects-scope-note{
-  display:flex;
-  gap:14px;
-  align-items:flex-start;
-  margin:0 0 34px;
-  padding:18px 22px;
-  border-left:3px solid var(--dadex-red,#c90000);
-  background:#faf6f6;
-  border-radius:0 12px 12px 0;
-}
-.projects-scope-note i{
-  color:var(--dadex-red,#c90000);
-  font-size:15px;
-  margin-top:3px;
-  flex:0 0 auto;
-}
-.projects-scope-note p{
-  margin:0;
-  color:#4d555b;
-  font-size:13.5px;
-  line-height:1.65;
-}
-.projects-scope-note strong{color:#25292d}
-
-/* Sector filter chips */
-.project-filters{
+/* ============================================================
+   PROJECT FILTERS
+   ============================================================ */
+.project-filter{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
   margin:0 0 34px;
-  padding-bottom:22px;
-  border-bottom:1px solid #e5e7e9;
+  padding:0;
 }
-.project-filter{
-  appearance:none;
-  border:1px solid #dfe2e4;
+.filter-btn{
+  display:inline-flex;
+  align-items:center;
+  padding:9px 16px;
+  border-radius:999px;
   background:#fff;
-  color:#3c4045;
+  border:1px solid #e1e4e7;
+  color:#383d42;
   font:700 12px/1 'Inter',system-ui,sans-serif;
   letter-spacing:.02em;
-  padding:11px 17px;
-  border-radius:999px;
   cursor:pointer;
-  transition:color .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease,transform .18s ease;
+  transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease,box-shadow .18s ease;
 }
-.project-filter:hover{
-  border-color:var(--dadex-red,#c90000);
-  color:var(--dadex-red,#c90000);
-  background:#fff6f6;
-  transform:translateY(-1px);
+@media (hover: hover) and (pointer: fine){
+  .filter-btn:hover{
+    border-color:var(--dadex-red);
+    color:var(--dadex-red);
+    background:#fff6f6;
+    transform:translateY(-1px);
+    box-shadow:0 8px 20px -8px rgba(201,0,0,.22);
+  }
 }
-.project-filter:focus-visible{
-  outline:2px solid var(--dadex-red,#c90000);
+.filter-btn:focus-visible{
+  outline:2px solid var(--dadex-red);
   outline-offset:2px;
 }
-.project-filter.is-active{
-  background:var(--dadex-red,#c90000);
-  border-color:var(--dadex-red,#c90000);
+.filter-btn.active{
+  background:var(--dadex-red);
+  border-color:var(--dadex-red);
   color:#fff;
 }
 
-/* Project card grid */
-.projects-grid{
+/* ============================================================
+   PROJECT CARDS
+   ============================================================ */
+.project-grid{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:18px;
-  margin-bottom:56px;
+  align-items:stretch;
+  margin:0 0 26px;
 }
-.project-tile{
+.project-card{
   display:flex;
   flex-direction:column;
+  height:100%;
+  box-sizing:border-box;
+  padding:26px 24px 24px;
   background:#fff;
   border:1px solid #e1e4e7;
-  border-radius:16px;
-  overflow:hidden;
-  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
-  min-height:280px;
-}
-.project-tile:hover{
-  transform:translateY(-4px);
-  box-shadow:0 18px 40px rgba(16,24,32,.08);
-  border-color:#d7b0b0;
-}
-.project-tile-featured{
-  grid-column:span 2;
-}
-.project-tile-media{
-  height:180px;
-  background:linear-gradient(135deg,#eef1f3,#f7f8f9);
-  display:grid;
-  place-items:center;
-  overflow:hidden;
+  border-radius:14px;
   position:relative;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+@media (hover: hover) and (pointer: fine){
+  .project-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 16px 34px rgba(16,24,32,.08);
+    border-color:#d3b0b0;
+  }
+}
+.project-card[hidden]{display:none!important}
+
+.project-card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  margin-bottom:16px;
+}
+.project-sector{
+  font-size:10.5px;
+  font-weight:800;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  color:var(--dadex-red);
+  line-height:1.3;
+}
+.project-card .card-index{
+  font-size:11px;
+  font-weight:800;
+  color:#b9bdc1;
+  letter-spacing:.06em;
   flex:0 0 auto;
 }
-.project-tile-media img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-.project-tile-media .project-tile-icon{
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#fff;
-  border:1px solid #e1e4e7;
-  color:var(--dadex-red,#c90000);
-  font-size:22px;
-  box-shadow:0 6px 18px rgba(16,24,32,.06);
-}
-.project-tile-body{
-  padding:24px 24px 22px;
-  display:flex;
-  flex-direction:column;
-  flex:1 1 auto;
-}
-.project-tile-customer{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:#8a9098;
-  margin-bottom:10px;
-}
-.project-tile-customer::before{
-  content:"";
-  width:16px;
-  height:2px;
-  background:var(--dadex-red,#c90000);
-  display:inline-block;
-  border-radius:2px;
-}
-.project-tile-body h3{
-  font-family:'Manrope','Inter',sans-serif;
-  font-size:19px;
-  font-weight:750;
-  letter-spacing:-.015em;
+.project-card h3{
+  font-size:20px;
   line-height:1.25;
+  margin:0 0 12px;
+  letter-spacing:-.02em;
   color:#17191c;
-  margin:0 0 10px;
+  font-weight:700;
 }
-.project-tile-body p{
-  margin:0 0 16px;
-  font-size:13.5px;
-  color:#626a70;
-  line-height:1.6;
+.project-card p{
+  font-size:14px;
+  color:#5d646b;
+  line-height:1.65;
+  margin:0 0 18px;
 }
-.project-tile-tags{
-  display:flex;
+.project-systems{
+  display:inline-flex;
   flex-wrap:wrap;
   gap:6px;
   margin-top:auto;
+  padding-top:16px;
+  border-top:1px solid #eef0f2;
 }
-.project-tile-tags span{
-  font-size:10.5px;
+.project-systems span{
+  font-size:11px;
   font-weight:700;
   letter-spacing:.02em;
-  color:#4d555b;
-  padding:5px 9px;
-  background:#f2f4f5;
+  padding:5px 10px;
   border-radius:999px;
-}
-.project-tile-system{
-  font-size:11px;
-  font-weight:750;
-  color:var(--dadex-red,#c90000);
-  margin-top:12px;
-  letter-spacing:.02em;
+  background:#f4f5f6;
+  color:#4e555d;
+  line-height:1.2;
 }
 
-/* Empty state */
-.projects-empty{
-  grid-column:1/-1;
-  padding:56px 28px;
-  border:1px dashed #cfd4d8;
-  border-radius:16px;
-  text-align:center;
-  color:#687078;
-  background:#fafbfc;
+/* Verification note under the grid */
+.project-note{
+  margin:0 0 40px;
+  padding:14px 18px;
+  font-size:12.5px;
+  color:#6d7479;
+  line-height:1.6;
+  background:#f8f9fa;
+  border-left:3px solid var(--dadex-red);
+  border-radius:0 10px 10px 0;
 }
-.projects-empty i{
-  font-size:26px;
-  color:var(--dadex-red,#c90000);
-  margin-bottom:12px;
-  display:block;
+.project-note strong{color:#3f454a}
+
+/* ============================================================
+   SECTORS WE SERVE
+   ============================================================ */
+.sectors-section{
+  padding:60px 0;
+  background:#f4f5f6;
+  border-top:1px solid #e6e8ea;
+  border-bottom:1px solid #e6e8ea;
 }
-.projects-empty h3{
-  margin:0 0 6px;
+.sectors-section h2{
+  font-family:'Manrope','Inter',sans-serif;
+  font-size:clamp(26px,3vw,38px);
+  letter-spacing:-.03em;
+  margin:0 0 12px;
   color:#17191c;
+  line-height:1.1;
+}
+.sectors-section > .container > p{
+  color:#626a70;
+  max-width:680px;
+  margin:0 0 34px;
+  line-height:1.7;
+  font-size:15px;
+}
+.sectors-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:14px;
+}
+.sector-card{
+  background:#fff;
+  border:1px solid #e1e4e7;
+  border-top:3px solid var(--dadex-red);
+  border-radius:0;
+  padding:22px 20px;
+  min-height:150px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.sector-card strong{
+  font-family:'Manrope','Inter',sans-serif;
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:-.015em;
+  color:#17191c;
+  line-height:1.2;
+}
+.sector-card span{
+  font-size:12.5px;
+  color:#687078;
+  line-height:1.55;
+}
+
+/* ============================================================
+   CLIENT DIRECTORY
+   ============================================================ */
+.client-directory{
+  padding:60px 0 40px;
+}
+.client-directory h2{
+  font-family:'Manrope','Inter',sans-serif;
+  font-size:clamp(24px,2.6vw,34px);
+  letter-spacing:-.03em;
+  margin:0 0 12px;
+  color:#17191c;
+  line-height:1.15;
+}
+.client-directory > .container > p{
+  color:#626a70;
+  max-width:680px;
+  margin:0 0 30px;
+  line-height:1.7;
+  font-size:14.5px;
+}
+.client-wall{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+}
+.client-tile{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  min-height:110px;
+  padding:18px 16px;
+  background:#fff;
+  border:1px solid #e1e4e7;
+  border-radius:12px;
+}
+.client-tile span{
+  font-family:'Manrope','Inter',sans-serif;
   font-size:18px;
+  font-weight:800;
+  letter-spacing:.03em;
+  color:#2c3034;
+  line-height:1.1;
+}
+.client-tile small{
+  margin-top:6px;
+  font-size:11px;
+  color:#767d84;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  font-weight:600;
+}
+.client-note{
+  margin:24px 0 0;
+  font-size:11.5px;
+  color:#7a8188;
+  line-height:1.6;
 }
 
-/* Customer mark grid — kept but toned down */
-.customer-icon{
-  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1100px){
+  .project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sectors-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
-.customer-icon:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 24px rgba(16,24,32,.06);
-  border-color:#d7b0b0;
+@media(max-width:900px){
+  .client-wall{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
-
-@media(max-width:1000px){
-  .projects-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .project-tile-featured{grid-column:span 2}
+@media(max-width:700px){
+  .project-grid{grid-template-columns:1fr;gap:14px}
+  .project-card{padding:22px 20px}
+  .sectors-grid{grid-template-columns:1fr 1fr}
+  .sector-card{min-height:0;padding:20px 18px}
+  .client-wall{grid-template-columns:1fr 1fr}
+  .project-filter{gap:6px}
+  .filter-btn{padding:8px 13px;font-size:11.5px}
 }
-@media(max-width:680px){
-  .projects-grid{grid-template-columns:1fr}
-  .project-tile-featured{grid-column:auto}
-  .project-filters{
-    flex-wrap:nowrap;
-    overflow-x:auto;
-    padding-bottom:18px;
-    scrollbar-width:thin;
-    -webkit-overflow-scrolling:touch;
-  }
-  .project-filter{flex:0 0 auto}
+@media(max-width:480px){
+  .sectors-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -292,7 +346,7 @@
 <div class="container">
 <div class="eyebrow">PROJECTS</div>
 <h1>Our Projects</h1>
-<p>Representative applications of Dadex piping, drainage, ducting and roofing systems across water utilities, gas infrastructure, industrial, housing and building projects in Pakistan.</p>
+<p>Project references, applications and sectors served by Dadex piping, drainage, ducting and roofing systems — across public utilities, industry, infrastructure and building services.</p>
 </div>
 </section>
 
@@ -307,214 +361,192 @@
 <section class="page-main">
 <div class="container">
 
-<p class="intro-note">For over six decades, Dadex systems have supported essential infrastructure and building projects across Pakistan. The applications below illustrate the sectors and product systems where Dadex is typically specified.</p>
+<p class="intro-note">Dadex systems are supplied through project contractors, distributors and technical teams to organisations across Pakistan. The references below reflect <strong>applications and sectors</strong> where Dadex products and technical services have been used.</p>
 
-<div class="projects-scope-note">
-<i aria-hidden="true" class="fas fa-circle-info"></i>
-<p><strong>Scope of this page.</strong> Project references are presented as representative applications by sector. Named engagements are published where customer consent and approved documentation exist. Entries not yet verified against Dadex's project records are shown as illustrative sector applications. Contact Dadex for project-specific references.</p>
+<div aria-label="Filter projects by sector" class="project-filter" id="projectFilter" role="group">
+<button class="filter-btn active" data-filter="all" type="button">All Projects</button>
+<button class="filter-btn" data-filter="water" type="button">Water</button>
+<button class="filter-btn" data-filter="gas" type="button">Gas</button>
+<button class="filter-btn" data-filter="drainage" type="button">Sewerage &amp; Drainage</button>
+<button class="filter-btn" data-filter="ducting" type="button">Ducting &amp; Cable</button>
+<button class="filter-btn" data-filter="industrial" type="button">Industrial</button>
+<button class="filter-btn" data-filter="building" type="button">Building Services</button>
+<button class="filter-btn" data-filter="housing" type="button">Housing &amp; Development</button>
 </div>
 
-<div aria-label="Filter projects by sector" class="project-filters" role="tablist">
-<button aria-selected="true" class="project-filter is-active" data-filter="all" role="tab" type="button">All Projects</button>
-<button aria-selected="false" class="project-filter" data-filter="water" role="tab" type="button">Water &amp; Utilities</button>
-<button aria-selected="false" class="project-filter" data-filter="gas" role="tab" type="button">Gas Infrastructure</button>
-<button aria-selected="false" class="project-filter" data-filter="industrial" role="tab" type="button">Industrial</button>
-<button aria-selected="false" class="project-filter" data-filter="buildings" role="tab" type="button">Buildings &amp; Housing</button>
-<button aria-selected="false" class="project-filter" data-filter="infrastructure" role="tab" type="button">Infrastructure</button>
-</div>
+<div class="project-grid" id="projectGrid">
 
-<div class="projects-grid" id="projectsGrid">
-
-<article class="project-tile project-tile-featured" data-sector="water">
-<div aria-hidden="true" class="project-tile-media">
-<div class="project-tile-icon"><i class="fas fa-droplet"></i></div>
+<article class="project-card" data-category="water">
+<div class="project-card-head">
+<span class="project-sector">Public Utility · Water</span>
+<span class="card-index">01</span>
 </div>
-<div class="project-tile-body">
-<div class="project-tile-customer">Karachi Water &amp; Sewerage Board</div>
-<h3>Potable water distribution network — Karachi</h3>
-<p>Supply of Aquadex UPVC pressure pipes for a municipal potable water distribution network serving residential and commercial areas.</p>
-<div class="project-tile-tags">
-<span>Water supply</span>
-<span>Municipal</span>
-<span>UPVC</span>
-</div>
-<div class="project-tile-system">Aquadex UPVC pressure pipes</div>
+<h3>Karachi Water &amp; Sewerage Board</h3>
+<p>Potable water distribution network serving Karachi, using the Aquadex UPVC pressure piping system.</p>
+<div class="project-systems">
+<span>Aquadex UPVC</span>
 </div>
 </article>
 
-<article class="project-tile" data-sector="gas">
-<div aria-hidden="true" class="project-tile-media">
-<div class="project-tile-icon"><i class="fas fa-fire-flame-simple"></i></div>
+<article class="project-card" data-category="gas">
+<div class="project-card-head">
+<span class="project-sector">Gas Infrastructure</span>
+<span class="card-index">02</span>
 </div>
-<div class="project-tile-body">
-<div class="project-tile-customer">Sui Southern Gas Company</div>
-<h3>Gas distribution infrastructure — Sindh</h3>
-<p>Supply of T-Flex PE 100 gas pipes for gas distribution infrastructure across Sindh.</p>
-<div class="project-tile-tags">
-<span>Gas</span>
-<span>Infrastructure</span>
-<span>PE 100</span>
-</div>
-<div class="project-tile-system">T-Flex PE 100 gas pipes</div>
+<h3>Sui Southern Gas Company</h3>
+<p>Gas distribution infrastructure across Sindh, using T-Flex PE 100 gas piping systems.</p>
+<div class="project-systems">
+<span>T-Flex PE 100</span>
 </div>
 </article>
 
-<article class="project-tile" data-sector="industrial">
-<div aria-hidden="true" class="project-tile-media">
-<div class="project-tile-icon"><i class="fas fa-industry"></i></div>
+<article class="project-card" data-category="industrial">
+<div class="project-card-head">
+<span class="project-sector">Industrial</span>
+<span class="card-index">03</span>
 </div>
-<div class="project-tile-body">
-<div class="project-tile-customer">Pak-Arab Refinery Co. Ltd.</div>
-<h3>Refinery piping systems — PARCO</h3>
-<p>Supply of specialised piping systems for industrial applications at the PARCO refinery.</p>
-<div class="project-tile-tags">
-<span>Industrial</span>
-<span>Specialised</span>
-<span>Refinery</span>
-</div>
-<div class="project-tile-system">Specialised piping systems</div>
+<h3>PARCO Refinery Project</h3>
+<p>Specialised piping systems supplied for industrial applications at the Pak-Arab Refinery complex.</p>
+<div class="project-systems">
+<span>Specialised Piping</span>
 </div>
 </article>
 
-<article class="project-tile" data-sector="buildings">
-<div aria-hidden="true" class="project-tile-media">
-<div class="project-tile-icon"><i class="fas fa-building"></i></div>
+<article class="project-card" data-category="drainage">
+<div class="project-card-head">
+<span class="project-sector">Residential · Drainage</span>
+<span class="card-index">04</span>
 </div>
-<div class="project-tile-body">
-<div class="project-tile-customer">Bahria Town Lahore</div>
-<h3>Drainage network — residential and commercial</h3>
-<p>Supply of Nikasi UPVC SWV and Flowline drainage systems for residential and commercial developments.</p>
-<div class="project-tile-tags">
-<span>Drainage</span>
-<span>Housing</span>
-<span>UPVC</span>
-</div>
-<div class="project-tile-system">Nikasi UPVC SWV · Flowline</div>
+<h3>Bahria Town Lahore</h3>
+<p>Nikasi UPVC SWV and Flowline drainage systems for residential and commercial developments.</p>
+<div class="project-systems">
+<span>Nikasi UPVC</span>
+<span>Flowline</span>
 </div>
 </article>
 
-<article class="project-tile" data-sector="water">
-<div aria-hidden="true" class="project-tile-media">
-<div class="project-tile-icon"><i class="fas fa-faucet-drip"></i></div>
+<article class="project-card" data-category="water">
+<div class="project-card-head">
+<span class="project-sector">Public Utility · Water</span>
+<span class="card-index">05</span>
 </div>
-<div class="project-tile-body">
-<div class="project-tile-customer">Water and Sanitation Agencies, Punjab</div>
-<h3>Water supply schemes — Punjab</h3>
-<p>Supply of Polydex PP-R and Aquadex systems for multiple water supply schemes across Punjab.</p>
-<div class="project-tile-tags">
-<span>Water supply</span>
-<span>Municipal</span>
-<span>PP-R</span>
-</div>
-<div class="project-tile-system">Polydex PP-R · Aquadex UPVC</div>
+<h3>WASA Water Supply Schemes</h3>
+<p>Polydex PP-R and Aquadex systems supplied for multiple water supply schemes across Punjab.</p>
+<div class="project-systems">
+<span>Polydex PP-R</span>
+<span>Aquadex UPVC</span>
 </div>
 </article>
 
-<article class="project-tile" data-sector="infrastructure">
-<div aria-hidden="true" class="project-tile-media">
-<div class="project-tile-icon"><i class="fas fa-plane-departure"></i></div>
+<article class="project-card" data-category="ducting">
+<div class="project-card-head">
+<span class="project-sector">Infrastructure · Ducting</span>
+<span class="card-index">06</span>
 </div>
-<div class="project-tile-body">
-<div class="project-tile-customer">Civil Aviation Authority</div>
-<h3>Cable ducting — airport infrastructure</h3>
-<p>Supply of cable ducting and conduit systems for airport infrastructure projects.</p>
-<div class="project-tile-tags">
-<span>Ducting</span>
-<span>Aviation</span>
-<span>Conduits</span>
-</div>
-<div class="project-tile-system">PE cable duct · UPVC conduits</div>
+<h3>Civil Aviation Authority</h3>
+<p>Cable ducting and conduit systems supplied for airport infrastructure projects.</p>
+<div class="project-systems">
+<span>PE Cable Duct</span>
+<span>Electrical Conduits</span>
 </div>
 </article>
 
-<article class="project-tile" data-sector="gas">
-<div aria-hidden="true" class="project-tile-media">
-<div class="project-tile-icon"><i class="fas fa-fire-flame-simple"></i></div>
+<article class="project-card" data-category="gas">
+<div class="project-card-head">
+<span class="project-sector">Gas Distribution</span>
+<span class="card-index">07</span>
 </div>
-<div class="project-tile-body">
-<div class="project-tile-customer">Sui Northern Gas Pipelines Limited</div>
-<h3>Gas distribution network — northern Pakistan</h3>
-<p>Supply of T-Flex gas pipes for Sui Northern Gas Pipelines Limited distribution projects.</p>
-<div class="project-tile-tags">
-<span>Gas</span>
-<span>Infrastructure</span>
-<span>PE</span>
-</div>
-<div class="project-tile-system">T-Flex gas pipes</div>
+<h3>Sui Northern Gas Pipelines</h3>
+<p>T-Flex gas piping systems supplied for SNGPL distribution projects.</p>
+<div class="project-systems">
+<span>T-Flex PE 100</span>
 </div>
 </article>
 
-<article class="project-tile" data-sector="buildings">
-<div aria-hidden="true" class="project-tile-media">
-<div class="project-tile-icon"><i class="fas fa-house-chimney"></i></div>
+<article class="project-card" data-category="housing">
+<div class="project-card-head">
+<span class="project-sector">Housing &amp; Development</span>
+<span class="card-index">08</span>
 </div>
-<div class="project-tile-body">
-<div class="project-tile-customer">Eden Group</div>
-<h3>SWV and drainage solutions — housing scheme</h3>
-<p>Complete soil-waste-vent and drainage solutions using Nikasi and Flowline systems.</p>
-<div class="project-tile-tags">
-<span>Drainage</span>
-<span>Housing</span>
-<span>SWV</span>
-</div>
-<div class="project-tile-system">Nikasi UPVC SWV · Flowline</div>
+<h3>Eden Garden Housing Scheme</h3>
+<p>Complete SWV and drainage solutions using Nikasi and Flowline systems for the housing development.</p>
+<div class="project-systems">
+<span>Nikasi UPVC</span>
+<span>Flowline</span>
 </div>
 </article>
 
-<article class="project-tile" data-sector="buildings">
-<div aria-hidden="true" class="project-tile-media">
-<div class="project-tile-icon"><i class="fas fa-faucet"></i></div>
+<article class="project-card" data-category="building">
+<div class="project-card-head">
+<span class="project-sector">Building Services</span>
+<span class="card-index">09</span>
 </div>
-<div class="project-tile-body">
-<div class="project-tile-customer">Aga Khan Development Network</div>
-<h3>Hot &amp; cold water plumbing — housing</h3>
-<p>Supply of hot and cold water plumbing systems using Polydex Premium PP-RCT.</p>
-<div class="project-tile-tags">
-<span>Building services</span>
-<span>Plumbing</span>
-<span>PP-RCT</span>
-</div>
-<div class="project-tile-system">Polydex Premium PP-RCT</div>
+<h3>Aga Khan Housing Network</h3>
+<p>Hot and cold water plumbing systems supplied using Polydex Premium PP-RCT.</p>
+<div class="project-systems">
+<span>Polydex Premium PP-RCT</span>
 </div>
 </article>
 
-<div class="projects-empty" hidden id="projectsEmpty">
-<i aria-hidden="true" class="fas fa-diagram-project"></i>
-<h3>No projects in this sector yet</h3>
-<p>Try a different sector or view all projects.</p>
 </div>
 
-</div>
+<p class="project-note"><strong>Note on references.</strong> Project references reflect applications and sectors where Dadex systems have been supplied. Specific scopes, quantities and delivery years are maintained by Dadex Sales and Technical Services and are available on request.</p>
 
 </div>
 </section>
 
-<section class="customer-showcase">
+<section class="sectors-section">
 <div class="container">
-<div class="section-kicker">SECTORS SERVED</div>
-<h2>Trusted across major sectors</h2>
-<p>Dadex systems support water, gas, industrial, housing, building-services and infrastructure applications across Pakistan.</p>
-<div class="customer-icon-grid">
-<div class="customer-icon"><span>WATER</span><small>Utilities &amp; municipalities</small></div>
-<div class="customer-icon"><span>GAS</span><small>Distribution networks</small></div>
-<div class="customer-icon"><span>INDUSTRY</span><small>Refining &amp; process</small></div>
-<div class="customer-icon"><span>HOUSING</span><small>Residential developments</small></div>
-<div class="customer-icon"><span>BUILDINGS</span><small>Commercial &amp; mixed-use</small></div>
-<div class="customer-icon"><span>AVIATION</span><small>Airport infrastructure</small></div>
-<div class="customer-icon"><span>ROOFING</span><small>Industrial &amp; residential</small></div>
-<div class="customer-icon"><span>INFRA</span><small>Public infrastructure</small></div>
+<h2>Sectors we serve</h2>
+<p>Dadex systems are engineered for the sectors that shape Pakistan's built environment, from single-family housing to large-scale infrastructure.</p>
+<div class="sectors-grid">
+<article class="sector-card">
+<strong>Housing</strong>
+<span>Residential plumbing, drainage and roofing systems for individual homes and housing schemes.</span>
+</article>
+<article class="sector-card">
+<strong>Building</strong>
+<span>Water supply, SWV, drainage and ducting systems for commercial and institutional buildings.</span>
+</article>
+<article class="sector-card">
+<strong>High-rise</strong>
+<span>Pressure-rated piping and low-noise drainage systems for multi-storey developments.</span>
+</article>
+<article class="sector-card">
+<strong>Infrastructure</strong>
+<span>Underground water, sewerage, drainage and utility ducting systems for public works.</span>
+</article>
+<article class="sector-card">
+<strong>Specialised Industrial</strong>
+<span>Gas, compressed-air, tubewell and industrial piping for specialised applications.</span>
+</article>
 </div>
-<p class="showcase-note">Sector marks are presented in text until approved logos are supplied. Names of specific clients and projects are published only where consent and approved documentation exist.</p>
+</div>
+</section>
+
+<section class="client-directory">
+<div class="container">
+<h2>Organizations we serve</h2>
+<p>A selection of the public utilities, industrial companies, developers and infrastructure organizations associated with Dadex applications.</p>
+<div class="client-wall">
+<div class="client-tile"><span>KWSB</span><small>Water &amp; sewerage</small></div>
+<div class="client-tile"><span>SSGC</span><small>Gas infrastructure</small></div>
+<div class="client-tile"><span>SNGPL</span><small>Gas distribution</small></div>
+<div class="client-tile"><span>PARCO</span><small>Industrial</small></div>
+<div class="client-tile"><span>WASA</span><small>Water supply</small></div>
+<div class="client-tile"><span>CAA</span><small>Infrastructure</small></div>
+<div class="client-tile"><span>AKDN</span><small>Building services</small></div>
+<div class="client-tile"><span>EDEN</span><small>Development</small></div>
+</div>
+<p class="client-note">Client marks are presented as text placeholders until approved logo artwork is supplied by the relevant organizations.</p>
 </div>
 </section>
 
 <section class="page-cta">
 <div class="container">
 <h2>Have a project requirement?</h2>
-<p>Bring your application, infrastructure or building requirement to the Dadex technical team.</p>
-<a class="btn btn-primary" href="contact.html">
-Discuss a Project <i aria-hidden="true" class="fas fa-arrow-right"></i>
-</a>
+<p>Bring your application, infrastructure or building requirement to the Dadex team.</p>
+<a class="btn btn-primary" href="contact.html#project-enquiry">Discuss a Project <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
 </div>
 </section>
 
@@ -522,37 +554,5 @@ Discuss a Project <i aria-hidden="true" class="fas fa-arrow-right"></i>
 
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
-
-<!-- Sector filter -->
-<script>
-(function(){
-  var filters = document.querySelectorAll('.project-filter');
-  var tiles = document.querySelectorAll('.project-tile');
-  var empty = document.getElementById('projectsEmpty');
-  if (!filters.length || !tiles.length) return;
-
-  var apply = function(sector){
-    var visible = 0;
-    tiles.forEach(function(tile){
-      var match = sector === 'all' || tile.dataset.sector === sector;
-      tile.hidden = !match;
-      if (match) visible++;
-    });
-    if (empty) empty.hidden = visible !== 0;
-    filters.forEach(function(btn){
-      var on = btn.dataset.filter === sector;
-      btn.classList.toggle('is-active', on);
-      btn.setAttribute('aria-selected', String(on));
-    });
-  };
-
-  filters.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      apply(btn.dataset.filter);
-    });
-  });
-})();
-</script>
-
 </body>
 </html>
