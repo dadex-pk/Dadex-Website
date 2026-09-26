@@ -1,49 +1,541 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>About Dadex | Dadex Eternit Limited</title>
-<meta content="Learn about Dadex Eternit Limited, its heritage, values, quality focus, presence and commitment to customers and communities." name="description"/>
+<meta content="Dadex Eternit Limited — established 1959, PSX-listed, ISO 9001 / 14001 / 45001 certified. Discover our vision, values, manufacturing presence and global technical partners." name="description"/>
+<link href="https://www.dadex.com/about.html" rel="canonical"/>
+<meta content="#c90000" name="theme-color"/>
+<meta content="index, follow" name="robots"/>
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
+
+<!-- Open Graph -->
+<meta content="website" property="og:type"/>
+<meta content="About Dadex | Dadex Eternit Limited" property="og:title"/>
+<meta content="Dadex Eternit Limited — established 1959, PSX-listed, ISO 9001 / 14001 / 45001 certified. Discover our vision, values, manufacturing presence and global technical partners." property="og:description"/>
+<meta content="https://www.dadex.com/about.html" property="og:url"/>
+<meta content="Dadex Eternit Limited" property="og:site_name"/>
+<meta content="en_PK" property="og:locale"/>
+<meta content="https://www.dadex.com/assets/images/dadex-logo.png" property="og:image"/>
+<meta content="Dadex Eternit Limited" property="og:image:alt"/>
+
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="About Dadex | Dadex Eternit Limited" name="twitter:title"/>
+<meta content="Dadex Eternit Limited — established 1959, PSX-listed, ISO 9001 / 14001 / 45001 certified. Discover our vision, values, manufacturing presence and global technical partners." name="twitter:description"/>
+<meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
+
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+
+<!-- Icons -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+
+<!-- Styles -->
 <link href="css/design-system.css" rel="stylesheet"/>
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About Dadex — Dadex Eternit Limited",
+  "url": "https://www.dadex.com/about.html",
+  "about": {
+    "@type": "Organization",
+    "name": "Dadex Eternit Limited",
+    "foundingDate": "1959",
+    "founder": {
+      "@type": "Person",
+      "name": "Kassim Dada",
+      "birthDate": "1919",
+      "deathDate": "2001"
+    },
+    "url": "https://www.dadex.com/",
+    "logo": "https://www.dadex.com/assets/images/dadex-logo.png",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal",
+      "addressLocality": "Karachi",
+      "postalCode": "75400",
+      "addressCountry": "PK"
+    },
+    "telephone": "+92-21-111-000-789",
+    "email": "info@dadex.com.pk",
+    "sameAs": []
+  }
+}
+</script>
+
+<!-- Page-scoped additions: certifications bar, partner strip -->
+<style>
+/* Certifications bar */
+.about-cert-strip{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:1px;
+  background:var(--core-line,#dfe2e4);
+  border:1px solid var(--core-line,#dfe2e4);
+}
+.about-cert{
+  background:#fff;
+  padding:30px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  position:relative;
+  overflow:hidden;
+}
+.about-cert::before{
+  content:"";
+  position:absolute;
+  left:24px;top:0;
+  width:32px;height:3px;
+  background:var(--dadex-red,#c90000);
+}
+.about-cert strong{
+  font-family:'Manrope','Inter',sans-serif;
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:-.02em;
+  color:#17191c;
+  line-height:1.15;
+  margin-top:14px;
+}
+.about-cert span{
+  font-size:13px;
+  color:#687078;
+  line-height:1.5;
+}
+
+/* Partner strip */
+.about-partners{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+.about-partner{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:28px 26px;
+  background:#fff;
+  border:1px solid var(--core-line,#dfe2e4);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+.about-partner:hover{
+  transform:translateY(-3px);
+  box-shadow:0 16px 34px rgba(16,24,32,.07);
+  border-color:#d7b0b0;
+}
+.about-partner-mark{
+  font-family:'Manrope','Inter',sans-serif;
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.01em;
+  color:#17191c;
+  line-height:1.15;
+}
+.about-partner-country{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--dadex-red,#c90000);
+  margin-bottom:2px;
+}
+.about-partner p{
+  font-size:13.5px;
+  color:#626a70;
+  line-height:1.6;
+  margin:0;
+}
+
+/* Responsibility three-column */
+.about-responsibility{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+.about-responsibility .core-card{
+  min-height:190px;
+}
+
+/* Service pillars use existing .about-service-steps but ensure 4-up */
+.about-service-steps{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+
+/* Founder section: warmer treatment */
+.founder-chairman-section .core-section-head{
+  margin-bottom:34px;
+}
+.founder-chairman-copy blockquote{
+  margin:22px 0;
+  font-size:15px;
+}
+.founder-chairman-copy cite{
+  display:block;
+  margin-top:14px;
+  font-style:normal;
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#8a9098;
+  font-weight:700;
+}
+
+@media(max-width:1000px){
+  .about-cert-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .about-service-steps{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:800px){
+  .about-partners{grid-template-columns:1fr}
+  .about-responsibility{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .about-cert-strip{grid-template-columns:1fr}
+  .about-service-steps{grid-template-columns:1fr!important}
+}
+</style>
 </head>
+
 <body class="core-page about-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
-<div class="breadcrumb"><div class="container"><a href="index.html">Home</a><span>/</span><strong>About Dadex</strong></div></div>
+
 <main id="main-content">
+
 <section class="core-hero">
-<div class="core-hero-media"><img alt="Dadex product systems" src="assets/images/corporate/about-products.webp"/></div>
-<div class="container"><div class="core-kicker">The Dadex Story</div><h1>About Dadex</h1><p>Since 1959, Dadex has evolved from a Pakistani manufacturing pioneer into a diversified construction-products company serving piping, drainage, utility and related building applications.</p></div>
-</section>
-<section class="core-content"><div class="container">
-<div class="core-intro">
-<article class="core-panel"><div class="core-kicker muted-kicker">Who we are</div><h2>Six decades of engineering experience.</h2>
-<p>Dadex Eternit Limited was incorporated as a public limited company on 13 April 1959 and is listed on the Pakistan Stock Exchange. The company manufactures and sells construction materials, principally piping systems and allied products, and also undertakes the merchandising of imported pipe fittings, accessories and other building products.</p>
-<p class="section-note">Over the decades, Dadex has expanded from its early manufacturing roots into thermoplastic piping and infrastructure systems serving construction, housing, architecture, telecommunications and infrastructure applications.</p></article>
-<div class="core-image-card"><img alt="Dadex product range" loading="lazy" src="assets/images/corporate/product-range.webp"/></div>
+<div class="core-hero-media">
+<img alt="Dadex product systems" fetchpriority="high" src="assets/images/corporate/about-products.webp" width="1600" height="900"/>
 </div>
-<section class="core-section"><div class="core-section-head"><div><div class="core-kicker muted-kicker">At a glance</div><h2>A company built around essential infrastructure.</h2></div><p>Dadex combines manufacturing experience, technical capability and market reach to support public, industrial, commercial and private-sector requirements.</p></div>
-<div class="core-grid"><article class="core-card"><span class="num">1959</span><h3>Established</h3><p>Incorporated in Pakistan on 13 April 1959 as a public limited company.</p></article><article class="core-card"><span class="num">PSX</span><h3>Listed Company</h3><p>Ordinary shares are listed on the Pakistan Stock Exchange under the symbol DADX.</p></article><article class="core-card"><span class="num">02</span><h3>Factory Locations</h3><p>Current manufacturing facilities are represented by Hyderabad and Sundar Industrial Estate, Lahore.</p></article><article class="core-card"><span class="num">01</span><h3>Head Office</h3><p>Dadex House, P.E.C.H.S., Shahrah-e-Faisal, Karachi serves as the registered/head-office address.</p></article><article class="core-card"><span class="num">06</span><h3>Core Materials</h3><p>Current product systems span UPVC, PP-R, PP-RCT and PE, alongside selected allied construction products.</p></article><article class="core-card"><span class="num">01</span><h3>Customer Promise</h3><p>Reliable products, responsive service, technical support and long-term value for stakeholders.</p></article></div></section>
-<section class="core-section"><div class="core-section-head"><div><div class="core-kicker muted-kicker">Our journey</div><h2>From roofing heritage to modern piping systems.</h2></div><p>Dadex's history reflects a steady evolution in materials, applications and manufacturing capability.</p></div>
-<div class="core-timeline"><article class="core-card"><div class="year">1959</div><h3>Dadex established</h3><p>The company was incorporated as a public limited company in Pakistan.</p></article><article class="core-card"><div class="year">Early years</div><h3>Manufacturing roots</h3><p>Dadex began with fiber-cement roofing and pipe manufacturing, establishing its industrial foundation.</p></article><article class="core-card"><div class="year">Expansion</div><h3>Thermoplastic systems</h3><p>The portfolio expanded into modern thermoplastic piping and drainage technologies for diverse applications.</p></article><article class="core-card"><div class="year">Today</div><h3>Integrated solutions</h3><p>Dadex serves water, sewerage, drainage, cable and utility ducting, roofing and specialised applications.</p></article></div>
-<div class="about-history-cta"><a class="btn btn-primary" href="history.html">Explore Our History <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
+<div class="container">
+<div class="core-kicker">The Dadex Story</div>
+<h1>About Dadex</h1>
+<p>A journey of trust from a vision to the industry leader. Since 1959, Dadex has evolved from a Pakistani manufacturing pioneer into a diversified construction-products company serving piping, drainage, utility and related building applications.</p>
+</div>
 </section>
-<section class="core-section founder-chairman-section"><div class="core-section-head"><div><div class="core-kicker muted-kicker">Founder Chairman</div><h2>Kassim Dada</h2></div><p>A legacy of integrity, fairness and the sanctity of promise.</p></div><div class="founder-chairman-grid"><div class="founder-chairman-photo"><img src="assets/images/corporate/founder-chairman.jpg" alt="Kassim Dada, Founder Chairman of Dadex" loading="lazy"></div><div class="founder-chairman-copy"><p class="founder-chairman-lead">Kassim Dada (1919–2001), the Founder Chairman of Dadex, was an individual of principles — an astute businessman, philanthropist and a man committed to basic values.</p><p>Following the simple principle of fairness, clarity and sincere application to all things in life, he worked hard to make Dadex a company recognized not only for the quality of its work and products, but also for its integrity.</p><blockquote>“...the conduct towards others must be based on kindness, service, fairness, charity, justice, honesty and the sanctity of promise, pledge or agreement.”</blockquote><p class="founder-chairman-note">His values remain part of the legacy that shapes Dadex's approach to business, relationships and responsible conduct.</p></div></div></section>
-<section class="core-section"><div class="core-section-head"><div><div class="core-kicker muted-kicker">Our philosophy</div><h2>Values that shape how we work.</h2></div><p>Customer focus, innovation, quality, reliability and ethical practices form the foundation of the Dadex approach.</p></div>
-<div class="core-values"><div class="core-value"><strong>Customer Focus</strong><span>Responsive support and attention to customer needs.</span></div><div class="core-value"><strong>Innovation</strong><span>Continuous improvement and forward-looking solutions.</span></div><div class="core-value"><strong>Quality</strong><span>Products and processes aligned with standards and best practices.</span></div><div class="core-value"><strong>Reliability</strong><span>Dependable products, service and relationships.</span></div><div class="core-value"><strong>Ethical Practices</strong><span>Integrity, transparency and responsible business conduct.</span></div></div></section>
-<section class="core-section about-why-dadex"><div class="core-section-head"><div><div class="core-kicker muted-kicker">Why Dadex</div><h2>Support beyond the product.</h2></div><p>Dadex works around a three-step service approach, supporting customers before, during and after the sale.</p></div><div class="core-grid three about-service-steps"><article class="core-card"><span class="num">01</span><h3>Pre-Sales</h3><p>Technical guidance, product selection and support to help customers plan the right solution.</p></article><article class="core-card"><span class="num">02</span><h3>During Sales</h3><p>Responsive coordination and assistance throughout the sales and project process.</p></article><article class="core-card"><span class="num">03</span><h3>Post-Sales</h3><p>Continued technical support and service after supply to help customers achieve reliable results.</p></article></div></section>
-<section class="core-section"><div class="core-section-head"><div><div class="core-kicker muted-kicker">Vision</div><h2>Our Vision</h2></div></div><div class="core-panel"><p class="vision-statement">“…to be the most valued company for all stakeholders, renowned for customer focus, innovation, quality, reliability &amp; ethical practices.”</p></div></section>
-<section class="core-section"><div class="core-section-head"><div><div class="core-kicker muted-kicker">Mission</div><h2>Our Mission</h2></div><p>Our mission translates the Dadex vision into priorities for customers, quality, people and shareholder value.</p></div><div class="core-grid two"><article class="core-card"><h3>Customers &amp; Supply Chain</h3><ul><li>Provide unparalleled service and best value through a responsive and cost-effective supply chain.</li><li>Increase penetration in piping systems through new channels and market opportunities.</li></ul></article><article class="core-card"><h3>Quality &amp; Standards</h3><ul><li>Provide quality products through international standards and best practices.</li><li>Set new trends through innovative marketing and manufacturing.</li></ul></article><article class="core-card"><h3>People &amp; Society</h3><ul><li>Follow business ethics, comply with SH&amp;E standards and contribute responsibly to society.</li><li>Develop talent in a competitive environment where people can excel and grow.</li></ul></article><article class="core-card"><h3>Shareholder Value</h3><ul><li>Strive to maximize shareholder value through sustained profitable growth.</li></ul></article></div></section>
-<section class="core-section"><div class="core-section-head"><div><div class="core-kicker muted-kicker">What we make</div><h2>Systems for essential applications.</h2></div><p>Dadex's current product architecture spans water supply, sewerage and drainage, cable and utility ducting, specialised and industrial applications, and roofing.</p></div><div class="core-grid two about-product-groups"><a class="core-card about-product-card" href="products.html#water-supply"><h3>Water &amp; Building Systems <i class="fas fa-arrow-right" aria-hidden="true"></i></h3><p>UPVC, PP-R and PP-RCT systems for water supply and building services.</p><span>Explore Water Supply</span></a><a class="core-card about-product-card" href="products.html#sewerage-drainage"><h3>Sewerage &amp; Drainage <i class="fas fa-arrow-right" aria-hidden="true"></i></h3><p>Underground sewerage, soil-waste-vent and drainage infrastructure systems.</p><span>Explore Sewerage &amp; Drainage</span></a><a class="core-card about-product-card" href="products.html#cable-utility-ducting"><h3>Cable &amp; Utility Ducting <i class="fas fa-arrow-right" aria-hidden="true"></i></h3><p>PE cable duct and electrical conduit solutions for utility infrastructure.</p><span>Explore Cable &amp; Utility Ducting</span></a><a class="core-card about-product-card" href="products.html#specialised-industrial"><h3>Specialised &amp; Industrial <i class="fas fa-arrow-right" aria-hidden="true"></i></h3><p>Selected gas, compressed-air, tubewell and other specialised systems.</p><span>Explore Specialised Applications</span></a><a class="core-card about-product-card" href="products.html#roofing"><h3>Roofing <i class="fas fa-arrow-right" aria-hidden="true"></i></h3><p>Corrugated sheet solutions rooted in Dadex's long manufacturing heritage.</p><span>Explore Roofing</span></a></div></section>
-<section class="core-section"><div class="core-section-head"><div><div class="core-kicker muted-kicker">Responsibility</div><h2>Safety, people and communities.</h2></div><p>Responsible business is part of the long-term value Dadex seeks to create for employees, customers, communities and other stakeholders.</p></div><div class="core-grid two"><article class="core-card"><span class="num">HSE</span><h3>Health, Safety &amp; Environment</h3><p>Workplace safety, employee well-being and environmental responsibility remain important elements of responsible operations.</p></article><article class="core-card"><span class="num">CSR</span><h3>Corporate Social Responsibility</h3><p>Dadex supports initiatives aimed at positive community impact and responsible resource use, including water-conservation awareness.</p></article></div></section>
-<div class="core-cta"><div><h2>Explore Dadex</h2><p>Discover our products, systems, applications and technical resources.</p></div><a class="btn btn-primary" href="products.html">Explore Products <i class="fas fa-arrow-right"></i></a></div>
-</div></section>
+
+<div class="breadcrumb">
+<div class="container">
+<a href="index.html">Home</a>
+<span>/</span>
+<strong>About Dadex</strong>
+</div>
+</div>
+
+<section class="core-content">
+<div class="container">
+
+<div class="core-intro">
+<article class="core-panel">
+<div class="core-kicker">Who we are</div>
+<h2>Over six decades of engineering experience.</h2>
+<p>Dadex Eternit Limited was incorporated as a public limited company in 1959 and is listed on the Pakistan Stock Exchange. The company manufactures and sells construction materials, principally piping systems and allied products, and also undertakes the merchandising of imported pipe fittings, accessories and other building products.</p>
+<p class="section-note">A pioneer of thermoplastic piping systems in Pakistan, Dadex has expanded from its early fibre cement roots into a broad portfolio serving construction, housing, architecture, telecommunications and infrastructure applications.</p>
+</article>
+<div class="core-image-card">
+<img alt="Dadex product range" loading="lazy" src="assets/images/corporate/product-range.webp" width="1200" height="900"/>
+</div>
+</div>
+
+<section class="core-section">
+<div class="core-section-head">
+<div>
+<div class="core-kicker">At a glance</div>
+<h2>A company built around essential infrastructure.</h2>
+</div>
+<p>Dadex combines manufacturing experience, technical capability and market reach to support public, industrial, commercial and private-sector requirements.</p>
+</div>
+<div class="core-grid">
+<article class="core-card"><span class="num">1959</span><h3>Established</h3><p>Incorporated in Pakistan as a public limited company and listed on the Pakistan Stock Exchange.</p></article>
+<article class="core-card"><span class="num">PSX</span><h3>Listed Company</h3><p>Ordinary shares are listed on the Pakistan Stock Exchange under the symbol DADX.</p></article>
+<article class="core-card"><span class="num">02</span><h3>Manufacturing Facilities</h3><p>Hyderabad and Sundar Industrial Estate, near Lahore.</p></article>
+<article class="core-card"><span class="num">06</span><h3>Sales Offices</h3><p>Karachi, Hyderabad, Lahore, Multan, Faisalabad and Islamabad.</p></article>
+<article class="core-card"><span class="num">04</span><h3>Core Materials</h3><p>UPVC, PP-R, PP-RCT and PE thermoplastic systems, alongside allied construction products.</p></article>
+<article class="core-card"><span class="num">04</span><h3>Certifications</h3><p>ISO 9001, ISO 14001, ISO 45001 and PSQCA certified.</p></article>
+</div>
+</section>
+
+<section class="core-section">
+<div class="core-section-head">
+<div>
+<div class="core-kicker">Certifications</div>
+<h2>Standards we stand behind.</h2>
+</div>
+<p>Dadex operations and management systems are certified against recognised international and national standards.</p>
+</div>
+<div class="about-cert-strip">
+<div class="about-cert">
+<strong>ISO 9001</strong>
+<span>Quality management systems</span>
+</div>
+<div class="about-cert">
+<strong>ISO 14001</strong>
+<span>Environmental management systems</span>
+</div>
+<div class="about-cert">
+<strong>ISO 45001</strong>
+<span>Occupational health and safety</span>
+</div>
+<div class="about-cert">
+<strong>PSQCA</strong>
+<span>Pakistan Standards and Quality Control Authority compliance</span>
+</div>
+</div>
+</section>
+
+<section class="core-section">
+<div class="core-section-head">
+<div>
+<div class="core-kicker">Our journey</div>
+<h2>From roofing heritage to modern piping systems.</h2>
+</div>
+<p>Dadex's history reflects a steady evolution in materials, applications and manufacturing capability.</p>
+</div>
+<div class="core-timeline">
+<article class="core-card"><div class="year">1959</div><h3>Dadex established</h3><p>Incorporated as a public limited company and listed on the Karachi Stock Exchange.</p></article>
+<article class="core-card"><div class="year">Early years</div><h3>Manufacturing roots</h3><p>Dadex began with fibre cement roofing and pipe manufacturing, establishing its industrial foundation.</p></article>
+<article class="core-card"><div class="year">Expansion</div><h3>Thermoplastic systems</h3><p>The portfolio expanded into modern thermoplastic piping and drainage technologies for diverse applications.</p></article>
+<article class="core-card"><div class="year">Today</div><h3>Integrated solutions</h3><p>Dadex serves water, sewerage, drainage, cable and utility ducting, roofing and specialised applications.</p></article>
+</div>
+<div class="about-history-cta">
+<a class="btn btn-primary" href="history.html">Explore Our History <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
+</div>
+</section>
+
+<section class="core-section founder-chairman-section">
+<div class="core-section-head">
+<div>
+<div class="core-kicker">Founder Chairman</div>
+<h2>Kassim Dada</h2>
+</div>
+<p>A legacy of integrity, fairness and the sanctity of promise.</p>
+</div>
+<div class="founder-chairman-grid">
+<div class="founder-chairman-photo">
+<img alt="Kassim Dada, Founder Chairman of Dadex" loading="lazy" src="assets/images/corporate/founder-chairman.jpg"/>
+</div>
+<div class="founder-chairman-copy">
+<p class="founder-chairman-lead">Kassim Dada (1919–2001), the Founder Chairman of Dadex, was an individual of principles — an astute businessman, a philanthropist, an avid traveller, and a man committed to basic values. His individuality influenced many to add meaning and significance to their own lives.</p>
+<p>Following the simple principle of fairness, clarity and sincere application to all things in life, he worked hard to make Dadex a company recognised not only for the quality of its work and products, but also for its integrity.</p>
+<blockquote>
+“...the conduct towards others must be based on kindness, service, fairness, charity, justice, honesty and the sanctity of promise, pledge or agreement.”
+<cite>— A Ramble through Life, autobiography of Kassim Dada</cite>
+</blockquote>
+<p class="founder-chairman-note">The Dadex Vision reflects these qualities — the conviction that the strength and longevity of a company does not merely lie in the superiority of its products, but in how it conducts business. That principle remains at the heart of how Dadex serves customers, ensures product quality and builds long-term relationships.</p>
+</div>
+</div>
+</section>
+
+<section class="core-section">
+<div class="core-section-head">
+<div>
+<div class="core-kicker">Our philosophy</div>
+<h2>Values that shape how we work.</h2>
+</div>
+<p>Customer focus, innovation, quality, reliability and ethical practices form the foundation of the Dadex approach.</p>
+</div>
+<div class="core-values">
+<div class="core-value"><strong>Customer Focus</strong><span>Superior customer support — magnified focus.</span></div>
+<div class="core-value"><strong>Innovation</strong><span>Boundless thinking. Timeless innovation.</span></div>
+<div class="core-value"><strong>Quality</strong><span>Quality assured is quality delivered.</span></div>
+<div class="core-value"><strong>Reliability</strong><span>Reliability and trust — a secure balance.</span></div>
+<div class="core-value"><strong>Ethical Practices</strong><span>Solid links to strong principles.</span></div>
+</div>
+</section>
+
+<section class="core-section about-why-dadex">
+<div class="core-section-head">
+<div>
+<div class="core-kicker">Why Dadex</div>
+<h2>Support beyond the product.</h2>
+</div>
+<p>A partnership built on commitment — supporting customers before, during and after the sale.</p>
+</div>
+<div class="core-grid three about-service-steps">
+<article class="core-card">
+<span class="num">01</span>
+<h3>Design &amp; Proposals</h3>
+<p>Design proposals, BOQ, estimates and product selection support.</p>
+</article>
+<article class="core-card">
+<span class="num">02</span>
+<h3>Tools Availability</h3>
+<p>Tools for jointing, laying and installation.</p>
+</article>
+<article class="core-card">
+<span class="num">03</span>
+<h3>Demonstrations &amp; Training</h3>
+<p>In-house, on-field and plumber training.</p>
+</article>
+<article class="core-card">
+<span class="num">04</span>
+<h3>On-Site Support</h3>
+<p>Laying and testing support at the project site.</p>
+</article>
+</div>
+</section>
+
+<section class="core-section">
+<div class="core-section-head">
+<div>
+<div class="core-kicker">Technical partners</div>
+<h2>Global collaboration, local manufacturing.</h2>
+</div>
+<p>Dadex works with established international partners to bring proven technologies and standards to the Pakistani market.</p>
+</div>
+<div class="about-partners">
+<article class="about-partner">
+<div class="about-partner-country">Netherlands</div>
+<div class="about-partner-mark">Wavin</div>
+<p>Technical collaboration for thermoplastic piping systems in Pakistan.</p>
+</article>
+<article class="about-partner">
+<div class="about-partner-country">Italy</div>
+<div class="about-partner-mark">Effast</div>
+<p>Collaboration for UPVC pressure piping systems.</p>
+</article>
+<article class="about-partner">
+<div class="about-partner-country">Poland</div>
+<div class="about-partner-mark">Magnaplast</div>
+<p>Collaboration supporting Dadex's specialised piping portfolio.</p>
+</article>
+</div>
+</section>
+
+<section class="core-section">
+<div class="core-section-head">
+<div>
+<div class="core-kicker">Vision</div>
+<h2>Our Vision</h2>
+</div>
+</div>
+<div class="core-panel">
+<p class="vision-statement">“…to be the most valued company for all stakeholders, renowned for customer focus, innovation, quality, reliability &amp; ethical practices.”</p>
+</div>
+</section>
+
+<section class="core-section">
+<div class="core-section-head">
+<div>
+<div class="core-kicker">Mission</div>
+<h2>Our Mission</h2>
+</div>
+<p>Our mission translates the Dadex vision into priorities for customers, quality, people and shareholder value.</p>
+</div>
+<div class="core-grid two">
+<article class="core-card">
+<h3>Customers &amp; Supply Chain</h3>
+<ul>
+<li>Provide unparalleled service and best value through a responsive and cost-effective supply chain.</li>
+<li>Increase penetration in piping systems through new channels and market opportunities.</li>
+</ul>
+</article>
+<article class="core-card">
+<h3>Quality &amp; Standards</h3>
+<ul>
+<li>Provide quality products through international standards and best practices.</li>
+<li>Set new trends through innovative marketing and manufacturing.</li>
+</ul>
+</article>
+<article class="core-card">
+<h3>People &amp; Society</h3>
+<ul>
+<li>Follow business ethics, comply with SH&amp;E standards and contribute responsibly to society.</li>
+<li>Develop talent in a competitive environment where people can excel and grow.</li>
+</ul>
+</article>
+<article class="core-card">
+<h3>Shareholder Value</h3>
+<ul>
+<li>Strive to maximise shareholder value through sustained profitable growth.</li>
+</ul>
+</article>
+</div>
+</section>
+
+<section class="core-section">
+<div class="core-section-head">
+<div>
+<div class="core-kicker">What we make</div>
+<h2>Systems for essential applications.</h2>
+</div>
+<p>Dadex's product architecture spans water supply, sewerage and drainage, cable and utility ducting, specialised and industrial applications, and roofing.</p>
+</div>
+<div class="core-grid two about-product-groups">
+<a class="about-product-card" href="products.html#water-supply">
+<h3>Water &amp; Building Systems <i aria-hidden="true" class="fas fa-arrow-right"></i></h3>
+<p>UPVC, PP-R and PP-RCT systems for water supply and building services.</p>
+<span>Explore Water Supply</span>
+</a>
+<a class="about-product-card" href="products.html#sewerage-drainage">
+<h3>Sewerage &amp; Drainage <i aria-hidden="true" class="fas fa-arrow-right"></i></h3>
+<p>Underground sewerage, soil-waste-vent and drainage infrastructure systems.</p>
+<span>Explore Sewerage &amp; Drainage</span>
+</a>
+<a class="about-product-card" href="products.html#cable-utility-ducting">
+<h3>Cable &amp; Utility Ducting <i aria-hidden="true" class="fas fa-arrow-right"></i></h3>
+<p>PE cable duct and electrical conduit solutions for utility infrastructure.</p>
+<span>Explore Cable &amp; Utility Ducting</span>
+</a>
+<a class="about-product-card" href="products.html#specialised-industrial">
+<h3>Specialised &amp; Industrial <i aria-hidden="true" class="fas fa-arrow-right"></i></h3>
+<p>Selected gas, compressed-air, tubewell and other specialised systems.</p>
+<span>Explore Specialised Applications</span>
+</a>
+<a class="about-product-card" href="products.html#roofing">
+<h3>Roofing <i aria-hidden="true" class="fas fa-arrow-right"></i></h3>
+<p>Corrugated sheet solutions rooted in Dadex's long manufacturing heritage.</p>
+<span>Explore Roofing</span>
+</a>
+</div>
+</section>
+
+<section class="core-section">
+<div class="core-section-head">
+<div>
+<div class="core-kicker">Responsibility</div>
+<h2>Safety, people and environment.</h2>
+</div>
+<p>Responsible business is part of the long-term value Dadex seeks to create for employees, customers, communities and other stakeholders.</p>
+</div>
+<div class="about-responsibility">
+<article class="core-card">
+<span class="num">HSE</span>
+<h3>Sustainable Operations</h3>
+<p>Facilities maintained in compliance with environmental standards and workplace safety requirements.</p>
+</article>
+<article class="core-card">
+<span class="num">HSE</span>
+<h3>Capacity Building</h3>
+<p>Training for employees and installers to identify and prevent harmful practices.</p>
+</article>
+<article class="core-card">
+<span class="num">HSE</span>
+<h3>Resource Efficiency</h3>
+<p>Waste recycling, dust control and monitoring systems supporting continuous improvement.</p>
+</article>
+</div>
+</section>
+
+<div class="core-cta">
+<div>
+<h2>A hallmark of trust for over 67 years.</h2>
+<p>Discover our products, systems, applications and technical resources.</p>
+</div>
+<a class="btn btn-primary" href="products.html">Explore Products <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
+</div>
+
+</div>
+</section>
+
 </main>
+
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
 </body>
