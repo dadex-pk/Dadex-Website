@@ -1,3 +1,1213 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DADEX | The Professional Engineering Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+           DADEX CALCULATOR SUITE – ENHANCED UI
+           ============================================================ */
+        :root {
+            --red: #c90000;
+            --red-dark: #a80000;
+            --red-light: #fce8e8;
+            --white: #ffffff;
+            --bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --text: #1a202c;
+            --text-light: #4a5568;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 8px 30px rgba(0,0,0,0.08);
+            --radius: 12px;
+            --transition: 0.25s ease;
+            --status-safe: #10b981;
+            --status-warn: #f59e0b;
+            --status-danger: #ef4444;
+        }
 
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Technical Calculators – Dadex Eternit Limited</title><meta content="Technical Calculators — Dadex Eternit Limited." name="description"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="css/design-system.css" rel="stylesheet"/></head><body><div data-component="header"></div><main><section class="page-hero"><div class="container"><div class="eyebrow">TECHNICAL TOOLS</div><h1>Technical Calculators</h1><p>Explore Dadex information, systems, services and resources through a clear, connected experience.</p></div></section><section class="page-main"><div class="container"><p class="intro-note">Dadex Eternit Limited brings together established engineering capability, product knowledge and technical support. This page provides the information relevant to <strong>technical calculators</strong>.</p><div class="card-grid"><article class="content-card"><span class="card-index">01</span><h2>Pressure Drop</h2><p>Calculate pressure loss in PE and UPVC pipelines based on flow rate, diameter, and length. Estimate flow capacity for your plumbing system based on pipe size and pressure.</p><a class="text-link" href="#section-1">Explore section <span>→</span></a></article></div><section class="detail-section" id="section-1"><div class="detail-head"><span>01</span><h2>Pressure Drop Calculator</h2></div><ul><li>Calculate pressure loss in PE and UPVC pipelines based on flow rate, diameter, and length.</li><li>Estimate flow capacity for your plumbing system based on pipe size and pressure.</li><li>Recommend the right pipe diameter for your application based on flow and pressure requirements.</li><li>Answer a few questions about your application and get a product recommendation from Dadex.</li><li>In the meantime, our Technical Support team is available to assist with your design and selection needs.</li></ul></section></div></section><section class="page-cta"><div class="container"><h2>Need help applying the numbers?</h2><p>Connect with Dadex for technical guidance on your application.</p><a class="btn btn-primary" href="technical-resources.html">Get Technical Guidance <i class="fas fa-arrow-right"></i></a></div></section></main><div data-component="footer"></div><script src="js/main.js"></script></body></html>
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --border: #334155;
+            --text: #f1f5f9;
+            --text-light: #94a3b8;
+            --red-light: #3b1f1f;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        /* ----- Navigation ----- */
+        nav {
+            background: var(--card-bg);
+            padding: 0.8rem 5%;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(255,255,255,0.92);
+            box-shadow: var(--shadow-sm);
+            transition: background var(--transition);
+        }
+        [data-theme="dark"] nav {
+            background: rgba(15,23,42,0.95);
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: -1.5px;
+            color: var(--text);
+        }
+        .logo span { color: var(--red); }
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .version {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: var(--text-light);
+            background: var(--bg);
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+        .toggle-btn {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .toggle-btn:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+        .toggle-btn.active {
+            background: var(--red);
+            color: var(--white);
+            border-color: var(--red);
+        }
+
+        /* ----- Container ----- */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 2rem 2rem 3rem;
+        }
+
+        /* ----- Headings ----- */
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .section-label .highlight { color: var(--red); }
+
+        /* ----- Converter ----- */
+        .converter-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1.5rem;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+            transition: background var(--transition), border var(--transition);
+        }
+        .converter-grid .divider {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--text-light);
+            padding-top: 1.2rem;
+        }
+        .converter-grid .input-group { margin-bottom: 0; }
+
+        /* ----- Material Selector ----- */
+        .material-selector {
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+            transition: background var(--transition), border var(--transition);
+        }
+        .mat-btn {
+            padding: 0.5rem 1.2rem;
+            border: 1.5px solid var(--border);
+            background: var(--bg);
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+        .mat-btn:hover {
+            border-color: var(--red);
+            color: var(--red);
+            background: var(--red-light);
+        }
+        .mat-btn.active {
+            background: var(--red);
+            color: var(--white);
+            border-color: var(--red);
+            box-shadow: 0 4px 12px rgba(201,0,0,0.25);
+        }
+        .mat-btn.active:hover { background: var(--red-dark); }
+        #current-mat-display {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--red);
+            margin-left: auto;
+            background: var(--red-light);
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+        }
+        [data-theme="dark"] #current-mat-display {
+            background: #3b1f1f;
+        }
+
+        /* ----- Calculator Grid ----- */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem 1.5rem 1.8rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            transition: background var(--transition), border var(--transition), box-shadow var(--transition);
+        }
+        .card:hover {
+            border-color: var(--red);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+        .card h3 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--red);
+            border-bottom: 2px solid var(--red-light);
+            padding-bottom: 0.4rem;
+            margin-bottom: 0;
+            flex: 1;
+        }
+        .copy-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            opacity: 0.5;
+        }
+        .copy-btn:hover {
+            opacity: 1;
+            color: var(--red);
+            background: var(--red-light);
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.2rem;
+        }
+        .input-row {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+        .input-row input[type="number"] {
+            flex: 1;
+            min-width: 0;
+            padding: 0.6rem 0.8rem;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg);
+            transition: var(--transition);
+            color: var(--text);
+            width: 100%;
+        }
+        .input-row input[type="range"] {
+            flex: 2;
+            min-width: 60px;
+            accent-color: var(--red);
+            cursor: pointer;
+            background: transparent;
+        }
+        .input-row input:focus {
+            outline: none;
+            border-color: var(--red);
+            background: var(--card-bg);
+            box-shadow: 0 0 0 3px rgba(201,0,0,0.12);
+        }
+        .input-row select {
+            flex: 1;
+            padding: 0.6rem 0.8rem;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+        }
+        .input-row select:focus {
+            outline: none;
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(201,0,0,0.12);
+        }
+        .input-group .unit-hint {
+            font-size: 0.6rem;
+            color: var(--text-light);
+            margin-left: 0.3rem;
+            font-weight: 400;
+        }
+
+        .res-box {
+            margin-top: 0.8rem;
+            padding: 1rem 1.2rem;
+            background: var(--red-light);
+            border-left: 4px solid var(--red);
+            border-radius: 8px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: background var(--transition);
+        }
+        [data-theme="dark"] .res-box {
+            background: #3b1f1f;
+        }
+        .res-label {
+            font-size: 0.55rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.1rem;
+        }
+        .res-value-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .res-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--red);
+            line-height: 1.2;
+        }
+        .res-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-top: 0.1rem;
+        }
+        .res-status {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.15rem 0.6rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 0.2rem;
+        }
+        .res-status.safe { background: #d1fae5; color: #065f46; }
+        .res-status.warn { background: #fef3c7; color: #92400e; }
+        .res-status.danger { background: #fecaca; color: #991b1b; }
+        [data-theme="dark"] .res-status.safe { background: #1e3a2f; color: #6ee7b7; }
+        [data-theme="dark"] .res-status.warn { background: #3b2e1e; color: #fcd34d; }
+        [data-theme="dark"] .res-status.danger { background: #3b1f1f; color: #f87171; }
+
+        /* ----- Footer ----- */
+        footer {
+            background: var(--text);
+            color: rgba(255,255,255,0.7);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            margin-top: 4rem;
+            border-top: 4px solid var(--red);
+            transition: background var(--transition);
+        }
+        footer strong { color: var(--white); font-weight: 700; }
+        footer .footer-small {
+            opacity: 0.5;
+            font-size: 0.6rem;
+            margin-top: 0.6rem;
+            display: block;
+        }
+
+        /* ----- Responsive ----- */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; align-items: stretch; gap: 0.6rem; padding: 0.8rem 5%; }
+            .nav-controls { justify-content: space-between; }
+            .container { padding: 1.5rem 1rem; }
+            .converter-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+                padding: 1.2rem;
+            }
+            .converter-grid .divider { padding-top: 0; text-align: center; }
+            .material-selector { padding: 0.8rem 1rem; gap: 0.5rem; }
+            .mat-btn { padding: 0.4rem 0.9rem; font-size: 0.6rem; }
+            #current-mat-display { margin-left: 0; width: 100%; text-align: center; }
+            .calc-grid { grid-template-columns: 1fr; }
+            .card { padding: 1.2rem; }
+            .res-value { font-size: 1.2rem; }
+            .input-row { flex-wrap: wrap; }
+            .input-row input[type="range"] { flex: 1 1 100%; }
+        }
+        @media (max-width: 480px) {
+            .version { font-size: 0.5rem; }
+            .logo { font-size: 1.3rem; }
+            .container { padding: 1rem 0.6rem; }
+            .section-label { font-size: 0.6rem; }
+        }
+
+        /* ----- Print ----- */
+        @media print {
+            nav, footer, .copy-btn, .toggle-btn { display: none; }
+            .card { break-inside: avoid; border: 1px solid #ddd; box-shadow: none; transform: none !important; }
+            .res-box { background: #f5f5f5 !important; }
+        }
+
+        /* ----- Accessibility ----- */
+        :focus-visible {
+            outline: 3px solid rgba(201,0,0,0.4);
+            outline-offset: 2px;
+        }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <body class="home-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div data-component="header"></div>
+    <div class="nav-controls">
+        <span class="version">TECHNICAL SPECIFICATION SUITE V5.0</span>
+        <button class="toggle-btn" id="unitToggle" aria-label="Toggle unit system">🌐 Metric</button>
+        <button class="toggle-btn" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- Unit Converter -->
+    <div class="section-label">⚡ GLOBAL UNIT <span class="highlight">CONVERTER</span></div>
+    <div class="converter-grid" id="converterGrid">
+        <div>
+            <div class="input-group">
+                <label for="q-bar">Pressure (BAR)</label>
+                <input type="number" id="q-bar" placeholder="Bar" step="any">
+            </div>
+        </div>
+        <div class="divider">⇌</div>
+        <div>
+            <div class="input-group">
+                <label for="q-psi">Pressure (PSI)</label>
+                <input type="number" id="q-psi" placeholder="PSI" step="any">
+            </div>
+        </div>
+    </div>
+
+    <!-- Material Selector -->
+    <div class="section-label">📐 SELECT PIPE <span class="highlight">MATERIAL</span></div>
+    <div class="material-selector" id="materialSelector">
+        <button class="mat-btn active" data-mat="UPVC">uPVC</button>
+        <button class="mat-btn" data-mat="HDPE">HDPE 100</button>
+        <button class="mat-btn" data-mat="PPR">PPR</button>
+        <button class="mat-btn" data-mat="PPRCT">PPR-CT</button>
+        <span id="current-mat-display">ACTIVE: UPVC</span>
+    </div>
+
+    <!-- Calculator Grid -->
+    <div class="calc-grid" id="calcGrid" role="main" aria-label="Engineering calculators"></div>
+</div>
+
+<footer>
+    <strong>DADEX ETERNIT LTD</strong> | ADVANCED HYDRAULIC UTILITY &copy; 2026<br>
+    <span class="footer-small">ISO 4422 | ISO 15874 | DIN 8074/8077 | AWWA C900 STANDARDS APPLIED</span>
+</footer>
+<div data-component="footer"></div>
+<script src="js/main.js"></script>
+<script>
+    // ============================================================
+    // 1. CONFIGURATION – All 12 calculators defined declaratively
+    // ============================================================
+
+    const BAR_PSI = 14.5038;
+
+    const matProps = {
+        UPVC:   { n: 0.009, alpha: 0.08, stress: 50, eModulus: 3000, kLoop: 34, derate: t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.015) },
+        HDPE:   { n: 0.010, alpha: 0.18, stress: 80, eModulus: 950,  kLoop: 26, derate: t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.012) },
+        PPR:    { n: 0.007, alpha: 0.15, stress: 70, eModulus: 800,  kLoop: 30, derate: t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.018) },
+        PPRCT:  { n: 0.007, alpha: 0.07, stress: 85, eModulus: 900,  kLoop: 30, derate: t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.011) }
+    };
+
+    const CALCULATORS = [
+        {
+            id: 'derating',
+            title: '1. Pressure Derating',
+            inputs: [
+                { id: 'der-pn', label: 'Nominal Pressure', default: 10, min: 0, step: 0.5, unit: 'PN/Bar' },
+                { id: 'der-t', label: 'Working Temp', default: 40, min: -20, max: 120, step: 1, unit: '°C' }
+            ],
+            compute: (props, vals) => {
+                const derated = vals['der-pn'] * props.derate(vals['der-t']);
+                return { primary: derated, secondary: derated * BAR_PSI, primaryUnit: 'BAR', secondaryUnit: 'PSI' };
+            },
+            status: (res) => {
+                if (res.primary < 2) return { label: '⚠️ Low Margin', cls: 'warn' };
+                if (res.primary < 5) return { label: '✅ Safe', cls: 'safe' };
+                return { label: '✅ High Margin', cls: 'safe' };
+            }
+        },
+        {
+            id: 'manning',
+            title: '2. Gravity Flow (Manning)',
+            inputs: [
+                { id: 'man-s', label: 'Pipe Slope', default: 1.0, min: 0.01, max: 10, step: 0.1, unit: '%' },
+                { id: 'man-d', label: 'Inside Diameter', default: 200, min: 10, max: 2000, step: 5, unit: 'mm' }
+            ],
+            compute: (props, vals) => {
+                const ms = vals['man-s'] / 100;
+                const md = vals['man-d'] / 1000;
+                if (md <= 0 || ms <= 0) return null;
+                const v = (1 / props.n) * Math.pow(md / 4, 2 / 3) * Math.sqrt(ms);
+                const q = ((Math.PI * Math.pow(md, 2)) / 4) * v * 1000;
+                return { primary: q, secondary: v, primaryUnit: 'L/s', secondaryUnit: 'm/s' };
+            },
+            status: (res) => {
+                const v = res.secondary;
+                if (v < 0.6) return { label: '⚠️ Silting Risk', cls: 'warn' };
+                if (v > 3.0) return { label: '⚠️ Scour Risk', cls: 'warn' };
+                return { label: '✅ Optimal', cls: 'safe' };
+            }
+        },
+        {
+            id: 'friction',
+            title: '3. Friction Head Loss',
+            inputs: [
+                { id: 'h-q', label: 'Flow Rate', default: 50, min: 0.1, max: 1000, step: 1, unit: 'm³/hr' },
+                { id: 'h-d', label: 'Inside Diameter', default: 100, min: 10, max: 1000, step: 5, unit: 'mm' }
+            ],
+            compute: (props, vals) => {
+                const fq = vals['h-q'] / 3600;
+                const fd = vals['h-d'] / 1000;
+                if (fd <= 0 || fq <= 0) return null;
+                const hloss = (10.67 * 100 * Math.pow(fq, 1.852)) / (Math.pow(150, 1.852) * Math.pow(fd, 4.87));
+                const barLoss = hloss * 0.0980665;
+                return { primary: hloss, secondary: barLoss, primaryUnit: 'm/100m', secondaryUnit: 'Bar' };
+            },
+            status: (res) => {
+                if (res.primary < 2) return { label: '✅ Low Loss', cls: 'safe' };
+                if (res.primary < 5) return { label: '⚠️ Moderate', cls: 'warn' };
+                return { label: '⚠️ High Loss', cls: 'danger' };
+            }
+        },
+        {
+            id: 'thermal',
+            title: '4. Thermal Expansion',
+            inputs: [
+                { id: 'exp-l', label: 'Pipeline Length', default: 100, min: 1, max: 1000, step: 1, unit: 'm' },
+                { id: 'exp-t', label: 'Temperature ΔT', default: 30, min: 1, max: 80, step: 1, unit: '°C' }
+            ],
+            compute: (props, vals) => {
+                const res = vals['exp-l'] * vals['exp-t'] * props.alpha;
+                return { primary: res, primaryUnit: 'mm' };
+            },
+            status: null
+        },
+        {
+            id: 'barlow',
+            title: '5. Burst Pressure (Barlow)',
+            inputs: [
+                { id: 'bar-t', label: 'Wall Thickness', default: 5.3, min: 0.1, max: 50, step: 0.1, unit: 'mm' },
+                { id: 'bar-od', label: 'Outside Diameter', default: 110, min: 10, max: 1000, step: 5, unit: 'mm' }
+            ],
+            compute: (props, vals) => {
+                const bt = vals['bar-t'];
+                const bod = vals['bar-od'];
+                if (bod <= 0 || bt <= 0) return null;
+                const burst = ((2 * props.stress * bt) / bod) * 10;
+                return { primary: burst, secondary: burst * BAR_PSI, primaryUnit: 'BAR', secondaryUnit: 'PSI' };
+            },
+            status: (res) => {
+                if (res.primary < 10) return { label: '⚠️ Low', cls: 'warn' };
+                if (res.primary < 20) return { label: '✅ Adequate', cls: 'safe' };
+                return { label: '✅ High', cls: 'safe' };
+            }
+        },
+        {
+            id: 'buoyancy',
+            title: '6. Buoyancy (Waterlogged)',
+            inputs: [
+                { id: 'buo-od', label: 'Pipe OD', default: 250, min: 10, max: 1000, step: 5, unit: 'mm' },
+                { id: 'buo-w', label: 'Pipe Weight', default: 3.5, min: 0.1, max: 100, step: 0.1, unit: 'kg/m' }
+            ],
+            compute: (props, vals) => {
+                const buod = vals['buo-od'] / 1000;
+                const bw = vals['buo-w'];
+                if (buod <= 0) return null;
+                const vol = (Math.PI * Math.pow(buod, 2)) / 4;
+                const force = ((vol * 1000) - bw) * 9.81;
+                return { primary: Math.max(0, force), primaryUnit: 'N/m' };
+            },
+            status: (res) => {
+                if (res.primary < 1) return { label: '✅ Stable', cls: 'safe' };
+                if (res.primary < 50) return { label: '⚠️ Moderate', cls: 'warn' };
+                return { label: '⚠️ High Buoyancy', cls: 'danger' };
+            }
+        },
+        {
+            id: 'hammer',
+            title: '7. Water Hammer (Surge)',
+            inputs: [
+                { id: 'ham-v', label: 'Flow Velocity ΔV', default: 2.0, min: 0.1, max: 10, step: 0.1, unit: 'm/s' },
+                { id: 'ham-sdr', label: 'SDR Rating', default: 11, min: 5, max: 50, step: 1, unit: 'OD/t' }
+            ],
+            compute: (props, vals) => {
+                const dv = vals['ham-v'];
+                const sdr = vals['ham-sdr'];
+                if (sdr <= 1) return null;
+                const K = 2.2e9;
+                const rho = 1000;
+                const E = props.eModulus * 1e6;
+                const c = Math.sqrt((K / rho) / (1 + (K / E) * (sdr - 2)));
+                const pSurgePa = rho * c * dv;
+                const pSurgeBar = pSurgePa / 1e5;
+                return { primary: pSurgeBar, secondary: c, primaryUnit: 'BAR', secondaryUnit: 'm/s' };
+            },
+            status: (res) => {
+                if (res.primary < 2) return { label: '✅ Low Surge', cls: 'safe' };
+                if (res.primary < 5) return { label: '⚠️ Moderate', cls: 'warn' };
+                return { label: '⚠️ High Surge', cls: 'danger' };
+            }
+        },
+        {
+            id: 'support',
+            title: '8. Support Spacing',
+            inputs: [
+                { id: 'sup-od', label: 'Outside Diameter', default: 110, min: 10, max: 500, step: 5, unit: 'mm' },
+                { id: 'sup-type', label: 'Installation Type', default: 'horizontal', options: ['horizontal', 'vertical'] }
+            ],
+            compute: (props, vals) => {
+                const supOd = vals['sup-od'];
+                if (supOd <= 0) return null;
+                let spacing = (0.008 * supOd) + 0.55;
+                if (vals['sup-type'] === 'HDPE') spacing *= 0.8;
+                if (vals['sup-type'] === 'vertical') spacing *= 1.3;
+                return { primary: spacing, primaryUnit: 'm' };
+            },
+            status: null
+        },
+        {
+            id: 'iowa',
+            title: '9. Buried Deflection (Iowa)',
+            inputs: [
+                { id: 'iow-h', label: 'Trench Depth', default: 1.5, min: 0.5, max: 10, step: 0.1, unit: 'm' },
+                { id: 'iow-sdr', label: 'Pipe SDR', default: 17, min: 5, max: 50, step: 1, unit: 'OD/t' }
+            ],
+            compute: (props, vals) => {
+                const depth = vals['iow-h'];
+                const sdr = vals['iow-sdr'];
+                if (sdr <= 0) return null;
+                const deadLoad = depth * 18;
+                const pipeStiffness = (props.eModulus / 12) * Math.pow(2 / (sdr - 1), 3);
+                const deflection = (deadLoad * 0.1) / (pipeStiffness + 0.06);
+                return { primary: deflection, primaryUnit: '%' };
+            },
+            status: (res) => {
+                if (res.primary < 3) return { label: '✅ Safe (<3%)', cls: 'safe' };
+                if (res.primary < 5) return { label: '⚠️ Moderate (3–5%)', cls: 'warn' };
+                return { label: '⚠️ Exceeds 5%', cls: 'danger' };
+            }
+        },
+        {
+            id: 'loop',
+            title: '10. Expansion Loop Sizing',
+            inputs: [
+                { id: 'lop-dl', label: 'Thermal Expansion ΔL', default: 45, min: 1, max: 200, step: 1, unit: 'mm' },
+                { id: 'lop-od', label: 'Outside Diameter', default: 110, min: 10, max: 500, step: 5, unit: 'mm' }
+            ],
+            compute: (props, vals) => {
+                const dl = vals['lop-dl'];
+                const od = vals['lop-od'];
+                if (dl <= 0 || od <= 0) return null;
+                const armL = (props.kLoop * Math.sqrt((od * dl) / 1000)) / 10;
+                return { primary: armL, primaryUnit: 'm' };
+            },
+            status: null
+        },
+        {
+            id: 'vacuum',
+            title: '11. Vacuum Collapse',
+            inputs: [
+                { id: 'vac-sdr', label: 'Pipe SDR', default: 11, min: 5, max: 50, step: 1, unit: 'OD/t' },
+                { id: 'vac-t', label: 'Operating Temp', default: 20, min: -20, max: 80, step: 1, unit: '°C' }
+            ],
+            compute: (props, vals) => {
+                const sdr = vals['vac-sdr'];
+                const t = vals['vac-t'];
+                if (sdr <= 1) return null;
+                const eDerated = props.eModulus * props.derate(t);
+                const pCollapse = (2 * eDerated / (1 - 0.14)) * Math.pow(1 / sdr, 3) * 10;
+                return { primary: pCollapse, primaryUnit: 'BAR' };
+            },
+            status: (res) => {
+                if (res.primary >= 1) return { label: '✅ Vacuum Safe', cls: 'safe' };
+                return { label: '⚠️ Not Vacuum Safe', cls: 'danger' };
+            }
+        },
+        {
+            id: 'velocity',
+            title: '12. Flow Velocity Check',
+            inputs: [
+                { id: 'vel-q', label: 'Flow Rate', default: 25, min: 0.1, max: 500, step: 0.5, unit: 'm³/hr' },
+                { id: 'vel-d', label: 'Inside Diameter', default: 75, min: 10, max: 500, step: 5, unit: 'mm' }
+            ],
+            compute: (props, vals) => {
+                const q = vals['vel-q'] / 3600;
+                const d = vals['vel-d'] / 1000;
+                if (d <= 0 || q <= 0) return null;
+                const area = (Math.PI * Math.pow(d, 2)) / 4;
+                const velocity = q / area;
+                return { primary: velocity, primaryUnit: 'm/s' };
+            },
+            status: (res) => {
+                const v = res.primary;
+                if (v < 0.6) return { label: '⚠️ Too Slow (Silting)', cls: 'warn' };
+                if (v > 3.0) return { label: '⚠️ High Scour Risk', cls: 'danger' };
+                return { label: '✅ Optimal', cls: 'safe' };
+            }
+        }
+    ];
+
+    // ============================================================
+    // 2. STATE MANAGEMENT
+    // ============================================================
+
+    const state = {
+        material: 'UPVC',
+        unitSystem: 'metric', // 'metric' or 'imperial'
+        darkMode: localStorage.getItem('dadex-dark') === 'true',
+        inputs: {},
+        results: {}
+    };
+
+    // ============================================================
+    // 3. RENDER ENGINE
+    // ============================================================
+
+    function renderAll() {
+        renderCalculators();
+        renderMaterialSelector();
+        updateConverterLabels();
+    }
+
+    function renderCalculators() {
+        const grid = document.getElementById('calcGrid');
+        grid.innerHTML = '';
+        CALCULATORS.forEach((cfg, idx) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.id = `card-${cfg.id}`;
+            card.setAttribute('role', 'article');
+            card.setAttribute('aria-label', cfg.title);
+
+            // Header
+            const header = document.createElement('div');
+            header.className = 'card-header';
+            const title = document.createElement('h3');
+            title.textContent = cfg.title;
+            header.appendChild(title);
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.innerHTML = '📋';
+            copyBtn.setAttribute('aria-label', `Copy results for ${cfg.title}`);
+            copyBtn.dataset.calcId = cfg.id;
+            copyBtn.addEventListener('click', () => copyResults(cfg.id));
+            header.appendChild(copyBtn);
+            card.appendChild(header);
+
+            // Inputs
+            cfg.inputs.forEach(inp => {
+                const group = document.createElement('div');
+                group.className = 'input-group';
+
+                const label = document.createElement('label');
+                label.htmlFor = inp.id;
+                const unitLabel = state.unitSystem === 'metric' ? inp.unit : getImperialUnit(inp.id, inp.unit);
+                label.innerHTML = `${inp.label} <span class="unit-hint">(${unitLabel})</span>`;
+                group.appendChild(label);
+
+                const row = document.createElement('div');
+                row.className = 'input-row';
+
+                const numInput = document.createElement('input');
+                numInput.type = 'number';
+                numInput.id = inp.id;
+                numInput.name = inp.id;
+                numInput.value = state.inputs[inp.id] ?? inp.default;
+                if (inp.min !== undefined) numInput.min = inp.min;
+                if (inp.max !== undefined) numInput.max = inp.max;
+                if (inp.step !== undefined) numInput.step = inp.step;
+                numInput.setAttribute('aria-label', inp.label);
+                numInput.dataset.calcId = cfg.id;
+                numInput.addEventListener('input', () => {
+                    const val = parseFloat(numInput.value);
+                    if (!isNaN(val)) {
+                        state.inputs[inp.id] = val;
+                        // Sync slider if it exists
+                        const slider = group.querySelector('input[type="range"]');
+                        if (slider) slider.value = val;
+                        scheduleCompute();
+                    }
+                });
+
+                // Slider for numeric inputs with min/max
+                if (inp.min !== undefined && inp.max !== undefined && inp.step !== undefined && !inp.options) {
+                    const slider = document.createElement('input');
+                    slider.type = 'range';
+                    slider.min = inp.min;
+                    slider.max = inp.max;
+                    slider.step = inp.step;
+                    slider.value = state.inputs[inp.id] ?? inp.default;
+                    slider.setAttribute('aria-label', `${inp.label} slider`);
+                    slider.addEventListener('input', () => {
+                        const val = parseFloat(slider.value);
+                        if (!isNaN(val)) {
+                            state.inputs[inp.id] = val;
+                            numInput.value = val;
+                            scheduleCompute();
+                        }
+                    });
+                    row.appendChild(slider);
+                }
+
+                // Select for options
+                if (inp.options) {
+                    const select = document.createElement('select');
+                    select.id = inp.id;
+                    select.name = inp.id;
+                    inp.options.forEach(opt => {
+                        const option = document.createElement('option');
+                        option.value = opt;
+                        option.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
+                        if (opt === (state.inputs[inp.id] ?? inp.default)) option.selected = true;
+                        select.appendChild(option);
+                    });
+                    select.addEventListener('change', () => {
+                        state.inputs[inp.id] = select.value;
+                        scheduleCompute();
+                    });
+                    row.appendChild(select);
+                } else {
+                    row.appendChild(numInput);
+                }
+
+                group.appendChild(row);
+                card.appendChild(group);
+            });
+
+            // Results box
+            const resBox = document.createElement('div');
+            resBox.className = 'res-box';
+            resBox.id = `res-${cfg.id}`;
+            resBox.setAttribute('aria-live', 'polite');
+            resBox.setAttribute('aria-atomic', 'true');
+
+            const resLabel = document.createElement('div');
+            resLabel.className = 'res-label';
+            resLabel.textContent = 'Result';
+            resBox.appendChild(resLabel);
+
+            const valWrap = document.createElement('div');
+            valWrap.className = 'res-value-wrap';
+            const valDiv = document.createElement('div');
+            valDiv.className = 'res-value';
+            valDiv.id = `res-val-${cfg.id}`;
+            valDiv.textContent = '—';
+            valWrap.appendChild(valDiv);
+            resBox.appendChild(valWrap);
+
+            const subDiv = document.createElement('div');
+            subDiv.className = 'res-sub';
+            subDiv.id = `res-sub-${cfg.id}`;
+            resBox.appendChild(subDiv);
+
+            const statusDiv = document.createElement('div');
+            statusDiv.className = 'res-status';
+            statusDiv.id = `res-status-${cfg.id}`;
+            resBox.appendChild(statusDiv);
+
+            card.appendChild(resBox);
+            grid.appendChild(card);
+        });
+
+        // Initial compute
+        computeAll();
+    }
+
+    function renderMaterialSelector() {
+        const btns = document.querySelectorAll('.mat-btn');
+        btns.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.mat === state.material);
+        });
+        document.getElementById('current-mat-display').textContent = `ACTIVE: ${state.material}`;
+    }
+
+    function updateConverterLabels() {
+        const isMetric = state.unitSystem === 'metric';
+        document.querySelector('#converterGrid .input-group:first-child label').textContent =
+            `Pressure (${isMetric ? 'BAR' : 'PSI'})`;
+        document.querySelector('#converterGrid .input-group:last-child label').textContent =
+            `Pressure (${isMetric ? 'PSI' : 'BAR'})`;
+    }
+
+    function getImperialUnit(inputId, metricUnit) {
+        // Simple mapping for key inputs
+        const map = {
+            'mm': 'in',
+            'm': 'ft',
+            'm³/hr': 'GPM',
+            '°C': '°F',
+            'kg/m': 'lb/ft'
+        };
+        const imperial = map[metricUnit] || metricUnit;
+        // For diameter, convert mm to in display
+        if (inputId.includes('d') || inputId.includes('od')) return 'in';
+        if (metricUnit === 'mm' && !inputId.includes('t')) return 'in';
+        return imperial;
+    }
+
+    // ============================================================
+    // 4. COMPUTATION ENGINE (debounced)
+    // ============================================================
+
+    let computeTimeout = null;
+
+    function scheduleCompute() {
+        if (computeTimeout) clearTimeout(computeTimeout);
+        computeTimeout = setTimeout(computeAll, 80);
+    }
+
+    function computeAll() {
+        const props = matProps[state.material];
+        if (!props) return;
+
+        CALCULATORS.forEach(cfg => {
+            // Gather inputs
+            const vals = {};
+            let hasValid = false;
+            cfg.inputs.forEach(inp => {
+                const val = state.inputs[inp.id];
+                if (val !== undefined && val !== null && val !== '' && !isNaN(val)) {
+                    vals[inp.id] = parseFloat(val);
+                    hasValid = true;
+                } else {
+                    vals[inp.id] = inp.default;
+                }
+            });
+
+            // Special handling for select inputs
+            cfg.inputs.forEach(inp => {
+                if (inp.options) {
+                    const select = document.getElementById(inp.id);
+                    if (select) vals[inp.id] = select.value;
+                }
+            });
+
+            // Compute
+            let result = null;
+            if (hasValid || cfg.inputs.every(i => i.options)) {
+                try {
+                    result = cfg.compute(props, vals);
+                } catch (e) {
+                    result = null;
+                }
+            }
+
+            // Store result
+            state.results[cfg.id] = result;
+
+            // Render result
+            const valDiv = document.getElementById(`res-val-${cfg.id}`);
+            const subDiv = document.getElementById(`res-sub-${cfg.id}`);
+            const statusDiv = document.getElementById(`res-status-${cfg.id}`);
+
+            if (result && result.primary !== undefined && !isNaN(result.primary) && isFinite(result.primary)) {
+                const primary = result.primary;
+                const primaryUnit = result.primaryUnit || '';
+                const secondary = result.secondary;
+                const secondaryUnit = result.secondaryUnit || '';
+
+                let display = primary.toFixed(2);
+                if (state.unitSystem === 'imperial') {
+                    const converted = convertToImperial(cfg.id, primary, primaryUnit);
+                    if (converted !== null) display = converted.toFixed(2);
+                }
+                valDiv.textContent = `${display} ${primaryUnit}`;
+
+                if (secondary !== undefined && !isNaN(secondary) && isFinite(secondary)) {
+                    let secDisplay = secondary.toFixed(2);
+                    if (state.unitSystem === 'imperial') {
+                        const conv = convertToImperial(cfg.id, secondary, secondaryUnit);
+                        if (conv !== null) secDisplay = conv.toFixed(2);
+                    }
+                    subDiv.textContent = `${secDisplay} ${secondaryUnit}`;
+                } else {
+                    subDiv.textContent = '';
+                }
+
+                // Status
+                if (cfg.status) {
+                    const status = cfg.status(result);
+                    statusDiv.textContent = status.label;
+                    statusDiv.className = `res-status ${status.cls}`;
+                    statusDiv.style.display = 'inline-block';
+                } else {
+                    statusDiv.textContent = '';
+                    statusDiv.className = 'res-status';
+                    statusDiv.style.display = 'none';
+                }
+            } else {
+                valDiv.textContent = '—';
+                subDiv.textContent = '';
+                statusDiv.textContent = '';
+                statusDiv.className = 'res-status';
+                statusDiv.style.display = 'none';
+            }
+        });
+    }
+
+    // ============================================================
+    // 5. UNIT CONVERSION HELPERS
+    // ============================================================
+
+    function convertToImperial(calcId, value, unit) {
+        if (!unit) return null;
+        const unitLower = unit.toLowerCase();
+        if (unitLower === 'mm') return value / 25.4;
+        if (unitLower === 'm' || unitLower === 'm/100m') return value * 3.28084;
+        if (unitLower === 'm³/hr') return value * 4.40287;
+        if (unitLower === 'l/s') return value * 15.8503;
+        if (unitLower === 'kg/m') return value * 0.671969;
+        if (unitLower === 'n/m') return value * 0.0685218;
+        if (unitLower === '°c') return (value * 9/5) + 32;
+        if (unitLower.includes('bar')) return value * BAR_PSI;
+        return null;
+    }
+
+    // ============================================================
+    // 6. COPY RESULTS
+    // ============================================================
+
+    function copyResults(calcId) {
+        const valDiv = document.getElementById(`res-val-${calcId}`);
+        const subDiv = document.getElementById(`res-sub-${calcId}`);
+        const statusDiv = document.getElementById(`res-status-${calcId}`);
+        let text = valDiv.textContent;
+        if (subDiv.textContent) text += ` | ${subDiv.textContent}`;
+        if (statusDiv.textContent) text += ` | ${statusDiv.textContent}`;
+
+        navigator.clipboard?.writeText(text).catch(() => {
+            // Fallback
+            const range = document.createRange();
+            range.selectNode(valDiv);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+        });
+
+        // Feedback
+        const btn = document.querySelector(`.copy-btn[data-calc-id="${calcId}"]`);
+        if (btn) {
+            btn.textContent = '✅';
+            setTimeout(() => { btn.innerHTML = '📋'; }, 1500);
+        }
+    }
+
+    // ============================================================
+    // 7. CONVERTER (BAR ↔ PSI)
+    // ============================================================
+
+    function initConverter() {
+        const barInput = document.getElementById('q-bar');
+        const psiInput = document.getElementById('q-psi');
+
+        barInput.addEventListener('input', () => {
+            const val = parseFloat(barInput.value);
+            if (!isNaN(val)) {
+                psiInput.value = (val * BAR_PSI).toFixed(2);
+            }
+        });
+        psiInput.addEventListener('input', () => {
+            const val = parseFloat(psiInput.value);
+            if (!isNaN(val)) {
+                barInput.value = (val / BAR_PSI).toFixed(2);
+            }
+        });
+    }
+
+    // ============================================================
+    // 8. MATERIAL SELECTOR
+    // ============================================================
+
+    function initMaterialSelector() {
+        document.querySelectorAll('.mat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                state.material = btn.dataset.mat;
+                renderMaterialSelector();
+                computeAll();
+            });
+        });
+    }
+
+    // ============================================================
+    // 9. DARK MODE TOGGLE
+    // ============================================================
+
+    function initThemeToggle() {
+        const btn = document.getElementById('themeToggle');
+        if (state.darkMode) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            btn.textContent = '☀️';
+        }
+        btn.addEventListener('click', () => {
+            state.darkMode = !state.darkMode;
+            document.documentElement.toggleAttribute('data-theme', state.darkMode);
+            btn.textContent = state.darkMode ? '☀️' : '🌙';
+            localStorage.setItem('dadex-dark', String(state.darkMode));
+        });
+    }
+
+    // ============================================================
+    // 10. UNIT SYSTEM TOGGLE
+    // ============================================================
+
+    function initUnitToggle() {
+        const btn = document.getElementById('unitToggle');
+        btn.textContent = state.unitSystem === 'metric' ? '🌐 Metric' : '🌐 Imperial';
+        btn.addEventListener('click', () => {
+            state.unitSystem = state.unitSystem === 'metric' ? 'imperial' : 'metric';
+            btn.textContent = state.unitSystem === 'metric' ? '🌐 Metric' : '🌐 Imperial';
+            updateConverterLabels();
+            // Re-run with new units
+            computeAll();
+        });
+    }
+
+    // ============================================================
+    // 11. INIT
+    // ============================================================
+
+    function init() {
+        // Set initial input defaults
+        CALCULATORS.forEach(cfg => {
+            cfg.inputs.forEach(inp => {
+                if (!(inp.id in state.inputs)) {
+                    state.inputs[inp.id] = inp.default;
+                }
+            });
+        });
+
+        renderAll();
+        initConverter();
+        initMaterialSelector();
+        initThemeToggle();
+        initUnitToggle();
+
+        // Recompute on window resize to keep layout consistent
+        window.addEventListener('resize', () => {});
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
