@@ -9,6 +9,7 @@
    - Investor panel switcher
    - Site search
    - DEXPERT
+   - Back-to-top floating button
    Page-scoped modules (dealers, etc.) live in their own files.
    ============================================================ */
 
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initInvestorPanels();
   initSiteSearch();
   initDEXPERT();
+  initBackToTop();
 });
 
 
@@ -55,7 +57,7 @@ async function loadSharedComponents(){
 function initDynamicSiteText(){
   const foundedYear = 1959;
   const now = new Date();
-  const anniversary = new Date(now.getFullYear(), 3, 13); // 13 April
+  const anniversary = new Date(now.getFullYear(), 3, 13);
   const age = now < anniversary
     ? now.getFullYear() - foundedYear - 1
     : now.getFullYear() - foundedYear;
@@ -83,7 +85,7 @@ function initHeaderState(){
 
 
 /* ------------------------------------------------------------
-   Navigation (mobile toggle, dropdowns, escape handling)
+   Navigation
    ------------------------------------------------------------ */
 function initNavigation(){
   const header = document.getElementById('siteHeader') || document.querySelector('.site-header');
@@ -171,7 +173,7 @@ function initNavigation(){
 
 
 /* ------------------------------------------------------------
-   Active navigation (path-based, applied to both tiers)
+   Active navigation
    ------------------------------------------------------------ */
 function setActiveNavigation(){
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
@@ -239,8 +241,6 @@ function initProjectFilter(){
 
 /* ------------------------------------------------------------
    Mailto contact form (contact.html)
-   Requires form to have [data-mailto-form] and lowercase
-   field names (name, email, subject, message).
    ------------------------------------------------------------ */
 function initMailtoForm(){
   document.querySelectorAll('[data-mailto-form]').forEach(form => {
@@ -291,8 +291,6 @@ function initLiteratureFilter(){
 
 /* ------------------------------------------------------------
    Investor panel switcher (investors.html)
-   Page shows the first panel by default in HTML
-   (class="active" on data-ir-panel="overview").
    ------------------------------------------------------------ */
 function initInvestorPanels(){
   const links = [...document.querySelectorAll('[data-ir]')];
@@ -347,7 +345,6 @@ function initInvestorPanels(){
 
 /* ------------------------------------------------------------
    Site search (search.html)
-   Reads window.DADEX_SEARCH_INDEX from search-index.js.
    ------------------------------------------------------------ */
 function initSiteSearch(){
   const input = document.getElementById('siteSearchInput');
@@ -598,4 +595,33 @@ function escapeHTML(value){
   return String(value).replace(/[&<>"']/g, m => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]
   ));
+}
+
+
+/* ------------------------------------------------------------
+   Back to top — floating button, injected site-wide
+   Appears after 600px of scroll. Sits above the DEXPERT FAB.
+   ------------------------------------------------------------ */
+function initBackToTop(){
+  if (document.querySelector('.back-to-top')) return;
+
+  const btn = document.createElement('button');
+  btn.className = 'back-to-top';
+  btn.type = 'button';
+  btn.setAttribute('aria-label', 'Back to top');
+  btn.innerHTML = '<i class="fas fa-arrow-up" aria-hidden="true"></i>';
+  document.body.appendChild(btn);
+
+  const threshold = 600;
+  const update = () => {
+    btn.classList.toggle('is-visible', window.scrollY > threshold);
+  };
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+
+  btn.addEventListener('click', () => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+  });
 }
