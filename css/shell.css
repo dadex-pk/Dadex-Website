@@ -1615,3 +1615,77 @@
     animation:none!important;
   }
 }
+
+/* ============================================================
+   BACK TO TOP — floating button, injected site-wide
+   ============================================================ */
+.back-to-top{
+  position:fixed;
+  right:24px;
+  bottom:90px;
+  z-index:1099;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#fff;
+  border:1px solid rgba(23,25,28,.10);
+  color:var(--d-text);
+  box-shadow:
+    0 2px 4px rgba(0,0,0,.06),
+    0 8px 20px -6px rgba(0,0,0,.15);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(10px);
+  transition:opacity .25s ease,
+             visibility 0s linear .25s,
+             transform .25s ease,
+             background .18s ease,
+             color .18s ease,
+             border-color .18s ease,
+             box-shadow .18s ease;
+}
+.back-to-top i{font-size:13px}
+.back-to-top.is-visible{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+  transition:opacity .25s ease,
+             visibility 0s,
+             transform .25s ease,
+             background .18s ease,
+             color .18s ease,
+             border-color .18s ease,
+             box-shadow .18s ease;
+}
+@media (hover: hover) and (pointer: fine){
+  .back-to-top:hover{
+    background:var(--dadex-red);
+    border-color:var(--dadex-red);
+    color:#fff;
+    transform:translateY(-2px);
+    box-shadow:
+      0 4px 10px rgba(201,0,0,.20),
+      0 12px 28px -6px rgba(201,0,0,.30);
+  }
+}
+.back-to-top:focus-visible{
+  outline:2px solid var(--dadex-red);
+  outline-offset:3px;
+}
+
+@media(max-width:700px){
+  .back-to-top{
+    right:16px;
+    bottom:80px;
+    width:40px;
+    height:40px;
+  }
+  .back-to-top i{font-size:12px}
+}
+
+@media print{
+  .back-to-top{display:none!important}
+}
