@@ -2287,13 +2287,15 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 
 /* ---------- Hero ---------- */
 .founder-hero{
-  display:grid;
-  grid-template-columns:minmax(300px,.72fr) minmax(0,1.28fr);
-  gap:0;
   background:#17191c;
   color:#fff;
   overflow:hidden;
   position:relative;
+}
+.founder-hero-grid{
+  display:grid;
+  grid-template-columns:minmax(300px,.72fr) minmax(0,1.28fr);
+  gap:0;
 }
 .founder-hero::after{
   content:"";
@@ -2542,7 +2544,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 
 /* ---------- Responsive ---------- */
 @media(max-width:1000px){
-  .founder-hero{grid-template-columns:1fr}
+  .founder-hero-grid{grid-template-columns:1fr}
   .founder-hero-photo,
   .founder-hero-photo img{min-height:420px;height:420px}
   .founder-hero-copy{padding:44px 32px 52px;max-width:none}
