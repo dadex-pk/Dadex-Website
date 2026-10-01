@@ -54,6 +54,17 @@
   background:linear-gradient(120deg,#17191c 0%,#24272a 62%,#303336 100%);
   color:#fff;
 }
+.page-hero::before{
+  content:"";
+  position:absolute;
+  width:620px;
+  height:620px;
+  border:110px solid rgba(201,0,0,.10);
+  border-radius:50%;
+  right:-270px;
+  top:-280px;
+  pointer-events:none;
+}
 .page-hero::after{
   content:"";position:absolute;inset:0;
   opacity:.12;pointer-events:none;
@@ -98,7 +109,8 @@
 }
 @media(max-width:700px){.page-hero{padding:34px 0}.section-padding{padding-block:34px}}
 @media(max-width:640px){.page-hero h1{font-size:36px}.page-hero p{font-size:15px}}
-
+@media(max-width:700px){.page-hero::before {width:420px;height:420px;border-width:80px;right:-180px;top:-180px;}
+}
 /* ============================================================
    4. FORMS
    ============================================================ */
