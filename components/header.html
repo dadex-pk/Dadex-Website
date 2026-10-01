@@ -26,7 +26,7 @@
 <a href="index.html"><i class="fas fa-house" aria-hidden="true"></i><span>Home</span></a>
 
 <div class="dropdown">
-<a class="dropdown-toggle" href="about.html" aria-controls="about-menu" aria-expanded="false">
+<a class="dropdown-toggle" href="about.html" aria-controls="about-menu" aria-expanded="false" aria-haspopup="true">
 <i class="fas fa-building" aria-hidden="true"></i>
 <span>About Dadex</span>
 <span class="arrow">⌄</span>
@@ -40,27 +40,42 @@
 </div>
 </div>
 
-<a href="projects.html"><i class="fas fa-diagram-project" aria-hidden="true"></i><span>Projects</span></a>
+<a href="products.html"><i class="fas fa-boxes-stacked" aria-hidden="true"></i><span>Products</span></a>
 
-<div class="dropdown dropdown-wide">
-<button aria-controls="mega-resources" aria-expanded="false" class="dropdown-toggle" type="button">
+<div class="dropdown">
+<button aria-controls="resources-menu" aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" type="button">
 <i class="fas fa-folder-open" aria-hidden="true"></i>
 <span>Resources</span>
 <span class="arrow">⌄</span>
 </button>
-<div class="dropdown-menu mega-menu mega-menu-resources" id="mega-resources">
-<div class="mega-feature">
-<strong>RESOURCES</strong>
-<span>Technical information, documents and useful references.</span>
-</div>
-<div class="mega-columns">
+<div class="dropdown-menu" id="resources-menu">
 <a href="technical-resources.html">Technical Resources</a>
 <a href="literature.html">Downloads &amp; Literature</a>
 <a href="calculators.html">Technical Calculators</a>
 <a href="news.html">News &amp; Media</a>
 </div>
 </div>
+
+<a href="investors.html"><i class="fas fa-chart-line" aria-hidden="true"></i><span>Investors</span></a>
+
+<a href="projects.html"><i class="fas fa-diagram-project" aria-hidden="true"></i><span>Projects</span></a>
+
+<div class="dropdown contact-dropdown">
+<button aria-controls="contact-menu" aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" type="button">
+<i class="fas fa-envelope" aria-hidden="true"></i>
+<span>Contact</span>
+<span class="arrow">⌄</span>
+</button>
+<div class="dropdown-menu" id="contact-menu">
+<a href="contact.html">Contact Us</a>
+<a href="dealers.html">Our Dealers</a>
 </div>
+</div>
+
+<a aria-label="Search Dadex" class="nav-search" href="search.html">
+<span aria-hidden="true" class="nav-search-icon"><i class="fas fa-magnifying-glass"></i></span>
+<span class="nav-search-label">Search</span>
+</a>
 
 <div aria-label="Products, systems and services" class="mobile-products-menu">
 <details>
@@ -78,35 +93,17 @@
 </details>
 </div>
 
-<a href="investors.html"><i class="fas fa-chart-line" aria-hidden="true"></i><span>Investors</span></a>
-
-<div class="dropdown contact-dropdown">
-<button aria-controls="contact-menu" aria-expanded="false" class="dropdown-toggle" type="button">
-<i class="fas fa-envelope" aria-hidden="true"></i>
-<span>Contact</span>
-<span class="arrow">⌄</span>
-</button>
-<div class="dropdown-menu" id="contact-menu">
-<a href="contact.html">Contact Us</a>
-<a href="dealers.html">Our Dealers</a>
-</div>
-</div>
-
-<a aria-label="Search Dadex" class="nav-search" href="search.html">
-<span aria-hidden="true" class="nav-search-icon"><i class="fas fa-magnifying-glass"></i></span>
-<span class="nav-search-label">Search</span>
-</a>
-
 </nav>
 </div>
 </div>
 
 <div class="header-products-tier">
-<div aria-label="Products, systems and services" class="container header-products-row">
+<div aria-label="Product categories" class="container header-products-row">
 
 <div class="dropdown dropdown-wide">
-<button aria-controls="mega-water" aria-expanded="false" class="dropdown-toggle" type="button">Water Supply <span class="arrow">⌄</span></button>
-<div class="dropdown-menu mega-menu" id="mega-water">
+<button aria-controls="mega-water" aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" type="button">Water Supply <span class="arrow">⌄</span></button>
+<div class="mega-menu" id="mega-water">
+<div class="mega-menu-inner">
 <div class="mega-feature">
 <strong>WATER SUPPLY</strong>
 <span>Systems for water supply in infrastructure, buildings and housing.</span>
@@ -127,10 +124,12 @@
 </div>
 </div>
 </div>
+</div>
 
 <div class="dropdown dropdown-wide">
-<button aria-controls="mega-sewer" aria-expanded="false" class="dropdown-toggle" type="button">Sewerage &amp; Drainage <span class="arrow">⌄</span></button>
-<div class="dropdown-menu mega-menu" id="mega-sewer">
+<button aria-controls="mega-sewer" aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" type="button">Sewerage &amp; Drainage <span class="arrow">⌄</span></button>
+<div class="mega-menu" id="mega-sewer">
+<div class="mega-menu-inner">
 <div class="mega-feature">
 <strong>SEWERAGE &amp; DRAINAGE</strong>
 <span>Pipes, drainage systems and infrastructure components.</span>
@@ -153,10 +152,12 @@
 </div>
 </div>
 </div>
+</div>
 
 <div class="dropdown dropdown-wide">
-<button aria-controls="mega-cable" aria-expanded="false" class="dropdown-toggle" type="button">Cable &amp; Utility Ducting <span class="arrow">⌄</span></button>
-<div class="dropdown-menu mega-menu" id="mega-cable">
+<button aria-controls="mega-cable" aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" type="button">Cable &amp; Utility Ducting <span class="arrow">⌄</span></button>
+<div class="mega-menu" id="mega-cable">
+<div class="mega-menu-inner">
 <div class="mega-feature">
 <strong>CABLE &amp; UTILITY DUCTING</strong>
 <span>Ducting systems for cable and utility requirements.</span>
@@ -178,10 +179,12 @@
 </div>
 </div>
 </div>
+</div>
 
 <div class="dropdown dropdown-wide">
-<button aria-controls="mega-special" aria-expanded="false" class="dropdown-toggle" type="button">Specialised &amp; Industrial <span class="arrow">⌄</span></button>
-<div class="dropdown-menu mega-menu" id="mega-special">
+<button aria-controls="mega-special" aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" type="button">Specialised &amp; Industrial <span class="arrow">⌄</span></button>
+<div class="mega-menu" id="mega-special">
+<div class="mega-menu-inner">
 <div class="mega-feature">
 <strong>SPECIALISED &amp; INDUSTRIAL</strong>
 <span>Selected specialised applications supported by approved Dadex information.</span>
@@ -203,16 +206,11 @@
 </div>
 </div>
 </div>
-
-<div class="dropdown">
-<button aria-controls="mega-roofing" aria-expanded="false" class="dropdown-toggle" type="button">Roofing <span class="arrow">⌄</span></button>
-<div class="dropdown-menu" id="mega-roofing">
-<a href="products.html#roofing">Roofing Overview</a>
-<a href="product-corrugated-sheets.html">Corrugated Sheets</a>
-</div>
 </div>
 
-<a class="tier2-services" href="services.html">Services</a>
+<a class="tier2-link" href="product-corrugated-sheets.html">Roofing</a>
+
+<a class="tier2-link tier2-services" href="services.html">Services</a>
 
 </div>
 </div>
