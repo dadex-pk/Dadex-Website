@@ -1,7 +1,8 @@
 /* ============================================================
    SHELL — Header, Footer, DEXPERT, Back to top
-   Refactored: rem sizing, token-driven, dead rules removed,
-   breakpoints aligned with js/main.js at 900px.
+   Refactored: rem sizing, token-driven, dead rules removed.
+   Mega-menu redesigned as a full-width panel anchored to the
+   products tier. Breakpoints aligned with js/main.js at 900px.
    ============================================================ */
 
 /* ============================================================
@@ -31,14 +32,15 @@
             0 14px 28px -6px rgba(15,18,21,.10),
             0 28px 56px -14px rgba(15,18,21,.16);
 
-  /* Header heights — used for offsets and mega-menu positioning */
-  --sh-header-utility:2.375rem;    /* 38px */
-  --sh-header-main:4.75rem;        /* 76px */
-  --sh-header-products:2.75rem;    /* 44px */
-  --sh-header-total:9.875rem;      /* ~158px — for scroll-margin anchors */
+  /* Header heights */
+  --sh-header-utility:2.375rem;
+  --sh-header-main:4.75rem;
+  --sh-header-products:2.75rem;
+  --sh-header-total:9.875rem;    /* ~158px, matches anchor offsets elsewhere */
 
-  /* Breakpoint companion — matches js/main.js MOBILE_NAV_MAX */
-  /* Note: this token is illustrative; media queries stay in px */
+  /* Mega-menu content width */
+  --sh-mega-max:77.5rem;         /* 1240px */
+  --sh-mega-pad-x:1.25rem;
 }
 
 /* ============================================================
@@ -177,7 +179,7 @@
 }
 
 /* ============================================================
-   HEADER — main tier (brand + primary nav)
+   HEADER — main tier
    ============================================================ */
 .site-header .header-main-tier{
   background:rgba(255,255,255,.98);
@@ -209,7 +211,7 @@
 .site-header .brand-sub{display:none!important}
 
 /* ============================================================
-   HEADER — primary navigation
+   HEADER — primary navigation (tier 1)
    ============================================================ */
 .site-header .site-navigation{
   margin-left:auto;
@@ -293,7 +295,8 @@
 }
 
 /* ============================================================
-   HEADER — products tier (catalogue strip)
+   HEADER — products tier (tier 2)
+   Positioning root for the mega-menu panel.
    ============================================================ */
 .site-header .header-products-tier{
   display:block;
@@ -317,7 +320,9 @@
   width:100%;box-sizing:border-box;
   overflow:visible;
 }
-.site-header .header-products-row>a,
+
+/* Common base for every direct tier-2 item (toggles + plain links) */
+.site-header .header-products-row>a.tier2-link,
 .site-header .header-products-row .dropdown-toggle,
 .site-header .header-products-row .tier2-services{
   border:0;background:transparent;
@@ -333,7 +338,7 @@
   transition:color var(--sh-t-fast) var(--sh-ease-io),
              background var(--sh-t-fast) var(--sh-ease-io);
 }
-.site-header .header-products-row>a::after,
+.site-header .header-products-row>a.tier2-link::after,
 .site-header .header-products-row .dropdown-toggle::after,
 .site-header .header-products-row .tier2-services::after{
   content:"";
@@ -345,22 +350,243 @@
   transition:left var(--sh-t-base) var(--sh-ease),
              right var(--sh-t-base) var(--sh-ease);
 }
-.site-header .header-products-row>a.nav-active,
+.site-header .header-products-row>a.tier2-link.nav-active,
 .site-header .header-products-row .dropdown-toggle.nav-parent-active{
   color:var(--dadex-red)!important;
   background:#fff;
 }
-.site-header .header-products-row>a.nav-active::after,
+.site-header .header-products-row>a.tier2-link.nav-active::after,
 .site-header .header-products-row .dropdown-toggle.nav-parent-active::after{
   left:.85rem;right:.85rem;
 }
 
+/* ---------- Dropdown container: static so the menu can anchor to the tier ---------- */
+.site-header .header-products-row>.dropdown{
+  position:static;
+}
+
 /* ============================================================
-   HEADER — dropdowns (simple)
+   HEADER — mega-menu (full-width panel anchored to tier)
+   ============================================================ */
+.site-header .mega-menu{
+  position:absolute;
+  left:0;
+  right:0;
+  top:100%;
+  width:auto!important;
+  max-width:none!important;
+  background:#fff;
+  border-top:2px solid var(--dadex-red);
+  border-bottom:1px solid var(--d-line);
+  box-shadow:
+    0 8px 24px -6px rgba(15,18,21,.10),
+    0 24px 56px -12px rgba(15,18,21,.18);
+  padding:2.25rem 0 2.5rem;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(.5rem);
+  transition:opacity var(--sh-t-base) var(--sh-ease-io),
+             visibility var(--sh-t-base) var(--sh-ease-io),
+             transform var(--sh-t-base) var(--sh-ease);
+  z-index:5;
+}
+.site-header .dropdown:focus-within>.mega-menu,
+.site-header .mega-menu.open{
+  opacity:1;
+  visibility:visible;
+  transform:none;
+}
+@media (hover: hover) and (pointer: fine){
+  .site-header .dropdown:hover>.mega-menu{
+    opacity:1;
+    visibility:visible;
+    transform:none;
+  }
+}
+
+/* ---------- Inner content: centred, container width ---------- */
+.site-header .mega-menu-inner{
+  width:min(100% - (var(--sh-mega-pad-x) * 2), var(--sh-mega-max));
+  margin-inline:auto;
+  display:grid;
+  grid-template-columns:15rem minmax(0,1fr);
+  gap:3.5rem;
+  align-items:start;
+}
+
+/* ---------- Feature panel (left) ---------- */
+.site-header .mega-feature{
+  border-right:1px solid rgba(23,25,28,.08);
+  padding-right:2rem;
+  display:flex;
+  flex-direction:column;
+  min-height:10rem;
+}
+.site-header .mega-feature strong{
+  display:inline-flex;
+  align-items:center;
+  font-size:.6875rem;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+  color:var(--dadex-red);
+  font-weight:800;
+  margin:0 0 1rem;
+  padding:0 0 .875rem;
+  position:relative;
+  width:fit-content;
+}
+.site-header .mega-feature strong::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:1.75rem;
+  height:2px;
+  background:var(--dadex-red);
+  border-radius:2px;
+}
+.site-header .mega-feature span{
+  display:block;
+  font-size:.875rem;
+  line-height:1.65;
+  color:#525a61;
+  margin:0;
+}
+.site-header .mega-overview{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  margin-top:auto;
+  padding-top:1.5rem;
+  color:var(--dadex-red);
+  font-weight:750;
+  font-size:.8125rem;
+  transition:gap var(--sh-t-base) var(--sh-ease),
+             color var(--sh-t-fast) var(--sh-ease-io);
+}
+@media (hover: hover) and (pointer: fine){
+  .site-header .mega-overview:hover{gap:.75rem;color:var(--dadex-red-dark)}
+}
+
+/* ---------- Columns (right) ---------- */
+.site-header .mega-columns{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));
+  gap:2.5rem;
+}
+.site-header .mega-columns section{
+  display:flex;
+  flex-direction:column;
+  gap:.125rem;
+  min-width:0;
+}
+.site-header .mega-columns section h3,
+.site-header .mega-column-title{
+  display:flex;
+  align-items:center;
+  font-size:.6875rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#8f959c;
+  font-weight:800;
+  margin:0 0 .875rem;
+  padding:0 0 .75rem .75rem;
+  position:relative;
+  border-bottom:1px solid rgba(23,25,28,.06);
+}
+.site-header .mega-columns section h3::before,
+.site-header .mega-column-title::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:1px;
+  width:.25rem;
+  height:.75rem;
+  border-radius:2px;
+  background:var(--dadex-red);
+  opacity:.85;
+}
+.site-header .mega-columns section h3::after,
+.site-header .mega-column-title::after{
+  content:"";
+  position:absolute;
+  left:.75rem;
+  bottom:-1px;
+  width:1.75rem;
+  height:2px;
+  background:var(--dadex-red);
+  border-radius:2px;
+  opacity:.9;
+}
+.site-header .mega-columns a{
+  position:relative;
+  display:flex;
+  align-items:center;
+  min-height:2.25rem;
+  padding:.5rem .75rem;
+  border-radius:.5rem;
+  color:#2e3236;
+  text-decoration:none;
+  font:500 .875rem/1.35 'Inter',system-ui,sans-serif;
+  letter-spacing:-.003em;
+  transition:background var(--sh-t-fast) var(--sh-ease-io),
+             color var(--sh-t-fast) var(--sh-ease-io),
+             padding-left var(--sh-t-fast) var(--sh-ease-io);
+}
+.site-header .mega-columns a::before{
+  content:"";
+  position:absolute;
+  left:.25rem;
+  top:50%;
+  transform:translate(-.375rem,-50%);
+  width:.3125rem;
+  height:.3125rem;
+  border-radius:50%;
+  background:var(--dadex-red);
+  opacity:0;
+  transition:opacity var(--sh-t-fast) var(--sh-ease-io),
+             transform var(--sh-t-base) var(--sh-ease);
+}
+@media (hover: hover) and (pointer: fine){
+  .site-header .mega-columns a:hover{
+    background:#fff2f2;
+    color:var(--dadex-red);
+    padding-left:1.25rem;
+  }
+  .site-header .mega-columns a:hover::before{
+    opacity:1;
+    transform:translate(0,-50%);
+  }
+}
+.site-header .mega-columns a:focus-visible{
+  background:#fff2f2;
+  color:var(--dadex-red);
+  padding-left:1.25rem;
+  outline:2px solid var(--dadex-red);
+  outline-offset:1px;
+}
+.site-header .mega-columns a:focus-visible::before{
+  opacity:1;
+  transform:translate(0,-50%);
+}
+.site-header .mega-columns a.nav-active{
+  background:#fff2f2;
+  color:var(--dadex-red);
+  font-weight:650;
+}
+.site-header .mega-columns a.nav-active::before{
+  opacity:1;
+  transform:translate(0,-50%);
+}
+
+/* ============================================================
+   HEADER — simple dropdowns (About, Resources, Contact)
    ============================================================ */
 .site-header .dropdown{position:relative}
 .site-header .dropdown-menu{
-  position:absolute;top:calc(100% - 1px);left:0;
+  position:absolute;
+  top:calc(100% - 1px);
+  left:0;
   min-width:15rem;
   background:linear-gradient(180deg,#fff 0%,#fbfbfc 100%);
   color:var(--d-text);
@@ -378,6 +604,11 @@
 .site-header .dropdown:focus-within>.dropdown-menu,
 .site-header .dropdown-menu.open{
   opacity:1;visibility:visible;transform:none;
+}
+@media (hover: hover) and (pointer: fine){
+  .site-header .dropdown:hover>.dropdown-menu{
+    opacity:1;visibility:visible;transform:none;
+  }
 }
 .site-header .dropdown-menu a{
   display:flex;align-items:center;
@@ -400,9 +631,20 @@
   transition:opacity var(--sh-t-fast) var(--sh-ease-io),
              transform var(--sh-t-fast) var(--sh-ease);
 }
+@media (hover: hover) and (pointer: fine){
+  .site-header .dropdown-menu a:hover{
+    background:#fff1f1;
+    color:var(--dadex-red);
+    padding-left:1.125rem;
+  }
+  .site-header .dropdown-menu a:hover::before{
+    opacity:1;transform:translate(0,-50%);
+  }
+}
 .site-header .dropdown-menu a:focus-visible,
 .site-header .dropdown-menu a.nav-active{
-  background:#fff1f1;color:var(--dadex-red);
+  background:#fff1f1;
+  color:var(--dadex-red);
   padding-left:1.125rem;
 }
 .site-header .dropdown-menu a:focus-visible::before,
@@ -412,189 +654,19 @@
 .site-header .dropdown-menu a.nav-active{font-weight:650}
 
 /* ============================================================
-   HEADER — mega menu
+   HEADER — tier-2 plain links (Roofing, Services)
    ============================================================ */
-.site-header .mega-menu{
-  width:min(51.25rem,calc(100vw - 2rem))!important;
-  max-width:calc(100vw - 2rem)!important;
-  box-sizing:border-box;
-  padding:1.625rem!important;
-  display:grid!important;
-  grid-template-columns:14.375rem minmax(0,1fr);
-  gap:1.625rem;
-  left:auto!important;right:0!important;
-  transform:translateY(.625rem)!important;
-  border-radius:0 0 1.25rem 1.25rem;
-  border-top-width:2px;
-  box-shadow:
-    0 2px 4px rgba(15,18,21,.04),
-    0 22px 48px -10px rgba(15,18,21,.20),
-    0 44px 80px -24px rgba(15,18,21,.18);
-}
-.site-header .dropdown:focus-within>.mega-menu,
-.site-header .mega-menu.open{
-  transform:translateY(0)!important;
-}
-.site-header .mega-feature{
-  border-right:1px solid rgba(23,25,28,.08);
-  padding-right:1.5rem;
-  display:flex;flex-direction:column;
-  min-height:11.25rem;
+.site-header .header-products-row>a.tier2-link,
+.site-header .header-products-row>a.tier2-services{
+  /* Shared base already defined above. This rule exists to
+     guarantee positioning context for the underline and to
+     keep specificity equivalent to the toggles. */
   position:relative;
 }
-.site-header .mega-feature strong{
-  display:inline-flex;align-items:center;
-  font-size:.59375rem;
-  letter-spacing:.17em;text-transform:uppercase;
-  color:var(--dadex-red);font-weight:800;
-  margin:0 0 .75rem;
-  padding:0 0 .6875rem;
-  position:relative;width:fit-content;
-}
-.site-header .mega-feature strong::after{
-  content:"";
-  position:absolute;left:0;bottom:0;
-  width:1.625rem;height:2px;
-  background:var(--dadex-red);
-  border-radius:2px;
-}
-.site-header .mega-feature span{
-  display:block;
-  font-size:.8125rem;line-height:1.6;
-  color:#525a61;letter-spacing:.005em;
-}
-.site-header .mega-overview{
-  display:inline-flex;align-items:center;gap:.4375rem;
-  margin-top:auto;padding-top:1.25rem;
-  color:var(--dadex-red);
-  font-weight:750;font-size:.78125rem;letter-spacing:.005em;
-  transition:gap var(--sh-t-base) var(--sh-ease),
-             color var(--sh-t-fast) var(--sh-ease-io);
-}
-.site-header .mega-columns{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:1.375rem;
-}
-.site-header .mega-columns section{
-  display:flex;flex-direction:column;gap:.125rem;min-width:0;
-}
-.site-header .mega-columns section h3,
-.site-header .mega-column-title{
-  display:flex;align-items:center;
-  font-size:.625rem;
-  letter-spacing:.14em;text-transform:uppercase;
-  color:#8f959c;font-weight:800;
-  margin:0 0 .75rem;
-  padding:0 0 .625rem .625rem;
-  position:relative;
-  border-bottom:1px solid rgba(23,25,28,.06);
-}
-.site-header .mega-columns section h3::before,
-.site-header .mega-column-title::before{
-  content:"";
-  position:absolute;left:0;top:1px;
-  width:.25rem;height:.6875rem;
-  border-radius:2px;
-  background:var(--dadex-red);
-  opacity:.85;
-}
-.site-header .mega-columns section h3::after,
-.site-header .mega-column-title::after{
-  content:"";
-  position:absolute;left:.625rem;bottom:-1px;
-  width:1.5rem;height:2px;
-  background:var(--dadex-red);
-  border-radius:2px;
-  opacity:.9;
-}
-.site-header .mega-columns a{
-  padding:.5625rem .75rem;
-  font-size:.78125rem;
-  min-height:2.375rem;
-  border-radius:.5625rem;
-  display:flex;align-items:center;
-  position:relative;
-  color:#2e3236;text-decoration:none;
-  letter-spacing:-.003em;font-weight:500;
-  transition:background var(--sh-t-fast) var(--sh-ease-io),
-             color var(--sh-t-fast) var(--sh-ease-io),
-             padding-left var(--sh-t-fast) var(--sh-ease-io);
-}
-.site-header .mega-columns a::before{
-  content:"";
-  position:absolute;left:.125rem;top:50%;
-  transform:translate(-.375rem,-50%);
-  width:.3125rem;height:.3125rem;
-  border-radius:50%;
-  background:var(--dadex-red);opacity:0;
-  transition:opacity var(--sh-t-fast) var(--sh-ease-io),
-             transform var(--sh-t-base) var(--sh-ease);
-}
-.site-header .mega-columns a:focus-visible,
-.site-header .mega-columns a.nav-active{
-  background:#fff2f2;color:var(--dadex-red);
-  padding-left:1.125rem;
-}
-.site-header .mega-columns a:focus-visible::before,
-.site-header .mega-columns a.nav-active::before{
-  opacity:1;transform:translate(0,-50%);
-}
-.site-header .mega-columns a.nav-active{font-weight:650}
-.site-header .mega-menu-resources{
-  width:min(38.75rem,calc(100vw - 2rem))!important;
-  grid-template-columns:13.75rem minmax(0,1fr);
-}
-.site-header .mega-menu-resources .mega-columns{
-  grid-template-columns:1fr 1fr;
-}
-
-/* ---------- Mega-menu anchoring — fixed nth-child rules
-   (previous rules targeted wrong .dropdown-menu class
-   on child 4 and 5, both were dead) ---------- */
-.site-header .header-products-row>.dropdown:nth-child(1)>.mega-menu,
-.site-header .header-products-row>.dropdown:nth-child(2)>.mega-menu,
-.site-header .header-products-row>.dropdown:nth-child(3)>.mega-menu{
-  left:0!important;right:auto!important;
-}
-.site-header .header-products-row>.dropdown:nth-child(4)>.mega-menu{
-  left:auto!important;right:0!important;
-}
-.site-header .header-products-row>.dropdown:nth-child(5)>.dropdown-menu{
-  left:0!important;right:auto!important;
-}
-
-/* ---------- Roofing simple dropdown ---------- */
-.site-header #mega-roofing{
-  min-width:15rem;
-  padding:.75rem!important;
-  border-radius:0 0 1rem 1rem;
-}
-.site-header #mega-roofing a{
-  display:flex;align-items:center;
-  padding:.6875rem .8125rem;
-  border-radius:.5625rem;
-  font-size:.8125rem;
-  font-weight:550;
-  position:relative;
-}
-.site-header #mega-roofing a::before{
-  content:"";
-  position:absolute;left:.1875rem;top:50%;
-  transform:translate(-.375rem,-50%);
-  width:.3125rem;height:.3125rem;
-  border-radius:50%;
-  background:var(--dadex-red);
-  opacity:0;
-  transition:opacity var(--sh-t-fast) var(--sh-ease-io),
-             transform var(--sh-t-base) var(--sh-ease);
-}
-.site-header #mega-roofing a:focus-visible{
-  background:#fff2f2;color:var(--dadex-red);
-  padding-left:1.25rem;
-}
-.site-header #mega-roofing a:focus-visible::before{
-  opacity:1;transform:translate(0,-50%);
+.site-header .header-products-row>a.tier2-link:focus-visible,
+.site-header .header-products-row>a.tier2-services:focus-visible{
+  outline:2px solid var(--dadex-red);
+  outline-offset:3px;
 }
 
 /* ============================================================
@@ -723,44 +795,16 @@
   .site-header .nav-search:hover .nav-search-icon{
     color:#fff;transform:scale(1.08);
   }
-  .site-header .header-products-row>a:hover,
+  .site-header .header-products-row>a.tier2-link:hover,
   .site-header .header-products-row .dropdown-toggle:hover,
   .site-header .header-products-row .tier2-services:hover{
     color:var(--dadex-red)!important;
     background:#fff;
   }
-  .site-header .header-products-row>a:hover::after,
+  .site-header .header-products-row>a.tier2-link:hover::after,
   .site-header .header-products-row .dropdown-toggle:hover::after,
   .site-header .header-products-row .tier2-services:hover::after{
     left:.85rem;right:.85rem;
-  }
-  .site-header .dropdown:hover>.dropdown-menu{
-    opacity:1;visibility:visible;transform:none;
-  }
-  .site-header .dropdown:hover>.mega-menu{
-    transform:translateY(0)!important;
-  }
-  .site-header .dropdown-menu a:hover{
-    background:#fff1f1;color:var(--dadex-red);
-    padding-left:1.125rem;
-  }
-  .site-header .dropdown-menu a:hover::before{
-    opacity:1;transform:translate(0,-50%);
-  }
-  .site-header .mega-overview:hover{gap:.6875rem;color:var(--dadex-red-dark)}
-  .site-header .mega-columns a:hover{
-    background:#fff2f2;color:var(--dadex-red);
-    padding-left:1.125rem;
-  }
-  .site-header .mega-columns a:hover::before{
-    opacity:1;transform:translate(0,-50%);
-  }
-  .site-header #mega-roofing a:hover{
-    background:#fff2f2;color:var(--dadex-red);
-    padding-left:1.25rem;
-  }
-  .site-header #mega-roofing a:hover::before{
-    opacity:1;transform:translate(0,-50%);
   }
   .site-header .mobile-products-menu>details>summary:hover,
   .site-header .mobile-products-links>a:hover,
@@ -779,7 +823,7 @@
     padding-left:.5625rem;padding-right:.5625rem;
     font-size:.75rem;
   }
-  .site-header .header-products-row>a,
+  .site-header .header-products-row>a.tier2-link,
   .site-header .header-products-row .dropdown-toggle,
   .site-header .header-products-row .tier2-services{
     font-size:.62rem;
@@ -788,16 +832,19 @@
   }
 }
 @media(max-width:1100px) and (min-width:901px){
-  .site-header .mega-menu{
+  .site-header .mega-menu{padding:1.875rem 0 2rem}
+  .site-header .mega-menu-inner{
     grid-template-columns:12.5rem minmax(0,1fr);
-    gap:1.25rem;
-    padding:1.375rem!important;
+    gap:2.5rem;
   }
-  .site-header .mega-feature{padding-right:1.125rem}
-  .site-header .mega-columns{gap:1rem}
+  .site-header .mega-feature{padding-right:1.5rem}
+  .site-header .mega-columns{
+    grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));
+    gap:1.75rem;
+  }
 }
 @media(max-width:900px){
-  /* Header uses relative positioning on mobile to avoid sticky overlap */
+  /* Header becomes relative on mobile to avoid sticky overlap */
   .site-header{position:relative;top:auto}
   .site-header .utility-inner{
     justify-content:center;flex-wrap:wrap;
@@ -861,57 +908,12 @@
     margin-top:.25rem;
   }
   .site-header .site-navigation .dropdown-menu.open{display:block}
+
+  /* Tier 2 is hidden on mobile (products handled by the accordion) */
   .site-header .header-products-tier{display:none!important}
   .site-header .mobile-products-menu{
     display:block;
     border-bottom:1px solid #eef0f2;
-  }
-
-  /* Mobile mega-menu adaptation */
-  .site-header .mega-menu,
-  .site-header .header-products-row .mega-menu,
-  .site-header .site-navigation .mega-menu{
-    width:auto!important;
-    max-width:none!important;
-    left:auto!important;right:auto!important;
-    grid-template-columns:1fr;
-    transform:none!important;
-    padding:.875rem!important;
-    gap:1rem;
-    border:0;
-    border-radius:.75rem;
-    background:#fafbfc;
-    box-shadow:none;
-    margin:.375rem 0 .125rem;
-  }
-  .site-header .mega-feature{
-    border-right:0;
-    border-bottom:1px solid rgba(23,25,28,.06);
-    padding:0 0 .875rem;
-    min-height:0;
-  }
-  .site-header .mega-feature strong{margin-bottom:.5rem}
-  .site-header .mega-feature span{font-size:.78125rem}
-  .site-header .mega-overview{padding-top:.75rem}
-  .site-header .mega-columns{
-    grid-template-columns:1fr;
-    gap:.875rem;
-  }
-  .site-header .mega-columns section h3,
-  .site-header .mega-column-title{
-    padding:0 0 .5rem .625rem;
-    margin:0 0 .5rem;
-  }
-  .site-header .mega-columns a{
-    min-height:2.75rem;
-    padding:.625rem .75rem;
-    font-size:.78125rem;
-    background:#fff;
-    border:1px solid rgba(23,25,28,.06);
-    margin-bottom:.25rem;
-  }
-  .site-header .mega-columns a.nav-active{
-    border-color:rgba(201,0,0,.22);
   }
 }
 @media(max-width:700px){
@@ -919,9 +921,6 @@
   .site-header .nav-search-label{display:none}
   .site-header .nav-search{padding:.5625rem .75rem!important;margin-left:.25rem}
   .site-header .site-navigation{max-height:calc(100dvh - 3.875rem)}
-  .site-header .header-products-row>.dropdown>.dropdown-menu{
-    left:auto!important;right:auto!important;
-  }
 }
 @media(max-width:600px){
   .site-header .utility-inner{min-height:2rem;font-size:.65625rem}
@@ -1058,9 +1057,7 @@
 .site-footer .brand{padding-left:0;transform:none!important}
 .site-footer .brand:hover{transform:none!important;padding-left:0!important}
 
-.site-footer .footer-contact-link{
-  color:#fff!important;font-weight:650;
-}
+.site-footer .footer-contact-link{color:#fff!important;font-weight:650}
 .site-footer .footer-nav-link{
   display:flex!important;align-items:center;gap:.5rem;
 }
@@ -1528,8 +1525,7 @@
              box-shadow .18s ease;
 }
 
-/* When DEXPERT dialog is open, hide the back-to-top button
-   to avoid visual overlap at the same right-edge position. */
+/* Hide the button while DEXPERT dialog is open (same right edge) */
 body:has(.dexpert-dialog.open) .back-to-top{
   opacity:0;visibility:hidden;pointer-events:none;
 }
