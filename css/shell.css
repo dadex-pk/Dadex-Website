@@ -3,6 +3,7 @@
    Refactored: rem sizing, token-driven, dead rules removed.
    Mega-menu redesigned as a full-width panel anchored to the
    products tier. Breakpoints aligned with js/main.js at 900px.
+   Tier-1 icons removed — text-only navigation.
    ============================================================ */
 
 /* ============================================================
@@ -36,10 +37,10 @@
   --sh-header-utility:2.375rem;
   --sh-header-main:4.75rem;
   --sh-header-products:2.75rem;
-  --sh-header-total:9.875rem;    /* ~158px, matches anchor offsets elsewhere */
+  --sh-header-total:9.875rem;
 
   /* Mega-menu content width */
-  --sh-mega-max:77.5rem;         /* 1240px */
+  --sh-mega-max:77.5rem;
   --sh-mega-pad-x:1.25rem;
 }
 
@@ -212,6 +213,7 @@
 
 /* ============================================================
    HEADER — primary navigation (tier 1)
+   Text-only — no icons.
    ============================================================ */
 .site-header .site-navigation{
   margin-left:auto;
@@ -226,7 +228,7 @@
   font:600 .8125rem/1.2 'Inter',system-ui,sans-serif;
   padding:1.5rem .75rem;
   cursor:pointer;white-space:nowrap;
-  display:inline-flex;align-items:center;gap:.5rem;
+  display:inline-flex;align-items:center;gap:.375rem;
   border-radius:.5625rem;
   letter-spacing:-.005em;
   transition:color var(--sh-t-fast) var(--sh-ease-io),
@@ -251,15 +253,6 @@
 .site-header .site-navigation>a.nav-active::before,
 .site-header .site-navigation .dropdown-toggle.nav-parent-active::before{
   left:.75rem;right:.75rem;
-}
-.site-header .site-navigation>a>i,
-.site-header .site-navigation .dropdown-toggle>i{
-  color:var(--dadex-red);
-  font-size:.78125rem;
-  width:1rem;text-align:center;
-  opacity:.92;
-  transition:transform var(--sh-t-base) var(--sh-ease),
-             opacity var(--sh-t-base) var(--sh-ease);
 }
 .site-header .site-navigation .dropdown-toggle .arrow{
   margin-left:1px;color:#8b9199;font-size:.75rem;
@@ -321,7 +314,7 @@
   overflow:visible;
 }
 
-/* Common base for every direct tier-2 item (toggles + plain links) */
+/* Common base for every direct tier-2 item */
 .site-header .header-products-row>a.tier2-link,
 .site-header .header-products-row .dropdown-toggle,
 .site-header .header-products-row .tier2-services{
@@ -360,7 +353,7 @@
   left:.85rem;right:.85rem;
 }
 
-/* ---------- Dropdown container: static so the menu can anchor to the tier ---------- */
+/* Dropdown container: static so the menu anchors to the tier */
 .site-header .header-products-row>.dropdown{
   position:static;
 }
@@ -404,7 +397,7 @@
   }
 }
 
-/* ---------- Inner content: centred, container width ---------- */
+/* ---------- Inner content ---------- */
 .site-header .mega-menu-inner{
   width:min(100% - (var(--sh-mega-pad-x) * 2), var(--sh-mega-max));
   margin-inline:auto;
@@ -468,7 +461,9 @@
   .site-header .mega-overview:hover{gap:.75rem;color:var(--dadex-red-dark)}
 }
 
-/* ---------- Columns (right) ---------- */
+/* ---------- Columns (right) ----------
+   Flex layout so columns hug their content.
+   Prevents the large empty gap produced by `1fr` tracks. */
 .site-header .mega-columns{
   display:flex;
   flex-wrap:wrap;
@@ -662,9 +657,6 @@
    ============================================================ */
 .site-header .header-products-row>a.tier2-link,
 .site-header .header-products-row>a.tier2-services{
-  /* Shared base already defined above. This rule exists to
-     guarantee positioning context for the underline and to
-     keep specificity equivalent to the toggles. */
   position:relative;
 }
 .site-header .header-products-row>a.tier2-link:focus-visible,
@@ -786,11 +778,6 @@
     color:var(--dadex-red);
     transform:translateY(1px);
   }
-  .site-header .site-navigation>a:hover>i,
-  .site-header .site-navigation .dropdown-toggle:hover>i{
-    transform:translateY(-1px) scale(1.08);
-    opacity:1;
-  }
   .site-header .nav-search:hover{
     background:var(--dadex-red);color:#fff!important;
     transform:translateY(-1px);
@@ -842,10 +829,8 @@
     gap:2.5rem;
   }
   .site-header .mega-feature{padding-right:1.5rem}
-  .site-header .mega-columns{
-    grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));
-    gap:1.75rem;
-  }
+  .site-header .mega-columns{gap:1.5rem 2rem}
+  .site-header .mega-columns section{min-width:10rem;max-width:14rem}
 }
 @media(max-width:900px){
   /* Header becomes relative on mobile to avoid sticky overlap */
@@ -913,7 +898,7 @@
   }
   .site-header .site-navigation .dropdown-menu.open{display:block}
 
-  /* Tier 2 is hidden on mobile (products handled by the accordion) */
+  /* Tier 2 hidden on mobile */
   .site-header .header-products-tier{display:none!important}
   .site-header .mobile-products-menu{
     display:block;
@@ -1528,12 +1513,9 @@
              border-color .18s ease,
              box-shadow .18s ease;
 }
-
-/* Hide the button while DEXPERT dialog is open (same right edge) */
 body:has(.dexpert-dialog.open) .back-to-top{
   opacity:0;visibility:hidden;pointer-events:none;
 }
-
 @media (hover: hover) and (pointer: fine){
   .back-to-top:hover{
     background:var(--dadex-red);
