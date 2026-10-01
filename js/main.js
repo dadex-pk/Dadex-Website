@@ -1,7 +1,7 @@
 /* ============================================================
    DADEX ETERNIT LIMITED — SHARED UI
    - Header and footer injection
-   - Navigation behaviour and active state
+   - Navigation behaviour (mobile drawer, dropdowns, active state)
    - Dynamic text (footer year, company age)
    - Project filter
    - Mailto contact form
@@ -9,9 +9,14 @@
    - Investor panel switcher
    - Site search
    - DEXPERT
-   - Back-to-top floating button
+   - Back to top
    Page-scoped modules (dealers, etc.) live in their own files.
+
+   MOBILE_NAV_MAX must match the breakpoint used in shell.css
+   for `.site-header .menu-toggle` / `.site-navigation` — currently 900px.
    ============================================================ */
+
+const MOBILE_NAV_MAX = 900;
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadSharedComponents();
@@ -38,8 +43,7 @@ async function loadSharedComponents(){
   const base = new URL('.', window.location.href);
   await Promise.all(Array.from(mounts).map(async mount => {
     const name = mount.getAttribute('data-component');
-      const allowed = ['header', 'footer', 'trust-bar'];
-      if (!allowed.includes(name)) return;
+    if (name !== 'header' && name !== 'footer') return;
     try {
       const response = await fetch(new URL(`components/${name}.html`, base), { cache: 'no-cache' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -92,6 +96,7 @@ function initNavigation(){
   const header = document.getElementById('siteHeader') || document.querySelector('.site-header');
   const hamburger = document.querySelector('.menu-toggle');
   const nav = document.getElementById('site-navigation');
+  const isMobile = () => window.innerWidth <= MOBILE_NAV_MAX;
 
   const closeMenus = ({ restoreFocus = false } = {}) => {
     document.querySelectorAll('.dropdown-menu.open')
@@ -107,6 +112,7 @@ function initNavigation(){
     if (restoreFocus && hamburger) hamburger.focus();
   };
 
+  /* Hamburger open / close */
   if (hamburger && nav) {
     hamburger.addEventListener('click', () => {
       const open = !nav.classList.contains('open');
@@ -121,19 +127,38 @@ function initNavigation(){
     });
   }
 
+  /* Dropdown toggles */
   document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
     const menuId = toggle.getAttribute('aria-controls');
     const menu = menuId ? document.getElementById(menuId) : toggle.nextElementSibling;
     if (!menu) return;
 
+    /* Mobile: tap toggles the dropdown; click on the parent does not navigate. */
     toggle.addEventListener('click', event => {
-      if (window.innerWidth <= 980) {
+      if (isMobile()) {
         event.preventDefault();
+        event.stopPropagation();
         const open = menu.classList.toggle('open');
         toggle.setAttribute('aria-expanded', String(open));
       }
     });
 
+    /* Desktop: hover opens via CSS; focus-within also opens via CSS.
+       Sync aria-expanded with real focus state so assistive tech knows. */
+    toggle.addEventListener('focusin', () => {
+      if (!isMobile()) toggle.setAttribute('aria-expanded', 'true');
+    });
+    toggle.addEventListener('focusout', () => {
+      if (isMobile()) return;
+      /* Let focus settle before deciding whether it left the whole dropdown. */
+      setTimeout(() => {
+        if (!menu.contains(document.activeElement)) {
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      }, 0);
+    });
+
+    /* Keyboard: Escape closes this dropdown and returns focus to the toggle. */
     toggle.addEventListener('keydown', event => {
       if (event.key === 'Escape') {
         menu.classList.remove('open');
@@ -143,21 +168,29 @@ function initNavigation(){
     });
   });
 
+  /* Closing the mobile drawer when a real navigation link is clicked. */
   document.querySelectorAll('.site-navigation a').forEach(link => {
-    link.addEventListener('click', () => closeMenus());
+    link.addEventListener('click', () => {
+      /* Skip the toggle itself on mobile — its own handler manages state. */
+      if (link.classList.contains('dropdown-toggle') && isMobile()) return;
+      closeMenus();
+    });
   });
 
+  /* Click outside the header closes menus. */
   document.addEventListener('click', event => {
     if (!header || header.contains(event.target)) return;
     closeMenus();
   });
 
+  /* Global Escape closes everything. */
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') closeMenus({ restoreFocus: true });
   });
 
+  /* Reset state when the viewport crosses back to desktop. */
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 980) {
+    if (!isMobile()) {
       document.body.classList.remove('nav-open');
       if (nav) nav.classList.remove('open');
       if (hamburger) {
@@ -174,7 +207,7 @@ function initNavigation(){
 
 
 /* ------------------------------------------------------------
-   Active navigation
+   Active navigation (path-based)
    ------------------------------------------------------------ */
 function setActiveNavigation(){
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
@@ -425,7 +458,7 @@ function initDEXPERT(){
   const path = window.location.pathname.split('/').pop() || 'index.html';
 
   const productLinks = [
-    ['Aquadex', 'product.html'],
+    ['Aquadex', 'product-aquadex.html'],
     ['T-Flex', 'product-tflex.html'],
     ['Polydex Premium', 'product-polydex-premium.html'],
     ['Polydex', 'product-polydex.html'],
@@ -601,7 +634,6 @@ function escapeHTML(value){
 
 /* ------------------------------------------------------------
    Back to top — floating button, injected site-wide
-   Appears after 600px of scroll. Sits above the DEXPERT FAB.
    ------------------------------------------------------------ */
 function initBackToTop(){
   if (document.querySelector('.back-to-top')) return;
