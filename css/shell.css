@@ -470,15 +470,19 @@
 
 /* ---------- Columns (right) ---------- */
 .site-header .mega-columns{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));
-  gap:2.5rem;
+  display:flex;
+  flex-wrap:wrap;
+  gap:2rem 3rem;
+  align-items:flex-start;
+  align-content:flex-start;
 }
 .site-header .mega-columns section{
+  flex:0 1 auto;
+  min-width:11rem;
+  max-width:16rem;
   display:flex;
   flex-direction:column;
   gap:.125rem;
-  min-width:0;
 }
 .site-header .mega-columns section h3,
 .site-header .mega-column-title{
