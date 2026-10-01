@@ -38,7 +38,8 @@ async function loadSharedComponents(){
   const base = new URL('.', window.location.href);
   await Promise.all(Array.from(mounts).map(async mount => {
     const name = mount.getAttribute('data-component');
-    if (name !== 'header' && name !== 'footer') return;
+      const allowed = ['header', 'footer', 'trust-bar'];
+      if (!allowed.includes(name)) return;
     try {
       const response = await fetch(new URL(`components/${name}.html`, base), { cache: 'no-cache' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
