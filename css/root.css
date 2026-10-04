@@ -1,6 +1,5 @@
 /* ============================================================
-   ROOT — Design tokens, reset, base elements
-   Consolidated from all :root blocks and foundation rules.
+   ROOT — Design tokens, reset, base elements, global a11y
    Load first. Every other stylesheet depends on these tokens.
    ============================================================ */
 
@@ -46,6 +45,9 @@
   /* Shadows */
   --shadow-soft:0 14px 40px rgba(18,24,30,.08);
   --d-shadow:0 14px 40px rgba(18,24,30,.08);
+
+  /* Shared sticky-header offset (header total = 9.875rem) */
+  --sticky-offset:10.5rem;
 }
 
 /* ---------- Reset ---------- */
@@ -85,15 +87,19 @@ small{color:var(--d-muted)}
 button,input,select,textarea{font:inherit}
 button,a,input,select,textarea{touch-action:manipulation}
 
-/* ---------- Global focus ---------- */
-:focus-visible{
-  outline:3px solid rgba(201,0,0,.35);
+/* ---------- Global focus (unified) ---------- */
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{
+  outline:3px solid var(--dadex-red);
   outline-offset:3px;
+  border-radius:2px;
 }
-:where(a,button,input,select,textarea):focus-visible{
-  outline:3px solid rgba(204,0,0,.42);
-  outline-offset:3px;
-}
+
+/* ---------- Anchor jump safety ---------- */
+:where([id]){scroll-margin-top:var(--sticky-offset)}
+
+/* ---------- Long-token overflow protection ---------- */
+pre,code,.spec-table,.data-table{max-width:100%}
+pre,code{overflow-wrap:anywhere}
 
 /* ---------- Utilities ---------- */
 [hidden]{display:none!important}
@@ -120,6 +126,7 @@ table{max-width:100%}
 
 /* ---------- Reduced motion ---------- */
 @media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
   *,*::before,*::after{
     scroll-behavior:auto!important;
     transition:none!important;
@@ -127,5 +134,9 @@ table{max-width:100%}
     animation-duration:.01ms!important;
     animation-iteration-count:1!important;
   }
-  html{scroll-behavior:auto}
+}
+
+/* ---------- Print (global) ---------- */
+@media print{
+  a{text-decoration:underline}
 }
