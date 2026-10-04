@@ -1,0 +1,196 @@
+/* ============================================================
+   PASS 3 — INTERNAL PAGES REFINEMENT
+   Baseline: DEL-Website-Pass2-031026
+   Scope: About, History, Quality, Services, Projects, Solutions,
+   Resources, Investors, News, Careers, Contact, Dealers & Search.
+   No product-system styling is changed here.
+   ============================================================ */
+
+:root{
+  --p3-line:#e1e4e7;
+  --p3-line-soft:#eceff1;
+  --p3-paper:#f5f6f7;
+  --p3-ink:#17191c;
+  --p3-muted:#626a72;
+  --p3-red:#c90000;
+  --p3-shadow:0 12px 32px rgba(18,24,30,.055);
+  --p3-shadow-hover:0 16px 38px rgba(18,24,30,.085);
+}
+
+/* ---------- Shared internal-page rhythm ---------- */
+.core-page .core-content{padding-top:clamp(3.75rem,6vw,5.25rem)}
+.core-page .core-section:first-child{margin-top:0}
+.core-page .core-section + .core-section{margin-top:clamp(3.75rem,6vw,5.25rem)}
+.core-page .core-section-head{margin-bottom:2rem}
+.core-page .core-section-head h2{line-height:1.12}
+.core-page .core-section-head>p{margin-top:1rem}
+
+.core-page .core-panel,
+.core-page .resource-card,
+.core-page .director-card,
+.core-page .finance-card,
+.core-page .ir-stat{
+  box-shadow:var(--p3-shadow);
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+
+.core-page .resource-card,
+.core-page .director-card,
+.core-page .finance-card{border-radius:10px}
+
+.core-page .resource-card:hover,
+.core-page .director-card:hover,
+.core-page .finance-card:hover{
+  border-color:#d4d8dc;
+  box-shadow:var(--p3-shadow-hover);
+}
+
+.core-page .resource-card h3{line-height:1.25}
+.core-page .resource-card p{line-height:1.7}
+.core-page .resource-card a{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  margin-top:.5rem;
+}
+
+/* Make resource grids feel like one reusable component. */
+.resource-grid{align-items:stretch}
+.resource-grid .resource-card{height:100%;box-sizing:border-box;display:flex;flex-direction:column}
+.resource-grid .resource-card a{margin-top:auto;padding-top:1rem}
+
+/* ---------- Generic page cards ---------- */
+.card-grid{align-items:stretch}
+.card-grid .content-card{height:100%;box-sizing:border-box;display:flex;flex-direction:column}
+.content-card p{line-height:1.7}
+.content-card .text-link{margin-top:auto;padding-top:1.125rem}
+
+/* ---------- About / quality / services / careers ---------- */
+.about-page .core-card,
+.about-page .core-value{transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.about-page .core-card:hover,
+.about-page .core-value:hover{box-shadow:var(--p3-shadow-hover);transform:translateY(-2px)}
+
+.careers-page .content-card{border-radius:10px}
+.careers-page .page-cta{margin-top:0}
+
+/* ---------- History ---------- */
+.history-card{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.history-card:hover{transform:translateY(-2px);box-shadow:var(--p3-shadow-hover)}
+.history-era-header{margin-bottom:3rem}
+.history-events li+li{border-top-color:var(--p3-line-soft)}
+
+/* ---------- Projects ---------- */
+.project-filter{margin-bottom:2rem}
+.project-grid{align-items:stretch}
+.project-card{
+  border-radius:10px;
+  box-shadow:var(--p3-shadow);
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+.project-card:hover{border-color:#d4d8dc;box-shadow:var(--p3-shadow-hover);transform:translateY(-2px)}
+.project-card .project-systems{margin-top:auto}
+.sector-card{transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.sector-card:hover{box-shadow:var(--p3-shadow);transform:translateY(-2px)}
+
+/* ---------- News ---------- */
+.rx-feature-grid{align-items:stretch}
+.rx-feature{
+  height:100%;
+  box-sizing:border-box;
+  border-radius:10px;
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+.rx-feature:hover{box-shadow:var(--p3-shadow-hover);transform:translateY(-2px)}
+.rx-feature a{display:inline-flex;align-items:center}
+.rx-link-grid{align-items:stretch}
+.rx-link-grid a{min-height:10rem;box-sizing:border-box;border-radius:10px}
+.rx-cta{border-top:1px solid rgba(255,255,255,.08)}
+
+/* ---------- Investor relations ---------- */
+.ir-sidebar{box-shadow:var(--p3-shadow)}
+.ir-side-link{transition:background-color .18s ease,color .18s ease,border-color .18s ease}
+.ir-content{padding-left:.25rem}
+.ir-panel{scroll-margin-top:6rem}
+.ir-panel h2{line-height:1.15}
+.ir-stat-grid,.finance-cards{align-items:stretch}
+.ir-stat,.finance-card{height:100%;box-sizing:border-box;border-radius:8px}
+.ir-detail-grid>div{min-height:5.75rem}
+.director-grid{align-items:stretch}
+.director-card{height:100%;box-sizing:border-box;border-radius:8px}
+.share-table{border:1px solid var(--p3-line);border-radius:8px}
+.share-table table{background:#fff}
+.share-table th{color:#454b50}
+.ir-note{border-radius:0 6px 6px 0}
+
+/* ---------- Search ---------- */
+.search-engine{
+  border-radius:10px;
+  box-shadow:var(--p3-shadow);
+}
+.site-search-box input:focus-visible,
+.search-engine select:focus-visible,
+.search-engine button:focus-visible{
+  outline:2px solid var(--p3-red);
+  outline-offset:2px;
+}
+.search-result-card{
+  height:100%;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+.search-result-card:hover{border-color:#d4d8dc;box-shadow:var(--p3-shadow-hover);transform:translateY(-2px)}
+.search-result-card a{margin-top:auto;padding-top:1rem}
+
+/* ---------- Dealers / contact ---------- */
+.core-page .contact-office{border-radius:8px;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.core-page .contact-office:hover{border-color:#d4d8dc;box-shadow:var(--p3-shadow);transform:translateY(-2px)}
+.core-page .contact-form{border-radius:10px}
+.dealers-page .sales-office-note{border-radius:8px}
+
+/* ---------- Mobile refinement ---------- */
+@media(max-width:900px){
+  .core-page .core-content{padding-top:3.5rem}
+  .ir-content{padding-left:0}
+  .rx-link-grid a{min-height:9rem}
+  .project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:700px){
+  .core-page .core-section-head{margin-bottom:1.625rem}
+  .resource-grid{grid-template-columns:1fr}
+  .project-filter{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    padding:.125rem .125rem .5rem;
+    margin-right:-1rem;
+    scrollbar-width:thin;
+  }
+  .filter-btn{flex:0 0 auto}
+  .project-grid{grid-template-columns:1fr}
+  .rx-feature-grid,.rx-link-grid{grid-template-columns:1fr}
+  .rx-feature{min-height:0}
+  .rx-link-grid a{min-height:8.5rem}
+}
+
+@media(max-width:560px){
+  .core-page .core-panel{padding:2rem 1.25rem}
+  .core-page .core-section{margin-top:3.25rem}
+  .history-era-header{margin-bottom:2rem}
+  .search-engine{padding:1.125rem}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .core-page .resource-card,
+  .core-page .director-card,
+  .core-page .finance-card,
+  .core-page .contact-office,
+  .content-card,
+  .project-card,
+  .sector-card,
+  .history-card,
+  .rx-feature,
+  .search-result-card{transition:none}
+}

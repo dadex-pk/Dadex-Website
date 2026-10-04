@@ -1,0 +1,81 @@
+/* ============================================================
+   PASS 2 — PRODUCT SYSTEM REFINEMENT
+   Scoped to the current product architecture only.
+   ============================================================ */
+
+.product-page .p2-hero{overflow:hidden}
+.product-page .p2-hero-grid{align-items:center}
+.product-page .p2-hero-copy{max-width:42rem}
+.product-page .p2-hero-copy h1{max-width:14ch}
+.product-page .p2-image-card{
+  width:min(27rem,88%);
+  aspect-ratio:1/1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:1.5rem;
+  transform:rotate(0deg);
+  border-radius:1.25rem;
+}
+.product-page .p2-image-card img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:.75rem;
+}
+.product-page .p2-image-card img[src$="corrugated-sheets.svg"]{
+  object-fit:cover;
+  background:#f5f5f2;
+}
+.product-page .p2-art-label{bottom:1rem}
+
+/* Product identity strip: clearer scanning without adding another component. */
+.product-page .p2-product-strip{
+  border-top:1px solid #dedbd7;
+  border-bottom:1px solid #dedbd7;
+  box-shadow:none;
+}
+.product-page .p2-strip-item{min-height:4.5rem;padding:1rem 1.125rem}
+.product-page .p2-strip-item strong{line-height:1.35}
+
+/* Technical content should read as one specification system across products. */
+.product-page .p2-tech-panel{box-shadow:0 .5rem 1.5rem rgba(0,0,0,.035)}
+.product-page .p2-spec-table th{font-size:.75rem;letter-spacing:.01em}
+.product-page .p2-spec-table td{font-size:.875rem}
+.product-page .p2-tech-notes article{min-height:100%}
+
+/* Related products: consistent visual weight and predictable card height. */
+.product-page .p2-related-grid a{
+  min-height:9rem;
+  padding:1.125rem;
+  border-radius:.75rem;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.product-page .p2-related-grid a strong{line-height:1.35}
+
+/* Product index: stronger media consistency without changing the existing catalogue layout. */
+.product-category .product-tile-media{
+  aspect-ratio:4/3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:#f7f7f5;
+}
+.product-category .product-tile-media img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  padding:1rem;
+  display:block;
+}
+.product-category .product-tile-media img[src$="corrugated-sheets.svg"]{padding:0;object-fit:cover}
+.product-category .product-tile-body{min-height:11rem;display:flex;flex-direction:column}
+.product-category .product-tile-body>span{margin-top:auto;padding-top:1rem}
+
+@media(max-width:700px){
+  .product-page .p2-image-card{width:min(24rem,92%);padding:1rem}
+  .product-page .p2-hero-copy h1{max-width:none}
+  .product-page .p2-strip-item{min-height:4rem}
+  .product-page .p2-related-grid a{min-height:8rem}
+}
