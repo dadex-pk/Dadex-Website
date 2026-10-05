@@ -2202,17 +2202,81 @@ input::placeholder,textarea::placeholder{color:#8f969d}
    18. LEGAL PAGE
    ============================================================ */
 .legal-page{
-  max-width:56.25rem;background:#fff;border:1px solid var(--d-line);
-  padding:2.625rem 2.875rem;border-radius:2px;
-  box-shadow:0 .75rem 2rem rgba(16,18,20,.045);
+  max-width:56.25rem;
+  background:#fff;
+  border:1px solid var(--d-line);
+  border-top:3px solid var(--dadex-red);
+  border-radius:0 0 12px 12px;
+  padding:2.625rem 2.875rem;
+  box-shadow:0 .75rem 2rem rgba(16,18,20,.055);
 }
-.legal-page h1{font-size:clamp(1.75rem,3.4vw,2.625rem);letter-spacing:-.03em;margin:0 0 1.125rem}
-.legal-page h2{font-size:1.25rem;margin:2rem 0 .75rem}
-.legal-page p{font-size:.875rem;line-height:1.8;color:#4f565c;margin:0 0 .875rem}
-.legal-page ul{padding-left:1.375rem;color:#4f555b}
-.legal-page li{margin:.375rem 0}
-.legal-page a{color:var(--dadex-red);font-weight:600}
-@media(max-width:640px){.legal-page{padding:1.625rem 1.375rem}}
+.legal-page h1{
+  font-size:clamp(1.75rem,3.4vw,2.625rem);
+  letter-spacing:-.03em;
+  margin:0 0 1.5rem;
+  line-height:1.15;
+}
+.legal-page h2{
+  font-size:1.375rem;
+  margin:2.5rem 0 1rem;
+  padding-bottom:.625rem;
+  border-bottom:1px solid #eef0f2;
+  color:#17191c;
+  letter-spacing:-.01em;
+}
+.legal-page p{
+  font-size:.9375rem;
+  line-height:1.8;
+  color:#4f565c;
+  margin:0 0 1rem;
+  max-width:72ch;
+}
+.legal-page ul{
+  list-style:none;
+  padding-left:1.375rem;
+  margin:0 0 1rem;
+  color:#4f555b;
+  max-width:72ch;
+}
+.legal-page ul ul{padding-left:1.125rem;margin-top:.375rem}
+.legal-page li{
+  position:relative;
+  padding-left:1.25rem;
+  margin:.375rem 0;
+  font-size:.9375rem;
+  line-height:1.7;
+}
+.legal-page li::before{
+  content:"";
+  position:absolute;left:0;top:.65em;
+  width:.375rem;height:.375rem;border-radius:50%;
+  background:var(--dadex-red);opacity:.65;
+}
+.legal-page a{
+  color:var(--dadex-red);
+  font-weight:600;
+  text-decoration:underline;
+  text-underline-offset:2px;
+  text-decoration-thickness:1px;
+}
+.legal-page a:hover{color:var(--dadex-red-dark)}
+
+/* Trim excess space above the card on the policy page only */
+.core-page:has(.legal-page) .core-content{
+  padding-top:clamp(2rem,3vw,3rem);
+}
+
+@media(max-width:640px){
+  .legal-page{
+    padding:1.75rem 1.375rem 1.875rem;
+    border-radius:0 0 10px 10px;
+  }
+  .legal-page h1{font-size:1.75rem;margin-bottom:1.25rem}
+  .legal-page h2{font-size:1.1875rem;margin:2rem 0 .875rem}
+  .legal-page p,
+  .legal-page ul,
+  .legal-page li{font-size:.90625rem}
+}
 
 /* ============================================================
    19. PRODUCTS PAGE — STICKY CATEGORY STRIP
