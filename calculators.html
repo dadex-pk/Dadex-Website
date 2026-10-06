@@ -1,30 +1,32 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Technical Calculators | Dadex Eternit Limited</title>
-<meta content="Professional engineering calculators for pipe material selection, hydraulic design, thermal expansion, buried deflection, water hammer and unit conversion — supporting uPVC, HDPE, PPR and PPR-CT systems." name="description"/>
+<meta content="Professional engineering calculators for pipe material selection, hydraulic design, thermal expansion, buried deflection, water hammer and unit conversion — supporting UPVC, HDPE, PPR and PP-RCT systems." name="description"/>
 <meta content="#c90000" name="theme-color"/>
 <meta content="index, follow" name="robots"/>
 <meta content="strict-origin-when-cross-origin" name="referrer"/>
 <link href="https://www.dadex.com/calculators.html" rel="canonical"/>
-<!-- Open Graph -->
 <meta content="website" property="og:type"/>
 <meta content="Technical Calculators | Dadex Eternit Limited" property="og:title"/>
-<meta content="Professional engineering calculators for pipe material selection, hydraulic design, thermal expansion, buried deflection, water hammer and unit conversion — supporting uPVC, HDPE, PPR and PPR-CT systems." property="og:description"/>
+<meta content="Professional engineering calculators for pipe material selection, hydraulic design, thermal expansion, buried deflection, water hammer and unit conversion — supporting UPVC, HDPE, PPR and PP-RCT systems." property="og:description"/>
 <meta content="https://www.dadex.com/calculators.html" property="og:url"/>
 <meta content="Dadex Eternit Limited" property="og:site_name"/>
 <meta content="en_PK" property="og:locale"/>
+<meta content="https://www.dadex.com/assets/images/dadex-logo.png" property="og:image"/>
+<meta content="Dadex Eternit Limited" property="og:image:alt"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Technical Calculators | Dadex Eternit Limited" name="twitter:title"/>
+<meta content="Professional engineering calculators for pipe material selection, hydraulic design, thermal expansion, buried deflection, water hammer and unit conversion — supporting UPVC, HDPE, PPR and PP-RCT systems." name="twitter:description"/>
+<meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
 <link href="css/design-system.css" rel="stylesheet"/>
 <link href="css/calculators.css" rel="stylesheet"/>
-<link href="css/pass1-refinement.css"/><link href="css/pass3-internal-refinement.css" rel="stylesheet"/>
-<meta content="https://www.dadex.com/assets/images/dadex-logo.png" property="og:image"/><meta content="Dadex Eternit Limited" property="og:image:alt"/><meta content="summary_large_image" name="twitter:card"/><meta content="Technical Calculators | Dadex Eternit Limited" name="twitter:title"/><meta content="Professional engineering calculators for pipe material selection, hydraulic design, thermal expansion, buried deflection, water hammer and unit conversion — supporting uPVC, HDPE, PPR and PPR-CT systems." name="twitter:description"/><meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/><link href="css/pass4-final-qa.css" rel="stylesheet"/>
 </head>
 <body class="core-page">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -39,14 +41,14 @@
 <div class="container">
 <div class="core-kicker">Technical Resources</div>
 <h1>Engineering Calculators</h1>
-<p>A professional engineering suite for pipe material selection, hydraulic design and unit conversion — supporting uPVC, HDPE, PPR and PPR-CT systems.</p>
+<p>A professional engineering suite for pipe material selection, hydraulic design and unit conversion — supporting UPVC, HDPE, PPR and PP-RCT systems.</p>
 <div aria-label="Calculator controls" class="calc-controls" role="group">
 <span class="calc-version">Technical Specification Suite · V5.0</span>
 <button aria-label="Toggle unit system" class="calc-toggle" id="unitToggle" type="button">
-<i aria-hidden="true" class="fas fa-globe"></i> <span data-unit-label="">Metric</span>
+<i aria-hidden="true" class="fas fa-globe"></i> <span data-unit-label>Imperial</span>
 </button>
 <button aria-label="Toggle dark mode" class="calc-toggle" id="themeToggle" type="button">
-<i aria-hidden="true" class="fas fa-moon"></i> <span data-theme-label="">Dark</span>
+<i aria-hidden="true" class="fas fa-moon"></i> <span data-theme-label>Dark</span>
 </button>
 </div>
 </div>
@@ -54,10 +56,8 @@
 <section class="core-content">
 <div class="container">
 <div class="calculator-suite">
-<!-- Unit Converter -->
-<div class="section-label">
-<span class="highlight">GLOBAL UNIT</span> CONVERTER
-</div>
+
+<div class="section-label"><span class="highlight">GLOBAL UNIT</span> CONVERTER</div>
 <div class="converter-grid" id="converterGrid">
 <div class="input-group">
 <label for="q-bar">Pressure (BAR)</label>
@@ -69,22 +69,22 @@
 <input id="q-psi" inputmode="decimal" placeholder="PSI" step="any" type="number"/>
 </div>
 </div>
-<!-- Material Selector -->
-<div class="section-label">
-<span class="highlight">SELECT PIPE</span> MATERIAL
-</div>
+
+<div class="section-label"><span class="highlight">SELECT PIPE</span> MATERIAL</div>
 <div class="material-selector" id="materialSelector">
-<button class="mat-btn active" data-mat="UPVC" type="button">uPVC</button>
+<button class="mat-btn active" data-mat="UPVC" type="button">UPVC</button>
 <button class="mat-btn" data-mat="HDPE" type="button">HDPE 100</button>
 <button class="mat-btn" data-mat="PPR" type="button">PPR</button>
-<button class="mat-btn" data-mat="PPRCT" type="button">PPR-CT</button>
+<button class="mat-btn" data-mat="PPRCT" type="button">PP-RCT</button>
 <span id="current-mat-display">ACTIVE: UPVC</span>
 </div>
-<!-- Calculator Grid -->
+
 <div aria-label="Engineering calculators" class="calc-grid" id="calcGrid" role="region"></div>
+
 <p class="calc-disclaimer">
 <strong>Note:</strong> Results are indicative engineering estimates based on standard design formulas and typical material properties. Final product selection and system design should always be confirmed against the applicable Dadex technical documentation and specific project requirements.
 </p>
+
 </div>
 </div>
 </section>
@@ -94,7 +94,7 @@
 <script>
 /* ============================================================
    DADEX ENGINEERING CALCULATOR SUITE
-   Preserved from V5.0 — logic unchanged.
+   V5.0 — logic preserved; unit-label and display fixes applied.
    ============================================================ */
 
 const BAR_PSI = 14.5038;
@@ -216,7 +216,8 @@ const CALCULATORS = [
       const supOd = vals['sup-od'];
       if (supOd <= 0) return null;
       let spacing = (0.008 * supOd) + 0.55;
-      if (vals['sup-type'] === 'HDPE') spacing *= 0.8;
+      /* HDPE has a lower stiffness than rigid systems and needs tighter support. */
+      if (state.material === 'HDPE') spacing *= 0.8;
       if (vals['sup-type'] === 'vertical') spacing *= 1.3;
       return { primary:spacing, primaryUnit:'m' };
     },
@@ -284,6 +285,59 @@ const CALCULATORS = [
   }
 ];
 
+/* ---------- Unit maps ---------- */
+
+/* Map a metric unit label to its imperial equivalent. Used for
+   the input-group hints next to every field label. */
+const UNIT_TO_IMPERIAL = {
+  'mm':    'in',
+  'm':     'ft',
+  'm³/hr': 'GPM',
+  'L/s':   'GPM',
+  'm/s':   'ft/s',
+  'kg/m':  'lb/ft',
+  'N/m':   'lbf/ft',
+  '°C':    '°F',
+  'PN/Bar':'PSI',
+  'BAR':   'PSI',
+  'PSI':   'BAR',
+  'OD/t':  'OD/t',
+  '%':     '%',
+  'm/100m':'ft/100ft'
+};
+
+function toImperialUnitLabel(metricUnit){
+  return UNIT_TO_IMPERIAL[metricUnit] || metricUnit;
+}
+
+function toMetricUnitLabel(imperialUnit){
+  for (const [m, i] of Object.entries(UNIT_TO_IMPERIAL)){
+    if (i === imperialUnit) return m;
+  }
+  return imperialUnit;
+}
+
+/* Convert a numeric value from its metric unit to the imperial
+   equivalent. Returns null when no conversion is defined. */
+function convertToImperial(value, unit){
+  if (!unit) return null;
+  const u = unit.toLowerCase();
+  if (u === 'mm')    return value / 25.4;
+  if (u === 'm')     return value * 3.28084;
+  if (u === 'm³/hr') return value * 4.40287;
+  if (u === 'l/s')   return value * 15.8503;
+  if (u === 'm/s')   return value * 3.28084;
+  if (u === 'kg/m')  return value * 0.671969;
+  if (u === 'n/m')   return value * 0.0685218;
+  if (u === '°c')    return (value * 9 / 5) + 32;
+  if (u === 'bar')   return value * BAR_PSI;
+  /* m/100m → ft/100ft: head loss is a per-unit-length ratio; the
+     numeric value is unchanged, only the label changes. */
+  if (u === 'm/100m') return value;
+  return null;
+}
+
+/* ---------- State ---------- */
 const state = {
   material:'UPVC',
   unitSystem:'metric',
@@ -330,7 +384,9 @@ function renderCalculators(){
 
       const label = document.createElement('label');
       label.htmlFor = inp.id;
-      const unitLabel = state.unitSystem === 'metric' ? inp.unit : getImperialUnit(inp.id, inp.unit);
+      const unitLabel = state.unitSystem === 'metric'
+        ? inp.unit
+        : toImperialUnitLabel(inp.unit);
       label.innerHTML = `${inp.label} <span class="unit-hint">(${unitLabel})</span>`;
       group.appendChild(label);
 
@@ -450,13 +506,6 @@ function updateConverterLabels(){
   if (labels[1]) labels[1].textContent = `Pressure (${isMetric ? 'PSI' : 'BAR'})`;
 }
 
-function getImperialUnit(inputId, metricUnit){
-  const map = { 'mm':'in', 'm':'ft', 'm³/hr':'GPM', '°C':'°F', 'kg/m':'lb/ft' };
-  if (inputId.includes('d') || inputId.includes('od')) return 'in';
-  if (metricUnit === 'mm' && !inputId.includes('t')) return 'in';
-  return map[metricUnit] || metricUnit;
-}
-
 /* ---------- Compute ---------- */
 let computeTimeout = null;
 function scheduleCompute(){
@@ -498,29 +547,37 @@ function computeAll(){
     const statusDiv = document.getElementById(`res-status-${cfg.id}`);
 
     if (result && result.primary !== undefined && !isNaN(result.primary) && isFinite(result.primary)) {
-      const primary = result.primary;
-      const primaryUnit = result.primaryUnit || '';
-      const secondary = result.secondary;
-      const secondaryUnit = result.secondaryUnit || '';
+      const isImperial = state.unitSystem === 'imperial';
 
-      let display = primary.toFixed(2);
-      if (state.unitSystem === 'imperial') {
-        const converted = convertToImperial(cfg.id, primary, primaryUnit);
-        if (converted !== null) display = converted.toFixed(2);
-      }
-      valDiv.textContent = `${display} ${primaryUnit}`;
-
-      if (secondary !== undefined && !isNaN(secondary) && isFinite(secondary)) {
-        let secDisplay = secondary.toFixed(2);
-        if (state.unitSystem === 'imperial') {
-          const conv = convertToImperial(cfg.id, secondary, secondaryUnit);
-          if (conv !== null) secDisplay = conv.toFixed(2);
+      /* Primary value */
+      let displayValue = result.primary.toFixed(2);
+      let displayUnit = result.primaryUnit || '';
+      if (isImperial) {
+        const converted = convertToImperial(result.primary, result.primaryUnit);
+        if (converted !== null) {
+          displayValue = converted.toFixed(2);
+          displayUnit = toImperialUnitLabel(result.primaryUnit);
         }
-        subDiv.textContent = `${secDisplay} ${secondaryUnit}`;
+      }
+      valDiv.textContent = `${displayValue} ${displayUnit}`;
+
+      /* Secondary value */
+      if (result.secondary !== undefined && !isNaN(result.secondary) && isFinite(result.secondary)) {
+        let secValue = result.secondary.toFixed(2);
+        let secUnit = result.secondaryUnit || '';
+        if (isImperial) {
+          const conv = convertToImperial(result.secondary, result.secondaryUnit);
+          if (conv !== null) {
+            secValue = conv.toFixed(2);
+            secUnit = toImperialUnitLabel(result.secondaryUnit);
+          }
+        }
+        subDiv.textContent = `${secValue} ${secUnit}`;
       } else {
         subDiv.textContent = '';
       }
 
+      /* Status badge */
       if (cfg.status) {
         const status = cfg.status(result);
         statusDiv.textContent = status.label;
@@ -539,21 +596,6 @@ function computeAll(){
       statusDiv.style.display = 'none';
     }
   });
-}
-
-/* ---------- Unit conversion ---------- */
-function convertToImperial(calcId, value, unit){
-  if (!unit) return null;
-  const u = unit.toLowerCase();
-  if (u === 'mm') return value / 25.4;
-  if (u === 'm' || u === 'm/100m') return value * 3.28084;
-  if (u === 'm³/hr') return value * 4.40287;
-  if (u === 'l/s') return value * 15.8503;
-  if (u === 'kg/m') return value * 0.671969;
-  if (u === 'n/m') return value * 0.0685218;
-  if (u === '°c') return (value * 9 / 5) + 32;
-  if (u.includes('bar')) return value * BAR_PSI;
-  return null;
 }
 
 /* ---------- Copy ---------- */
@@ -608,17 +650,20 @@ function initThemeToggle(){
   const suite = document.querySelector('.calculator-suite');
   const btn = document.getElementById('themeToggle');
   const label = btn.querySelector('[data-theme-label]');
-  if (state.darkMode) {
-    suite.setAttribute('data-theme','dark');
-    label.textContent = 'Light';
-    btn.querySelector('i').className = 'fas fa-sun';
-  }
+  const icon = btn.querySelector('i');
+
+  const applyTheme = (dark) => {
+    if (dark) suite.setAttribute('data-theme','dark');
+    else suite.removeAttribute('data-theme');
+    label.textContent = dark ? 'Light' : 'Dark';
+    icon.className = dark ? 'fas fa-sun' : 'fas fa-moon';
+  };
+
+  applyTheme(state.darkMode);
+
   btn.addEventListener('click', () => {
     state.darkMode = !state.darkMode;
-    if (state.darkMode) suite.setAttribute('data-theme','dark');
-    else suite.removeAttribute('data-theme');
-    label.textContent = state.darkMode ? 'Light' : 'Dark';
-    btn.querySelector('i').className = state.darkMode ? 'fas fa-sun' : 'fas fa-moon';
+    applyTheme(state.darkMode);
     localStorage.setItem('dadex-dark', String(state.darkMode));
   });
 }
@@ -627,11 +672,18 @@ function initThemeToggle(){
 function initUnitToggle(){
   const btn = document.getElementById('unitToggle');
   const label = btn.querySelector('[data-unit-label]');
+
+  const applyUnit = () => {
+    label.textContent = state.unitSystem === 'metric' ? 'Imperial' : 'Metric';
+  };
+  applyUnit();
+
   btn.addEventListener('click', () => {
     state.unitSystem = state.unitSystem === 'metric' ? 'imperial' : 'metric';
-    label.textContent = state.unitSystem === 'metric' ? 'Metric' : 'Imperial';
+    applyUnit();
     updateConverterLabels();
-    computeAll();
+    /* Re-render inputs so their unit hints update, then recompute. */
+    renderCalculators();
   });
 }
 
