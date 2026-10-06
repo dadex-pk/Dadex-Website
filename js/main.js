@@ -17,6 +17,9 @@
    ============================================================ */
 
 const MOBILE_NAV_MAX = 900;
+const COMPANY_FOUNDED_YEAR = 1959;
+const COMPANY_ANNIVERSARY_MONTH = 3; /* April (0-indexed) */
+const COMPANY_ANNIVERSARY_DAY = 13;
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadSharedComponents();
@@ -35,13 +38,35 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 /* ------------------------------------------------------------
+   Utilities
+   ------------------------------------------------------------ */
+
+/* Escape a string for safe inclusion in innerHTML. */
+function escapeHTML(value){
+  return String(value ?? '').replace(/[&<>"']/g, m => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]
+  ));
+}
+
+/* Trailing-edge debounce. Returns a function that postpones the
+   call until `wait` ms have elapsed since the last invocation. */
+function debounce(fn, wait){
+  let timer = null;
+  return function debounced(...args){
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), wait);
+  };
+}
+
+
+/* ------------------------------------------------------------
    Shared header / footer injection
    ------------------------------------------------------------ */
 async function loadSharedComponents(){
   const mounts = document.querySelectorAll('[data-component]');
   if (!mounts.length) return;
   const base = new URL('.', window.location.href);
-  await Promise.all(Array.from(mounts).map(async mount => {
+  await Promise.allSettled(Array.from(mounts).map(async mount => {
     const name = mount.getAttribute('data-component');
     if (name !== 'header' && name !== 'footer') return;
     try {
@@ -60,12 +85,16 @@ async function loadSharedComponents(){
    Dynamic text (footer year, company age)
    ------------------------------------------------------------ */
 function initDynamicSiteText(){
-  const foundedYear = 1959;
   const now = new Date();
-  const anniversary = new Date(now.getFullYear(), 3, 13);
+  const anniversary = new Date(
+    now.getFullYear(),
+    COMPANY_ANNIVERSARY_MONTH,
+    COMPANY_ANNIVERSARY_DAY
+  );
   const age = now < anniversary
-    ? now.getFullYear() - foundedYear - 1
-    : now.getFullYear() - foundedYear;
+    ? now.getFullYear() - COMPANY_FOUNDED_YEAR - 1
+    : now.getFullYear() - COMPANY_FOUNDED_YEAR;
+
   document.querySelectorAll('[data-current-year]').forEach(el => {
     el.textContent = String(now.getFullYear());
   });
@@ -112,6 +141,10 @@ function initNavigation(){
     if (restoreFocus && hamburger) hamburger.focus();
   };
 
+  const anyMenuOpen = () =>
+    (nav && nav.classList.contains('open')) ||
+    !!document.querySelector('.dropdown-menu.open');
+
   /* Hamburger open / close */
   if (hamburger && nav) {
     hamburger.addEventListener('click', () => {
@@ -133,7 +166,7 @@ function initNavigation(){
     const menu = menuId ? document.getElementById(menuId) : toggle.nextElementSibling;
     if (!menu) return;
 
-    /* Mobile: tap toggles the dropdown; click on the parent does not navigate. */
+    /* Mobile: tap toggles the dropdown; the toggle link does not navigate. */
     toggle.addEventListener('click', event => {
       if (isMobile()) {
         event.preventDefault();
@@ -144,7 +177,7 @@ function initNavigation(){
     });
 
     /* Desktop: hover opens via CSS; focus-within also opens via CSS.
-       Sync aria-expanded with real focus state so assistive tech knows. */
+       Sync aria-expanded so assistive tech reflects real focus state. */
     toggle.addEventListener('focusin', () => {
       if (!isMobile()) toggle.setAttribute('aria-expanded', 'true');
     });
@@ -171,7 +204,6 @@ function initNavigation(){
   /* Closing the mobile drawer when a real navigation link is clicked. */
   document.querySelectorAll('.site-navigation a').forEach(link => {
     link.addEventListener('click', () => {
-      /* Skip the toggle itself on mobile — its own handler manages state. */
       if (link.classList.contains('dropdown-toggle') && isMobile()) return;
       closeMenus();
     });
@@ -183,26 +215,30 @@ function initNavigation(){
     closeMenus();
   });
 
-  /* Global Escape closes everything. */
+  /* Global Escape — only act if something is actually open.
+     Prevents focus being stolen to the hamburger when the user is
+     pressing Escape inside a form field, dialog, or search box. */
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') closeMenus({ restoreFocus: true });
+    if (event.key !== 'Escape') return;
+    if (!anyMenuOpen()) return;
+    closeMenus({ restoreFocus: true });
   });
 
-  /* Reset state when the viewport crosses back to desktop. */
-  window.addEventListener('resize', () => {
-    if (!isMobile()) {
-      document.body.classList.remove('nav-open');
-      if (nav) nav.classList.remove('open');
-      if (hamburger) {
-        hamburger.setAttribute('aria-expanded', 'false');
-        hamburger.setAttribute('aria-label', 'Open navigation');
-      }
-      document.querySelectorAll('.dropdown-menu.open')
-        .forEach(menu => menu.classList.remove('open'));
-      document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]')
-        .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+  /* Reset state when the viewport crosses back to desktop. Debounced so
+     dragging a window edge does not thrash the DOM on every pixel. */
+  window.addEventListener('resize', debounce(() => {
+    if (isMobile()) return;
+    document.body.classList.remove('nav-open');
+    if (nav) nav.classList.remove('open');
+    if (hamburger) {
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open navigation');
     }
-  }, { passive: true });
+    document.querySelectorAll('.dropdown-menu.open')
+      .forEach(menu => menu.classList.remove('open'));
+    document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]')
+      .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+  }, 150), { passive: true });
 }
 
 
@@ -287,7 +323,9 @@ function initMailtoForm(){
       const message = String(data.get('message') || '').trim();
       if (!name || !email) { form.reportValidity(); return; }
       const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-      window.location.href = `mailto:info@dadex.com.pk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href =
+        `mailto:info@dadex.com.pk?subject=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(body)}`;
     });
   });
 }
@@ -372,7 +410,7 @@ function initInvestorPanels(){
 
   links.forEach(a => a.addEventListener('click', () => setTimeout(sync, 0)));
   window.addEventListener('hashchange', sync);
-  window.addEventListener('resize', sync);
+  window.addEventListener('resize', debounce(sync, 150));
   sync();
 }
 
@@ -405,10 +443,10 @@ function initSiteSearch(){
     count.textContent = `${rows.length} result${rows.length === 1 ? '' : 's'} found`;
     grid.innerHTML = rows.map(p => `
       <article class="search-result-card">
-        <span class="result-type">${p[2]}</span>
-        <h3>${p[0]}</h3>
-        <p>${p[3]}</p>
-        <a href="${p[1]}">Open page <i class="fas fa-arrow-right"></i></a>
+        <span class="result-type">${escapeHTML(p[2])}</span>
+        <h3>${escapeHTML(p[0])}</h3>
+        <p>${escapeHTML(p[3])}</p>
+        <a href="${escapeHTML(p[1])}">Open page <i class="fas fa-arrow-right"></i></a>
       </article>`).join('');
     empty.hidden = rows.length !== 0;
   };
@@ -487,7 +525,7 @@ function initDEXPERT(){
     ['Roofing', 'products.html#roofing']
   ];
 
-  const isProduct = path.startsWith('product') && path !== 'products.html' && path !== 'product-pe-gas.html';
+  const isProduct = path.startsWith('product') && path !== 'products.html';
   const isInvestor = /investor|financial-reports/i.test(path);
   const isResources = /literature|calculators|news/i.test(path);
   const currentProduct = isProduct ? title : '';
@@ -552,10 +590,10 @@ function initDEXPERT(){
     body.innerHTML = `
       <button class="dexpert-back" type="button">← Back</button>
       <div class="dexpert-result">
-        <span>${label}</span>
-        <h4>${heading}</h4>
-        <p>${message}</p>
-        <a class="dexpert-result-link" href="${href}">${cta} →</a>
+        <span>${escapeHTML(label)}</span>
+        <h4>${escapeHTML(heading)}</h4>
+        <p>${escapeHTML(message)}</p>
+        <a class="dexpert-result-link" href="${escapeHTML(href)}">${escapeHTML(cta)} →</a>
       </div>`;
     body.querySelector('.dexpert-back').addEventListener('click', home);
   }
@@ -571,7 +609,7 @@ function initDEXPERT(){
     const product = productLinks.find(p =>
       q.includes(p[0].toLowerCase()) || p[0].toLowerCase().includes(q));
     if (product) {
-      result('PRODUCT', escapeHTML(product[0]),
+      result('PRODUCT', product[0],
         'Open the product page for its approved information.',
         product[1], 'Open product');
       return;
@@ -579,7 +617,7 @@ function initDEXPERT(){
     const app = apps.find(a =>
       q.includes(a[0].toLowerCase()) || a[0].toLowerCase().includes(q));
     if (app) {
-      result('APPLICATION', escapeHTML(app[0]),
+      result('APPLICATION', app[0],
         'Explore the systems listed for this application area.',
         app[1], 'Explore');
       return;
@@ -616,19 +654,30 @@ function initDEXPERT(){
   fab.addEventListener('click', () => dialog.classList.contains('open') ? close() : open());
   dialog.querySelector('.dexpert-close').addEventListener('click', close);
 
+  /* Escape closes the dialog and returns focus to the FAB.
+     Guarded so the handler does nothing when the dialog is closed —
+     otherwise Escape anywhere on the site would steal focus. */
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { close(); fab.focus(); }
+    if (e.key !== 'Escape') return;
+    if (!dialog.classList.contains('open')) return;
+    close();
+    fab.focus();
   });
-  document.addEventListener('click', e => {
-    if (e.target.closest('[data-open-dexpert]')) { e.preventDefault(); open(); return; }
-    if (dialog.classList.contains('open') && !dialog.contains(e.target) && !fab.contains(e.target)) close();
-  });
-}
 
-function escapeHTML(value){
-  return String(value).replace(/[&<>"']/g, m => (
-    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]
-  ));
+  /* Click outside closes the dialog. Also handles [data-open-dexpert]
+     triggers elsewhere on the site. */
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-open-dexpert]')) {
+      e.preventDefault();
+      open();
+      return;
+    }
+    if (dialog.classList.contains('open') &&
+        !dialog.contains(e.target) &&
+        !fab.contains(e.target)) {
+      close();
+    }
+  });
 }
 
 
