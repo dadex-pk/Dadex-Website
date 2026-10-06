@@ -37,22 +37,45 @@
 </div>
 </div>
 <main id="main-content">
+
 <section class="core-hero calc-hero">
 <div class="container">
 <div class="core-kicker">Technical Resources</div>
 <h1>Engineering Calculators</h1>
 <p>A professional engineering suite for pipe material selection, hydraulic design and unit conversion — supporting UPVC, HDPE, PPR and PP-RCT systems.</p>
-<div aria-label="Calculator controls" class="calc-controls" role="group">
-<span class="calc-version">Technical Specification Suite · V5.0</span>
-<button aria-label="Toggle unit system" class="calc-toggle" id="unitToggle" type="button">
-<i aria-hidden="true" class="fas fa-globe"></i> <span data-unit-label>Imperial</span>
-</button>
-<button aria-label="Toggle dark mode" class="calc-toggle" id="themeToggle" type="button">
-<i aria-hidden="true" class="fas fa-moon"></i> <span data-theme-label>Dark</span>
-</button>
-</div>
 </div>
 </section>
+
+<div class="calc-print-header" aria-hidden="true">
+<div>
+<strong>Dadex Eternit Limited — Technical Calculators</strong><br/>
+<small>Indicative engineering results. Confirm against approved Dadex documentation before specification.</small>
+</div>
+<div>
+<small>Printed: <span data-print-date>—</span></small>
+</div>
+</div>
+
+<div class="calc-toolbar" role="region" aria-label="Calculator controls">
+<div class="container calc-toolbar-inner">
+<div class="material-selector" id="materialSelector" aria-label="Select pipe material">
+<button class="mat-btn active" data-mat="UPVC" type="button">uPVC</button>
+<button class="mat-btn" data-mat="HDPE" type="button">HDPE 100</button>
+<button class="mat-btn" data-mat="PPR" type="button">PPR</button>
+<button class="mat-btn" data-mat="PPRCT" type="button">PP-RCT</button>
+<span id="current-mat-display">ACTIVE: UPVC</span>
+</div>
+<div class="calc-toolbar-actions" role="group" aria-label="Display and output options">
+<button aria-label="Toggle unit system" class="calc-action" id="unitToggle" type="button">
+<i aria-hidden="true" class="fas fa-globe"></i> <span data-unit-label>Imperial</span>
+</button>
+<button aria-label="Print or save these results as PDF" class="calc-action" id="printBtn" type="button">
+<i aria-hidden="true" class="fas fa-file-pdf"></i> Print / Save PDF
+</button>
+</div>
+</div>
+</div>
+
 <section class="core-content">
 <div class="container">
 <div class="calculator-suite">
@@ -70,15 +93,6 @@
 </div>
 </div>
 
-<div class="section-label"><span class="highlight">SELECT PIPE</span> MATERIAL</div>
-<div class="material-selector" id="materialSelector">
-<button class="mat-btn active" data-mat="UPVC" type="button">UPVC</button>
-<button class="mat-btn" data-mat="HDPE" type="button">HDPE 100</button>
-<button class="mat-btn" data-mat="PPR" type="button">PPR</button>
-<button class="mat-btn" data-mat="PPRCT" type="button">PP-RCT</button>
-<span id="current-mat-display">ACTIVE: UPVC</span>
-</div>
-
 <div aria-label="Engineering calculators" class="calc-grid" id="calcGrid" role="region"></div>
 
 <p class="calc-disclaimer">
@@ -94,7 +108,7 @@
 <script>
 /* ============================================================
    DADEX ENGINEERING CALCULATOR SUITE
-   V5.0 — logic preserved; unit-label and display fixes applied.
+   V5.0 — toolbar, print, unit conversion.
    ============================================================ */
 
 const BAR_PSI = 14.5038;
@@ -216,7 +230,6 @@ const CALCULATORS = [
       const supOd = vals['sup-od'];
       if (supOd <= 0) return null;
       let spacing = (0.008 * supOd) + 0.55;
-      /* HDPE has a lower stiffness than rigid systems and needs tighter support. */
       if (state.material === 'HDPE') spacing *= 0.8;
       if (vals['sup-type'] === 'vertical') spacing *= 1.3;
       return { primary:spacing, primaryUnit:'m' };
@@ -285,40 +298,16 @@ const CALCULATORS = [
   }
 ];
 
-/* ---------- Unit maps ---------- */
-
-/* Map a metric unit label to its imperial equivalent. Used for
-   the input-group hints next to every field label. */
 const UNIT_TO_IMPERIAL = {
-  'mm':    'in',
-  'm':     'ft',
-  'm³/hr': 'GPM',
-  'L/s':   'GPM',
-  'm/s':   'ft/s',
-  'kg/m':  'lb/ft',
-  'N/m':   'lbf/ft',
-  '°C':    '°F',
-  'PN/Bar':'PSI',
-  'BAR':   'PSI',
-  'PSI':   'BAR',
-  'OD/t':  'OD/t',
-  '%':     '%',
-  'm/100m':'ft/100ft'
+  'mm':'in', 'm':'ft', 'm³/hr':'GPM', 'L/s':'GPM', 'm/s':'ft/s',
+  'kg/m':'lb/ft', 'N/m':'lbf/ft', '°C':'°F', 'PN/Bar':'PSI',
+  'BAR':'PSI', 'PSI':'BAR', 'OD/t':'OD/t', '%':'%', 'm/100m':'ft/100ft'
 };
 
 function toImperialUnitLabel(metricUnit){
   return UNIT_TO_IMPERIAL[metricUnit] || metricUnit;
 }
 
-function toMetricUnitLabel(imperialUnit){
-  for (const [m, i] of Object.entries(UNIT_TO_IMPERIAL)){
-    if (i === imperialUnit) return m;
-  }
-  return imperialUnit;
-}
-
-/* Convert a numeric value from its metric unit to the imperial
-   equivalent. Returns null when no conversion is defined. */
 function convertToImperial(value, unit){
   if (!unit) return null;
   const u = unit.toLowerCase();
@@ -331,17 +320,13 @@ function convertToImperial(value, unit){
   if (u === 'n/m')   return value * 0.0685218;
   if (u === '°c')    return (value * 9 / 5) + 32;
   if (u === 'bar')   return value * BAR_PSI;
-  /* m/100m → ft/100ft: head loss is a per-unit-length ratio; the
-     numeric value is unchanged, only the label changes. */
   if (u === 'm/100m') return value;
   return null;
 }
 
-/* ---------- State ---------- */
 const state = {
   material:'UPVC',
   unitSystem:'metric',
-  darkMode: localStorage.getItem('dadex-dark') === 'true',
   inputs:{},
   results:{}
 };
@@ -496,7 +481,8 @@ function renderMaterialSelector(){
   document.querySelectorAll('.mat-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.mat === state.material);
   });
-  document.getElementById('current-mat-display').textContent = `ACTIVE: ${state.material}`;
+  const display = document.getElementById('current-mat-display');
+  if (display) display.textContent = `ACTIVE: ${state.material}`;
 }
 
 function updateConverterLabels(){
@@ -549,7 +535,6 @@ function computeAll(){
     if (result && result.primary !== undefined && !isNaN(result.primary) && isFinite(result.primary)) {
       const isImperial = state.unitSystem === 'imperial';
 
-      /* Primary value */
       let displayValue = result.primary.toFixed(2);
       let displayUnit = result.primaryUnit || '';
       if (isImperial) {
@@ -561,7 +546,6 @@ function computeAll(){
       }
       valDiv.textContent = `${displayValue} ${displayUnit}`;
 
-      /* Secondary value */
       if (result.secondary !== undefined && !isNaN(result.secondary) && isFinite(result.secondary)) {
         let secValue = result.secondary.toFixed(2);
         let secUnit = result.secondaryUnit || '';
@@ -577,7 +561,6 @@ function computeAll(){
         subDiv.textContent = '';
       }
 
-      /* Status badge */
       if (cfg.status) {
         const status = cfg.status(result);
         statusDiv.textContent = status.label;
@@ -645,29 +628,6 @@ function initMaterialSelector(){
   });
 }
 
-/* ---------- Theme toggle ---------- */
-function initThemeToggle(){
-  const suite = document.querySelector('.calculator-suite');
-  const btn = document.getElementById('themeToggle');
-  const label = btn.querySelector('[data-theme-label]');
-  const icon = btn.querySelector('i');
-
-  const applyTheme = (dark) => {
-    if (dark) suite.setAttribute('data-theme','dark');
-    else suite.removeAttribute('data-theme');
-    label.textContent = dark ? 'Light' : 'Dark';
-    icon.className = dark ? 'fas fa-sun' : 'fas fa-moon';
-  };
-
-  applyTheme(state.darkMode);
-
-  btn.addEventListener('click', () => {
-    state.darkMode = !state.darkMode;
-    applyTheme(state.darkMode);
-    localStorage.setItem('dadex-dark', String(state.darkMode));
-  });
-}
-
 /* ---------- Unit toggle ---------- */
 function initUnitToggle(){
   const btn = document.getElementById('unitToggle');
@@ -682,9 +642,40 @@ function initUnitToggle(){
     state.unitSystem = state.unitSystem === 'metric' ? 'imperial' : 'metric';
     applyUnit();
     updateConverterLabels();
-    /* Re-render inputs so their unit hints update, then recompute. */
     renderCalculators();
   });
+}
+
+/* ---------- Print / Save PDF ---------- */
+function initPrint(){
+  const btn = document.getElementById('printBtn');
+  const dateSpan = document.querySelector('[data-print-date]');
+
+  const stampDate = () => {
+    if (!dateSpan) return;
+    const d = new Date();
+    dateSpan.textContent = d.toLocaleDateString('en-GB', {
+      day: '2-digit', month: 'short', year: 'numeric'
+    }) + ' · ' + d.toLocaleTimeString('en-GB', {
+      hour: '2-digit', minute: '2-digit'
+    });
+  };
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      stampDate();
+      window.print();
+    });
+  }
+
+  /* Also catch Ctrl/Cmd+P and browser menu print. */
+  window.addEventListener('beforeprint', stampDate);
+  if (window.matchMedia) {
+    const mq = window.matchMedia('print');
+    const handler = (e) => { if (e.matches) stampDate(); };
+    if (mq.addEventListener) mq.addEventListener('change', handler);
+    else if (mq.addListener) mq.addListener(handler);
+  }
 }
 
 /* ---------- Init ---------- */
@@ -697,8 +688,8 @@ function init(){
   renderAll();
   initConverter();
   initMaterialSelector();
-  initThemeToggle();
   initUnitToggle();
+  initPrint();
 }
 document.addEventListener('DOMContentLoaded', init);
 </script>
