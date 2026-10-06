@@ -54,7 +54,6 @@
 <div class="contact-layout">
 
 <div>
-<!-- Head Office -->
 <div class="contact-office">
 <div class="core-kicker muted-kicker">Head Office</div>
 <h2>Dadex House</h2>
@@ -65,7 +64,6 @@
 <p><strong>Website:</strong> www.dadex.com</p>
 </div>
 
-<!-- Factories -->
 <section class="core-section">
 <div class="core-section-head">
 <div id="factories">
@@ -90,7 +88,6 @@
 </div>
 </section>
 
-<!-- Sales Offices -->
 <section class="core-section" id="sales-offices">
 <div class="core-section-head">
 <div>
@@ -139,7 +136,6 @@
 </div>
 </section>
 
-<!-- Technical Support CTA -->
 <div class="core-cta" id="technical-support">
 <div>
 <h2>Need product or technical assistance?</h2>
@@ -150,20 +146,19 @@
 
 </div>
 
-<!-- Contact form -->
 <aside class="contact-form" id="project-enquiry">
 <span aria-hidden="true" class="contact-anchor" id="product-enquiry"></span>
 <h2>Send a Message</h2>
 <p>Tell us what you need and we will route your enquiry to the appropriate team.</p>
-<form action="mailto:info@dadex.com.pk" enctype="text/plain" id="information-request" method="post">
+<form action="mailto:info@dadex.com.pk" data-mailto-form enctype="text/plain" id="information-request" method="post">
 <label for="name">Name</label>
-<input autocomplete="name" id="name" name="Name" required type="text"/>
+<input autocomplete="name" id="name" name="name" required type="text"/>
 
 <label for="email">Email</label>
-<input autocomplete="email" id="email" name="Email" required type="email"/>
+<input autocomplete="email" id="email" name="email" required type="email"/>
 
 <label for="subject">Subject</label>
-<select id="subject" name="Subject">
+<select id="subject" name="subject">
 <option>General Inquiry</option>
 <option>Product Inquiry</option>
 <option>Technical Support</option>
@@ -173,10 +168,9 @@
 </select>
 
 <label for="message">Message</label>
-<textarea autocomplete="off" id="message" name="Message" required></textarea>
+<textarea autocomplete="off" id="message" name="message" required></textarea>
 
 <button class="btn btn-primary" type="submit">Send Message <i class="fas fa-paper-plane"></i></button>
-<p class="contact-note">This form opens your email client. A server-side contact service can be connected later if required.</p>
 </form>
 </aside>
 
