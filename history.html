@@ -26,6 +26,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
 <link href="css/design-system.css" rel="stylesheet"/>
+<link href="css/history.css" rel="stylesheet"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -498,47 +499,130 @@
 (function(){
   if (!('IntersectionObserver' in window)) return;
 
-  var chips = Array.prototype.slice.call(document.querySelectorAll('.history-decade-chip'));
-  if (!chips.length) return;
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var map = {};
-  var targets = [];
+  /* ============================================================
+     1. Decade chips — scroll-spy
+     Highlights the chip whose era is currently dominant in view.
+     ============================================================ */
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.history-decade-chip'));
+  var chipMap = {};
+  var chipTargets = [];
 
   chips.forEach(function(chip){
     var id = chip.getAttribute('href').slice(1);
     var el = document.getElementById(id);
     if (!el) return;
-    map[id] = chip;
-    targets.push(el);
+    chipMap[id] = chip;
+    chipTargets.push(el);
   });
 
-  if (!targets.length) return;
-
-  var setActive = function(id){
-    chips.forEach(function(c){ c.classList.toggle('is-active', c === map[id]); });
+  var setActiveChip = function(id){
+    chips.forEach(function(c){
+      c.classList.toggle('is-active', c === chipMap[id]);
+    });
   };
 
-  var observer = new IntersectionObserver(function(entries){
-    var best = null;
-    entries.forEach(function(e){
-      if (!e.isIntersecting) return;
-      if (!best || e.intersectionRatio > best.intersectionRatio){
-        best = e;
-      }
+  if (chipTargets.length) {
+    var chipObserver = new IntersectionObserver(function(entries){
+      var best = null;
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        if (!best || e.intersectionRatio > best.intersectionRatio) best = e;
+      });
+      if (best && best.target.id) setActiveChip(best.target.id);
+    }, {
+      rootMargin: '-200px 0px -55% 0px',
+      threshold: [0, .25, .5]
     });
-    if (best && best.target.id) setActive(best.target.id);
-  }, {
-    rootMargin: '-200px 0px -55% 0px',
-    threshold: [0, .25, .5]
-  });
 
-  targets.forEach(function(t){ observer.observe(t); });
+    chipTargets.forEach(function(t){ chipObserver.observe(t); });
 
-  chips.forEach(function(chip){
-    chip.addEventListener('click', function(){
-      setActive(chip.getAttribute('href').slice(1));
+    chips.forEach(function(chip){
+      chip.addEventListener('click', function(){
+        setActiveChip(chip.getAttribute('href').slice(1));
+      });
     });
-  });
+  }
+
+  /* ============================================================
+     2. Reveal on scroll
+     Assigns --event-index to each timeline event, and computes a
+     --marker-delay that scales with position so each marker pops
+     as the drawn timeline line reaches it. Reveals each section
+     once, then unobserves.
+     ============================================================ */
+
+  if (!prefersReduced) {
+    var LINE_DRAW_MS = 1400;
+    var MARKER_BASE_DELAY_MS = 400;
+
+    document.querySelectorAll('.history-era').forEach(function(era){
+      var events = era.querySelectorAll('.history-timeline > .history-event');
+      var total = events.length;
+      Array.prototype.forEach.call(events, function(ev, i){
+        ev.style.setProperty('--event-index', i);
+        /* Marker delay spreads across the line draw. For a single-event
+           era (total === 1), the marker lands at the midpoint. */
+        var ratio = total > 1 ? i / (total - 1) : 0.5;
+        var delay = Math.round(MARKER_BASE_DELAY_MS + ratio * (LINE_DRAW_MS - MARKER_BASE_DELAY_MS));
+        ev.style.setProperty('--marker-delay', delay + 'ms');
+      });
+    });
+
+    var revealTargets = document.querySelectorAll(
+      '.history-intro, .history-era, .history-legacy'
+    );
+    if (revealTargets.length) {
+      var revealObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-revealed');
+          /* Once revealed, stop observing — do not replay on scroll up. */
+          revealObserver.unobserve(entry.target);
+        });
+      }, {
+        rootMargin: '-10% 0px -15% 0px',
+        threshold: 0
+      });
+
+      revealTargets.forEach(function(el){ revealObserver.observe(el); });
+    }
+  }
+
+  /* ============================================================
+     3. Hero parallax
+     Sets --hero-scroll on the hero element, which css/history.css
+     reads on the ::before pseudo-element. rAF-throttled, passive,
+     and gated on prefers-reduced-motion.
+     ============================================================ */
+
+  if (!prefersReduced) {
+    var hero = document.querySelector('.history-hero');
+    if (hero) {
+      var ticking = false;
+
+      var updateHero = function(){
+        var rect = hero.getBoundingClientRect();
+        /* Only run while the hero is at or near the top of the viewport. */
+        if (rect.bottom > -200) {
+          /* 0.25× scroll rate — subtle lag without obvious motion. */
+          var offset = Math.max(0, window.scrollY) * 0.25;
+          hero.style.setProperty('--hero-scroll', offset.toFixed(1));
+        }
+        ticking = false;
+      };
+
+      var onScroll = function(){
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updateHero);
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      updateHero();
+    }
+  }
 })();
 </script>
 </body>
