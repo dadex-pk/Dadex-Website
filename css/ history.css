@@ -1,0 +1,212 @@
+/* ============================================================
+   HISTORY — page animations for history.html
+   Loaded only from history.html, after design-system.css.
+
+   Contract with history.html's inline script:
+     - .history-intro, .history-era, .history-legacy receive
+       .is-revealed when they scroll into view.
+     - Each .history-event has --event-index set inline (0, 1, 2…)
+       and --marker-delay computed to line up with the drawn timeline.
+     - .history-hero receives --hero-scroll on scroll for parallax.
+
+   Under prefers-reduced-motion: reduce, this file has no effect
+   beyond hiding nothing and showing everything.
+   ============================================================ */
+
+
+/* ============================================================
+   1. REVEAL & MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ----- 1a. Intro — kicker, heading, paragraph ----- */
+  .history-intro .history-kicker,
+  .history-intro h2,
+  .history-intro p {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity .7s cubic-bezier(.2, .65, .2, 1),
+      transform .7s cubic-bezier(.2, .65, .2, 1);
+  }
+  .history-intro h2 { transition-delay: .08s; }
+  .history-intro p  { transition-delay: .16s; }
+
+  .history-intro.is-revealed .history-kicker,
+  .history-intro.is-revealed h2,
+  .history-intro.is-revealed p {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ----- 1b. Era headers ----- */
+  .history-era-header .history-era-kicker,
+  .history-era-header h3,
+  .history-era-header p {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity .6s cubic-bezier(.2, .65, .2, 1),
+      transform .6s cubic-bezier(.2, .65, .2, 1);
+  }
+  .history-era-header h3 { transition-delay: .06s; }
+  .history-era-header p  { transition-delay: .14s; }
+
+  .history-era.is-revealed .history-era-kicker,
+  .history-era.is-revealed h3,
+  .history-era.is-revealed p {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ----- 1c. Timeline events — slide from their side ----- */
+  .history-event {
+    opacity: 0;
+    transition:
+      opacity .6s cubic-bezier(.2, .65, .2, 1),
+      transform .6s cubic-bezier(.2, .65, .2, 1);
+    transition-delay: calc(var(--event-index, 0) * 60ms + 200ms);
+  }
+  .history-event-left  { transform: translateX(-22px); }
+  .history-event-right { transform: translateX(22px); }
+
+  .history-event.is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ----- 1d. Timeline markers — pop when the line reaches them -----
+     --marker-delay is set by JS so each marker's timing aligns with
+     its position along the timeline. Falls back to 400ms if unset. */
+  .history-marker {
+    transform: scale(0);
+    transition: transform .45s cubic-bezier(.34, 1.4, .5, 1);
+    transition-delay: var(--marker-delay, 400ms);
+  }
+  .history-event.is-revealed .history-marker {
+    transform: scale(1);
+  }
+
+  /* ----- 1e. Timeline line — draws from grey to red -----
+     Two layered gradients on ::before: the red layer grows from
+     0% to 100% height over the reveal, drawing over the base grey. */
+  .history-era .history-timeline::before {
+    background-image:
+      linear-gradient(180deg,
+        transparent 0%,
+        var(--dadex-red) 5%,
+        var(--dadex-red) 95%,
+        transparent 100%),
+      linear-gradient(to bottom,
+        transparent 0,
+        #d8dadd 5%,
+        #d8dadd 95%,
+        transparent 100%);
+    background-size: 100% 0%, 100% 100%;
+    background-position: top center, top center;
+    background-repeat: no-repeat, no-repeat;
+    transition: background-size 1.4s cubic-bezier(.2, .65, .2, 1);
+  }
+  .history-era.is-revealed .history-timeline::before {
+    background-size: 100% 100%, 100% 100%;
+  }
+
+  /* ----- 1f. Legacy section — per-column stagger -----
+     Column 1 (kicker + h2) begins at 0ms.
+     Column 2 (p + button) begins at 180ms. */
+  .history-legacy .history-kicker,
+  .history-legacy h2,
+  .history-legacy p,
+  .history-legacy .btn {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity .7s cubic-bezier(.2, .65, .2, 1),
+      transform .7s cubic-bezier(.2, .65, .2, 1);
+  }
+  .history-legacy-grid > div:nth-child(1) .history-kicker { transition-delay: 0ms; }
+  .history-legacy-grid > div:nth-child(1) h2            { transition-delay: 80ms; }
+  .history-legacy-grid > div:nth-child(2) p             { transition-delay: 180ms; }
+  .history-legacy-grid > div:nth-child(2) .btn          { transition-delay: 260ms; }
+
+  .history-legacy.is-revealed .history-kicker,
+  .history-legacy.is-revealed h2,
+  .history-legacy.is-revealed p,
+  .history-legacy.is-revealed .btn {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ----- 1g. Decade chip — pulse when it becomes active ----- */
+  .history-decade-chip.is-active {
+    animation: historyChipPulse .5s cubic-bezier(.34, 1.4, .5, 1);
+  }
+  @keyframes historyChipPulse {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+
+  /* ----- 1h. Hero parallax — the decorative ring drifts slower
+     than the page on scroll. JS sets --hero-scroll on the hero
+     element; CSS applies it to the pseudo-element only. ----- */
+  .history-hero::before {
+    transform: translateY(calc(var(--hero-scroll, 0) * 1px));
+    will-change: transform;
+  }
+}
+
+
+/* ============================================================
+   2. MOBILE OVERRIDES
+   Below 900px the timeline runs down the left edge. All cards
+   enter from the left so they read as one column rather than
+   alternating from both sides.
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) and (max-width: 900px) {
+
+  .history-event,
+  .history-event-left,
+  .history-event-right {
+    transform: translateX(-18px);
+  }
+  .history-event.is-revealed {
+    transform: none;
+  }
+}
+
+
+/* ============================================================
+   3. PRINT — no animation on paper
+   ============================================================ */
+
+@media print {
+  .history-intro .history-kicker,
+  .history-intro h2,
+  .history-intro p,
+  .history-era-header .history-era-kicker,
+  .history-era-header h3,
+  .history-era-header p,
+  .history-event,
+  .history-marker,
+  .history-legacy .history-kicker,
+  .history-legacy h2,
+  .history-legacy p,
+  .history-legacy .btn {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .history-era .history-timeline::before {
+    background-image: none !important;
+    background: #d8dadd !important;
+    transition: none !important;
+  }
+  .history-hero::before {
+    transform: none !important;
+    will-change: auto;
+  }
+}
