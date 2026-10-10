@@ -23,34 +23,151 @@
 <meta content="Investor Relations for Dadex Eternit Limited — company information, governance, shareholding, financial results, reports, AGM notices and investor contact." name="twitter:description"/>
 <meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
 <style>
-.ir-panel[data-ir-panel="directors"] .director-card{
-  padding:1.375rem 1.5rem 1.5rem;
+/* ============================================================
+   PROFILE OF DIRECTORS — accordion cards
+   ============================================================ */
+
+.director-controls{
+  display:flex;
+  justify-content:flex-end;
+  margin:1.5rem 0 .875rem;
 }
-.ir-panel[data-ir-panel="directors"] .director-card strong{
+.director-expand-all{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.5rem .9375rem;
+  border:1px solid #dde1e4;
+  border-radius:999px;
+  background:#fff;
+  color:#2c3034;
+  font:700 .75rem/1 'Inter',system-ui,sans-serif;
+  letter-spacing:.02em;
+  cursor:pointer;
+  transition:border-color .18s ease,background .18s ease,color .18s ease;
+}
+.director-expand-all:hover{
+  border-color:var(--dadex-red);
+  color:var(--dadex-red);
+  background:#fff6f6;
+}
+.director-expand-all:focus-visible{
+  outline:2px solid var(--dadex-red);
+  outline-offset:2px;
+}
+.director-expand-all i{font-size:.75rem}
+
+.director-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:.875rem;
+  margin:0 0 1.75rem;
+  align-items:start;
+}
+
+.director-card{
+  border:1px solid #e2e5e7;
+  background:#fff;
+  border-radius:10px;
+  overflow:hidden;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.director-card[open]{
+  border-color:rgba(201,0,0,.22);
+  box-shadow:0 12px 28px rgba(18,24,30,.055);
+}
+
+/* Summary acts as the clickable header */
+.director-card > summary{
+  list-style:none;
+  cursor:pointer;
+  padding:1.125rem 3.25rem 1.125rem 1.375rem;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:.25rem;
+  transition:background .18s ease;
+}
+.director-card > summary::-webkit-details-marker{display:none}
+.director-card > summary::marker{content:""}
+.director-card > summary:hover{background:#fafbfb}
+.director-card[open] > summary{background:#fffafa}
+.director-card > summary:focus-visible{
+  outline:2px solid var(--dadex-red);
+  outline-offset:-2px;
+}
+
+.director-card > summary strong{
   font-size:1.0625rem;
+  font-weight:700;
   letter-spacing:-.01em;
+  color:#17191c;
+  line-height:1.25;
 }
-.ir-panel[data-ir-panel="directors"] .director-card span{
+.director-card > summary span{
   font-size:.75rem;
   font-weight:700;
   letter-spacing:.05em;
   text-transform:uppercase;
   color:#a52229;
-  margin-top:.25rem;
+  line-height:1.3;
 }
-.ir-panel[data-ir-panel="directors"] .director-card p{
-  margin:.875rem 0 0;
-  padding-top:.875rem;
+
+/* +/− toggle indicator */
+.director-card > summary::after{
+  content:"+";
+  position:absolute;
+  right:1.375rem;
+  top:50%;
+  transform:translateY(-50%);
+  width:1.75rem;
+  height:1.75rem;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:1px solid #dde1e4;
+  color:#6b7379;
+  font-size:1rem;
+  font-weight:500;
+  line-height:1;
+  transition:transform .25s cubic-bezier(.34,1.4,.5,1),
+             color .18s ease,border-color .18s ease,background .18s ease;
+}
+.director-card[open] > summary::after{
+  content:"−";
+  color:var(--dadex-red);
+  border-color:rgba(201,0,0,.35);
+  background:#fce8e8;
+}
+
+/* Bio body */
+.director-bio{
+  padding:1rem 1.375rem 1.375rem;
   border-top:1px solid #eef0f2;
-  font-size:.8125rem;
-  line-height:1.7;
-  color:#5d646b;
-  max-width:66ch;
 }
-.ir-panel[data-ir-panel="directors"] .director-card p + p{
+.director-bio p{
+  margin:0;
+  font-size:.8125rem;
+  line-height:1.75;
+  color:#5d646b;
+  max-width:70ch;
+}
+.director-bio p + p{
   margin-top:.875rem;
   padding-top:.875rem;
   border-top:1px solid #f4f5f6;
+}
+
+@media(max-width:768px){
+  .director-grid{grid-template-columns:1fr}
+  .director-controls{justify-content:flex-start}
+}
+
+/* Print: show all bios regardless of on-screen state */
+@media print{
+  .director-controls{display:none}
+  .director-card > summary::after{display:none}
+  .director-card[open] > summary{background:transparent}
 }
 </style>
 </head>
@@ -230,22 +347,36 @@
 <section class="ir-panel" data-ir-panel="directors" id="directors">
 <div class="core-kicker">INVESTOR RELATIONS</div>
 <h2>Profile of Directors</h2>
-<p>The current Board composition is set out below. Biographies are reproduced from the Company's approved director profiles.</p>
+<p>The current Board composition is set out below. Click a Director to read their full profile.</p>
+
+<div class="director-controls">
+<button class="director-expand-all" type="button" id="directorToggleAll">
+<i class="fas fa-chevron-down" aria-hidden="true"></i>
+<span>Expand all</span>
+</button>
+</div>
 
 <div class="director-grid">
 
-<div class="director-card">
+<details class="director-card">
+<summary>
 <strong>Shahzad M. Husain</strong>
 <span>Chairman / Non-Executive Director</span>
+</summary>
+<div class="director-bio">
 <p>Mr. Shahzad M. Husain is a luminary in the realm of academia, holding the distinction of a Master's degree in Law and International Relations. His illustrious career is underscored by a rich tapestry of experiences and accomplishments. With two decades of dedicated service at Citibank, he exercised astute stewardship over Corporate and Wholesale Banking, exemplifying his acumen in the world of finance.</p>
 <p>His footprint of influence extends beyond banking, as he has served as a pivotal figure on the boards of notable entities such as the Central Depository Company of Pakistan Limited, PICIC, and the esteemed Pakistan International Airlines.</p>
 <p>Moreover, Mr. Shahzad M. Husain currently assumes the mantle of Chief Executive Officer at Muznash (Private) Limited, a consultancy firm that bears his imprimatur, established in 1998. This consultancy is renowned for its specialized prowess in the arena of financial advisory services, further underscoring his commitment to financial excellence.</p>
 <p>In addition to his extensive portfolio of responsibilities, he lends his expertise as a Director on the distinguished board of Berger Paints Pakistan Limited, further enhancing the strategic landscape of this eminent organization.</p>
 </div>
+</details>
 
-<div class="director-card">
+<details class="director-card">
+<summary>
 <strong>Sikander Dada</strong>
 <span>Chief Executive Officer / Executive Director</span>
+</summary>
+<div class="director-bio">
 <p>Mr. Sikander Dada occupies a prominent position within the corporate sphere, with a multifaceted journey that warrants attention. In the past year, he assumed the role of the Company's Chief Executive Officer, marking a significant milestone in his illustrious career. His tenure began in 1989 and extended until May 2014, at which point he held the esteemed position of Chairman on the Board of Directors of the Company. Furthermore, from 2022 onwards, he resumed the role of CEO, embarking on a new phase in his remarkable journey, all the while preserving and advancing the visionary legacy of the late Founder Chairman, Mr. Kassim Dada.</p>
 <p>Mr. Dada's narrative of leadership spans an impressive 24-year span. During this time, the Company flourished under his guidance, experiencing consistent growth in sales volume, diversification of the product portfolio, incorporation of cutting-edge production technologies, and the strategic repositioning of Dadex as a beacon of innovation, unwavering dedication to customers, and an unwavering symbol of reliability in the industry.</p>
 <p>Educationally, Mr. Sikander Dada is the holder of a distinguished B.Sc (Hons.) in Economics from the esteemed London School of Economics at the University of London. Prior to his association with the Company, he sought knowledge and expertise through a series of technical and management training programs conducted in Belgium, Holland, and the United Kingdom, thereby enriching his reservoir of skills and insights.</p>
@@ -253,46 +384,68 @@
 <p>Mr. Sikander Dada's influence within the corporate landscape extends to his pivotal role in igniting a revolution in plastic piping within Pakistan, a testament to his unwavering commitment to technological progress. Furthermore, his collaborative efforts with the government in formulating policies for high-efficiency irrigation systems stand as a testament to his dedication to promoting sustainable development.</p>
 <p>In addition to these diverse responsibilities, Mr. Dada concurrently serves as the Managing Director of Sikander (Private) Limited. His expertise and influence further extend to his role as a Director on the Board of Berger DPI (Private) Limited and Berdex Construction Chemicals (Private) Limited. Notably, his legacy of leadership includes a prior chairmanship of the Board at Berger Paints Pakistan Limited, solidifying his profound impact on the corporate landscape.</p>
 </div>
+</details>
 
-<div class="director-card">
+<details class="director-card">
+<summary>
 <strong>Abu Talib H.K. Dada</strong>
 <span>Non-Executive Director</span>
+</summary>
+<div class="director-bio">
 <p>Mr. Abu Talib H.K. Dada served as member in Board Human Resource &amp; Remuneration Committee.</p>
 <p>Mr. Dada, a distinguished individual within the Company, received his early education in Bantva, India, until the year 1947, after which he continued his academic journey in Karachi, where he remained until 1953. His pursuit of higher education led him to England. As one of the Company's most significant shareholders and a Director since its inception, he plays an indispensable and influential role within the organization. Mr. Abu Talib H.K. Dada is one of the five brothers who sponsored the Company's establishment, and he continues to actively contribute as a valued member of the Board of Directors. It's noteworthy that he previously held the prestigious position of Chairman of the Board.</p>
 <p>In addition to his corporate commitments, Mr. Abu Talib H.K. Dada is a dedicated philanthropist, demonstrating unwavering dedication to humanitarian causes. Since 1959, he has overseen the compassionate operations of Hooseni Yateem Khana, which serves as a charitable hospital. Furthermore, his civic engagement extends to his role as a Director of the Karachi Co-operative Housing Societies Union Limited. In the year 2000, he took on the responsibilities of a Director at the Sindh Provincial Co-operative Union, and for over a decade, since 2007, he has held the esteemed position of Vice President at the Sindh Provincial Co-operative Union.</p>
 </div>
+</details>
 
-<div class="director-card">
+<details class="director-card">
+<summary>
 <strong>Khawaja Samiullah Askari</strong>
 <span>Non-Executive Director</span>
+</summary>
+<div class="director-bio">
+<p>A biography for this Director has not yet been provided.</p>
 </div>
+</details>
 
-<div class="director-card">
+<details class="director-card">
+<summary>
 <strong>Syed Shahid Ali Bukhari</strong>
 <span>Independent Director</span>
+</summary>
+<div class="director-bio">
 <p>Syed Shahid Ali Bukhari served as an Independent Director on the Company's Board. In this capacity, he assumed the pivotal role of leading the Board Audit Committee. His professional journey encompasses diverse experiences in various sectors of trade and commerce.</p>
 <p>Mr. Bukhari initiated his career by working with several firms engaged in General trading in Karachi, focusing on the importation of chemicals and tea. Impressively, he ventured into establishing a General trading company in Dubai, with a primary focus on the trade of organic fertilizers and media. Beyond these trading ventures, he also made significant contributions to the fields of commercial construction and poultry farming.</p>
 <p>Educationally, Mr. Bukhari completed his A-Levels at Karachi Grammar Schools before embarking on a transformative journey. He commenced his professional path as an articled clerk at the C.A. firm Somers Baker in London, following the successful completion of his foundation course at the Middlesex Institute.</p>
 <p>Mr. Bukhari's commitment to excellence is exemplified by his attainment of Certified Director status. His unwavering dedication to ongoing learning is further underscored by his participation in the Directors' Training Program, which he completed at The Executive Development Center (EDC) of The University of Lahore. Notably, The University of Lahore is recognized as one of the approved institutions by the SECP for providing Directors' Training Programs in Pakistan. This attests to his commitment to upholding the highest standards of corporate governance and directorship.</p>
 </div>
+</details>
 
-<div class="director-card">
+<details class="director-card">
+<summary>
 <strong>Ayesha Tariq Allawala</strong>
 <span>Independent Director</span>
+</summary>
+<div class="director-bio">
 <p>During her tenure, Mrs. Ayesha Tariq Allawala served as the Chairperson of the Board Human Resource &amp; Remuneration Sub-Committee, a role she undertook as an Independent Director, in compliance with legal requirements. Her leadership of the committee was nothing short of remarkable.</p>
 <p>Ayesha's educational journey was highlighted by her attainment of both a Bachelor's degree and a Master's degree in Business Administration, a milestone she achieved in the year 2014. This noteworthy accomplishment was earned at the prestigious Institute of Business Administration (IBA) in Karachi.</p>
 <p>For a significant period spanning five years, she dedicated her time and expertise to The Citizens Foundation. During her service with the organization, Ayesha held multifaceted roles, which encompassed the management of volunteer programs, administration of scholarships for alumni, and the facilitation of invaluable career counseling sessions. Her unwavering commitment is further reflected in her current role as a volunteer, where she actively engages in fundraising efforts to ensure the organization's continued success in pursuing its noble mission.</p>
 <p>Furthermore, for an impressive duration of eight years, Ayesha actively participated in Rotaract, a dynamic program tailored for individuals aged between 18 and 30, under the auspices of Rotary International. Throughout her engagement with Rotaract, she took on a multitude of leadership positions, both at the club level and within the district. Her journey within the organization culminated in her attaining the highest possible role, that of the District Rotaract Representative.</p>
 </div>
+</details>
 
-<div class="director-card">
+<details class="director-card">
+<summary>
 <strong>Amber Ahmed Motiwala</strong>
 <span>Female Director</span>
+</summary>
+<div class="director-bio">
 <p>Amber Ahmed Motiwala, a distinguished member of the organization, held the pivotal position of serving on the Board Audit Committee. Her contributions in this role were nothing short of instrumental, as she actively shaped the committee's deliberations and decisions.</p>
 <p>Mrs. Motiwala's educational journey began at Karachi Grammar School, where she embarked on her scholastic voyage from nursery all the way to A-levels. Following her academic pursuits, she ventured into the world of business, having completed her Bachelor of Commerce degree. Subsequently, she ventured into the entrepreneurial realm, launching an infant clothing business that she skillfully managed for a successful five-year span.</p>
 <p>Beyond her professional endeavors, she passionately immersed herself in the domain of swimming events. Over the years, her dedication and expertise proved invaluable in orchestrating swimming events at prestigious institutions such as Karachi Gymkhana and Sindh Swimming Association, spanning provincial and national levels. Her unwavering commitment is further exemplified by her more than decade-long service on the swimming sub-committee of Karachi Gymkhana.</p>
 <p>Currently, Mrs. Motiwala occupies the esteemed position of Vice President within the Sindh Swimming Association, playing a central role in guiding the organization's aquatic pursuits. In addition to her aquatic commitments, she serves as the Honorary Secretary of the ladies' physical fitness gym at Karachi Gymkhana, demonstrating her dedication to promoting physical well-being and fitness within the community.</p>
 </div>
+</details>
 
 </div>
 </section>
@@ -575,5 +728,59 @@ Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisa
 </main>
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
+<script>
+/* ============================================================
+   Director profiles — Expand all / Collapse all + print handling.
+
+   The <details>/<summary> elements work natively without this
+   script; it only adds the batch toggle and forces all bios open
+   before printing.
+   ============================================================ */
+(function(){
+  var panel = document.getElementById('directors');
+  if (!panel) return;
+  var cards = Array.prototype.slice.call(
+    panel.querySelectorAll('details.director-card')
+  );
+  if (!cards.length) return;
+
+  var toggleBtn = document.getElementById('directorToggleAll');
+
+  var updateButtonLabel = function(){
+    if (!toggleBtn) return;
+    var anyClosed = cards.some(function(c){ return !c.open; });
+    var label = toggleBtn.querySelector('span');
+    var icon = toggleBtn.querySelector('i');
+    if (anyClosed) {
+      label.textContent = 'Expand all';
+      icon.className = 'fas fa-chevron-down';
+    } else {
+      label.textContent = 'Collapse all';
+      icon.className = 'fas fa-chevron-up';
+    }
+  };
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', function(){
+      var anyClosed = cards.some(function(c){ return !c.open; });
+      cards.forEach(function(c){ c.open = anyClosed; });
+      updateButtonLabel();
+    });
+  }
+
+  /* Keep the button label in sync if the user toggles cards
+     manually via keyboard or click. */
+  cards.forEach(function(c){
+    c.addEventListener('toggle', updateButtonLabel);
+  });
+  updateButtonLabel();
+
+  /* Force all bios open before printing so paper output is
+     complete regardless of on-screen state. */
+  window.addEventListener('beforeprint', function(){
+    cards.forEach(function(c){ c.open = true; });
+  });
+})();
+</script>
 </body>
 </html>
