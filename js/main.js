@@ -5,7 +5,7 @@
    - Dynamic text (footer year, company age)
    - Project filter
    - Mailto contact form
-   - Literature filter
+   - Literature filter (search, type filter, clear, empty state)
    - Investor panel switcher
    - Site search
    - DEXPERT
@@ -82,7 +82,22 @@ async function loadSharedComponents(){
 
 
 /* ------------------------------------------------------------
-   Dynamic text (footer year, company age)
+   Dynamic text — current year and company age.
+
+   The age is computed against the founder anniversary
+   (13 April 1959). Before the anniversary each calendar year,
+   the age is one less than the naive subtraction would suggest.
+
+   Attributes handled:
+     data-current-year            → "2026"
+     data-company-age             → "67"
+     data-company-age-years       → "67 years"
+     data-company-age-over        → "over 67 years"
+     data-company-age-hyphenated  → "67-year-old"
+
+   Any element carrying one of these attributes has its text
+   replaced on every page load. The static text inside the HTML
+   is only a fallback for JS-disabled readers and search crawlers.
    ------------------------------------------------------------ */
 function initDynamicSiteText(){
   const now = new Date();
@@ -95,12 +110,17 @@ function initDynamicSiteText(){
     ? now.getFullYear() - COMPANY_FOUNDED_YEAR - 1
     : now.getFullYear() - COMPANY_FOUNDED_YEAR;
 
-  document.querySelectorAll('[data-current-year]').forEach(el => {
-    el.textContent = String(now.getFullYear());
-  });
-  document.querySelectorAll('[data-company-age]').forEach(el => {
-    el.textContent = String(age);
-  });
+  const setText = (selector, value) => {
+    document.querySelectorAll(selector).forEach(el => {
+      el.textContent = value;
+    });
+  };
+
+  setText('[data-current-year]', String(now.getFullYear()));
+  setText('[data-company-age]', String(age));
+  setText('[data-company-age-years]', `${age} years`);
+  setText('[data-company-age-over]', `over ${age} years`);
+  setText('[data-company-age-hyphenated]', `${age}-year-old`);
 }
 
 
@@ -183,7 +203,6 @@ function initNavigation(){
     });
     toggle.addEventListener('focusout', () => {
       if (isMobile()) return;
-      /* Let focus settle before deciding whether it left the whole dropdown. */
       setTimeout(() => {
         if (!menu.contains(document.activeElement)) {
           toggle.setAttribute('aria-expanded', 'false');
@@ -224,8 +243,8 @@ function initNavigation(){
     closeMenus({ restoreFocus: true });
   });
 
-  /* Reset state when the viewport crosses back to desktop. Debounced so
-     dragging a window edge does not thrash the DOM on every pixel. */
+  /* Reset state when the viewport crosses back to desktop. Debounced
+     so dragging a window edge does not thrash the DOM on every pixel. */
   window.addEventListener('resize', debounce(() => {
     if (isMobile()) return;
     document.body.classList.remove('nav-open');
@@ -333,31 +352,104 @@ function initMailtoForm(){
 
 /* ------------------------------------------------------------
    Literature filter (literature.html)
+
+   Handles:
+     - Free-text search across card name and subtitle
+     - Type filter (All / Brochures only / Flyers only / Corporate)
+     - Per-card button visibility based on selected type
+     - Section visibility (hides sections with no visible cards)
+     - Result count line with aria-live
+     - Clear button (appears when any filter is active)
+     - Empty state with its own reset button
+     - Certificates routing card hidden when no products match
    ------------------------------------------------------------ */
 function initLiteratureFilter(){
   const grid = document.getElementById('resourceGrid');
   if (!grid) return;
-  const input = document.getElementById('resourceSearch');
-  const typeSelect = document.getElementById('resourceType');
-  const cards = [...grid.querySelectorAll('.resource-card')];
 
-  const render = () => {
-    const q = (input?.value || '').trim().toLowerCase();
-    const type = (typeSelect?.value || 'all').toLowerCase();
-    let visible = 0;
+  const input       = document.getElementById('resourceSearch');
+  const typeSelect  = document.getElementById('resourceType');
+  const clearBtn    = document.getElementById('resourceClear');
+  const emptyState  = document.getElementById('resourceEmpty');
+  const emptyReset  = document.getElementById('resourceEmptyReset');
+  const countLine   = document.getElementById('resourceCount');
+  const certsCard   = document.getElementById('litCertificates');
+
+  const sections = grid.querySelectorAll('.lit-section');
+  const cards    = grid.querySelectorAll('.lit-card');
+  const totalCards = cards.length;
+
+  const applyFilters = () => {
+    const query = (input?.value || '').trim().toLowerCase();
+    const type  = (typeSelect?.value || 'all').toLowerCase();
+    let visibleCards = 0;
+
     cards.forEach(card => {
-      const resource = (card.dataset.resource || '').toLowerCase();
-      const text = card.textContent.toLowerCase();
-      const show = (type === 'all' || resource === type) &&
-                   (!q || text.includes(q));
+      const name      = (card.dataset.name || '').toLowerCase();
+      const cardTypes = (card.dataset.types || '').split(/\s+/).filter(Boolean);
+
+      const matchesSearch = !query || name.includes(query);
+
+      let matchesType = true;
+      if (type === 'brochure')       matchesType = cardTypes.includes('brochure');
+      else if (type === 'flyer')     matchesType = cardTypes.includes('flyer');
+      else if (type === 'corporate') matchesType = cardTypes.includes('corporate');
+
+      /* Within a matching card, hide non-matching download buttons */
+      card.querySelectorAll('.lit-btn[data-type]').forEach(btn => {
+        if (type === 'brochure')       btn.hidden = btn.dataset.type !== 'brochure';
+        else if (type === 'flyer')     btn.hidden = btn.dataset.type !== 'flyer';
+        else                           btn.hidden = false;
+      });
+
+      const show = matchesSearch && matchesType;
       card.hidden = !show;
-      if (show) visible++;
+      if (show) visibleCards++;
     });
+
+    /* Hide sections that contain no visible cards */
+    sections.forEach(section => {
+      const anyVisible = Array.prototype.some.call(
+        section.querySelectorAll('.lit-card'),
+        c => !c.hidden
+      );
+      section.hidden = !anyVisible;
+    });
+
+    /* Empty state and certificates routing card visibility */
+    if (emptyState) emptyState.hidden = visibleCards !== 0;
+    if (certsCard)  certsCard.hidden  = visibleCards === 0;
+
+    /* Count line */
+    if (countLine) {
+      if (visibleCards === 0) {
+        countLine.textContent = 'No documents match your filters';
+      } else if (visibleCards === totalCards) {
+        countLine.textContent = `Showing all ${totalCards} documents`;
+      } else {
+        countLine.textContent = `Showing ${visibleCards} of ${totalCards} documents`;
+      }
+    }
+
+    /* Clear button visibility */
+    if (clearBtn) {
+      const hasFilter = query !== '' || type !== 'all';
+      clearBtn.hidden = !hasFilter;
+    }
   };
 
-  if (input) input.addEventListener('input', render);
-  if (typeSelect) typeSelect.addEventListener('change', render);
-  render();
+  const clearAll = () => {
+    if (input) input.value = '';
+    if (typeSelect) typeSelect.value = 'all';
+    applyFilters();
+  };
+
+  if (input)      input.addEventListener('input', applyFilters);
+  if (typeSelect) typeSelect.addEventListener('change', applyFilters);
+  if (clearBtn)   clearBtn.addEventListener('click', clearAll);
+  if (emptyReset) emptyReset.addEventListener('click', clearAll);
+
+  applyFilters();
 }
 
 
@@ -527,7 +619,7 @@ function initDEXPERT(){
 
   const isProduct = path.startsWith('product') && path !== 'products.html';
   const isInvestor = /investor|financial-reports/i.test(path);
-  const isResources = /literature|calculators|news/i.test(path);
+  const isResources = /literature|calculators|videos|news/i.test(path);
   const currentProduct = isProduct ? title : '';
 
   const link = (href, label) => `<a href="${href}">${label}</a>`;
@@ -539,7 +631,7 @@ function initDEXPERT(){
       intro = `<strong>${escapeHTML(currentProduct)}</strong>`;
       actions = [
         link('#technical', 'Technical information'),
-        link('technical-resources.html', 'Technical resources'),
+        link('literature.html', 'Literature'),
         link('products.html', 'Related products'),
         link('dealers.html', 'Find a dealer')
       ];
@@ -554,15 +646,17 @@ function initDEXPERT(){
       intro = 'Dadex Resources';
       actions = [
         link('products.html', 'Find a product'),
-        link('technical-resources.html', 'Technical resources'),
-        link('calculators.html', 'Technical calculators'),
+        link('literature.html', 'Literature'),
+        link('videos.html', 'Videos'),
+        link('calculators.html', 'Calculators'),
         link('contact.html', 'Technical support')
       ];
     } else {
       actions = [
         link('products.html', 'Find a product'),
-        link('solutions.html', 'Find a solution'),
-        link('technical-resources.html', 'Technical resources'),
+        link('literature.html', 'Literature'),
+        link('videos.html', 'Videos'),
+        link('calculators.html', 'Calculators'),
         link('dealers.html', 'Find a dealer')
       ];
     }
@@ -628,14 +722,26 @@ function initDEXPERT(){
         'investors.html#annual', 'Open investor information');
       return;
     }
-    if (/document|brochure|datasheet|certificate|technical|literature|drawing/.test(q)) {
-      result('RESOURCES', 'Technical Resources',
-        'Find approved technical information and support routes.',
-        'technical-resources.html', 'Open technical resources');
+    if (/brochure|flyer|leaflet|literature|document|datasheet|certificate|drawing/.test(q)) {
+      result('LITERATURE', 'Literature',
+        'Find brochures, flyers, corporate publications and technical documents.',
+        'literature.html', 'Open Literature');
+      return;
+    }
+    if (/video|installation|demonstration/.test(q)) {
+      result('VIDEOS', 'Videos',
+        'Installation guides, product overviews and application demonstrations.',
+        'videos.html', 'Open Videos');
+      return;
+    }
+    if (/calculator|pressure drop|flow|head loss|sizing/.test(q)) {
+      result('CALCULATORS', 'Calculators',
+        'Engineering calculators for pipe selection, hydraulic design and unit conversion.',
+        'calculators.html', 'Open Calculators');
       return;
     }
     result('DEXPERT', 'No direct match',
-      'Try a product, application or technical-resource term.',
+      'Try a product, application or resource term.',
       'products.html', 'Browse products');
   }
 
