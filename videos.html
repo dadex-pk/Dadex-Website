@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Product Videos — Dadex Eternit Limited</title>
+<title>Videos — Dadex Eternit Limited</title>
 <meta content="Installation guides, product overviews and application videos for Dadex piping, drainage, ducting and roofing systems." name="description"/>
 <meta content="#c90000" name="theme-color"/>
 <meta content="index, follow" name="robots"/>
 <meta content="strict-origin-when-cross-origin" name="referrer"/>
 <link href="https://www.dadex.com/videos.html" rel="canonical"/>
 <meta content="website" property="og:type"/>
-<meta content="Product Videos — Dadex Eternit Limited" property="og:title"/>
+<meta content="Videos — Dadex Eternit Limited" property="og:title"/>
 <meta content="Installation guides, product overviews and application videos for Dadex piping, drainage, ducting and roofing systems." property="og:description"/>
 <meta content="https://www.dadex.com/videos.html" property="og:url"/>
 <meta content="Dadex Eternit Limited" property="og:site_name"/>
 <meta content="en_PK" property="og:locale"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Product Videos — Dadex Eternit Limited" name="twitter:title"/>
+<meta content="Videos — Dadex Eternit Limited" name="twitter:title"/>
 <meta content="Installation guides, product overviews and application videos for Dadex piping, drainage, ducting and roofing systems." name="twitter:description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
 <link href="css/design-system.css" rel="stylesheet"/>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"CollectionPage","name":"Product Videos — Dadex Eternit Limited","url":"https://www.dadex.com/videos.html","description":"Installation guides, product overviews and application videos for Dadex systems.","isPartOf":{"@type":"WebSite","name":"Dadex Eternit Limited","url":"https://www.dadex.com/"}}
+{"@context":"https://schema.org","@type":"CollectionPage","name":"Videos — Dadex Eternit Limited","url":"https://www.dadex.com/videos.html","description":"Installation guides, product overviews and application videos for Dadex systems.","isPartOf":{"@type":"WebSite","name":"Dadex Eternit Limited","url":"https://www.dadex.com/"}}
 </script>
 <meta content="https://www.dadex.com/assets/images/products/aquadex.webp" property="og:image"/>
 <meta content="Aquadex installation guide" property="og:image:alt"/>
@@ -35,16 +35,14 @@
 <div data-component="header"></div>
 <div class="breadcrumb">
 <div class="container">
-<a href="index.html">Home</a><span>/</span>
-<a href="technical-resources.html">Technical Resources</a><span>/</span>
-<strong>Product Videos</strong>
+<a href="index.html">Home</a><span>/</span><strong>Videos</strong>
 </div>
 </div>
 <main id="main-content">
 <section class="core-hero">
 <div class="container">
-<div class="core-kicker">Technical Resources</div>
-<h1>Product Videos</h1>
+<div class="core-kicker">Resources</div>
+<h1>Videos</h1>
 <p>Installation guides, product overviews and application demonstrations — short films prepared by Dadex technical teams.</p>
 </div>
 </section>
@@ -187,7 +185,7 @@
 <div class="container">
 <h2>Looking for product literature?</h2>
 <p>Download brochures, technical data sheets and certificates for the full Dadex range.</p>
-<a class="btn btn-primary" href="literature.html">Downloads &amp; Literature <i class="fas fa-arrow-right"></i></a>
+<a class="btn btn-primary" href="literature.html">Literature <i class="fas fa-arrow-right"></i></a>
 </div>
 </section>
 </main>
@@ -203,7 +201,6 @@
 <script src="js/main.js"></script>
 <script>
 (function(){
-  /* ---------- Filter ---------- */
   var filterBtns = document.querySelectorAll('[data-video-filter]');
   var cards = document.querySelectorAll('.video-card');
   var empty = document.getElementById('videoEmpty');
@@ -226,13 +223,10 @@
     });
   });
 
-  /* ---------- Lightbox ---------- */
   var lightbox = document.getElementById('videoLightbox');
   var frame = document.getElementById('videoLightboxFrame');
   if (!lightbox || !frame) return;
 
-  /* Detect placeholder sources so we can show a friendly message
-     instead of loading a broken player. */
   var isPlaceholder = function(value){
     if (!value) return true;
     return value.indexOf('VIDEO_ID_') !== -1 ||
