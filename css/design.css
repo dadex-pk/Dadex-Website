@@ -1905,6 +1905,30 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
+   QUALITY PAGE — Certifications block
+   ============================================================ */
+.about-cert-block{
+  margin-top:3.5rem;
+  padding-top:2.5rem;
+  border-top:1px solid var(--d-line);
+}
+.cert-request-note{
+  margin:1.75rem 0 0;
+  font-size:.875rem;
+  color:#5d646b;
+  line-height:1.65;
+  max-width:60rem;
+}
+.cert-request-note a{
+  color:var(--dadex-red);
+  font-weight:700;
+  text-decoration:none;
+}
+.cert-request-note a:hover{
+  text-decoration:underline;
+}
+
+/* ============================================================
    14. LITERATURE / RESOURCES (merged with pass3)
    ============================================================ */
 .resource-grid{
