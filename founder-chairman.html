@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -29,8 +28,48 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Kassim Dada","birthDate":"1919","deathDate":"2001","jobTitle":"Founder Chairman","worksFor":{"@type":"Organization","name":"Dadex Eternit Limited","url":"https://www.dadex.com/"}}
 </script>
-<link href="css/pass1-refinement.css" rel="stylesheet"/>
-<meta content="Kassim Dada, Founder Chairman of Dadex" property="og:image:alt"/><link href="css/pass4-final-qa.css" rel="stylesheet"/>
+<style>
+/* Founding board — single-column list scoped to this page only. */
+.founder-board .founder-board-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  max-width:42rem;
+  display:grid;
+  gap:.5rem;
+  counter-reset:founder;
+}
+.founder-board .founder-board-list li{
+  display:flex;
+  align-items:baseline;
+  gap:1rem;
+  padding:.875rem 1.125rem;
+  background:#fff;
+  border:1px solid #e1e4e7;
+  border-left:3px solid var(--dadex-red);
+  border-radius:.5rem;
+  font-size:.9375rem;
+  font-weight:600;
+  color:#2c3034;
+  line-height:1.5;
+}
+.founder-board .founder-board-list li::before{
+  counter-increment:founder;
+  content:counter(founder,decimal-leading-zero);
+  font-family:'Manrope','Inter',sans-serif;
+  font-size:.6875rem;
+  font-weight:800;
+  letter-spacing:.14em;
+  color:var(--dadex-red);
+  flex:0 0 1.75rem;
+}
+@media(max-width:560px){
+  .founder-board .founder-board-list li{
+    padding:.75rem .875rem;
+    font-size:.875rem;
+  }
+}
+</style>
 </head>
 <body class="core-page about-page">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -43,9 +82,7 @@
 </div>
 </div>
 <main id="main-content">
-<!-- ==================================================
-     HERO
-     ================================================== -->
+
 <section class="founder-hero">
 <div class="founder-hero-grid">
 <div class="founder-hero-photo">
@@ -62,9 +99,7 @@
 </div>
 </div>
 </section>
-<!-- ==================================================
-     BIOGRAPHY
-     ================================================== -->
+
 <section class="core-content">
 <div class="container">
 <article class="founder-bio">
@@ -84,9 +119,7 @@
 </article>
 </div>
 </section>
-<!-- ==================================================
-     BOARD POSITIONS (HISTORICAL)
-     ================================================== -->
+
 <section class="founder-positions">
 <div class="container">
 <div class="founder-positions-header">
@@ -127,9 +160,26 @@
 <p class="founder-positions-note"><strong>Historical record.</strong> The positions listed above represent roles held by Kassim Dada during his lifetime (1919–2001). Company names are recorded as they existed at the time of his service.</p>
 </div>
 </section>
-<!-- ==================================================
-     LEGACY CTA
-     ================================================== -->
+
+<section class="founder-positions founder-board">
+<div class="container">
+<div class="founder-positions-header">
+<div class="core-kicker">First Board of Directors · 1959</div>
+<h2>The founding board</h2>
+<p>Dadex was established in 1959 by a group of Pakistani industrialists. The first Board of Directors guided the company through its formative years.</p>
+</div>
+<ul class="founder-board-list">
+<li>Mr. Kassim Dada</li>
+<li>Mr. Abdur Razzak H.K. Dada</li>
+<li>Mr. Abu Talib H.K. Dada</li>
+<li>Mr. Mohamed Dawjee Dadabhoy</li>
+<li>Mr. Alimohamed H.K. Dada J.P.</li>
+<li>Mr. Yusuf H.K. Dada</li>
+<li>Mr. Mohamed Rafique Saigol</li>
+</ul>
+</div>
+</section>
+
 <section class="founder-legacy">
 <div class="container">
 <div class="founder-legacy-inner">
@@ -145,6 +195,7 @@
 </div>
 </div>
 </section>
+
 </main>
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
