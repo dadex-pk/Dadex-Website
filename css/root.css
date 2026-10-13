@@ -4,13 +4,13 @@
    ============================================================ */
 
 :root{
-  /* Brand */
+  /* ---------- Brand ---------- */
   --dadex-red:#c90000;
   --dadex-red-dark:#9f0000;
   --d-red:#c90000;
   --d-red-dark:#a90000;
 
-  /* Ink / text */
+  /* ---------- Ink / text ---------- */
   --ink:#17191c;
   --d-ink:#17191c;
   --d-ink-2:#171a1d;
@@ -19,7 +19,7 @@
   --d-muted:#687078;
   --d-muted-light:#8f969d;
 
-  /* Surfaces */
+  /* ---------- Surfaces ---------- */
   --white:#fff;
   --d-white:#fff;
   --surface:#f5f6f7;
@@ -29,25 +29,74 @@
   --paper:#ffffff;
   --mist:#f4f5f6;
   --steel:#eef1f3;
+  --d-bg:#f6f7f8;
 
-  /* Lines */
+  /* ---------- Lines ---------- */
   --line:#e4e7ea;
   --d-line:#e4e7ea;
+  --d-line-soft:#eef0f2;
 
-  /* Layout */
+  /* ---------- Layout ---------- */
   --max:1240px;
   --d-max:1240px;
+  --sticky-offset:10.5rem;
 
-  /* Radii */
+  /* ---------- Radii ---------- */
   --radius:14px;
   --d-radius:14px;
+  --radius-sm:6px;
+  --radius-md:10px;
+  --radius-lg:14px;
+  --radius-pill:999px;
 
-  /* Shadows */
+  /* ---------- Spacing scale ---------- */
+  --space-xs:.25rem;
+  --space-sm:.5rem;
+  --space-md:1rem;
+  --space-lg:1.5rem;
+  --space-xl:2rem;
+  --space-2xl:3rem;
+  --space-3xl:4rem;
+
+  /* ---------- Motion ---------- */
+  --ease-out:cubic-bezier(.2,.65,.2,1);
+  --ease-io:cubic-bezier(.4,0,.2,1);
+  --ease-spring:cubic-bezier(.34,1.4,.5,1);
+  --duration-fast:.18s;
+  --duration-base:.26s;
+  --duration-slow:.44s;
+
+  /* ---------- Elevation ---------- */
   --shadow-soft:0 14px 40px rgba(18,24,30,.08);
   --d-shadow:0 14px 40px rgba(18,24,30,.08);
+  --shadow-1:0 1px 2px rgba(15,18,21,.04),0 1px 3px rgba(15,18,21,.05);
+  --shadow-2:0 1px 2px rgba(15,18,21,.04),
+             0 6px 12px -3px rgba(15,18,21,.07),
+             0 12px 28px -8px rgba(15,18,21,.09);
+  --shadow-3:0 2px 4px rgba(15,18,21,.04),
+             0 14px 28px -6px rgba(15,18,21,.10),
+             0 28px 56px -14px rgba(15,18,21,.16);
 
-  /* Shared sticky-header offset (header total = 9.875rem) */
-  --sticky-offset:10.5rem;
+  /* ---------- Decorative — hero rings & grid ---------- */
+  --ring-a-size:38.75rem;
+  --ring-a-thickness:6.875rem;
+  --ring-a-color:rgba(201,0,0,.10);
+  --ring-a-right:-16.875rem;
+  --ring-a-top:-17.5rem;
+
+  --ring-a-size-mobile:26.25rem;
+  --ring-a-thickness-mobile:5rem;
+  --ring-a-right-mobile:-11.25rem;
+  --ring-a-top-mobile:-11.25rem;
+
+  --ring-b-size:19.375rem;
+  --ring-b-color:rgba(255,255,255,.08);
+  --ring-b-right:6.875rem;
+  --ring-b-bottom:-13.125rem;
+
+  --deco-grid-size:2.875rem;
+  --deco-grid-color:rgba(255,255,255,.12);
+  --deco-grid-opacity:.12;
 }
 
 /* ---------- Reset ---------- */
@@ -62,7 +111,7 @@ html{
 body{
   margin:0;
   overflow-x:hidden;
-  background:#f6f7f8;
+  background:var(--d-bg);
   color:var(--d-text);
   font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   line-height:1.65;
@@ -87,7 +136,7 @@ small{color:var(--d-muted)}
 button,input,select,textarea{font:inherit}
 button,a,input,select,textarea{touch-action:manipulation}
 
-/* ---------- Global focus (unified) ---------- */
+/* ---------- Global focus ---------- */
 :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{
   outline:3px solid var(--dadex-red);
   outline-offset:3px;
@@ -97,7 +146,7 @@ button,a,input,select,textarea{touch-action:manipulation}
 /* ---------- Anchor jump safety ---------- */
 :where([id]){scroll-margin-top:var(--sticky-offset)}
 
-/* ---------- Long-token overflow protection ---------- */
+/* ---------- Overflow protection ---------- */
 pre,code,.spec-table,.data-table{max-width:100%}
 pre,code{overflow-wrap:anywhere}
 
@@ -136,7 +185,7 @@ table{max-width:100%}
   }
 }
 
-/* ---------- Print (global) ---------- */
+/* ---------- Print ---------- */
 @media print{
   a{text-decoration:underline}
 }
