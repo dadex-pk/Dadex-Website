@@ -7,10 +7,17 @@
 (function () {
   'use strict';
 
+  /* Hoisted so the map is not recreated on every replace call. */
+  const ESC_MAP = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;'
+  };
+
   function esc(value) {
-    return String(value ?? '').replace(/[&<>'"]/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[c];
-    });
+    return String(value ?? '').replace(/[&<>'"]/g, c => ESC_MAP[c]);
   }
 
   function unique(values) {
@@ -18,24 +25,33 @@
       .sort(function (a, b) { return String(a).localeCompare(String(b)); });
   }
 
+  /* Trailing-edge debounce for filter inputs that rebuild the grid. */
+  function debounce(fn, wait) {
+    let timer = null;
+    return function debounced(...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), wait);
+    };
+  }
+
   function initDealerLocator() {
-    var grid = document.getElementById('dealerGrid');
+    const grid = document.getElementById('dealerGrid');
     if (!grid) return;
 
-    var province = document.getElementById('provinceFilter');
-    var city = document.getElementById('cityFilter');
-    var area = document.getElementById('areaFilter');
-    var product = document.getElementById('productFilter');
-    var name = document.getElementById('nameSearch');
-    var reset = document.getElementById('resetFilters');
-    var summary = document.getElementById('resultsSummary');
-    var activeSummary = document.getElementById('activeFilterSummary');
+    const province = document.getElementById('provinceFilter');
+    const city     = document.getElementById('cityFilter');
+    const area     = document.getElementById('areaFilter');
+    const product  = document.getElementById('productFilter');
+    const name     = document.getElementById('nameSearch');
+    const reset    = document.getElementById('resetFilters');
+    const summary  = document.getElementById('resultsSummary');
+    const activeSummary = document.getElementById('activeFilterSummary');
 
-    var all = Array.isArray(window.DADEX_DEALERS) ? window.DADEX_DEALERS : [];
-    var dealers = all.filter(function (d) { return d && d.active !== false; });
+    const all = Array.isArray(window.DADEX_DEALERS) ? window.DADEX_DEALERS : [];
+    const dealers = all.filter(d => d && d.active !== false);
 
-    var params = new URLSearchParams(window.location.search);
-    var initial = {
+    const params = new URLSearchParams(window.location.search);
+    const initial = {
       province: params.get('province') || '',
       city: params.get('city') || '',
       area: params.get('area') || '',
@@ -43,13 +59,13 @@
       name: params.get('name') || ''
     };
 
+    /* ---------- Option list helpers ---------- */
+
     function fill(select, values, placeholder) {
       if (!select) return;
-      var current = select.value;
+      const current = select.value;
       select.innerHTML = '<option value="">' + placeholder + '</option>'
-        + values.map(function (v) {
-            return '<option value="' + esc(v) + '">' + esc(v) + '</option>';
-          }).join('');
+        + values.map(v => '<option value="' + esc(v) + '">' + esc(v) + '</option>').join('');
       if (values.indexOf(current) !== -1) select.value = current;
     }
 
@@ -57,8 +73,8 @@
       fill(
         city,
         unique(dealers
-          .filter(function (d) { return !province.value || d.province === province.value; })
-          .map(function (d) { return d.city; })),
+          .filter(d => !province.value || d.province === province.value)
+          .map(d => d.city)),
         'All Cities'
       );
     }
@@ -67,24 +83,24 @@
       fill(
         area,
         unique(dealers
-          .filter(function (d) {
-            return (!province.value || d.province === province.value) &&
-                   (!city.value || d.city === city.value);
-          })
-          .map(function (d) { return d.area; })),
+          .filter(d =>
+            (!province.value || d.province === province.value) &&
+            (!city.value || d.city === city.value)
+          )
+          .map(d => d.area)),
         'All Areas'
       );
     }
 
     function refreshProducts() {
-      var scoped = dealers.filter(function (d) {
-        return (!province.value || d.province === province.value) &&
-               (!city.value || d.city === city.value) &&
-               (!area.value || d.area === area.value);
-      });
+      const scoped = dealers.filter(d =>
+        (!province.value || d.province === province.value) &&
+        (!city.value || d.city === city.value) &&
+        (!area.value || d.area === area.value)
+      );
       fill(
         product,
-        unique(scoped.reduce(function (acc, d) {
+        unique(scoped.reduce((acc, d) => {
           if (Array.isArray(d.products)) acc = acc.concat(d.products);
           return acc;
         }, [])),
@@ -92,37 +108,40 @@
       );
     }
 
+    /* ---------- URL state ---------- */
+
     function syncUrl() {
-      var next = new URLSearchParams();
+      const next = new URLSearchParams();
       if (province.value) next.set('province', province.value);
       if (city.value) next.set('city', city.value);
       if (area.value) next.set('area', area.value);
       if (product.value) next.set('product', product.value);
       if (name.value.trim()) next.set('name', name.value.trim());
-      var query = next.toString();
+      const query = next.toString();
       history.replaceState(null, '', window.location.pathname + (query ? '?' + query : ''));
     }
 
     function renderActiveFilters() {
       if (!activeSummary) return;
-      var items = [
+      const items = [
         ['Province', province.value],
         ['City', city.value],
         ['Area', area.value],
         ['Product', product.value],
         ['Dealer', name.value.trim()]
-      ].filter(function (pair) { return pair[1]; });
+      ].filter(pair => pair[1]);
 
       activeSummary.innerHTML = items
-        .map(function (pair) {
-          return '<span class="active-filter"><strong>' + esc(pair[0]) + ':</strong> ' + esc(pair[1]) + '</span>';
-        })
+        .map(pair =>
+          '<span class="active-filter"><strong>' + esc(pair[0]) + ':</strong> ' + esc(pair[1]) + '</span>')
         .join('');
       activeSummary.hidden = items.length === 0;
     }
 
+    /* ---------- Init ---------- */
+
     function initFilters() {
-      fill(province, unique(dealers.map(function (d) { return d.province; })), 'All Provinces / Regions');
+      fill(province, unique(dealers.map(d => d.province)), 'All Provinces / Regions');
       province.value = initial.province;
       refreshCities();
       city.value = initial.city;
@@ -133,9 +152,11 @@
       name.value = initial.name;
     }
 
+    /* ---------- Filtering ---------- */
+
     function matches(d) {
-      var q = name.value.trim().toLowerCase();
-      var products = Array.isArray(d.products) ? d.products : [];
+      const q = name.value.trim().toLowerCase();
+      const products = Array.isArray(d.products) ? d.products : [];
       return (!province.value || d.province === province.value) &&
              (!city.value || d.city === city.value) &&
              (!area.value || d.area === area.value) &&
@@ -155,11 +176,13 @@
       render();
     }
 
+    /* ---------- Render ---------- */
+
     function render() {
       syncUrl();
       renderActiveFilters();
 
-      var rows = dealers.filter(matches);
+      const rows = dealers.filter(matches);
 
       if (summary) {
         summary.innerHTML = dealers.length
@@ -186,34 +209,34 @@
             '<p>Try a different province, city, area, product, or dealer name.</p>' +
             '<button class="btn btn-outline btn-sm" type="button" id="emptyReset">Clear filters</button>' +
           '</div>';
-        var emptyReset = document.getElementById('emptyReset');
+        const emptyReset = document.getElementById('emptyReset');
         if (emptyReset) emptyReset.addEventListener('click', clearAll);
         return;
       }
 
-      grid.innerHTML = rows.map(function (d) {
-        var locationParts = [d.area, d.city, d.province].filter(Boolean);
-        var locationLabel = d.location || locationParts.join(', ');
-        var contactName = d.contactName ? String(d.contactName).trim() : '';
+      grid.innerHTML = rows.map(d => {
+        const locationParts = [d.area, d.city, d.province].filter(Boolean);
+        const locationLabel = d.location || locationParts.join(', ');
+        const contactName = d.contactName ? String(d.contactName).trim() : '';
 
-        var phoneHref = d.phone ? 'tel:' + esc(String(d.phone).replace(/[^+\d]/g, '')) : '';
-        var phoneLine = d.phone
+        const phoneHref = d.phone ? 'tel:' + esc(String(d.phone).replace(/[^+\d]/g, '')) : '';
+        const phoneLine = d.phone
           ? '<a href="' + phoneHref + '" class="dealer-contact"><i class="fas fa-phone" aria-hidden="true"></i>' + esc(d.phone) + '</a>'
           : '';
 
-        var emailLine = d.email
+        const emailLine = d.email
           ? '<a href="mailto:' + esc(d.email) + '" class="dealer-contact"><i class="fas fa-envelope" aria-hidden="true"></i>' + esc(d.email) + '</a>'
           : '';
 
-        var tags = (Array.isArray(d.products) && d.products.length)
-          ? '<div class="dealer-tags">' + d.products.map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</div>'
+        const tags = (Array.isArray(d.products) && d.products.length)
+          ? '<div class="dealer-tags">' + d.products.map(x => '<span>' + esc(x) + '</span>').join('') + '</div>'
           : '';
 
-        var contextLink = product.value
+        const contextLink = product.value
           ? '<a class="dealer-context-link" href="products.html?q=' + encodeURIComponent(product.value) + '">View ' + esc(product.value) + ' <i class="fas fa-arrow-right" aria-hidden="true"></i></a>'
           : '';
 
-        var mapLink = d.mapUrl
+        const mapLink = d.mapUrl
           ? '<a class="dealer-map" href="' + esc(d.mapUrl) + '" target="_blank" rel="noopener">View location <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>'
           : '';
 
@@ -234,6 +257,11 @@
         '</article>';
       }).join('');
     }
+
+    /* ---------- Event binding ---------- */
+
+    /* Name search debounced — one rebuild per keystroke burst. */
+    const renderDebounced = debounce(render, 120);
 
     if (province) {
       province.addEventListener('change', function () {
@@ -257,7 +285,7 @@
       });
     }
     if (product) product.addEventListener('change', render);
-    if (name) name.addEventListener('input', render);
+    if (name) name.addEventListener('input', renderDebounced);
     if (reset) reset.addEventListener('click', clearAll);
 
     initFilters();
