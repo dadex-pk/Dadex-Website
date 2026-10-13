@@ -1,35 +1,8 @@
 /* ============================================================
    DESIGN SYSTEM — components, layouts, page systems
-   Merged from: design.css, pass1-refinement.css,
-                product-pass2.css, pass3-internal-refinement.css,
-                projects-images.css, pass4-final-qa.css (design layer)
-   Root tokens live in root.css. Shell lives in shell.css.
+   Requires: root.css (tokens, reset, base elements).
+   Loaded via design-system.css after root.css, before shell.css.
    ============================================================ */
-
-/* ============================================================
-   0. DARK SURFACE DECORATION TOKENS
-   ============================================================ */
-:root{
-  --ring-a-size:38.75rem;
-  --ring-a-thickness:6.875rem;
-  --ring-a-color:rgba(201,0,0,.10);
-  --ring-a-right:-16.875rem;
-  --ring-a-top:-17.5rem;
-
-  --ring-a-size-mobile:26.25rem;
-  --ring-a-thickness-mobile:5rem;
-  --ring-a-right-mobile:-11.25rem;
-  --ring-a-top-mobile:-11.25rem;
-
-  --ring-b-size:19.375rem;
-  --ring-b-color:rgba(255,255,255,.08);
-  --ring-b-right:6.875rem;
-  --ring-b-bottom:-13.125rem;
-
-  --deco-grid-size:2.875rem;
-  --deco-grid-color:rgba(255,255,255,.12);
-  --deco-grid-opacity:.12;
-}
 
 /* ============================================================
    1. BREADCRUMB
@@ -51,40 +24,57 @@
 }
 
 /* ============================================================
-   2. BUTTONS (merged with pass1 refinement)
+   2. BUTTONS
    ============================================================ */
-.btn,.home-btn,.btn-secondary{
+.btn,
+.btn-secondary,
+.home-btn{
   min-height:2.75rem;
   padding:.75rem 1.5rem;
-  border-radius:.5rem;
+  border-radius:var(--radius-sm);
   display:inline-flex;align-items:center;justify-content:center;
-  gap:.5rem;box-sizing:border-box;
+  gap:.5rem;
   font-weight:700;line-height:1.2;text-decoration:none;
-  transition:background-color .2s ease,border-color .2s ease,color .2s ease,
-             box-shadow .2s ease,transform .2s ease;
+  transition:background-color var(--duration-fast) var(--ease-io),
+             border-color var(--duration-fast) var(--ease-io),
+             color var(--duration-fast) var(--ease-io),
+             box-shadow var(--duration-base) var(--ease-io),
+             transform var(--duration-base) var(--ease-io);
 }
 .btn-sm{min-height:2.5rem;padding:.5625rem 1.125rem;font-size:.875rem}
+
 .btn.btn-primary{background:var(--dadex-red);border:1px solid var(--dadex-red);color:#fff}
 .btn.btn-primary:hover{background:var(--dadex-red-dark);border-color:var(--dadex-red-dark)}
 .btn.btn-outline{background:#fff;border:1px solid #bfc5ca;color:var(--d-text)}
 .btn.btn-outline:hover{border-color:var(--dadex-red);color:var(--dadex-red)}
+
 .btn-secondary{border:1px solid rgba(0,0,0,.14);background:#fff;color:#1d2328;font-weight:650;cursor:pointer}
-.btn-secondary:hover,.btn-secondary:focus-visible{border-color:rgba(201,0,0,.35);color:var(--dadex-red);background:#fffafa}
-.btn:hover,.btn-secondary:hover,.home-btn:hover{box-shadow:0 7px 18px rgba(18,24,30,.09)}
-.btn:active,.btn-secondary:active,.home-btn:active{transform:translateY(1px)}
+.btn-secondary:hover,
+.btn-secondary:focus-visible{
+  border-color:rgba(201,0,0,.35);color:var(--dadex-red);background:#fffafa;
+}
+
 .home-btn-primary{background:var(--dadex-red);border:1px solid var(--dadex-red);color:#fff}
 .home-btn-primary:hover{background:var(--dadex-red-dark);border-color:var(--dadex-red-dark);transform:translateY(-1px)}
 .home-btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff}
 .home-btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08);transform:translateY(-1px)}
 .home-btn-light{background:#fff;border:1px solid #fff;color:#17191b}
 .home-btn-light:hover{background:#f2f3f4;border-color:#f2f3f4;transform:translateY(-1px)}
+
+.btn:hover,
+.btn-secondary:hover,
+.home-btn:hover{box-shadow:0 7px 18px rgba(18,24,30,.09)}
+.btn:active,
+.btn-secondary:active,
+.home-btn:active{transform:translateY(1px)}
+
 @media(max-width:640px){.btn,.btn-secondary,.home-btn{min-height:2.625rem}}
 @media(prefers-reduced-motion:reduce){
   .btn,.btn-secondary,.home-btn{transition:none}
 }
 
 /* ============================================================
-   3. PAGE HERO & SECTION TYPOGRAPHY (merged with pass1)
+   3. HERO & TYPOGRAPHY
    ============================================================ */
 main h1{letter-spacing:-.035em}
 main h2{letter-spacing:-.028em}
@@ -148,8 +138,10 @@ main p{max-width:70ch}
 .core-section-head>div{max-width:47.5rem}
 .core-section-head>div h2{margin-bottom:0}
 .core-section-head>p{max-width:47.5rem;margin:1.125rem 0 0;color:#626a70;line-height:1.7}
-.p2-section-head,.product-category-head{display:block}
-.p2-section-head>p,.product-category-head>p{margin:1.125rem 0 0;max-width:47.5rem}
+.p2-section-head,
+.product-category-head{display:block}
+.p2-section-head>p,
+.product-category-head>p{margin:1.125rem 0 0;max-width:47.5rem}
 
 @media(prefers-reduced-motion:no-preference){
   .page-hero h1,.page-hero p{animation:pass4Rise .65s ease both}
@@ -179,7 +171,7 @@ main p{max-width:70ch}
 }
 
 /* ============================================================
-   4. FORMS (merged with pass1)
+   4. FORMS
    ============================================================ */
 .form-group input,
 .form-group textarea,
@@ -215,7 +207,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   5. HOMEPAGE (merged with pass1)
+   5. HOMEPAGE
    ============================================================ */
 .home-page{
   background:var(--d-paper);color:var(--d-ink);
@@ -328,8 +320,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .home-product-card{
   position:relative;display:flex;flex-direction:column;justify-content:flex-start;
   min-height:15.625rem;padding:1.6rem 1.55rem 1.625rem;
-  background:#fff;border:0;border-radius:0;box-shadow:none;
-  overflow:hidden;
+  background:#fff;border:0;border-radius:0;box-shadow:none;overflow:hidden;
 }
 .home-product-card:before{
   content:'';position:absolute;left:0;top:0;width:3px;height:0;
@@ -571,8 +562,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 
 /* ============================================================
    6. PRODUCT DETAIL (p2-*)
-   Merged with product-pass2 refinements.
-   Unified scope: .product-redesign
+   Scope: .product-redesign
    ============================================================ */
 .product-redesign{background:#fff;color:#1d1d1f}
 .product-redesign .container{max-width:74rem}
@@ -633,9 +623,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .p2-image-card img{
   width:100%;height:100%;object-fit:contain;border-radius:.75rem;
 }
-.p2-image-card img[src$="corrugated-sheets.svg"]{
-  object-fit:cover;background:#f5f5f2;padding:0;
-}
 .p2-image-placeholder{
   min-height:18.75rem;display:flex;align-items:center;justify-content:center;
   background:linear-gradient(135deg,#f2f2ef,#ffffff);overflow:hidden;
@@ -695,7 +682,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 .p2-strip-item:last-child strong{color:#c90000!important}
 
-/* ---------- Tabs (offset respects sticky header) ---------- */
+/* ---------- Tabs ---------- */
 .p2-tabs{
   display:flex;gap:0;border-bottom:1px solid #ddd;
   position:sticky;top:var(--sticky-offset);z-index:90;
@@ -705,7 +692,8 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   padding:1.0625rem 1.5rem;color:#4a4a4a;text-decoration:none;
   font-weight:700;font-size:.8125rem;border-bottom:3px solid transparent;
 }
-.p2-tabs a:hover,.p2-tabs a.is-active{color:#c90000;border-bottom-color:#c90000}
+.p2-tabs a:hover,
+.p2-tabs a.is-active{color:#c90000;border-bottom-color:#c90000}
 @media(max-width:700px){.p2-tabs{top:4.5rem}}
 
 /* ---------- Overview ---------- */
@@ -956,8 +944,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   7. CORE PAGES (core-page, core-hero, core-*, contact)
-   Merged with pass3.
+   7. CORE PAGES
    ============================================================ */
 .core-page{
   --core-paper:#f5f6f7;--core-white:#fff;--core-ink:#17191c;
@@ -1187,7 +1174,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   8. ABOUT PAGE (merged with pass3)
+   8. ABOUT PAGE
    ============================================================ */
 .about-page .core-kicker,
 .about-page .core-kicker.muted-kicker{
@@ -1320,7 +1307,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   9. HISTORY (merged with pass3)
+   9. HISTORY
    ============================================================ */
 .history-hero{padding-bottom:4.5rem}
 .history-hero p{max-width:51.25rem}
@@ -1510,7 +1497,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   10. DEALER FINDER (merged with pass3)
+   10. DEALER FINDER
    ============================================================ */
 .dealer-finder{
   padding:1.625rem;border:1px solid var(--line);border-radius:1.125rem;
@@ -1641,7 +1628,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   11. NEWS (.rx-*) (merged with pass3)
+   11. NEWS
    ============================================================ */
 .rx-hero{
   position:relative;overflow:hidden;
@@ -1737,7 +1724,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   12. INVESTOR RELATIONS (merged with pass3)
+   12. INVESTOR RELATIONS
    ============================================================ */
 .ir-layout{
   display:grid;grid-template-columns:17.5rem minmax(0,1fr);
@@ -1849,7 +1836,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   13. SEARCH (merged with pass3)
+   13. SEARCH
    ============================================================ */
 .site-search{max-width:65.625rem}
 .search-engine{
@@ -1905,52 +1892,40 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   QUALITY PAGE — Certifications block
+   14. LITERATURE / RESOURCES + GENERIC CARD GRID
+   Merged: literature card grid and generic content cards use
+   the same structure. Aliased selectors resolve to the same
+   rules.
    ============================================================ */
-.about-cert-block{
-  margin-top:3.5rem;
-  padding-top:2.5rem;
-  border-top:1px solid var(--d-line);
-}
-.cert-request-note{
-  margin:1.75rem 0 0;
-  font-size:.875rem;
-  color:#5d646b;
-  line-height:1.65;
-  max-width:60rem;
-}
-.cert-request-note a{
-  color:var(--dadex-red);
-  font-weight:700;
-  text-decoration:none;
-}
-.cert-request-note a:hover{
-  text-decoration:underline;
-}
-
-/* ============================================================
-   14. LITERATURE / RESOURCES (merged with pass3)
-   ============================================================ */
-.resource-grid{
+.resource-grid,
+.card-grid{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:1.125rem;align-items:stretch;
 }
-.resource-card{
+.resource-card,
+.content-card{
   background:#fff;border:1px solid #e2e5e7;padding:1.5rem;
-  border-radius:10px;
+  border-radius:var(--radius-md);
   height:100%;box-sizing:border-box;display:flex;flex-direction:column;
-  box-shadow:var(--p3-shadow);
-  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+  box-shadow:var(--shadow-1);
+  transition:border-color var(--duration-base) var(--ease-io),
+             box-shadow var(--duration-base) var(--ease-io),
+             transform var(--duration-base) var(--ease-io);
 }
-.resource-card:hover{
-  border-color:#d4d8dc;box-shadow:var(--p3-shadow-hover);
+.resource-card:hover,
+.content-card:hover{
+  border-color:#d4d8dc;box-shadow:var(--shadow-2);transform:translateY(-2px);
 }
-.resource-card .resource-type{
+.content-card{min-height:13.75rem;position:relative}
+.resource-card .resource-type,
+.content-card .card-index{
   font-size:.6875rem;font-weight:800;letter-spacing:.08em;
   color:#a52229;text-transform:uppercase;
 }
-.resource-card h3{margin:.625rem 0 .5rem;line-height:1.25}
-.resource-card p{line-height:1.7}
+.resource-card h3{margin:.625rem 0 .5rem;line-height:1.25;font-size:1.125rem}
+.content-card h2{font-size:1.4375rem;margin:1.125rem 0 .75rem;line-height:1.25}
+.resource-card p,
+.content-card p{line-height:1.7;color:#626a72;font-size:.9375rem}
 .resource-card a{
   color:#a52229;font-weight:700;text-decoration:none;
   display:inline-flex;align-items:center;gap:.4rem;
@@ -1959,13 +1934,8 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .resource-toolbar{display:flex;gap:.625rem;flex-wrap:wrap;margin:1.375rem 0}
 .resource-toolbar input,
 .resource-toolbar select{padding:.75rem .875rem;border:1px solid #d9dde0;background:#fff}
-@media(max-width:700px){
-  .resource-grid{grid-template-columns:1fr}
-}
 
-/* ============================================================
-   15. GENERIC PAGE HELPERS (merged with pass1 + pass3)
-   ============================================================ */
+/* ---------- Generic page helpers ---------- */
 :is(.card,.feature-card,.info-card,.resource-card,.search-result-card,.project-card,.service-card,.investor-card){
   border-color:#e2e5e8;
   border-radius:12px;
@@ -1979,20 +1949,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 .page-main{padding:4.5rem 0}
 .intro-note{max-width:53.125rem;font-size:1.25rem;color:#4e555d;margin-bottom:3rem;line-height:1.75}
-.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.125rem;margin-bottom:4.5rem;align-items:stretch}
-.card-grid .content-card{height:100%;box-sizing:border-box;display:flex;flex-direction:column}
-.content-card{
-  background:#fff;border:1px solid #e1e4e7;padding:1.75rem;min-height:13.75rem;
-  position:relative;transition:.2s;border-radius:.9375rem;
-}
-.content-card:hover{
-  transform:translateY(-3px);box-shadow:0 .875rem 1.875rem rgba(23,25,28,.08);
-  border-color:#c90000;
-}
-.content-card p{color:#626a72;font-size:.9375rem;line-height:1.7}
 .content-card .text-link{margin-top:auto;padding-top:1.125rem}
-.card-index{font-size:.75rem;color:#c90000;font-weight:800;letter-spacing:.12em}
-.content-card h2{font-size:1.4375rem;margin:1.125rem 0 .75rem}
 .text-link{
   display:inline-flex;gap:.5rem;margin-top:1.125rem;
   color:#c90000;font-weight:700;font-size:.875rem;
@@ -2008,8 +1965,12 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .page-cta{background:#17191c;color:#fff;padding:3.375rem 0}
 .page-cta h2{color:#fff;font-size:2rem;margin-bottom:.625rem}
 .page-cta p{color:#bfc4ca;max-width:42.5rem}
-.page-cta .btn,.rx-cta .btn,.home-final-cta .home-btn{white-space:nowrap}
-.page-cta .btn:hover,.rx-cta .btn:hover,.home-final-cta .home-btn:hover{transform:translateY(-1px)}
+.page-cta .btn,
+.rx-cta .btn,
+.home-final-cta .home-btn{white-space:nowrap}
+.page-cta .btn:hover,
+.rx-cta .btn:hover,
+.home-final-cta .home-btn:hover{transform:translateY(-1px)}
 
 .solution-card-link{display:block!important;color:inherit!important;text-decoration:none!important;height:100%!important}
 .solution-card-link:hover{color:inherit!important}
@@ -2034,18 +1995,8 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .careers-page .detail-section p{max-width:51.25rem;line-height:1.75}
 .careers-page .page-cta{margin-top:0}
 
-@media(max-width:900px){.card-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){
-  .card-grid{grid-template-columns:1fr}
-  .page-main{padding:3.25rem 0}
-  .detail-head h2{font-size:1.5rem}
-  .careers-page .page-main{padding:3rem 0 3.625rem}
-  .careers-page .card-grid{margin-bottom:3rem}
-  .careers-page .content-card{padding:1.5rem}
-}
-
 /* ============================================================
-   16. PROJECTS (merged with pass3 + projects-images)
+   15. PROJECTS
    ============================================================ */
 .project-filter{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 2.125rem;padding:0}
 .filter-btn{
@@ -2214,7 +2165,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   17. SITEMAP
+   16. SITEMAP
    ============================================================ */
 .sitemap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem}
 .sitemap-grid section{background:#fff;border:1px solid #e2e5e7;padding:1.375rem}
@@ -2223,7 +2174,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 @media(max-width:900px){.sitemap-grid{grid-template-columns:1fr}}
 
 /* ============================================================
-   18. LEGAL PAGE
+   17. LEGAL PAGE
    ============================================================ */
 .legal-page{
   max-width:56.25rem;
@@ -2303,7 +2254,9 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   19. PRODUCTS PAGE — STICKY CATEGORY STRIP
+   18. PRODUCTS — STICKY CATEGORY STRIP + CATEGORY GRID + HERO STATS
+   Merged: sticky strip and category grid; both describe the
+   products catalogue and share the same scroll-margin token.
    ============================================================ */
 .products-strip{
   position:sticky;top:var(--sticky-offset);z-index:20;
@@ -2366,13 +2319,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .products-chip.is-active i{background:rgba(255,255,255,.20);color:#fff}
 .products-chip.is-active .products-chip-count{background:rgba(255,255,255,.22);color:#fff}
 
-.products-catalogue .product-category,
-.product-tile{scroll-margin-top:13.125rem}
-
-/* ============================================================
-   20. PRODUCTS PAGE — CATEGORY GRID & HERO STATS
-   Merged with product-pass2.
-   ============================================================ */
+/* ---------- Catalogue category grid ---------- */
 .core-page .products-intro{padding:4.5rem 0 1.625rem}
 .core-page .products-intro .container{
   display:grid;grid-template-columns:.9fr 1.1fr;gap:4.375rem;align-items:end;
@@ -2381,7 +2328,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   font-size:clamp(1.875rem,3.5vw,2.875rem);line-height:1.05;letter-spacing:-.045em;
 }
 .core-page .products-intro p{font-size:.875rem;line-height:1.8;color:var(--core-muted);max-width:40.625rem}
-.core-page .product-category{margin-top:4.5rem;scroll-margin-top:13.125rem}
+.core-page .product-category{margin-top:4.5rem;scroll-margin-top:calc(var(--sticky-offset) + 2.625rem)}
 .core-page .product-category-head{
   border-top:2px solid #17191c;padding-top:1.125rem;margin-bottom:1.25rem;
 }
@@ -2398,6 +2345,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .core-page .product-tile{
   border:0;border-radius:0;min-height:18.25rem;box-shadow:none;
   background:#fff;display:flex;flex-direction:column;
+  scroll-margin-top:calc(var(--sticky-offset) + 2.625rem);
 }
 .core-page .product-tile:hover{
   transform:none;box-shadow:inset 0 -3px 0 var(--core-red);border-color:transparent;
@@ -2421,7 +2369,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   letter-spacing:.06em;text-transform:uppercase;font-weight:800;
 }
 
-/* Product index tiles (pass2 refinements) */
+/* Product index tiles — refinement */
 .product-category .product-tile-media{
   aspect-ratio:4/3;
   height:auto;min-height:9.375rem;
@@ -2431,9 +2379,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .product-category .product-tile-media img{
   width:100%;height:100%;object-fit:contain;padding:1rem;display:block;
 }
-.product-category .product-tile-media img[src$="corrugated-sheets.svg"]{
-  padding:0;object-fit:cover;
-}
 .product-category .product-tile-body{
   min-height:11rem;display:flex;flex-direction:column;
 }
@@ -2441,8 +2386,12 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   margin-top:auto;padding-top:1rem;
 }
 
+.products-catalogue .product-category,
+.product-tile{scroll-margin-top:calc(var(--sticky-offset) + 2.625rem)}
+
 .products-final-cta{margin-top:1.125rem}
 
+/* ---------- Hero stats ---------- */
 .products-hero-meta{
   display:flex;flex-wrap:wrap;margin-top:1.875rem;
   padding-top:1.625rem;border-top:1px solid rgba(255,255,255,.12);max-width:47.5rem;
@@ -2485,7 +2434,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   .products-strip-inner::-webkit-scrollbar{display:none}
   .products-chip{flex:0 0 auto}
   .products-catalogue .product-category,
-  .product-tile{scroll-margin-top:1.875rem}
+  .product-tile,
   .core-page .product-category{scroll-margin-top:1.875rem}
 }
 @media(max-width:720px){
@@ -2515,7 +2464,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   21. FOUNDER CHAIRMAN PAGE & ABOUT TEASER
+   19. FOUNDER CHAIRMAN
    ============================================================ */
 .founder-hero{background:#17191c;color:#fff;overflow:hidden;position:relative}
 .founder-hero-grid{
@@ -2707,7 +2656,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   22. TRUST BAR
+   20. TRUST BAR
    ============================================================ */
 .trust-bar{
   background:#f4f5f6;border-top:1px solid #e6e8ea;border-bottom:1px solid #e6e8ea;
@@ -2715,6 +2664,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 .trust-bar-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.875rem 3.75rem;align-items:start}
 .trust-bar-group{min-width:0}
+.trust-bar-group:last-child .trust-bar-items{gap:.375rem}
 .trust-bar-label{
   display:flex;align-items:center;gap:.5625rem;
   font-family:'Manrope','Inter',sans-serif;
@@ -2760,7 +2710,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   23. PRODUCT VIDEOS PAGE
+   21. PRODUCT VIDEOS
    ============================================================ */
 .video-filter{
   display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 2.25rem;padding:0;justify-content:center;
@@ -2870,7 +2820,31 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   PRINT — design-layer
+   22. QUALITY PAGE — Certifications block
+   ============================================================ */
+.about-cert-block{
+  margin-top:3.5rem;
+  padding-top:2.5rem;
+  border-top:1px solid var(--d-line);
+}
+.cert-request-note{
+  margin:1.75rem 0 0;
+  font-size:.875rem;
+  color:#5d646b;
+  line-height:1.65;
+  max-width:60rem;
+}
+.cert-request-note a{
+  color:var(--dadex-red);
+  font-weight:700;
+  text-decoration:none;
+}
+.cert-request-note a:hover{
+  text-decoration:underline;
+}
+
+/* ============================================================
+   23. PRINT — design-layer
    ============================================================ */
 @media print{
   .page-cta .btn,
