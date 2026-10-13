@@ -5,51 +5,42 @@
    - Dynamic text (footer year, company age)
    - Project filter
    - Mailto contact form
-   - Literature filter (search, type filter, clear, empty state)
+   - Literature filter
    - Investor panel switcher
    - Site search
-   - DEXPERT
+   - DEXPERT (lazy — content built on first interaction or idle)
    - Back to top
-   Page-scoped modules (dealers, etc.) live in their own files.
 
+   Page-scoped modules (dealers) live in js/dealers.js.
    MOBILE_NAV_MAX must match the breakpoint used in shell.css
-   for `.site-header .menu-toggle` / `.site-navigation` — currently 900px.
+   for .site-header .menu-toggle / .site-navigation — currently 900px.
    ============================================================ */
 
 const MOBILE_NAV_MAX = 900;
 const COMPANY_FOUNDED_YEAR = 1959;
 const COMPANY_ANNIVERSARY_MONTH = 3; /* April (0-indexed) */
 const COMPANY_ANNIVERSARY_DAY = 13;
-
-document.addEventListener('DOMContentLoaded', async () => {
-  await loadSharedComponents();
-  initDynamicSiteText();
-  initHeaderState();
-  initNavigation();
-  setActiveNavigation();
-  initProjectFilter();
-  initMailtoForm();
-  initLiteratureFilter();
-  initInvestorPanels();
-  initSiteSearch();
-  initDEXPERT();
-  initBackToTop();
-});
+const SCROLL_TOP_THRESHOLD = 600;
 
 
 /* ------------------------------------------------------------
    Utilities
    ------------------------------------------------------------ */
 
-/* Escape a string for safe inclusion in innerHTML. */
+/* Hoisted so the replacement map is created once, not per match. */
+const HTML_ESCAPE_MAP = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;'
+};
+
 function escapeHTML(value){
-  return String(value ?? '').replace(/[&<>"']/g, m => (
-    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]
-  ));
+  return String(value ?? '').replace(/[&<>"']/g, m => HTML_ESCAPE_MAP[m]);
 }
 
-/* Trailing-edge debounce. Returns a function that postpones the
-   call until `wait` ms have elapsed since the last invocation. */
+/* Trailing-edge debounce. */
 function debounce(fn, wait){
   let timer = null;
   return function debounced(...args){
@@ -58,10 +49,47 @@ function debounce(fn, wait){
   };
 }
 
+/* Run non-critical work when the browser is idle. Falls back to
+   setTimeout for Safari < 15. */
+const scheduleIdle = (typeof requestIdleCallback === 'function')
+  ? cb => requestIdleCallback(cb, { timeout: 2000 })
+  : cb => setTimeout(cb, 200);
+
+
+/* ------------------------------------------------------------
+   Bootstrap
+   ------------------------------------------------------------ */
+
+document.addEventListener('DOMContentLoaded', async () => {
+  /* Header and footer must be in the DOM before navigation binds
+     and active-link state is computed. */
+  await loadSharedComponents();
+
+  /* Cheap, synchronous, always needed. */
+  initDynamicSiteText();
+  initHeaderState();
+  initNavigation();
+  setActiveNavigation();
+
+  /* Page-scoped modules. Each one exits immediately when its
+     markup is absent, so this block costs nothing on pages that
+     don't use them. */
+  initProjectFilter();
+  initMailtoForm();
+  initLiteratureFilter();
+  initInvestorPanels();
+  initSiteSearch();
+
+  /* Global UI that is not on the critical path. */
+  initDEXPERT();
+  initBackToTop();
+});
+
 
 /* ------------------------------------------------------------
    Shared header / footer injection
    ------------------------------------------------------------ */
+
 async function loadSharedComponents(){
   const mounts = document.querySelectorAll('[data-component]');
   if (!mounts.length) return;
@@ -82,11 +110,7 @@ async function loadSharedComponents(){
 
 
 /* ------------------------------------------------------------
-   Dynamic text — current year and company age.
-
-   The age is computed against the founder anniversary
-   (13 April 1959). Before the anniversary each calendar year,
-   the age is one less than the naive subtraction would suggest.
+   Dynamic text — current year and company age
 
    Attributes handled:
      data-current-year            → "2026"
@@ -95,10 +119,9 @@ async function loadSharedComponents(){
      data-company-age-over        → "over 67 years"
      data-company-age-hyphenated  → "67-year-old"
 
-   Any element carrying one of these attributes has its text
-   replaced on every page load. The static text inside the HTML
-   is only a fallback for JS-disabled readers and search crawlers.
+   The static HTML text is a fallback for JS-disabled readers.
    ------------------------------------------------------------ */
+
 function initDynamicSiteText(){
   const now = new Date();
   const anniversary = new Date(
@@ -127,6 +150,7 @@ function initDynamicSiteText(){
 /* ------------------------------------------------------------
    Header state flag (home vs internal)
    ------------------------------------------------------------ */
+
 function initHeaderState(){
   const header = document.getElementById('siteHeader') || document.querySelector('.site-header');
   if (!header) return;
@@ -141,10 +165,13 @@ function initHeaderState(){
 /* ------------------------------------------------------------
    Navigation
    ------------------------------------------------------------ */
+
 function initNavigation(){
   const header = document.getElementById('siteHeader') || document.querySelector('.site-header');
   const hamburger = document.querySelector('.menu-toggle');
   const nav = document.getElementById('site-navigation');
+  if (!header || !nav) return;
+
   const isMobile = () => window.innerWidth <= MOBILE_NAV_MAX;
 
   const closeMenus = ({ restoreFocus = false } = {}) => {
@@ -152,7 +179,7 @@ function initNavigation(){
       .forEach(menu => menu.classList.remove('open'));
     document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]')
       .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
-    if (nav) nav.classList.remove('open');
+    nav.classList.remove('open');
     if (hamburger) {
       hamburger.setAttribute('aria-expanded', 'false');
       hamburger.setAttribute('aria-label', 'Open navigation');
@@ -162,11 +189,11 @@ function initNavigation(){
   };
 
   const anyMenuOpen = () =>
-    (nav && nav.classList.contains('open')) ||
+    nav.classList.contains('open') ||
     !!document.querySelector('.dropdown-menu.open');
 
   /* Hamburger open / close */
-  if (hamburger && nav) {
+  if (hamburger) {
     hamburger.addEventListener('click', () => {
       const open = !nav.classList.contains('open');
       if (open) {
@@ -186,7 +213,6 @@ function initNavigation(){
     const menu = menuId ? document.getElementById(menuId) : toggle.nextElementSibling;
     if (!menu) return;
 
-    /* Mobile: tap toggles the dropdown; the toggle link does not navigate. */
     toggle.addEventListener('click', event => {
       if (isMobile()) {
         event.preventDefault();
@@ -196,8 +222,6 @@ function initNavigation(){
       }
     });
 
-    /* Desktop: hover opens via CSS; focus-within also opens via CSS.
-       Sync aria-expanded so assistive tech reflects real focus state. */
     toggle.addEventListener('focusin', () => {
       if (!isMobile()) toggle.setAttribute('aria-expanded', 'true');
     });
@@ -210,7 +234,6 @@ function initNavigation(){
       }, 0);
     });
 
-    /* Keyboard: Escape closes this dropdown and returns focus to the toggle. */
     toggle.addEventListener('keydown', event => {
       if (event.key === 'Escape') {
         menu.classList.remove('open');
@@ -220,7 +243,7 @@ function initNavigation(){
     });
   });
 
-  /* Closing the mobile drawer when a real navigation link is clicked. */
+  /* Close mobile drawer when a real navigation link is clicked. */
   document.querySelectorAll('.site-navigation a').forEach(link => {
     link.addEventListener('click', () => {
       if (link.classList.contains('dropdown-toggle') && isMobile()) return;
@@ -230,25 +253,23 @@ function initNavigation(){
 
   /* Click outside the header closes menus. */
   document.addEventListener('click', event => {
-    if (!header || header.contains(event.target)) return;
+    if (header.contains(event.target)) return;
     closeMenus();
   });
 
-  /* Global Escape — only act if something is actually open.
-     Prevents focus being stolen to the hamburger when the user is
-     pressing Escape inside a form field, dialog, or search box. */
+  /* Global Escape — only acts when something is actually open,
+     so it never steals focus from a form field or search box. */
   document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;
     if (!anyMenuOpen()) return;
     closeMenus({ restoreFocus: true });
   });
 
-  /* Reset state when the viewport crosses back to desktop. Debounced
-     so dragging a window edge does not thrash the DOM on every pixel. */
+  /* Reset state when the viewport crosses back to desktop. */
   window.addEventListener('resize', debounce(() => {
     if (isMobile()) return;
     document.body.classList.remove('nav-open');
-    if (nav) nav.classList.remove('open');
+    nav.classList.remove('open');
     if (hamburger) {
       hamburger.setAttribute('aria-expanded', 'false');
       hamburger.setAttribute('aria-label', 'Open navigation');
@@ -264,6 +285,7 @@ function initNavigation(){
 /* ------------------------------------------------------------
    Active navigation (path-based)
    ------------------------------------------------------------ */
+
 function setActiveNavigation(){
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
 
@@ -312,6 +334,7 @@ function setActiveNavigation(){
 /* ------------------------------------------------------------
    Project filter (projects.html)
    ------------------------------------------------------------ */
+
 function initProjectFilter(){
   const buttons = document.querySelectorAll('#projectFilter .filter-btn[data-filter]');
   const cards = document.querySelectorAll('.project-card[data-category]');
@@ -331,6 +354,7 @@ function initProjectFilter(){
 /* ------------------------------------------------------------
    Mailto contact form (contact.html)
    ------------------------------------------------------------ */
+
 function initMailtoForm(){
   document.querySelectorAll('[data-mailto-form]').forEach(form => {
     form.addEventListener('submit', event => {
@@ -354,8 +378,8 @@ function initMailtoForm(){
    Literature filter (literature.html)
 
    Handles:
-     - Free-text search across card name and subtitle
-     - Type filter (All / Brochures only / Flyers only / Corporate)
+     - Free-text search across card name
+     - Type filter (All / Brochures / Flyers / Corporate)
      - Per-card button visibility based on selected type
      - Section visibility (hides sections with no visible cards)
      - Result count line with aria-live
@@ -363,6 +387,7 @@ function initMailtoForm(){
      - Empty state with its own reset button
      - Certificates routing card hidden when no products match
    ------------------------------------------------------------ */
+
 function initLiteratureFilter(){
   const grid = document.getElementById('resourceGrid');
   if (!grid) return;
@@ -375,8 +400,8 @@ function initLiteratureFilter(){
   const countLine   = document.getElementById('resourceCount');
   const certsCard   = document.getElementById('litCertificates');
 
-  const sections = grid.querySelectorAll('.lit-section');
-  const cards    = grid.querySelectorAll('.lit-card');
+  const sections   = grid.querySelectorAll('.lit-section');
+  const cards      = grid.querySelectorAll('.lit-card');
   const totalCards = cards.length;
 
   const applyFilters = () => {
@@ -395,7 +420,7 @@ function initLiteratureFilter(){
       else if (type === 'flyer')     matchesType = cardTypes.includes('flyer');
       else if (type === 'corporate') matchesType = cardTypes.includes('corporate');
 
-      /* Within a matching card, hide non-matching download buttons */
+      /* Within a matching card, hide non-matching download buttons. */
       card.querySelectorAll('.lit-btn[data-type]').forEach(btn => {
         if (type === 'brochure')       btn.hidden = btn.dataset.type !== 'brochure';
         else if (type === 'flyer')     btn.hidden = btn.dataset.type !== 'flyer';
@@ -407,7 +432,7 @@ function initLiteratureFilter(){
       if (show) visibleCards++;
     });
 
-    /* Hide sections that contain no visible cards */
+    /* Hide sections that contain no visible cards. */
     sections.forEach(section => {
       const anyVisible = Array.prototype.some.call(
         section.querySelectorAll('.lit-card'),
@@ -416,11 +441,9 @@ function initLiteratureFilter(){
       section.hidden = !anyVisible;
     });
 
-    /* Empty state and certificates routing card visibility */
     if (emptyState) emptyState.hidden = visibleCards !== 0;
     if (certsCard)  certsCard.hidden  = visibleCards === 0;
 
-    /* Count line */
     if (countLine) {
       if (visibleCards === 0) {
         countLine.textContent = 'No documents match your filters';
@@ -431,7 +454,6 @@ function initLiteratureFilter(){
       }
     }
 
-    /* Clear button visibility */
     if (clearBtn) {
       const hasFilter = query !== '' || type !== 'all';
       clearBtn.hidden = !hasFilter;
@@ -456,8 +478,9 @@ function initLiteratureFilter(){
 /* ------------------------------------------------------------
    Investor panel switcher (investors.html)
    ------------------------------------------------------------ */
+
 function initInvestorPanels(){
-  const links = [...document.querySelectorAll('[data-ir]')];
+  const links  = [...document.querySelectorAll('[data-ir]')];
   const panels = [...document.querySelectorAll('[data-ir-panel]')];
   if (!links.length || !panels.length) return;
 
@@ -510,9 +533,11 @@ function initInvestorPanels(){
 /* ------------------------------------------------------------
    Site search (search.html)
    ------------------------------------------------------------ */
+
 function initSiteSearch(){
   const input = document.getElementById('siteSearchInput');
   if (!input) return;
+
   const button = document.getElementById('siteSearchButton');
   const clear = document.getElementById('searchClear');
   const grid = document.getElementById('searchResults');
@@ -554,8 +579,44 @@ function initSiteSearch(){
 
 
 /* ------------------------------------------------------------
-   DEXPERT — persistent guide
+   DEXPERT — floating assistant
+
+   Reference tables live at module scope so the array literals
+   are created once per page load, not on every DEXPERT init.
+   The dialog content is built lazily — first FAB click or when
+   the browser goes idle, whichever comes first.
    ------------------------------------------------------------ */
+
+const DEXPERT_PRODUCTS = [
+  ['Aquadex', 'product-aquadex.html'],
+  ['T-Flex', 'product-tflex.html'],
+  ['Polydex Premium', 'product-polydex-premium.html'],
+  ['Polydex', 'product-polydex.html'],
+  ['Thermoline', 'product-thermoline.html'],
+  ['Flow Line', 'product-flow-line.html'],
+  ['Inspection Chambers', 'product-inspection-chambers.html'],
+  ['Manholes', 'product-manholes.html'],
+  ['Catchpits', 'product-catchpits.html'],
+  ['Nikasi', 'product-nikasi.html'],
+  ['Polyduct', 'product-polyduct.html'],
+  ['PE Cable Duct', 'product-pe-cable-duct.html'],
+  ['Electrical Conduits', 'product-electrical-conduits.html'],
+  ['Electroduct', 'product-electroduct.html'],
+  ['Corrugated Sheets', 'product-corrugated-sheets.html'],
+  ['Non-Return Valves', 'product-non-return-valves.html'],
+  ['T-Flex Gas', 'product-tflex-gas.html'],
+  ['T-Flex Compressed Air', 'product-tflex-compressed-air.html'],
+  ['UPVC Tubewell Casing & Screen Pipes System', 'product-upvc-tubewell.html']
+];
+
+const DEXPERT_APPS = [
+  ['Water Supply', 'products.html#water-supply'],
+  ['Sewerage & Drainage', 'products.html#sewerage-drainage'],
+  ['Cable & Utility Ducting', 'products.html#cable-utility-ducting'],
+  ['Specialised & Industrial', 'products.html#specialised-industrial'],
+  ['Roofing', 'products.html#roofing']
+];
+
 function initDEXPERT(){
   if (document.querySelector('.dexpert-fab')) return;
 
@@ -587,42 +648,14 @@ function initDEXPERT(){
     || document.title.replace(/\s*[|–-].*$/, '')).trim();
   const path = window.location.pathname.split('/').pop() || 'index.html';
 
-  const productLinks = [
-    ['Aquadex', 'product-aquadex.html'],
-    ['T-Flex', 'product-tflex.html'],
-    ['Polydex Premium', 'product-polydex-premium.html'],
-    ['Polydex', 'product-polydex.html'],
-    ['Thermoline', 'product-thermoline.html'],
-    ['Flow Line', 'product-flow-line.html'],
-    ['Inspection Chambers', 'product-inspection-chambers.html'],
-    ['Manholes', 'product-manholes.html'],
-    ['Catchpits', 'product-catchpits.html'],
-    ['Nikasi', 'product-nikasi.html'],
-    ['Polyduct', 'product-polyduct.html'],
-    ['PE Cable Duct', 'product-pe-cable-duct.html'],
-    ['Electrical Conduits', 'product-electrical-conduits.html'],
-    ['Electroduct', 'product-electroduct.html'],
-    ['Corrugated Sheets', 'product-corrugated-sheets.html'],
-    ['Non-Return Valves', 'product-non-return-valves.html'],
-    ['T-Flex Gas', 'product-tflex-gas.html'],
-    ['T-Flex Compressed Air', 'product-tflex-compressed-air.html'],
-    ['UPVC Tubewell Casing & Screen Pipes System', 'product-upvc-tubewell.html']
-  ];
-
-  const apps = [
-    ['Water Supply', 'products.html#water-supply'],
-    ['Sewerage & Drainage', 'products.html#sewerage-drainage'],
-    ['Cable & Utility Ducting', 'products.html#cable-utility-ducting'],
-    ['Specialised & Industrial', 'products.html#specialised-industrial'],
-    ['Roofing', 'products.html#roofing']
-  ];
-
-  const isProduct = path.startsWith('product') && path !== 'products.html';
-  const isInvestor = /investor|financial-reports/i.test(path);
-  const isResources = /literature|calculators|videos|news/i.test(path);
+  const isProduct    = path.startsWith('product') && path !== 'products.html';
+  const isInvestor   = /investor|financial-reports/i.test(path);
+  const isResources  = /literature|calculators|videos|news/i.test(path);
   const currentProduct = isProduct ? title : '';
 
   const link = (href, label) => `<a href="${href}">${label}</a>`;
+
+  let isPopulated = false;
 
   function home(){
     let intro = 'What do you need?';
@@ -700,7 +733,7 @@ function initDEXPERT(){
         'products.html', 'Browse products');
       return;
     }
-    const product = productLinks.find(p =>
+    const product = DEXPERT_PRODUCTS.find(p =>
       q.includes(p[0].toLowerCase()) || p[0].toLowerCase().includes(q));
     if (product) {
       result('PRODUCT', product[0],
@@ -708,7 +741,7 @@ function initDEXPERT(){
         product[1], 'Open product');
       return;
     }
-    const app = apps.find(a =>
+    const app = DEXPERT_APPS.find(a =>
       q.includes(a[0].toLowerCase()) || a[0].toLowerCase().includes(q));
     if (app) {
       result('APPLICATION', app[0],
@@ -745,13 +778,20 @@ function initDEXPERT(){
       'products.html', 'Browse products');
   }
 
-  home();
+  /* Build the panel body on first interaction, or when the browser
+     goes idle, whichever fires first. Content only renders once. */
+  function ensurePopulated(){
+    if (isPopulated) return;
+    isPopulated = true;
+    home();
+  }
 
   const close = () => {
     dialog.classList.remove('open');
     fab.setAttribute('aria-expanded', 'false');
   };
   const open = () => {
+    ensurePopulated();
     dialog.classList.add('open');
     fab.setAttribute('aria-expanded', 'true');
     setTimeout(() => dialog.querySelector('#dexpertQuery')?.focus(), 60);
@@ -761,7 +801,7 @@ function initDEXPERT(){
   dialog.querySelector('.dexpert-close').addEventListener('click', close);
 
   /* Escape closes the dialog and returns focus to the FAB.
-     Guarded so the handler does nothing when the dialog is closed —
+     Guarded so it does nothing when the dialog is closed —
      otherwise Escape anywhere on the site would steal focus. */
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
@@ -784,12 +824,16 @@ function initDEXPERT(){
       close();
     }
   });
+
+  /* Pre-build the panel during idle so the first open feels instant. */
+  scheduleIdle(ensurePopulated);
 }
 
 
 /* ------------------------------------------------------------
    Back to top — floating button, injected site-wide
    ------------------------------------------------------------ */
+
 function initBackToTop(){
   if (document.querySelector('.back-to-top')) return;
 
@@ -800,9 +844,8 @@ function initBackToTop(){
   btn.innerHTML = '<i class="fas fa-arrow-up" aria-hidden="true"></i>';
   document.body.appendChild(btn);
 
-  const threshold = 600;
   const update = () => {
-    btn.classList.toggle('is-visible', window.scrollY > threshold);
+    btn.classList.toggle('is-visible', window.scrollY > SCROLL_TOP_THRESHOLD);
   };
 
   window.addEventListener('scroll', update, { passive: true });
