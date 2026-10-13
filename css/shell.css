@@ -6,30 +6,31 @@
 
 /* ============================================================
    SHELL TOKENS
+   Motion and elevation alias the global tokens in root.css.
+   Header-height values stay local — they describe this
+   component, not the whole design system.
    ============================================================ */
 .site-header,
 .site-footer,
 .dexpert-fab,
 .dexpert-dialog,
 .back-to-top{
-  --sh-ease:cubic-bezier(.2,.65,.2,1);
-  --sh-ease-io:cubic-bezier(.4,0,.2,1);
-  --sh-t-fast:.18s;
-  --sh-t-base:.26s;
-  --sh-t-slow:.44s;
+  --sh-ease:var(--ease-out);
+  --sh-ease-io:var(--ease-io);
+  --sh-t-fast:var(--duration-fast);
+  --sh-t-base:var(--duration-base);
+  --sh-t-slow:var(--duration-slow);
 
   --sh-red-soft:rgba(201,0,0,.055);
   --sh-red-border:rgba(201,0,0,.28);
   --sh-red-on-dark:#ff5c5c;
 
-  --sh-el-1:0 1px 2px rgba(15,18,21,.04),0 1px 3px rgba(15,18,21,.05);
-  --sh-el-2:0 1px 2px rgba(15,18,21,.04),
-            0 6px 12px -3px rgba(15,18,21,.07),
-            0 12px 28px -8px rgba(15,18,21,.09);
-  --sh-el-3:0 2px 4px rgba(15,18,21,.04),
-            0 14px 28px -6px rgba(15,18,21,.10),
-            0 28px 56px -14px rgba(15,18,21,.16);
+  --sh-el-1:var(--shadow-1);
+  --sh-el-2:var(--shadow-2);
+  --sh-el-3:var(--shadow-3);
 
+  /* --sticky-offset (root.css) = header-total + 0.625rem slack.
+     Do not "correct" these to match — the slack is deliberate. */
   --sh-header-utility:2.375rem;
   --sh-header-main:4.75rem;
   --sh-header-products:2.75rem;
@@ -176,8 +177,6 @@
   transition:transform var(--sh-t-slow) var(--sh-ease);
 }
 .site-header .brand:hover .brand-logo{transform:translateY(-1px)}
-/* NOTE: brand-name in the shell header should be dark (light background).
-   The white variant below is only used inside the footer. */
 .site-header .brand-name{
   font-size:1.625rem;letter-spacing:-.05em;font-weight:800;color:var(--d-text);
 }
@@ -696,7 +695,7 @@
 }
 
 /* ============================================================
-   FOOTER (merged with pass1 border refinement)
+   FOOTER
    ============================================================ */
 .site-footer{
   background:linear-gradient(180deg,#14171a 0%,#0d0f11 100%);
