@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -10,6 +9,8 @@
 <meta content="index, follow" name="robots"/>
 <meta content="strict-origin-when-cross-origin" name="referrer"/>
 <link href="https://www.dadex.com/about.html" rel="canonical"/>
+
+<!-- Open Graph -->
 <meta content="website" property="og:type"/>
 <meta content="About Dadex | Dadex Eternit Limited" property="og:title"/>
 <meta content="Dadex Eternit Limited — established 1959, PSX-listed, ISO 9001 / 14001 / 45001 certified. Discover our vision, values, manufacturing presence and global technical partners." property="og:description"/>
@@ -18,25 +19,83 @@
 <meta content="en_PK" property="og:locale"/>
 <meta content="https://www.dadex.com/assets/images/corporate/about-products.webp" property="og:image"/>
 <meta content="Dadex product systems" property="og:image:alt"/>
+<meta content="1600" property="og:image:width"/>
+<meta content="900" property="og:image:height"/>
+
+<!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="About Dadex | Dadex Eternit Limited" name="twitter:title"/>
 <meta content="Dadex Eternit Limited — established 1959, PSX-listed, ISO 9001 / 14001 / 45001 certified. Discover our vision, values, manufacturing presence and global technical partners." name="twitter:description"/>
 <meta content="https://www.dadex.com/assets/images/corporate/about-products.webp" name="twitter:image"/>
+
+<!-- Preconnect -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
+
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+
+<!-- Styles -->
 <link href="css/design-system.css" rel="stylesheet"/>
+
+<!-- Structured data -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"AboutPage","name":"About Dadex — Dadex Eternit Limited","url":"https://www.dadex.com/about.html","about":{"@type":"Organization","name":"Dadex Eternit Limited","foundingDate":"1959","founder":{"@type":"Person","name":"Kassim Dada","birthDate":"1919","deathDate":"2001"},"url":"https://www.dadex.com/","logo":"https://www.dadex.com/assets/images/dadex-logo.png","address":{"@type":"PostalAddress","streetAddress":"Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal","addressLocality":"Karachi","postalCode":"75400","addressCountry":"PK"},"telephone":"+92-21-111-000-789","email":"info@dadex.com.pk"}}
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "name": "About Dadex — Dadex Eternit Limited",
+      "url": "https://www.dadex.com/about.html",
+      "description": "Dadex Eternit Limited — established 1959, PSX-listed, ISO 9001 / 14001 / 45001 certified.",
+      "about": { "@id": "https://www.dadex.com/#organization" },
+      "breadcrumb": { "@id": "https://www.dadex.com/about.html#breadcrumb" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.dadex.com/#organization",
+      "name": "Dadex Eternit Limited",
+      "foundingDate": "1959",
+      "founder": {
+        "@type": "Person",
+        "name": "Kassim Dada",
+        "birthDate": "1919",
+        "deathDate": "2001"
+      },
+      "url": "https://www.dadex.com/",
+      "logo": "https://www.dadex.com/assets/images/dadex-logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal",
+        "addressLocality": "Karachi",
+        "postalCode": "75400",
+        "addressCountry": "PK"
+      },
+      "telephone": "+92-21-111-000-789",
+      "email": "info@dadex.com.pk"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.dadex.com/about.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.dadex.com/" },
+        { "@type": "ListItem", "position": 2, "name": "About Dadex", "item": "https://www.dadex.com/about.html" }
+      ]
+    }
+  ]
+}
 </script>
-<link href="css/pass1-refinement.css"/><link href="css/pass3-internal-refinement.css" rel="stylesheet"/>
-<link href="css/pass4-final-qa.css" rel="stylesheet"/>
 </head>
 <body class="core-page about-page">
 <a class="skip-link" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
+
 <main id="main-content">
+
 <!-- ==================================================
      HERO
      ================================================== -->
@@ -50,13 +109,16 @@
 <p>A journey of trust from a vision to the industry leader. Since 1959, Dadex has evolved from a Pakistani manufacturing pioneer into a diversified construction-products company serving piping, drainage, utility and related building applications.</p>
 </div>
 </section>
+
 <div class="breadcrumb">
 <div class="container">
 <a href="index.html">Home</a><span>/</span><strong>About Dadex</strong>
 </div>
 </div>
+
 <section class="core-content">
 <div class="container">
+
 <!-- ==================================================
      WHO WE ARE
      ================================================== -->
@@ -71,6 +133,7 @@
 <img alt="Dadex product range" decoding="async" height="900" loading="lazy" src="assets/images/corporate/product-range.webp" width="1200"/>
 </div>
 </div>
+
 <!-- ==================================================
      AT A GLANCE
      ================================================== -->
@@ -91,6 +154,7 @@
 <article class="core-card"><span class="num">04</span><h3>Certifications</h3><p>ISO 9001, ISO 14001, ISO 45001 and PSQCA certified.</p></article>
 </div>
 </section>
+
 <!-- ==================================================
      CERTIFICATIONS
      ================================================== -->
@@ -109,6 +173,7 @@
 <div class="about-cert"><strong>PSQCA</strong><span>Pakistan Standards and Quality Control Authority compliance</span></div>
 </div>
 </section>
+
 <!-- ==================================================
      JOURNEY
      ================================================== -->
@@ -130,6 +195,7 @@
 <a class="btn btn-primary" href="history.html">Explore Our History <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
 </div>
 </section>
+
 <!-- ==================================================
      FOUNDER CHAIRMAN — TEASER
      ================================================== -->
@@ -152,6 +218,7 @@
 </div>
 </div>
 </section>
+
 <!-- ==================================================
      VALUES
      ================================================== -->
@@ -171,6 +238,7 @@
 <div class="core-value"><strong>Ethical Practices</strong><span>Solid links to strong principles.</span></div>
 </div>
 </section>
+
 <!-- ==================================================
      WHY DADEX
      ================================================== -->
@@ -182,13 +250,14 @@
 </div>
 <p>A partnership built on commitment — supporting customers before, during and after the sale.</p>
 </div>
-<div class="core-grid three about-service-steps">
+<div class="core-grid about-service-steps">
 <article class="core-card"><span class="num">01</span><h3>Design &amp; Proposals</h3><p>Design proposals, BOQ, estimates and product selection support.</p></article>
 <article class="core-card"><span class="num">02</span><h3>Tools Availability</h3><p>Tools for jointing, laying and installation.</p></article>
 <article class="core-card"><span class="num">03</span><h3>Demonstrations &amp; Training</h3><p>In-house, on-field and plumber training.</p></article>
 <article class="core-card"><span class="num">04</span><h3>On-Site Support</h3><p>Laying and testing support at the project site.</p></article>
 </div>
 </section>
+
 <!-- ==================================================
      TECHNICAL PARTNERS
      ================================================== -->
@@ -206,6 +275,7 @@
 <article class="about-partner"><div class="about-partner-country">Poland</div><div class="about-partner-mark">Magnaplast</div><p>Collaboration supporting Dadex's specialised piping portfolio.</p></article>
 </div>
 </section>
+
 <!-- ==================================================
      VISION
      ================================================== -->
@@ -220,6 +290,7 @@
 <p class="vision-statement">“…to be the most valued company for all stakeholders, renowned for customer focus, innovation, quality, reliability &amp; ethical practices.”</p>
 </div>
 </section>
+
 <!-- ==================================================
      MISSION
      ================================================== -->
@@ -261,6 +332,7 @@
 </article>
 </div>
 </section>
+
 <!-- ==================================================
      WHAT WE MAKE
      ================================================== -->
@@ -300,6 +372,7 @@
 </a>
 </div>
 </section>
+
 <!-- ==================================================
      RESPONSIBILITY
      ================================================== -->
@@ -317,6 +390,7 @@
 <article class="core-card"><span class="num">HSE</span><h3>Resource Efficiency</h3><p>Waste recycling, dust control and monitoring systems supporting continuous improvement.</p></article>
 </div>
 </section>
+
 <!-- ==================================================
      CTA
      ================================================== -->
@@ -327,9 +401,11 @@
 </div>
 <a class="btn btn-primary" href="products.html">Explore Products <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
 </div>
+
 </div>
 </section>
 </main>
+
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
 </body>
