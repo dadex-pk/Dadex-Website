@@ -7,7 +7,10 @@
 <meta content="Product brochures, flyers, corporate publications and technical documents for the Dadex range." name="description"/>
 <meta content="#c90000" name="theme-color"/>
 <meta content="index, follow" name="robots"/>
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
 <link href="https://www.dadex.com/literature.html" rel="canonical"/>
+
+<!-- Open Graph -->
 <meta content="website" property="og:type"/>
 <meta content="Literature | Dadex Eternit Limited" property="og:title"/>
 <meta content="Product brochures, flyers, corporate publications and technical documents for the Dadex range." property="og:description"/>
@@ -16,336 +19,141 @@
 <meta content="en_PK" property="og:locale"/>
 <meta content="https://www.dadex.com/assets/images/dadex-logo.png" property="og:image"/>
 <meta content="Dadex Eternit Limited" property="og:image:alt"/>
+<meta content="176" property="og:image:width"/>
+<meta content="46" property="og:image:height"/>
+
+<!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Literature | Dadex Eternit Limited" name="twitter:title"/>
 <meta content="Product brochures, flyers, corporate publications and technical documents for the Dadex range." name="twitter:description"/>
 <meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
+
+<!-- Preconnect -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
-<link href="css/design-system.css" rel="stylesheet"/>
-<style>
-/* ============================================================
-   LITERATURE PAGE — page-scoped styles
-   ============================================================ */
+<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
 
-/* ---------- Toolbar ---------- */
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+
+<!-- Styles -->
+<link href="css/design-system.css" rel="stylesheet"/>
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Literature — Dadex Eternit Limited",
+  "url": "https://www.dadex.com/literature.html",
+  "description": "Product brochures, flyers, corporate publications and technical documents for the Dadex range.",
+  "isPartOf": { "@type": "WebSite", "name": "Dadex Eternit Limited", "url": "https://www.dadex.com/" }
+}
+</script>
+
+<style>
+/* Page-scoped literature styles.
+   Brand red updated to #e50000 (rgba 229,0,0). */
+
 .lit-toolbar{
-  padding:1.25rem 1.5rem;
-  background:#fafbfb;
-  border:1px solid #e2e5e7;
-  border-radius:12px;
-  margin-bottom:2.5rem;
+  padding:1.25rem 1.5rem;background:#fafbfb;border:1px solid #e2e5e7;
+  border-radius:12px;margin-bottom:2.5rem;
 }
-.lit-controls{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.75rem;
-  margin-bottom:.875rem;
-}
-.lit-search{
-  position:relative;
-  flex:1 1 260px;
-  min-width:0;
-  display:block;
-}
-.lit-search i{
-  position:absolute;
-  left:1rem;
-  top:50%;
-  transform:translateY(-50%);
-  color:#8a9197;
-  font-size:.875rem;
-  pointer-events:none;
-}
+.lit-controls{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:.875rem}
+.lit-search{position:relative;flex:1 1 260px;min-width:0;display:block}
+.lit-search i{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:#8a9197;font-size:.875rem;pointer-events:none}
 .lit-search input{
-  width:100%;
-  min-height:2.875rem;
-  padding:.75rem 1rem .75rem 2.75rem;
-  border:1px solid #d9dde0;
-  border-radius:.5rem;
-  background:#fff;
-  color:#17191c;
+  width:100%;min-height:2.875rem;padding:.75rem 1rem .75rem 2.75rem;
+  border:1px solid #d9dde0;border-radius:.5rem;background:#fff;color:#17191c;
   font:500 .875rem/1.2 'Inter',system-ui,sans-serif;
   transition:border-color .18s ease,box-shadow .18s ease;
 }
 .lit-search input::placeholder{color:#8f969d}
-.lit-search input:focus{
-  outline:none;
-  border-color:rgba(201,0,0,.55);
-  box-shadow:0 0 0 3px rgba(201,0,0,.09);
-}
+.lit-search input:focus{outline:none;border-color:rgba(229,0,0,.55);box-shadow:0 0 0 3px rgba(229,0,0,.09)}
 .lit-filter{display:block;flex:0 0 auto}
 .lit-filter select{
-  min-height:2.875rem;
-  padding:.75rem 2.5rem .75rem 1rem;
-  border:1px solid #d9dde0;
-  border-radius:.5rem;
-  background:#fff;
-  color:#17191c;
-  font:600 .875rem/1.2 'Inter',system-ui,sans-serif;
-  cursor:pointer;
-  appearance:none;
-  -webkit-appearance:none;
+  min-height:2.875rem;padding:.75rem 2.5rem .75rem 1rem;
+  border:1px solid #d9dde0;border-radius:.5rem;background:#fff;color:#17191c;
+  font:600 .875rem/1.2 'Inter',system-ui,sans-serif;cursor:pointer;
+  appearance:none;-webkit-appearance:none;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%23687078' d='M6 8L0 0h12z'/></svg>");
-  background-repeat:no-repeat;
-  background-position:right .875rem center;
-  background-size:.625rem;
+  background-repeat:no-repeat;background-position:right .875rem center;background-size:.625rem;
   transition:border-color .18s ease,box-shadow .18s ease;
 }
-.lit-filter select:focus{
-  outline:none;
-  border-color:rgba(201,0,0,.55);
-  box-shadow:0 0 0 3px rgba(201,0,0,.09);
-}
-
-.lit-status{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1rem;
-  padding-top:.875rem;
-  border-top:1px solid #eef0f2;
-  font-size:.8125rem;
-}
-.lit-count{
-  margin:0;
-  color:#687078;
-  letter-spacing:.005em;
-}
+.lit-filter select:focus{outline:none;border-color:rgba(229,0,0,.55);box-shadow:0 0 0 3px rgba(229,0,0,.09)}
+.lit-status{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:.875rem;border-top:1px solid #eef0f2;font-size:.8125rem}
+.lit-count{margin:0;color:#687078;letter-spacing:.005em}
 .lit-clear{
-  display:inline-flex;
-  align-items:center;
-  gap:.375rem;
-  padding:.375rem .75rem;
-  border:1px solid #d9dde0;
-  border-radius:999px;
-  background:#fff;
-  color:#2c3034;
-  font:700 .75rem/1 'Inter',system-ui,sans-serif;
-  cursor:pointer;
+  display:inline-flex;align-items:center;gap:.375rem;padding:.375rem .75rem;
+  border:1px solid #d9dde0;border-radius:999px;background:#fff;color:#2c3034;
+  font:700 .75rem/1 'Inter',system-ui,sans-serif;cursor:pointer;
   transition:border-color .18s ease,color .18s ease,background .18s ease;
 }
-.lit-clear:hover{
-  border-color:var(--dadex-red);
-  color:var(--dadex-red);
-  background:#fff6f6;
-}
-.lit-clear:focus-visible{
-  outline:2px solid var(--dadex-red);
-  outline-offset:2px;
-}
+.lit-clear:hover{border-color:var(--dadex-red);color:var(--dadex-red);background:#fff6f6}
+.lit-clear:focus-visible{outline:2px solid var(--dadex-red);outline-offset:2px}
 .lit-clear i{font-size:.6875rem}
 
-/* ---------- Sections ---------- */
 .lit-section{margin-bottom:2.75rem}
 .lit-section:last-of-type{margin-bottom:1.5rem}
-.lit-section-head{
-  display:flex;
-  align-items:baseline;
-  justify-content:space-between;
-  gap:1rem;
-  padding-bottom:.875rem;
-  margin-bottom:1.25rem;
-  border-bottom:1px solid #e8eaec;
-}
-.lit-section-head h2{
-  font-size:1.25rem;
-  font-weight:800;
-  letter-spacing:-.02em;
-  color:#17191c;
-  margin:0;
-  font-family:'Manrope','Inter',sans-serif;
-}
-.lit-section-count{
-  font-size:.6875rem;
-  font-weight:800;
-  color:#8a9197;
-  letter-spacing:.11em;
-  text-transform:uppercase;
-}
+.lit-section-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding-bottom:.875rem;margin-bottom:1.25rem;border-bottom:1px solid #e8eaec}
+.lit-section-head h2{font-size:1.25rem;font-weight:800;letter-spacing:-.02em;color:#17191c;margin:0;font-family:'Manrope','Inter',sans-serif}
+.lit-section-head h2 span{color:var(--accent-light)}
+.lit-section-count{font-size:.6875rem;font-weight:800;color:#8a9197;letter-spacing:.11em;text-transform:uppercase}
 
-/* ---------- Card grid ---------- */
-.lit-grid{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:1rem;
-}
-
-.lit-card{
-  display:flex;
-  flex-direction:column;
-  padding:1.375rem;
-  background:#fff;
-  border:1px solid #e2e5e7;
-  border-radius:12px;
-  transition:border-color .2s ease,box-shadow .2s ease;
-}
+.lit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.lit-card{display:flex;flex-direction:column;padding:1.375rem;background:#fff;border:1px solid #e2e5e7;border-radius:12px;transition:border-color .2s ease,box-shadow .2s ease}
 .lit-card[hidden]{display:none}
-.lit-card:hover{
-  border-color:rgba(201,0,0,.22);
-  box-shadow:0 12px 28px rgba(18,24,30,.055);
-}
-
-.lit-tag{
-  display:inline-block;
-  align-self:flex-start;
-  padding:.25rem .625rem;
-  margin-bottom:.875rem;
-  border-radius:999px;
-  background:#f2f3f5;
-  color:#626a70;
-  font-size:.625rem;
-  font-weight:800;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  line-height:1.4;
-}
-
-.lit-card h3{
-  font-size:1.0625rem;
-  font-weight:700;
-  letter-spacing:-.01em;
-  color:#17191c;
-  margin:0 0 .375rem;
-  line-height:1.3;
-}
-.lit-subtitle{
-  font-size:.8125rem;
-  color:#687078;
-  line-height:1.55;
-  margin:0 0 1.25rem;
-}
-
-.lit-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.5rem;
-  margin-top:auto;
-}
-
+.lit-card:hover{border-color:rgba(229,0,0,.22);box-shadow:0 12px 28px rgba(18,24,30,.055)}
+.lit-tag{display:inline-block;align-self:flex-start;padding:.25rem .625rem;margin-bottom:.875rem;border-radius:999px;background:#f2f3f5;color:#626a70;font-size:.625rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;line-height:1.4}
+.lit-card h3{font-size:1.0625rem;font-weight:700;letter-spacing:-.01em;color:#17191c;margin:0 0 .375rem;line-height:1.3}
+.lit-subtitle{font-size:.8125rem;color:#687078;line-height:1.55;margin:0 0 1.25rem}
+.lit-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:auto}
 .lit-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:.4375rem;
-  padding:.5625rem .875rem;
-  border:1px solid #dde1e4;
-  border-radius:.5rem;
-  background:#fff;
-  color:#2c3034;
-  font:700 .75rem/1 'Inter',system-ui,sans-serif;
-  letter-spacing:.015em;
+  display:inline-flex;align-items:center;gap:.4375rem;
+  padding:.5625rem .875rem;border:1px solid #dde1e4;border-radius:.5rem;
+  background:#fff;color:#2c3034;
+  font:700 .75rem/1 'Inter',system-ui,sans-serif;letter-spacing:.015em;
   text-decoration:none;
   transition:border-color .18s ease,color .18s ease,background .18s ease;
 }
 .lit-btn[hidden]{display:none}
-.lit-btn i{font-size:.6875rem;color:#c90000}
-.lit-btn:hover{
-  border-color:var(--dadex-red);
-  color:var(--dadex-red);
-  background:#fff6f6;
-}
-.lit-btn:focus-visible{
-  outline:2px solid var(--dadex-red);
-  outline-offset:2px;
-}
+.lit-btn i{font-size:.6875rem;color:var(--dadex-red)}
+.lit-btn:hover{border-color:var(--dadex-red);color:var(--dadex-red);background:#fff6f6}
+.lit-btn:focus-visible{outline:2px solid var(--dadex-red);outline-offset:2px}
 
-/* ---------- Certificates routing ---------- */
 .lit-certificates{
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  gap:1.25rem;
-  align-items:center;
-  padding:1.5rem 1.5rem;
-  margin:0 0 2rem;
-  border:1px solid #e2e5e7;
-  border-left:3px solid var(--dadex-red);
-  border-radius:12px;
-  background:#fafbfb;
+  display:grid;grid-template-columns:auto 1fr auto;gap:1.25rem;align-items:center;
+  padding:1.5rem;margin:0 0 2rem;border:1px solid #e2e5e7;border-left:3px solid var(--dadex-red);
+  border-radius:12px;background:#fafbfb;
 }
 .lit-certificates[hidden]{display:none}
-.lit-cert-icon{
-  display:grid;
-  place-items:center;
-  width:2.75rem;
-  height:2.75rem;
-  border-radius:50%;
-  background:#fce8e8;
-  color:#c90000;
-  font-size:1.125rem;
-}
-.lit-certificates h3{
-  margin:0 0 .25rem;
-  font-size:1.0625rem;
-  font-weight:700;
-  color:#17191c;
-  letter-spacing:-.01em;
-}
-.lit-certificates p{
-  margin:0;
-  font-size:.875rem;
-  color:#687078;
-  line-height:1.55;
-}
-
-/* ---------- Empty state ---------- */
-.lit-empty{
-  text-align:center;
-  padding:3.5rem 1.5rem;
-  background:#fff;
-  border:1px dashed #cfd4d9;
-  border-radius:12px;
-}
+.lit-cert-icon{display:grid;place-items:center;width:2.75rem;height:2.75rem;border-radius:50%;background:#fce8e8;color:var(--dadex-red);font-size:1.125rem}
+.lit-certificates h3{margin:0 0 .25rem;font-size:1.0625rem;font-weight:700;color:#17191c;letter-spacing:-.01em}
+.lit-certificates p{margin:0;font-size:.875rem;color:#687078;line-height:1.55}
+.lit-empty{text-align:center;padding:3.5rem 1.5rem;background:#fff;border:1px dashed #cfd4d9;border-radius:12px}
 .lit-empty[hidden]{display:none}
-.lit-empty i{
-  font-size:1.75rem;
-  color:#c90000;
-  margin-bottom:1rem;
-  display:inline-block;
-}
-.lit-empty h3{
-  margin:0 0 .5rem;
-  font-size:1.125rem;
-  font-weight:700;
-  color:#17191c;
-}
-.lit-empty p{
-  margin:0 auto 1.25rem;
-  font-size:.875rem;
-  color:#687078;
-  max-width:32rem;
-  line-height:1.6;
-}
+.lit-empty i{font-size:1.75rem;color:var(--dadex-red);margin-bottom:1rem;display:inline-block}
+.lit-empty h3{margin:0 0 .5rem;font-size:1.125rem;font-weight:700;color:#17191c}
+.lit-empty p{margin:0 auto 1.25rem;font-size:.875rem;color:#687078;max-width:32rem;line-height:1.6}
 
-/* ---------- Responsive ---------- */
-@media(max-width:1000px){
-  .lit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
+@media(max-width:1000px){.lit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){
   .lit-controls{flex-direction:column}
   .lit-filter select{width:100%}
   .lit-status{flex-direction:column;align-items:flex-start;gap:.625rem}
   .lit-grid{grid-template-columns:1fr}
-  .lit-certificates{
-    grid-template-columns:1fr;
-    text-align:center;
-    padding:1.5rem 1.25rem;
-  }
+  .lit-certificates{grid-template-columns:1fr;text-align:center;padding:1.5rem 1.25rem}
   .lit-cert-icon{margin-inline:auto}
   .lit-certificates .btn{justify-self:center}
 }
 @media(prefers-reduced-motion:reduce){
-  .lit-search input,
-  .lit-filter select,
-  .lit-clear,
-  .lit-card,
-  .lit-btn{transition:none!important}
+  .lit-search input,.lit-filter select,.lit-clear,.lit-card,.lit-btn{transition:none!important}
 }
 @media print{
-  .lit-toolbar,
-  .lit-certificates,
-  .lit-empty{display:none!important}
+  .lit-toolbar,.lit-certificates,.lit-empty{display:none!important}
   .lit-grid{grid-template-columns:repeat(2,1fr)!important}
   .lit-card{box-shadow:none;transform:none}
 }
@@ -354,344 +162,347 @@
 <body class="core-page">
 <a class="skip-link" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
+
 <div class="breadcrumb">
 <div class="container">
 <a href="index.html">Home</a><span>/</span><strong>Literature</strong>
 </div>
 </div>
+
 <main id="main-content">
+
 <section class="core-hero">
 <div class="container">
 <div class="core-kicker">Resources</div>
-<h1>Literature</h1>
+<h1>Product <span>Literature</span></h1>
 <p>Product brochures, flyers, corporate publications and technical documents for the Dadex range.</p>
 </div>
 </section>
+
 <section class="core-content">
 <div class="container">
 
 <div class="lit-toolbar" role="search">
-  <div class="lit-controls">
-    <label class="lit-search">
-      <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
-      <input type="search" id="resourceSearch" aria-label="Search literature" placeholder="Search literature…" autocomplete="off"/>
-    </label>
-    <label class="lit-filter">
-      <span class="sr-only">Filter by document type</span>
-      <select id="resourceType" aria-label="Filter by document type">
-        <option value="all">All documents</option>
-        <option value="brochure">Brochures only</option>
-        <option value="flyer">Flyers only</option>
-        <option value="corporate">Corporate publications</option>
-      </select>
-    </label>
-  </div>
-  <div class="lit-status">
-    <p class="lit-count" id="resourceCount" aria-live="polite">Showing all 21 documents</p>
-    <button type="button" class="lit-clear" id="resourceClear" hidden>
-      <i class="fas fa-xmark" aria-hidden="true"></i> Clear filters
-    </button>
-  </div>
+<div class="lit-controls">
+<label class="lit-search">
+<i aria-hidden="true" class="fas fa-magnifying-glass"></i>
+<input aria-label="Search literature" autocomplete="off" id="resourceSearch" placeholder="Search literature…" type="search"/>
+</label>
+<label class="lit-filter">
+<span class="sr-only">Filter by document type</span>
+<select aria-label="Filter by document type" id="resourceType">
+<option value="all">All documents</option>
+<option value="brochure">Brochures only</option>
+<option value="flyer">Flyers only</option>
+<option value="corporate">Corporate publications</option>
+</select>
+</label>
+</div>
+<div class="lit-status">
+<p aria-live="polite" class="lit-count" id="resourceCount">Showing all 21 documents</p>
+<button class="lit-clear" hidden id="resourceClear" type="button">
+<i aria-hidden="true" class="fas fa-xmark"></i> Clear filters
+</button>
+</div>
 </div>
 
 <div id="resourceGrid">
 
-  <!-- ================= WATER SUPPLY ================= -->
-  <section class="lit-section">
-    <div class="lit-section-head">
-      <h2>Water Supply</h2>
-      <span class="lit-section-count">5 products</span>
-    </div>
-    <div class="lit-grid">
+<!-- ================= WATER SUPPLY ================= -->
+<section class="lit-section">
+<div class="lit-section-head">
+<h2>Water <span>Supply</span></h2>
+<span class="lit-section-count">5 products</span>
+</div>
+<div class="lit-grid">
 
-      <article class="lit-card" data-name="aquadex upvc pressure pipe system" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Aquadex</h3>
-        <p class="lit-subtitle">UPVC Pressure Pipe System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_aquadex.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_aquadex.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="aquadex upvc pressure pipe system" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Aquadex</h3>
+<p class="lit-subtitle">UPVC Pressure Pipe System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_aquadex.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_aquadex.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="t-flex pe 100 flexible piping system" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>T-Flex</h3>
-        <p class="lit-subtitle">PE 100 Flexible Piping System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_tflex.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_tflex.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="t-flex pe 100 flexible piping system" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>T-Flex</h3>
+<p class="lit-subtitle">PE 100 Flexible Piping System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_tflex.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_tflex.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="polydex premium pp-rct hot cold water" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Polydex Premium</h3>
-        <p class="lit-subtitle">PP-RCT Hot &amp; Cold Water System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_polydex-premium.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_polydex-premium.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="polydex premium pp-rct hot cold water" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Polydex Premium</h3>
+<p class="lit-subtitle">PP-RCT Hot &amp; Cold Water System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_polydex-premium.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_polydex-premium.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="polydex pp-r water supply system" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Polydex</h3>
-        <p class="lit-subtitle">PP-R Water Supply System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_polydex.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_polydex.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="polydex pp-r water supply system" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Polydex</h3>
+<p class="lit-subtitle">PP-R Water Supply System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_polydex.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_polydex.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="thermoline pp-r hot cold water" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Thermoline</h3>
-        <p class="lit-subtitle">PP-R Hot &amp; Cold Water System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_thermoline.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_thermoline.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="thermoline pp-r hot cold water" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Thermoline</h3>
+<p class="lit-subtitle">PP-R Hot &amp; Cold Water System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_thermoline.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_thermoline.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-    </div>
-  </section>
+</div>
+</section>
 
-  <!-- ================= SEWERAGE & DRAINAGE ================= -->
-  <section class="lit-section">
-    <div class="lit-section-head">
-      <h2>Sewerage &amp; Drainage</h2>
-      <span class="lit-section-count">7 products</span>
-    </div>
-    <div class="lit-grid">
+<!-- ================= SEWERAGE & DRAINAGE ================= -->
+<section class="lit-section">
+<div class="lit-section-head">
+<h2>Sewerage &amp; <span>Drainage</span></h2>
+<span class="lit-section-count">7 products</span>
+</div>
+<div class="lit-grid">
 
-      <article class="lit-card" data-name="flow line upvc underground sewerage" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Flow Line</h3>
-        <p class="lit-subtitle">UPVC Underground Sewerage System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_flow-line.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_flow-line.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="flow line upvc underground sewerage" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Flow Line</h3>
+<p class="lit-subtitle">UPVC Underground Sewerage System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_flow-line.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_flow-line.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="inspection chambers modular underground" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Inspection Chambers</h3>
-        <p class="lit-subtitle">Modular Underground Chamber System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_inspection-chambers.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_inspection-chambers.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="inspection chambers modular underground" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Inspection Chambers</h3>
+<p class="lit-subtitle">Modular Underground Chamber System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_inspection-chambers.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_inspection-chambers.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="manholes underground sewer access" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Manholes</h3>
-        <p class="lit-subtitle">Underground Sewer Access System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_manholes.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_manholes.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="manholes underground sewer access" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Manholes</h3>
+<p class="lit-subtitle">Underground Sewer Access System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_manholes.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_manholes.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="catchpits polypropylene rainwater surface drainage" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Catchpits</h3>
-        <p class="lit-subtitle">Lightweight PP Rainwater &amp; Surface Drainage Pits</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_catchpits.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_catchpits.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="catchpits polypropylene rainwater surface drainage" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Catchpits</h3>
+<p class="lit-subtitle">Lightweight PP Rainwater &amp; Surface Drainage Pits</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_catchpits.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_catchpits.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="non-return valves backflow protection" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Non-Return Valves</h3>
-        <p class="lit-subtitle">Backflow Protection for Sewerage Systems</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_non-return-valves.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_non-return-valves.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="non-return valves backflow protection" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Non-Return Valves</h3>
+<p class="lit-subtitle">Backflow Protection for Sewerage Systems</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_non-return-valves.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_non-return-valves.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="nikasi upvc soil waste ventilation swv" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Nikasi</h3>
-        <p class="lit-subtitle">UPVC Soil, Waste &amp; Ventilation System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_nikasi.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_nikasi.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="nikasi upvc soil waste ventilation swv" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Nikasi</h3>
+<p class="lit-subtitle">UPVC Soil, Waste &amp; Ventilation System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_nikasi.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_nikasi.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="polyduct low noise swv drainage" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Polyduct</h3>
-        <p class="lit-subtitle">Low-Noise SWV Drainage System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_polyduct.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_polyduct.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="polyduct low noise swv drainage" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Polyduct</h3>
+<p class="lit-subtitle">Low-Noise SWV Drainage System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_polyduct.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_polyduct.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-    </div>
-  </section>
+</div>
+</section>
 
-  <!-- ================= CABLE & UTILITY DUCTING ================= -->
-  <section class="lit-section">
-    <div class="lit-section-head">
-      <h2>Cable &amp; Utility Ducting</h2>
-      <span class="lit-section-count">3 products</span>
-    </div>
-    <div class="lit-grid">
+<!-- ================= CABLE & UTILITY DUCTING ================= -->
+<section class="lit-section">
+<div class="lit-section-head">
+<h2>Cable &amp; <span>Utility Ducting</span></h2>
+<span class="lit-section-count">3 products</span>
+</div>
+<div class="lit-grid">
 
-      <article class="lit-card" data-name="pe cable duct fibre optics utility" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>PE Cable Duct</h3>
-        <p class="lit-subtitle">PE / UPVC Cable Ducting System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_pe-cable-duct.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_pe-cable-duct.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="pe cable duct fibre optics utility" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>PE Cable Duct</h3>
+<p class="lit-subtitle">PE / UPVC Cable Ducting System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_pe-cable-duct.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_pe-cable-duct.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="electrical conduits upvc wiring" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Electrical Conduits</h3>
-        <p class="lit-subtitle">UPVC Electrical Conduit System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_electrical-conduits.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_electrical-conduits.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="electrical conduits upvc wiring" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Electrical Conduits</h3>
+<p class="lit-subtitle">UPVC Electrical Conduit System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_electrical-conduits.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_electrical-conduits.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="electroduct upvc electrical conduit en 50086" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Electroduct</h3>
-        <p class="lit-subtitle">UPVC Electrical Conduit System to EN 50086</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_electroduct.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_electroduct.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="electroduct upvc electrical conduit en 50086" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Electroduct</h3>
+<p class="lit-subtitle">UPVC Electrical Conduit System to EN 50086</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_electroduct.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_electroduct.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-    </div>
-  </section>
+</div>
+</section>
 
-  <!-- ================= SPECIALISED & INDUSTRIAL ================= -->
-  <section class="lit-section">
-    <div class="lit-section-head">
-      <h2>Specialised &amp; Industrial</h2>
-      <span class="lit-section-count">3 products</span>
-    </div>
-    <div class="lit-grid">
+<!-- ================= SPECIALISED & INDUSTRIAL ================= -->
+<section class="lit-section">
+<div class="lit-section-head">
+<h2>Specialised &amp; <span>Industrial</span></h2>
+<span class="lit-section-count">3 products</span>
+</div>
+<div class="lit-grid">
 
-      <article class="lit-card" data-name="t-flex gas pe 80 pe 100" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>T-Flex Gas</h3>
-        <p class="lit-subtitle">PE 80 &amp; PE 100 Gas Piping System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_tflex-gas.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_tflex-gas.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="t-flex gas pe 80 pe 100" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>T-Flex Gas</h3>
+<p class="lit-subtitle">PE 80 &amp; PE 100 Gas Piping System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_tflex-gas.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_tflex-gas.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="t-flex compressed air pe 100 industrial" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>T-Flex Compressed Air</h3>
-        <p class="lit-subtitle">PE 100 Compressed Air Piping System</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_tflex-compressed-air.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_tflex-compressed-air.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="t-flex compressed air pe 100 industrial" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>T-Flex Compressed Air</h3>
+<p class="lit-subtitle">PE 100 Compressed Air Piping System</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_tflex-compressed-air.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_tflex-compressed-air.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="upvc tubewell casing screen pipes water wells" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>UPVC Tubewell Casing &amp; Screen Pipes</h3>
-        <p class="lit-subtitle">Casing &amp; Screen Pipes for Water Wells</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_upvc-tubewell.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_upvc-tubewell.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="upvc tubewell casing screen pipes water wells" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>UPVC Tubewell Casing &amp; Screen Pipes</h3>
+<p class="lit-subtitle">Casing &amp; Screen Pipes for Water Wells</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_upvc-tubewell.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_upvc-tubewell.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-    </div>
-  </section>
+</div>
+</section>
 
-  <!-- ================= ROOFING ================= -->
-  <section class="lit-section">
-    <div class="lit-section-head">
-      <h2>Roofing</h2>
-      <span class="lit-section-count">1 product</span>
-    </div>
-    <div class="lit-grid">
+<!-- ================= ROOFING ================= -->
+<section class="lit-section">
+<div class="lit-section-head">
+<h2><span>Roofing</span></h2>
+<span class="lit-section-count">1 product</span>
+</div>
+<div class="lit-grid">
 
-      <article class="lit-card" data-name="corrugated sheets roofing wall cladding" data-types="brochure flyer">
-        <span class="lit-tag">Product Literature</span>
-        <h3>Corrugated Sheets</h3>
-        <p class="lit-subtitle">Roofing &amp; Wall Cladding Sheets</p>
-        <div class="lit-actions">
-          <a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_corrugated-sheets.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Brochure</a>
-          <a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_corrugated-sheets.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Flyer</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="corrugated sheets roofing wall cladding" data-types="brochure flyer">
+<span class="lit-tag">Product Literature</span>
+<h3>Corrugated Sheets</h3>
+<p class="lit-subtitle">Roofing &amp; Wall Cladding Sheets</p>
+<div class="lit-actions">
+<a class="lit-btn" data-type="brochure" href="assets/brochures/brochure_corrugated-sheets.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Brochure</a>
+<a class="lit-btn" data-type="flyer" href="assets/flyers/flyer_corrugated-sheets.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Flyer</a>
+</div>
+</article>
 
-    </div>
-  </section>
+</div>
+</section>
 
-  <!-- ================= CORPORATE ================= -->
-  <section class="lit-section">
-    <div class="lit-section-head">
-      <h2>Corporate Publications</h2>
-      <span class="lit-section-count">2 documents</span>
-    </div>
-    <div class="lit-grid">
+<!-- ================= CORPORATE ================= -->
+<section class="lit-section">
+<div class="lit-section-head">
+<h2>Corporate <span>Publications</span></h2>
+<span class="lit-section-count">2 documents</span>
+</div>
+<div class="lit-grid">
 
-      <article class="lit-card" data-name="product booklet dadex range" data-types="corporate">
-        <span class="lit-tag">Corporate Publication</span>
-        <h3>Product Booklet</h3>
-        <p class="lit-subtitle">Complete overview of the Dadex product range</p>
-        <div class="lit-actions">
-          <a class="lit-btn" href="assets/corporate/product-booklet.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Download</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="product booklet dadex range" data-types="corporate">
+<span class="lit-tag">Corporate Publication</span>
+<h3>Product Booklet</h3>
+<p class="lit-subtitle">Complete overview of the Dadex product range</p>
+<div class="lit-actions">
+<a class="lit-btn" href="assets/corporate/product-booklet.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Download</a>
+</div>
+</article>
 
-      <article class="lit-card" data-name="corporate profile company background" data-types="corporate">
-        <span class="lit-tag">Corporate Publication</span>
-        <h3>Corporate Profile</h3>
-        <p class="lit-subtitle">Company background, manufacturing capability and partnerships</p>
-        <div class="lit-actions">
-          <a class="lit-btn" href="assets/corporate/corporate-profile.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Download</a>
-        </div>
-      </article>
+<article class="lit-card" data-name="corporate profile company background" data-types="corporate">
+<span class="lit-tag">Corporate Publication</span>
+<h3>Corporate Profile</h3>
+<p class="lit-subtitle">Company background, manufacturing capability and partnerships</p>
+<div class="lit-actions">
+<a class="lit-btn" href="assets/corporate/corporate-profile.pdf" rel="noopener" target="_blank"><i aria-hidden="true" class="fas fa-file-pdf"></i> Download</a>
+</div>
+</article>
 
-    </div>
-  </section>
+</div>
+</section>
 
-  <!-- ================= CERTIFICATES ROUTING ================= -->
-  <div class="lit-certificates" id="litCertificates">
-    <div class="lit-cert-icon"><i class="fas fa-certificate" aria-hidden="true"></i></div>
-    <div>
-      <h3>Certificates &amp; Standards</h3>
-      <p>ISO 9001, ISO 14001, ISO 45001 and PSQCA certificates are available on request for tender submissions and project compliance.</p>
-    </div>
-    <a href="quality.html" class="btn btn-outline">Visit Quality &amp; Compliance <i class="fas fa-arrow-right"></i></a>
-  </div>
+<div class="lit-certificates" id="litCertificates">
+<div class="lit-cert-icon"><i aria-hidden="true" class="fas fa-certificate"></i></div>
+<div>
+<h3>Certificates &amp; Standards</h3>
+<p>ISO 9001, ISO 14001, ISO 45001 and PSQCA certificates are available on request for tender submissions and project compliance.</p>
+</div>
+<a class="btn btn-outline" href="quality.html">Visit Quality &amp; Compliance <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
+</div>
 
-  <!-- ================= EMPTY STATE ================= -->
-  <div class="lit-empty" id="resourceEmpty" hidden>
-    <i class="fas fa-file-circle-question" aria-hidden="true"></i>
-    <h3>No documents match your search</h3>
-    <p>Try a different keyword, or clear the filters to see all available literature.</p>
-    <button type="button" class="btn btn-outline btn-sm" id="resourceEmptyReset">Clear filters</button>
-  </div>
+<div class="lit-empty" hidden id="resourceEmpty">
+<i aria-hidden="true" class="fas fa-file-circle-question"></i>
+<h3>No documents match your search</h3>
+<p>Try a different keyword, or clear the filters to see all available literature.</p>
+<button class="btn btn-outline btn-sm" id="resourceEmptyReset" type="button">Clear filters</button>
+</div>
 
 </div>
 </div>
 </section>
 </main>
+
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
 </body>
