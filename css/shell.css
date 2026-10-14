@@ -1,15 +1,8 @@
 /* ============================================================
    SHELL — Header, Footer, DEXPERT, Back to top
-   Refactored: rem sizing, token-driven. Mega-menu full-width
-   panel anchored to products tier. Breakpoints @ 900px.
+   Breakpoints @ 900px.
    ============================================================ */
 
-/* ============================================================
-   SHELL TOKENS
-   Motion and elevation alias the global tokens in root.css.
-   Header-height values stay local — they describe this
-   component, not the whole design system.
-   ============================================================ */
 .site-header,
 .site-footer,
 .dexpert-fab,
@@ -858,6 +851,8 @@
 
 /* ============================================================
    DEXPERT — floating assistant
+   Native <dialog> element; showModal() provides focus trap,
+   Escape close and focus return natively.
    ============================================================ */
 .dexpert-fab{
   position:fixed;right:1.5rem;bottom:1.5rem;z-index:1100;
@@ -905,30 +900,48 @@
 }
 .dexpert-fab:focus-visible{outline:2px solid var(--dadex-red);outline-offset:4px}
 
+/* ---------- Dialog — native <dialog> ---------- */
 .dexpert-dialog{
-  position:fixed;right:1.5rem;bottom:5.625rem;z-index:1101;
+  /* Reset native dialog centering defaults */
+  position:fixed;
+  right:1.5rem;
+  bottom:5.625rem;
+  left:auto;
+  top:auto;
+  margin:0;
+  padding:0;
+  max-width:none;
+  max-height:none;
+
+  z-index:1101;
   width:min(24.375rem,calc(100vw - 2rem));
   max-height:min(41.25rem,calc(100vh - 11.25rem));
-  overflow:auto;background:#fff;
-  border:1px solid rgba(23,25,28,.08);border-radius:1.25rem;
+  overflow:auto;
+  background:#fff;
+  border:1px solid rgba(23,25,28,.08);
+  border-radius:1.25rem;
   box-shadow:
     0 1px 2px rgba(0,0,0,.04),
     0 6px 12px -2px rgba(0,0,0,.06),
     0 28px 64px -12px rgba(15,18,21,.24);
-  visibility:hidden;opacity:0;
-  transform:translateY(.875rem) scale(.96);
-  transform-origin:bottom right;pointer-events:none;
-  transition:opacity var(--sh-t-base) var(--sh-ease),
-             transform var(--sh-t-base) var(--sh-ease),
-             visibility 0s linear var(--sh-t-base);
+  transform-origin:bottom right;
 }
-.dexpert-dialog.open{
-  visibility:visible;opacity:1;
-  transform:translateY(0) scale(1);pointer-events:auto;
-  transition:opacity var(--sh-t-slow) var(--sh-ease),
-             transform var(--sh-t-slow) cubic-bezier(.34,1.4,.5,1),
-             visibility 0s;
+.dexpert-dialog[open]{
+  animation:dexpertIn var(--sh-t-slow) var(--sh-ease);
 }
+@keyframes dexpertIn{
+  from{opacity:0;transform:translateY(.875rem) scale(.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.dexpert-dialog::backdrop{
+  background:rgba(10,12,14,.18);
+  animation:dexpertBackdropIn var(--sh-t-base) var(--sh-ease);
+}
+@keyframes dexpertBackdropIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
 .dexpert-head{
   display:flex;align-items:center;justify-content:space-between;
   padding:1.125rem 1.25rem!important;
@@ -1160,7 +1173,7 @@
              border-color .18s ease,
              box-shadow .18s ease;
 }
-body:has(.dexpert-dialog.open) .back-to-top{
+body:has(.dexpert-dialog[open]) .back-to-top{
   opacity:0;visibility:hidden;pointer-events:none;
 }
 @media (hover: hover) and (pointer: fine){
@@ -1190,6 +1203,8 @@ body:has(.dexpert-dialog.open) .back-to-top{
   .dexpert-fab,
   .dexpert-fab img,
   .dexpert-dialog,
+  .dexpert-dialog[open],
+  .dexpert-dialog::backdrop,
   .dexpert-close,
   .dexpert-actions a,
   .dexpert-actions button,
