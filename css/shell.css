@@ -851,8 +851,6 @@
 
 /* ============================================================
    DEXPERT — floating assistant
-   Native <dialog> element; showModal() provides focus trap,
-   Escape close and focus return natively.
    ============================================================ */
 .dexpert-fab{
   position:fixed;right:1.5rem;bottom:1.5rem;z-index:1100;
@@ -902,7 +900,6 @@
 
 /* ---------- Dialog — native <dialog> ---------- */
 .dexpert-dialog{
-  /* Reset native dialog centering defaults */
   position:fixed;
   right:1.5rem;
   bottom:5.625rem;
