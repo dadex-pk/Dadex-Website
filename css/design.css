@@ -1293,7 +1293,133 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   font-size:1.375rem;color:#20252a;font-weight:650;
   border-left:3px solid var(--dadex-red);padding-left:1.125rem;
 }
+/* ---------- Vision & Mission — separate 2-column sections ---------- */
+.vm-section-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(20rem,.85fr);
+  gap:clamp(2.5rem,5vw,5rem);
+  align-items:center;
+}
+.vm-section-content{min-width:0}
+.vm-section-content h3{
+  font-family:'Manrope','Inter',sans-serif;
+  font-size:clamp(1.5rem,2.8vw,2rem);
+  line-height:1.15;
+  letter-spacing:-.03em;
+  color:#17191c;
+  margin:0 0 1.25rem;
+  position:relative;
+  padding-bottom:.875rem;
+}
+.vm-section-content h3::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:0;
+  width:2.75rem;height:3px;
+  background:var(--dadex-red);
+}
+.vm-section-content p{
+  font-size:.9375rem;
+  line-height:1.8;
+  color:#4f555c;
+  max-width:40rem;
+  margin:0 0 1rem;
+}
+.vm-section-content p:last-child{margin-bottom:0}
 
+/* Vision statement — larger, quoted */
+.vm-vision-statement{
+  font-size:clamp(1.125rem,1.8vw,1.375rem) !important;
+  line-height:1.7 !important;
+  color:#20252a !important;
+  font-weight:650;
+  border-left:3px solid var(--dadex-red);
+  padding-left:1.125rem;
+  margin:0 !important;
+  max-width:36rem;
+}
+
+/* Mission sub-cards inside the text column */
+.vm-mission-cards{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1px;
+  background:var(--core-line);
+  border:1px solid var(--core-line);
+  margin-top:1.25rem;
+}
+.vm-mission-cards .core-card{
+  background:#fff;
+  border:0;
+  border-radius:0;
+  min-height:0;
+  padding:1.5rem 1.5rem 1.375rem;
+  box-shadow:none;
+}
+.vm-mission-cards .core-card h4{
+  font-family:'Manrope','Inter',sans-serif;
+  font-size:.9375rem;
+  font-weight:700;
+  color:#17191c;
+  margin:0 0 .5rem;
+  letter-spacing:-.015em;
+  line-height:1.3;
+}
+.vm-mission-cards .core-card ul{
+  padding-left:1.125rem;
+  margin:.5rem 0 0;
+}
+.vm-mission-cards .core-card li{
+  font-size:.8125rem;
+  line-height:1.65;
+  color:#5a6167;
+  margin:.375rem 0;
+}
+
+/* Image column */
+.vm-section-media{
+  position:relative;
+  border-radius:12px;
+  overflow:hidden;
+  background:#f4f5f6;
+  min-height:22rem;
+  align-self:stretch;
+}
+.vm-section-media img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .4s ease;
+}
+
+/* Alternate — image on the left for the second section */
+.vm-section-grid.is-flipped{
+  grid-template-columns:minmax(20rem,.85fr) minmax(0,1fr);
+}
+.vm-section-grid.is-flipped .vm-section-content{order:2}
+.vm-section-grid.is-flipped .vm-section-media{order:1}
+
+@media (hover: hover) and (pointer: fine){
+  .vm-section-media:hover img{transform:scale(1.02)}
+}
+
+@media(max-width:900px){
+  .vm-section-grid,
+  .vm-section-grid.is-flipped{
+    grid-template-columns:1fr;
+    gap:2.5rem;
+  }
+  .vm-section-grid.is-flipped .vm-section-content,
+  .vm-section-grid.is-flipped .vm-section-media{order:initial}
+  .vm-section-media{min-height:18rem}
+}
+@media(max-width:560px){
+  .vm-mission-cards{grid-template-columns:1fr}
+  .vm-vision-statement{font-size:1.0625rem !important}
+  .vm-section-media{min-height:14rem}
+}
 @media(max-width:1000px){
   .about-cert-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
   .about-service-steps{grid-template-columns:repeat(2,minmax(0,1fr))!important}
@@ -1314,114 +1440,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 @media(max-width:600px){
   .vision-statement{font-size:1.1rem}
 }
-/* ---------- Vision & Mission — 2-column layout ---------- */
-.vm-grid{
-  display:grid;
-  grid-template-columns:minmax(0,1.15fr) minmax(18rem,.85fr);
-  gap:clamp(2.5rem,5vw,4.5rem);
-  align-items:start;
-}
-.vm-content{
-  display:flex;
-  flex-direction:column;
-  gap:clamp(2.5rem,4vw,3.5rem);
-  min-width:0;
-}
-.vm-block h3{
-  font-family:'Manrope','Inter',sans-serif;
-  font-size:clamp(1.375rem,2.6vw,1.875rem);
-  line-height:1.15;
-  letter-spacing:-.028em;
-  color:#17191c;
-  margin:0 0 1.25rem;
-  position:relative;
-  padding-bottom:.875rem;
-}
-.vm-block h3::after{
-  content:"";
-  position:absolute;
-  left:0;bottom:0;
-  width:2.5rem;height:3px;
-  background:var(--dadex-red);
-}
-.vm-block p{
-  font-size:.9375rem;
-  line-height:1.8;
-  color:#4f555c;
-  max-width:38rem;
-  margin:0;
-}
-.vm-block .vision-statement{
-  font-size:1.1875rem;
-  line-height:1.7;
-  color:#20252a;
-  font-weight:650;
-  border-left:3px solid var(--dadex-red);
-  padding-left:1.125rem;
-  margin:0;
-  max-width:36rem;
-}
 
-/* Mission sub-cards inside the left column */
-.vm-mission-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:1px;
-  background:var(--core-line);
-  border:1px solid var(--core-line);
-  margin-top:.5rem;
-}
-.vm-mission-grid .core-card{
-  background:#fff;
-  border:0;
-  border-radius:0;
-  min-height:0;
-  padding:1.5rem 1.5rem 1.375rem;
-  box-shadow:none;
-}
-.vm-mission-grid .core-card h3{
-  font-size:1rem;
-  font-family:'Manrope','Inter',sans-serif;
-  font-weight:700;
-  color:#17191c;
-  margin:0 0 .5rem;
-  padding:0;
-  letter-spacing:-.015em;
-}
-.vm-mission-grid .core-card h3::after{display:none}
-.vm-mission-grid .core-card ul{padding-left:1.125rem;margin:.5rem 0 0}
-.vm-mission-grid .core-card li{
-  font-size:.8125rem;
-  line-height:1.65;
-  color:#5a6167;
-  margin:.375rem 0;
-}
-
-/* Media column */
-.vm-media{
-  position:relative;
-  border-radius:12px;
-  overflow:hidden;
-  background:#f4f5f6;
-  align-self:stretch;
-  min-height:24rem;
-}
-.vm-media img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-}
-
-@media(max-width:900px){
-  .vm-grid{grid-template-columns:1fr;gap:2.5rem}
-  .vm-media{min-height:18rem}
-}
-@media(max-width:560px){
-  .vm-mission-grid{grid-template-columns:1fr}
-  .vm-block .vision-statement{font-size:1.0625rem}
-}
 /* ============================================================
    9. HISTORY
    ============================================================ */
