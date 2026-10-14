@@ -1893,9 +1893,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 
 /* ============================================================
    14. LITERATURE / RESOURCES + GENERIC CARD GRID
-   Merged: literature card grid and generic content cards use
-   the same structure. Aliased selectors resolve to the same
-   rules.
    ============================================================ */
 .resource-grid,
 .card-grid{
@@ -2032,7 +2029,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 .project-card[hidden]{display:none!important}
 
-/* Project card media */
 .project-card-media{
   height:9.375rem;
   background:#f7f7f7;
@@ -2048,7 +2044,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   .project-card:hover .project-card-media img{transform:scale(1.035)}
 }
 
-/* Project card head */
 .project-card-head{
   display:flex;justify-content:space-between;align-items:flex-start;
   gap:1rem;margin-bottom:1rem;padding:1.625rem 1.5rem 0;
@@ -2236,7 +2231,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 .legal-page a:hover{color:var(--dadex-red-dark)}
 
-/* Trim excess space above the card on the policy page only */
 .core-page:has(.legal-page) .core-content{
   padding-top:clamp(2rem,3vw,3rem);
 }
@@ -2254,9 +2248,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 /* ============================================================
-   18. PRODUCTS — STICKY CATEGORY STRIP + CATEGORY GRID + HERO STATS
-   Merged: sticky strip and category grid; both describe the
-   products catalogue and share the same scroll-margin token.
+   18. PRODUCTS
    ============================================================ */
 .products-strip{
   position:sticky;top:var(--sticky-offset);z-index:20;
@@ -2321,9 +2313,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 
 /* ---------- Catalogue category grid ---------- */
 .core-page .products-intro{padding:4.5rem 0 1.625rem}
-.core-page .products-intro .container{
-  display:grid;grid-template-columns:.9fr 1.1fr;gap:4.375rem;align-items:end;
-}
+.core-page .products-intro .container{display:block}
 .core-page .products-intro h2{
   font-size:clamp(1.875rem,3.5vw,2.875rem);line-height:1.05;letter-spacing:-.045em;
 }
@@ -2418,9 +2408,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   text-transform:uppercase;letter-spacing:.13em;line-height:1.2;white-space:nowrap;
 }
 
-@media(max-width:1000px){
-  .core-page .products-intro .container{grid-template-columns:1fr;gap:1.375rem}
-}
 @media(max-width:900px){
   .products-strip{
     position:static;padding:.875rem 0;background:transparent;
