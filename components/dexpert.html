@@ -1,0 +1,45 @@
+<dialog aria-label="DEXPERT Dadex digital guide" class="dexpert-dialog" id="dexpertDialog">
+  <div class="dexpert-head">
+    <div class="dexpert-brand">
+      <strong>DEXPERT</strong>
+      <span>Dadex digital guide</span>
+    </div>
+    <button aria-label="Close DEXPERT" class="dexpert-close" type="button">×</button>
+  </div>
+  <div class="dexpert-body" id="dexpertBody"></div>
+</dialog>
+
+<template id="dexpertHomeTemplate">
+  <div>
+    <div class="dexpert-context">
+      <span>Current page</span>
+      <strong></strong>
+    </div>
+    <p class="dexpert-intro"></p>
+    <div class="dexpert-actions"></div>
+    <div class="dexpert-ask">
+      <label for="dexpertQuery">Search Dadex</label>
+      <div>
+        <input autocomplete="off" id="dexpertQuery" placeholder="Product or application" type="search"/>
+        <button id="dexpertAskBtn" type="button">Ask</button>
+      </div>
+    </div>
+    <p class="dexpert-note">Uses approved Dadex website information.</p>
+  </div>
+</template>
+
+<template id="dexpertResultTemplate">
+  <div>
+    <button class="dexpert-back" type="button">← Back</button>
+    <div class="dexpert-result">
+      <span data-label></span>
+      <h4 data-heading></h4>
+      <p data-message></p>
+      <a class="dexpert-result-link" href="#"><span data-cta></span> →</a>
+    </div>
+  </div>
+</template>
+
+<template id="dexpertActionTemplate">
+  <a href="#"></a>
+</template>
