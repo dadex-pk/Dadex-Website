@@ -4,11 +4,19 @@
    ============================================================ */
 
 :root{
-  /* ---------- Brand ---------- */
-  --dadex-red:#c90000;
-  --dadex-red-dark:#9f0000;
-  --d-red:#c90000;
-  --d-red-dark:#a90000;
+  /* ---------- Brand — primary red ----------
+     Source: CMYK 0 100 100 10
+     Digital equivalent: #E50000
+     If your brand book lists a different hex, change only the
+     two lines below — every downstream file inherits. */
+  --dadex-red:#e50000;
+  --dadex-red-dark:#b50000;
+  --d-red:#e50000;
+  --d-red-dark:#c00000;
+
+  /* ---------- Accent reds for two-colour headings ---------- */
+  --accent-light:#e50000;   /* on light backgrounds — passes AA at 4.5:1 */
+  --accent-dark:#ff6a6a;    /* on dark backgrounds — bright enough for contrast */
 
   /* ---------- Ink / text ---------- */
   --ink:#17191c;
@@ -80,7 +88,7 @@
   /* ---------- Decorative — hero rings & grid ---------- */
   --ring-a-size:38.75rem;
   --ring-a-thickness:6.875rem;
-  --ring-a-color:rgba(201,0,0,.10);
+  --ring-a-color:rgba(229,0,0,.10);
   --ring-a-right:-16.875rem;
   --ring-a-top:-17.5rem;
 
