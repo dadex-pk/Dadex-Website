@@ -1,8 +1,19 @@
 /* ============================================================
    SHELL — Header, Footer, DEXPERT, Back to top
-   Breakpoints @ 900px.
+   Refactored: rem sizing, token-driven. Mega-menu full-width
+   panel anchored to products tier. Breakpoints @ 900px.
+
+   Updated for brand red #e50000 (CMYK 0 100 100 10).
+   Shadow and glow rgba() values match the new brand red.
+   DEXPERT gradients resolve from --dadex-red / --dadex-red-dark.
    ============================================================ */
 
+/* ============================================================
+   SHELL TOKENS
+   Motion and elevation alias the global tokens in root.css.
+   Header-height values stay local — they describe this
+   component, not the whole design system.
+   ============================================================ */
 .site-header,
 .site-footer,
 .dexpert-fab,
@@ -14,9 +25,9 @@
   --sh-t-base:var(--duration-base);
   --sh-t-slow:var(--duration-slow);
 
-  --sh-red-soft:rgba(201,0,0,.055);
-  --sh-red-border:rgba(201,0,0,.28);
-  --sh-red-on-dark:#ff5c5c;
+  --sh-red-soft:rgba(229,0,0,.055);
+  --sh-red-border:rgba(229,0,0,.28);
+  --sh-red-on-dark:#ff6a6a;
 
   --sh-el-1:var(--shadow-1);
   --sh-el-2:var(--shadow-2);
@@ -77,9 +88,9 @@
   content:"";position:absolute;left:0;right:0;top:0;height:2px;
   background:linear-gradient(90deg,
     transparent 0%,
-    rgba(201,0,0,.35) 18%,
+    rgba(229,0,0,.35) 18%,
     var(--dadex-red) 50%,
-    rgba(201,0,0,.35) 82%,
+    rgba(229,0,0,.35) 82%,
     transparent 100%);
   opacity:.9;pointer-events:none;z-index:1;
 }
@@ -99,7 +110,7 @@
 }
 .site-header .utility-bar::after{
   content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(201,0,0,.25),transparent);
+  background:linear-gradient(90deg,transparent,rgba(229,0,0,.25),transparent);
   pointer-events:none;
 }
 .site-header .utility-inner{
@@ -116,7 +127,7 @@
 .site-header .utility-left strong::before{
   content:"";width:.375rem;height:.375rem;border-radius:50%;
   background:var(--sh-red-on-dark);
-  box-shadow:0 0 0 .1875rem rgba(255,92,92,.22);
+  box-shadow:0 0 0 .1875rem rgba(255,106,106,.22);
   flex:0 0 .375rem;
 }
 .site-header .utility-left strong::after{
@@ -136,7 +147,7 @@
   width:1.375rem;height:1.375rem;
   display:inline-flex;align-items:center;justify-content:center;
   border-radius:.375rem;
-  background:rgba(255,92,92,.16);
+  background:rgba(255,106,106,.16);
   color:var(--sh-red-on-dark);
   font-size:.65625rem;
   transition:background var(--sh-t-fast) var(--sh-ease-io),
@@ -246,7 +257,7 @@
 }
 .site-header .header-products-tier::after{
   content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(201,0,0,.20) 50%,transparent);
+  background:linear-gradient(90deg,transparent,rgba(229,0,0,.20) 50%,transparent);
   pointer-events:none;
 }
 .site-header .header-products-row{
@@ -544,7 +555,7 @@
 }
 .site-header .menu-toggle:hover{
   background:var(--dadex-red);color:#fff;border-color:var(--dadex-red);
-  box-shadow:0 .375rem .875rem -.25rem rgba(201,0,0,.35);
+  box-shadow:0 .375rem .875rem -.25rem rgba(229,0,0,.35);
 }
 .site-header .menu-toggle:focus-visible,
 .site-header .site-navigation a:focus-visible,
@@ -577,7 +588,7 @@
   .site-header .nav-search:hover{
     background:var(--dadex-red);color:#fff!important;
     transform:translateY(-1px);
-    box-shadow:0 .375rem 1rem -.25rem rgba(201,0,0,.35);
+    box-shadow:0 .375rem 1rem -.25rem rgba(229,0,0,.35);
   }
   .site-header .nav-search:hover .nav-search-icon{color:#fff;transform:scale(1.08)}
   .site-header .header-products-row>a.tier2-link:hover,
@@ -666,7 +677,7 @@
     opacity:1;visibility:visible;transform:none;
     box-shadow:none;border:0;border-radius:0;
     padding:.375rem 0 .5rem 1rem;
-    border-left:2px solid rgba(201,0,0,.22);margin-top:.25rem;
+    border-left:2px solid rgba(229,0,0,.22);margin-top:.25rem;
   }
   .site-header .site-navigation .dropdown-menu.open{display:block}
 
@@ -700,17 +711,17 @@
   content:"";position:absolute;left:0;right:0;top:0;height:3px;
   background:linear-gradient(90deg,
     transparent 0%,
-    rgba(201,0,0,.30) 15%,
+    rgba(229,0,0,.30) 15%,
     var(--dadex-red) 50%,
-    rgba(201,0,0,.30) 85%,
+    rgba(229,0,0,.30) 85%,
     transparent 100%);
 }
 .site-footer::after{
   content:"";position:absolute;width:45rem;height:45rem;border-radius:50%;
   right:-20rem;top:-22.5rem;
-  border:1px solid rgba(201,0,0,.10);
+  border:1px solid rgba(229,0,0,.10);
   box-shadow:
-    0 0 0 5.625rem rgba(201,0,0,.035),
+    0 0 0 5.625rem rgba(229,0,0,.035),
     0 0 0 11.25rem rgba(255,255,255,.012);
   pointer-events:none;
 }
@@ -754,7 +765,7 @@
 .site-footer h4 i{
   width:1.375rem;height:1.375rem;
   display:inline-flex!important;align-items:center;justify-content:center;
-  border-radius:.375rem;background:rgba(255,92,92,.18);
+  border-radius:.375rem;background:rgba(255,106,106,.18);
   color:var(--sh-red-on-dark);font-size:.625rem;margin-right:.625rem;
   vertical-align:middle;
   transition:background var(--sh-t-base) var(--sh-ease-io),
@@ -851,19 +862,23 @@
 
 /* ============================================================
    DEXPERT — floating assistant
+   Native <dialog> element; showModal() provides focus trap,
+   Escape close and focus return natively.
+   Gradients resolve from brand tokens so brand-red updates
+   propagate automatically.
    ============================================================ */
 .dexpert-fab{
   position:fixed;right:1.5rem;bottom:1.5rem;z-index:1100;
   display:inline-flex!important;align-items:center!important;gap:.6rem!important;
   min-height:3.25rem;padding:0 1.25rem 0 .4375rem!important;
-  background:linear-gradient(135deg,#d10000 0%,#9d0000 100%)!important;
+  background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%)!important;
   border:1px solid rgba(255,255,255,.14)!important;
   border-radius:999px;color:#fff!important;
   font-size:.78125rem;font-weight:800;letter-spacing:.02em;
   box-shadow:
     0 1px 2px rgba(0,0,0,.08),
     0 4px 12px rgba(0,0,0,.12),
-    0 14px 36px -4px rgba(201,0,0,.35);
+    0 14px 36px -4px rgba(229,0,0,.35);
   cursor:pointer;overflow:hidden;
   transition:transform var(--sh-t-base) var(--sh-ease),
              box-shadow var(--sh-t-base) var(--sh-ease-io),
@@ -888,13 +903,13 @@
 }
 .dexpert-fab small{font-size:.5625rem;color:#f3d0d0;line-height:1}
 .dexpert-fab[aria-expanded="true"]{
-  background:linear-gradient(135deg,#e10000 0%,#ad0000 100%)!important;
+  background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%)!important;
   border-color:rgba(255,255,255,.24)!important;
   transform:translateY(-3px);
   box-shadow:
     0 2px 4px rgba(0,0,0,.10),
     0 6px 16px rgba(0,0,0,.14),
-    0 22px 48px -6px rgba(201,0,0,.45);
+    0 22px 48px -6px rgba(229,0,0,.45);
 }
 .dexpert-fab:focus-visible{outline:2px solid var(--dadex-red);outline-offset:4px}
 
@@ -942,7 +957,7 @@
 .dexpert-head{
   display:flex;align-items:center;justify-content:space-between;
   padding:1.125rem 1.25rem!important;
-  background:linear-gradient(135deg,#c90000 0%,#9d0000 100%)!important;
+  background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%)!important;
   color:#fff!important;position:relative;overflow:hidden;
 }
 .dexpert-head::before{
@@ -1030,8 +1045,8 @@
              box-shadow var(--sh-t-fast) var(--sh-ease-io);
 }
 .dexpert-ask>div:focus-within{
-  border-color:rgba(201,0,0,.5);background:#fff;
-  box-shadow:0 0 0 4px rgba(201,0,0,.08);
+  border-color:rgba(229,0,0,.5);background:#fff;
+  box-shadow:0 0 0 4px rgba(229,0,0,.08);
 }
 .dexpert-ask input{
   min-width:0;border:0!important;background:transparent;
@@ -1042,7 +1057,7 @@
 .dexpert-ask input::placeholder{color:#8f969d}
 .dexpert-ask button{
   min-width:3.75rem!important;border:0;border-radius:.5625rem!important;
-  background:linear-gradient(135deg,#c90000 0%,#9d0000 100%);
+  background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%);
   color:#fff;padding:.625rem .875rem!important;
   font:800 .6875rem/1 'Inter',system-ui,sans-serif!important;
   letter-spacing:.03em;cursor:pointer;
@@ -1081,7 +1096,7 @@
   display:flex!important;align-items:center;justify-content:space-between;
   margin-top:1rem;font-size:.78125rem!important;
   padding:.75rem .9375rem!important;border-radius:.6875rem!important;
-  background:linear-gradient(135deg,#c90000 0%,#9d0000 100%);
+  background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%);
   color:#fff!important;font-weight:700;letter-spacing:.005em;
   text-decoration:none;position:relative;overflow:hidden;
   transition:transform var(--sh-t-base) var(--sh-ease),
@@ -1094,33 +1109,33 @@
 }
 @media (hover: hover) and (pointer: fine){
   .dexpert-fab:hover{
-    background:linear-gradient(135deg,#e10000 0%,#ad0000 100%)!important;
+    background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%)!important;
     border-color:rgba(255,255,255,.24)!important;
     transform:translateY(-3px);
     box-shadow:
       0 2px 4px rgba(0,0,0,.10),
       0 6px 16px rgba(0,0,0,.14),
-      0 22px 48px -6px rgba(201,0,0,.45);
+      0 22px 48px -6px rgba(229,0,0,.45);
   }
   .dexpert-fab:hover img{transform:scale(1.05) rotate(-3deg)}
   .dexpert-close:hover{background:rgba(255,255,255,.24);transform:rotate(90deg)}
   .dexpert-actions a:hover,
   .dexpert-actions button:hover{
-    border-color:rgba(201,0,0,.28);background:#fff6f6;color:var(--dadex-red);
+    border-color:rgba(229,0,0,.28);background:#fff6f6;color:var(--dadex-red);
     transform:translateX(3px);
-    box-shadow:0 .375rem 1rem -.375rem rgba(201,0,0,.18);
+    box-shadow:0 .375rem 1rem -.375rem rgba(229,0,0,.18);
   }
   .dexpert-actions a:hover small,
-  .dexpert-actions button:hover small{color:#a83a3a}
+  .dexpert-actions button:hover small{color:#c03838}
   .dexpert-ask button:hover{
-    background:linear-gradient(135deg,#e10000 0%,#ad0000 100%);
-    box-shadow:0 .375rem 1rem -.25rem rgba(201,0,0,.40);
+    background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%);
+    box-shadow:0 .375rem 1rem -.25rem rgba(229,0,0,.40);
     transform:translateY(-1px);
   }
   .dexpert-back:hover{gap:.5625rem;color:var(--dadex-red-dark)}
   .dexpert-result-link:hover{
     transform:translateY(-2px);
-    box-shadow:0 .75rem 1.75rem -.5rem rgba(201,0,0,.45);
+    box-shadow:0 .75rem 1.75rem -.5rem rgba(229,0,0,.45);
   }
 }
 .dexpert-ask button:active{transform:translateY(0)}
@@ -1178,8 +1193,8 @@ body:has(.dexpert-dialog[open]) .back-to-top{
     background:var(--dadex-red);border-color:var(--dadex-red);color:#fff;
     transform:translateY(-2px);
     box-shadow:
-      0 4px 10px rgba(201,0,0,.20),
-      0 12px 28px -6px rgba(201,0,0,.30);
+      0 4px 10px rgba(229,0,0,.20),
+      0 12px 28px -6px rgba(229,0,0,.30);
   }
 }
 .back-to-top:focus-visible{outline:2px solid var(--dadex-red);outline-offset:3px}
