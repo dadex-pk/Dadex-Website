@@ -2,42 +2,134 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Investor Relations | Dadex Eternit Limited</title>
 <meta content="Investor Relations for Dadex Eternit Limited — company information, governance, shareholding, financial results, reports, AGM notices and investor contact." name="description"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="css/design-system.css" rel="stylesheet"/>
+<meta content="#c90000" name="theme-color"/>
+<meta content="index, follow" name="robots"/>
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
 <link href="https://www.dadex.com/investors.html" rel="canonical"/>
+
+<!-- Open Graph -->
 <meta content="website" property="og:type"/>
 <meta content="Investor Relations | Dadex Eternit Limited" property="og:title"/>
-<meta content="Investor Relations for Dadex Eternit Limited — company information, governance, shareholding, financial results, reports, AGM notices and investor contact." property="og:description"/>
+<meta content="Company information, governance, shareholding, financial results, reports, AGM notices and investor contact." property="og:description"/>
 <meta content="https://www.dadex.com/investors.html" property="og:url"/>
 <meta content="Dadex Eternit Limited" property="og:site_name"/>
 <meta content="en_PK" property="og:locale"/>
 <meta content="https://www.dadex.com/assets/images/dadex-logo.png" property="og:image"/>
 <meta content="Dadex Eternit Limited" property="og:image:alt"/>
+<meta content="176" property="og:image:width"/>
+<meta content="46" property="og:image:height"/>
+
+<!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Investor Relations | Dadex Eternit Limited" name="twitter:title"/>
-<meta content="Investor Relations for Dadex Eternit Limited — company information, governance, shareholding, financial results, reports, AGM notices and investor contact." name="twitter:description"/>
+<meta content="Company information, governance, shareholding, financial results, reports, AGM notices and investor contact." name="twitter:description"/>
 <meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
+
+<!-- Preconnect -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+
+<!-- Styles -->
+<link href="css/design-system.css" rel="stylesheet"/>
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Investor Relations — Dadex Eternit Limited",
+  "url": "https://www.dadex.com/investors.html",
+  "description": "Company information, governance, shareholding, financial results and disclosures.",
+  "isPartOf": { "@type": "WebSite", "name": "Dadex Eternit Limited", "url": "https://www.dadex.com/" }
+}
+</script>
+
+<style>
+.ir-panel[data-ir-panel="directors"] .director-card{padding:1.375rem 1.5rem 1.5rem}
+.ir-panel[data-ir-panel="directors"] .director-card strong{font-size:1.0625rem;letter-spacing:-.01em}
+.ir-panel[data-ir-panel="directors"] .director-card span{font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--dadex-red);margin-top:.25rem}
+.ir-panel[data-ir-panel="directors"] .director-card p{margin:.875rem 0 0;padding-top:.875rem;border-top:1px solid #eef0f2;font-size:.8125rem;line-height:1.7;color:#5d646b;max-width:66ch}
+.ir-panel[data-ir-panel="directors"] .director-card p + p{margin-top:.875rem;padding-top:.875rem;border-top:1px solid #f4f5f6}
+.director-controls{display:flex;justify-content:flex-end;margin:1.5rem 0 .875rem}
+.director-expand-all{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.5rem .9375rem;border:1px solid #dde1e4;border-radius:999px;
+  background:#fff;color:#2c3034;
+  font:700 .75rem/1 'Inter',system-ui,sans-serif;letter-spacing:.02em;
+  cursor:pointer;
+  transition:border-color .18s ease,background .18s ease,color .18s ease;
+}
+.director-expand-all:hover{border-color:var(--dadex-red);color:var(--dadex-red);background:#fff6f6}
+.director-expand-all:focus-visible{outline:2px solid var(--dadex-red);outline-offset:2px}
+.director-expand-all i{font-size:.75rem}
+.director-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.875rem;margin:0 0 1.75rem;align-items:start}
+.director-card{border:1px solid #e2e5e7;background:#fff;border-radius:10px;overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease}
+.director-card[open]{border-color:rgba(229,0,0,.22);box-shadow:0 12px 28px rgba(18,24,30,.055)}
+.director-card > summary{
+  list-style:none;cursor:pointer;
+  padding:1.125rem 3.25rem 1.125rem 1.375rem;position:relative;
+  display:flex;flex-direction:column;gap:.25rem;
+  transition:background .18s ease;
+}
+.director-card > summary::-webkit-details-marker{display:none}
+.director-card > summary::marker{content:""}
+.director-card > summary:hover{background:#fafbfb}
+.director-card[open] > summary{background:#fffafa}
+.director-card > summary:focus-visible{outline:2px solid var(--dadex-red);outline-offset:-2px}
+.director-card > summary strong{font-size:1.0625rem;font-weight:700;letter-spacing:-.01em;color:#17191c;line-height:1.25}
+.director-card > summary span{font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--dadex-red);line-height:1.3}
+.director-card > summary::after{
+  content:"+";position:absolute;right:1.375rem;top:50%;transform:translateY(-50%);
+  width:1.75rem;height:1.75rem;display:grid;place-items:center;
+  border-radius:50%;border:1px solid #dde1e4;color:#6b7379;
+  font-size:1rem;font-weight:500;line-height:1;
+  transition:transform .25s cubic-bezier(.34,1.4,.5,1),color .18s ease,border-color .18s ease,background .18s ease;
+}
+.director-card[open] > summary::after{content:"−";color:var(--dadex-red);border-color:rgba(229,0,0,.35);background:#fce8e8}
+.director-bio{padding:1rem 1.375rem 1.375rem;border-top:1px solid #eef0f2}
+.director-bio p{margin:0;font-size:.8125rem;line-height:1.75;color:#5d646b;max-width:70ch}
+.director-bio p + p{margin-top:.875rem;padding-top:.875rem;border-top:1px solid #f4f5f6}
+@media(max-width:768px){
+  .director-grid{grid-template-columns:1fr}
+  .director-controls{justify-content:flex-start}
+}
+@media print{
+  .director-controls{display:none}
+  .director-card > summary::after{display:none}
+  .director-card[open] > summary{background:transparent}
+}
+</style>
 </head>
 <body class="core-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
+
 <div class="breadcrumb">
 <div class="container">
 <a href="index.html">Home</a><span>/</span><strong>Investor Relations</strong>
 </div>
 </div>
-<main>
+
+<main id="main-content">
+
 <section class="core-hero">
 <div class="container">
 <div class="core-kicker">Investor Relations</div>
-<h1>Investor Relations</h1>
+<h1>Investor <span>Relations</span></h1>
 <p>A single, structured destination for shareholders, analysts and stakeholders — from company profile and governance to financial reporting and statutory disclosures.</p>
 </div>
 </section>
+
 <section class="core-content">
 <div class="container">
 <div class="ir-layout">
@@ -99,10 +191,10 @@
 
 <div class="ir-content">
 
-<!-- =========================== OVERVIEW ============================ -->
+<!-- ===================== OVERVIEW ==================== -->
 <section class="ir-panel active" data-ir-panel="overview" id="overview">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Investor Relations</h2>
+<h2>Investor <span>Relations</span></h2>
 <p>Dadex Eternit Limited (DADX) is a public limited company listed on the Pakistan Stock Exchange. This Investor Relations centre brings together company information, governance, shareholder information, financial reporting and statutory disclosures.</p>
 <div class="ir-stat-grid">
 <div class="ir-stat"><span>Established</span><strong>1959</strong></div>
@@ -113,54 +205,39 @@
 <p>The latest audited financial information shown here is for the year ended <strong>30 June 2026</strong>.</p>
 </section>
 
-<!-- ======================= PROFILE OF COMPANY ====================== -->
+<!-- ================= PROFILE OF COMPANY ================ -->
 <section class="ir-panel" data-ir-panel="company-profile" id="company-profile">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Profile of Company</h2>
+<h2>Profile of <span>Company</span></h2>
 <p>Dadex was established as a public limited company in 1959. The company began with fibre-cement roofing systems in Hyderabad under the leadership of Founder Chairman Kassim Dada. Under the leadership of Sikander Dada, the business diversified into plastic piping systems.</p>
 <p>Today Dadex manufactures thermoplastic systems including UPVC, PP-R, PP-RCT, PP and PE. Headquartered in Karachi, the company operates manufacturing facilities in Hyderabad and Sundar Industrial Estate near Lahore.</p>
 <p>Dadex operations are supported by ISO 9001, ISO 14001 and ISO 45001 certifications together with PSQCA certification. Its focus is customer service, quality, innovation and reliable technical support.</p>
 </section>
 
-<!-- ======================== MANAGEMENT TEAM ======================= -->
+<!-- ================= MANAGEMENT TEAM ================ -->
 <section class="ir-panel" data-ir-panel="management" id="management">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Management Team</h2>
+<h2>Management <span>Team</span></h2>
 <div class="director-grid">
-<div class="director-card">
-<strong>Mr. Sikander Dada</strong>
-<span>Chief Executive Officer</span>
-</div>
-<div class="director-card">
-<strong>Mr. Asim M. Khan</strong>
-<span>Chief Operating Officer</span>
-</div>
-<div class="director-card">
-<strong>Mr. Muhammad Yousuf</strong>
-<span>Chief Financial Officer &amp; Company Secretary</span>
-</div>
-<div class="director-card">
-<strong>Lt. Cdr. (Retd.) Saeed Ahmed Khan</strong>
-<span>General Manager, Admin &amp; HR</span>
-</div>
-<div class="director-card">
-<strong>Mr. Muhammad Irfan</strong>
-<span>Senior Manager Corporate &amp; Head of Internal Audit</span>
-</div>
+<div class="director-card"><strong>Mr. Sikander Dada</strong><span>Chief Executive Officer</span></div>
+<div class="director-card"><strong>Mr. Asim M. Khan</strong><span>Chief Operating Officer</span></div>
+<div class="director-card"><strong>Mr. Muhammad Yousuf</strong><span>Chief Financial Officer &amp; Company Secretary</span></div>
+<div class="director-card"><strong>Lt. Cdr. (Retd.) Saeed Ahmed Khan</strong><span>General Manager, Admin &amp; HR</span></div>
+<div class="director-card"><strong>Mr. Muhammad Irfan</strong><span>Senior Manager Corporate &amp; Head of Internal Audit</span></div>
 </div>
 </section>
 
-<!-- ======================= PERMISSIBLE BUSINESS ==================== -->
+<!-- ================= PERMISSIBLE BUSINESS ================ -->
 <section class="ir-panel" data-ir-panel="business" id="business">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Permissible Business</h2>
+<h2>Permissible <span>Business</span></h2>
 <p>The principal business of the Company is the manufacture and sale of construction material, mainly including piping systems and allied products manufactured from chrysotile fibre cement, rubber and plastics, together with merchandising of imported fittings, accessories and other building products.</p>
 </section>
 
-<!-- ====================== NTN & REGISTRATION ======================= -->
+<!-- ================= NTN & REGISTRATION ================ -->
 <section class="ir-panel" data-ir-panel="corporate" id="corporate">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>NTN &amp; Registration</h2>
+<h2>NTN &amp; <span>Registration</span></h2>
 <div class="ir-detail-grid">
 <div><span>Legal Name</span><strong>DADEX ETERNIT LIMITED</strong></div>
 <div><span>NTN</span><strong>0800583-4</strong></div>
@@ -173,10 +250,10 @@
 </div>
 </section>
 
-<!-- ================= HEAD OFFICE & SALES OFFICES =================== -->
+<!-- ================= HEAD OFFICE & SALES OFFICES ================ -->
 <section class="ir-panel" data-ir-panel="offices" id="offices">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Head Office &amp; Sales Offices</h2>
+<h2>Head Office &amp; <span>Sales Offices</span></h2>
 <div class="resource-grid">
 <div class="resource-card">
 <h3>Head Office</h3>
@@ -198,10 +275,10 @@
 <p>Sales offices and authorised distribution coverage extend across major Pakistani markets. Use the <a href="dealers.html">Dealer Finder</a> for the current dealer and distributor list.</p>
 </section>
 
-<!-- ======================= ASSOCIATED COMPANIES =================== -->
+<!-- ================= ASSOCIATED COMPANIES ================ -->
 <section class="ir-panel" data-ir-panel="associated" id="associated">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Associated Companies</h2>
+<h2>Associated <span>Companies</span></h2>
 <p>Associated companies as reported in the FY2025-26 related-party disclosure.</p>
 <div class="resource-grid">
 <div class="resource-card"><h3>Sikander (Private) Limited</h3><p>Holding company — 63.18% shareholding.</p></div>
@@ -211,10 +288,10 @@
 </div>
 </section>
 
-<!-- ================= GOVERNANCE / CODE OF CONDUCT ================== -->
+<!-- ================= GOVERNANCE ================ -->
 <section class="ir-panel" data-ir-panel="governance" id="governance">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Governance / Code of Conduct</h2>
+<h2><span>Governance</span> / Code of Conduct</h2>
 <p>Dadex's governance principles emphasise honesty, integrity, legal and regulatory compliance, fair competition, responsible business conduct, product safety, environmental responsibility, reliable financial reporting, merit-based employment, confidentiality and avoidance or disclosure of conflicts of interest.</p>
 <ol class="ir-list">
 <li>Conduct business honestly and ethically, respecting stakeholders.</li>
@@ -234,19 +311,17 @@
 </ol>
 </section>
 
-<!-- ====================== PROFILE OF DIRECTORS ==================== -->
+<!-- ================= PROFILE OF DIRECTORS ================ -->
 <section class="ir-panel" data-ir-panel="directors" id="directors">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Profile of Directors</h2>
+<h2>Profile of <span>Directors</span></h2>
 <p>The current Board composition is set out below. Click a Director to read their full profile.</p>
-
 <div class="director-controls">
-<button class="director-expand-all" type="button" id="directorToggleAll">
-<i class="fas fa-chevron-down" aria-hidden="true"></i>
+<button class="director-expand-all" id="directorToggleAll" type="button">
+<i aria-hidden="true" class="fas fa-chevron-down"></i>
 <span>Expand all</span>
 </button>
 </div>
-
 <div class="director-grid">
 
 <details class="director-card">
@@ -342,10 +417,10 @@
 </div>
 </section>
 
-<!-- ============================== AUDITORS ========================= -->
+<!-- ================= AUDITORS ================ -->
 <section class="ir-panel" data-ir-panel="auditors" id="auditors">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Auditors</h2>
+<h2><span>Auditors</span></h2>
 <h3>BDO Ebrahim &amp; Co., Chartered Accountants</h3>
 <p>Statutory auditor of Dadex Eternit Limited. Reappointment for the year ending 30 June 2027 was recommended by the Board Audit Committee and proposed at the 67th AGM.</p>
 <div class="resource-card">
@@ -355,18 +430,18 @@
 </div>
 </section>
 
-<!-- ========================== LEGAL ADVISORS ======================= -->
+<!-- ================= LEGAL ADVISORS ================ -->
 <section class="ir-panel" data-ir-panel="legal" id="legal">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Legal Advisors</h2>
+<h2>Legal <span>Advisors</span></h2>
 <h3>Abrar Hasan &amp; Co.</h3>
 <p>9 Mezzanine Floor, Beaumont Plaza, near PIDC House, Karachi.</p>
 </section>
 
-<!-- ===================== PATTERN OF SHARE HOLDING ================== -->
+<!-- ================= PATTERN OF SHARE HOLDING ================ -->
 <section class="ir-panel" data-ir-panel="shareholding" id="shareholding">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Pattern of Share Holding</h2>
+<h2>Pattern of <span>Share Holding</span></h2>
 <p><strong>As at 30 June 2026</strong></p>
 <div class="share-table">
 <table>
@@ -394,10 +469,10 @@
 <p>No transactions in the shares of the Company were carried out by Directors, their spouses or minors during the year.</p>
 </section>
 
-<!-- ====================== FINANCIAL HIGHLIGHTS ==================== -->
+<!-- ================= FINANCIAL HIGHLIGHTS ================ -->
 <section class="ir-panel" data-ir-panel="highlights" id="highlights">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Financial Highlights</h2>
+<h2>Financial <span>Highlights</span></h2>
 <p>All figures are in PKR thousands except EPS.</p>
 <div class="finance-cards">
 <div class="finance-card"><span>FY2026 Net Sales</span><strong>959,910</strong><small>PKR thousands</small></div>
@@ -432,10 +507,10 @@
 <p>FY2026 net profit is primarily attributable to the gain realised on disposal of assets held for sale. The Company declared a final cash dividend of Rs. Nil per share for the year (2025: Rs. Nil).</p>
 </section>
 
-<!-- ======================= EARNINGS PER SHARE ===================== -->
+<!-- ================= EARNINGS PER SHARE ================ -->
 <section class="ir-panel" data-ir-panel="eps" id="eps">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Earnings Per Share</h2>
+<h2>Earnings Per <span>Share</span></h2>
 <div class="finance-cards">
 <div class="finance-card"><span>FY2026 EPS</span><strong>44.56</strong><small>Rupees</small></div>
 <div class="finance-card"><span>FY2025 EPS</span><strong>(37.82)</strong><small>Rupees</small></div>
@@ -444,20 +519,20 @@
 <p>There is no dilutive effect on the basic earnings per share of the Company. Weighted average number of ordinary shares outstanding: 10,764 thousand.</p>
 </section>
 
-<!-- ============================ SHARE REGISTRAR ==================== -->
+<!-- ================= SHARE REGISTRAR ================ -->
 <section class="ir-panel" data-ir-panel="registrar" id="registrar">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Share Registrar</h2>
+<h2>Share <span>Registrar</span></h2>
 <h3>JWAFFS Registrar Services (Private) Limited</h3>
 <p>Office # 20, 5th Floor, Arkay Square Extension, New Chali, Shahrah-e-Liaquat, Karachi.</p>
 <p><strong>Phone:</strong> +92 21 32440974-75</p>
 <p><strong>Email:</strong> jwaffsregistrar@gmail.com</p>
 </section>
 
-<!-- ============================ FREE FLOAT ======================== -->
+<!-- ================= FREE FLOAT ================ -->
 <section class="ir-panel" data-ir-panel="free-float" id="free-float">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Free Float Shares</h2>
+<h2>Free Float <span>Shares</span></h2>
 <div class="finance-cards">
 <div class="finance-card"><span>Free Float Shares</span><strong>538,200</strong><small>Shares</small></div>
 <div class="finance-card"><span>Free Float</span><strong>5.00%</strong><small>of issued shares</small></div>
@@ -466,10 +541,10 @@
 <p>Free float is as reported in the latest PSX company record for DADX.</p>
 </section>
 
-<!-- ============================= ANNUAL REPORTS =================== -->
+<!-- ================= ANNUAL REPORTS ================ -->
 <section class="ir-panel" data-ir-panel="annual" id="annual">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Annual Reports</h2>
+<h2>Annual <span>Reports</span></h2>
 <div class="resource-grid">
 <div class="resource-card">
 <div class="resource-type">67th Annual Report</div>
@@ -492,10 +567,10 @@
 </div>
 </section>
 
-<!-- ========================== INTERIM ACCOUNTS =================== -->
+<!-- ================= INTERIM ACCOUNTS ================ -->
 <section class="ir-panel" data-ir-panel="interim" id="interim">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Interim Accounts</h2>
+<h2>Interim <span>Accounts</span></h2>
 <div class="resource-grid">
 <div class="resource-card">
 <div class="resource-type">Unaudited</div>
@@ -512,10 +587,10 @@
 </div>
 </section>
 
-<!-- ============================ AGM NOTICES ====================== -->
+<!-- ================= AGM NOTICES ================ -->
 <section class="ir-panel" data-ir-panel="agm" id="agm">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>AGM Notices</h2>
+<h2>AGM <span>Notices</span></h2>
 <div class="resource-grid">
 <div class="resource-card">
 <div class="resource-type">67th AGM</div>
@@ -527,10 +602,10 @@
 <p>The 67th AGM will receive and adopt the FY2025-26 audited financial statements and the Directors' Report, appoint auditors for FY2026-27, and elect seven Directors for a three-year term. Retiring Directors eligible for re-election: Mr. Sikander Dada, Mr. Abu Talib H.K. Dada, Mr. Shahzad M. Husain, Syed Shahid Ali Bukhari, Mrs. Amber Ahmed Motiwala, Mrs. Ayesha Tariq Allawala, Mr. Khawaja Samiullah Askari.</p>
 </section>
 
-<!-- ====================== NOTICE TO SHAREHOLDERS ================= -->
+<!-- ================= NOTICE TO SHAREHOLDERS ================ -->
 <section class="ir-panel" data-ir-panel="shareholders" id="shareholders">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Notice to Shareholders</h2>
+<h2>Notice to <span>Shareholders</span></h2>
 <p>Shareholders may request annual reporting material through the Company Secretary or the Share Registrar. In accordance with SECP directives, shareholders are encouraged to convert physical securities into book-entry form and to submit valid CNIC, NTN and Electronic Credit Mandate details to receive dividend payments electronically.</p>
 <div class="ir-note">
 <strong>Company Secretary:</strong> Muhammad Yousuf<br/>
@@ -538,10 +613,10 @@ Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisa
 </div>
 </section>
 
-<!-- ============================ PROXY FORM ======================= -->
+<!-- ================= PROXY FORM ================ -->
 <section class="ir-panel" data-ir-panel="proxy" id="proxy">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Proxy Form</h2>
+<h2><span>Proxy</span> Form</h2>
 <p>The proxy form is issued with each AGM notice. Completed and signed proxy forms must be deposited at the Registered Office not less than 48 hours before the meeting.</p>
 <div class="resource-card">
 <h3>67th AGM — Proxy Form</h3>
@@ -550,18 +625,18 @@ Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisa
 </div>
 </section>
 
-<!-- ========================= ELECTION OF DIRECTORS ================ -->
+<!-- ================= ELECTION OF DIRECTORS ================ -->
 <section class="ir-panel" data-ir-panel="election" id="election">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Election of Directors</h2>
+<h2>Election of <span>Directors</span></h2>
 <p>Seven Directors are to be elected at the 67th AGM for a three-year term commencing from the date of the Annual General Meeting, in accordance with Section 159 of the Companies Act, 2017. The retiring Directors are eligible for re-election.</p>
 <p>Any person seeking to contest the election must file the prescribed documents with the Company at its registered office no later than fourteen days before the date of the meeting, as set out in the AGM notice.</p>
 </section>
 
-<!-- ======================= PROFILE OF CANDIDATES ================= -->
+<!-- ================= PROFILE OF CANDIDATES ================ -->
 <section class="ir-panel" data-ir-panel="candidates" id="candidates">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Profile of Candidates</h2>
+<h2>Profile of <span>Candidates</span></h2>
 <p>Candidate profiles are published in accordance with SECP's SRO 1196(I)/2019 dated October 3, 2019, as part of the Directors' Election documentation.</p>
 <div class="resource-card">
 <div class="resource-type">Directors' Election</div>
@@ -570,10 +645,10 @@ Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisa
 </div>
 </section>
 
-<!-- ======================= DIRECTORS REPORT (URDU) ================ -->
+<!-- ================= DIRECTORS REPORT (URDU) ================ -->
 <section class="ir-panel" data-ir-panel="directors-report" id="directors-report">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Directors Report (Urdu)</h2>
+<h2>Directors Report <span>(Urdu)</span></h2>
 <div class="resource-card">
 <div class="resource-type">Directors Report</div>
 <h3>Directors Report (Urdu) — FY2025–26</h3>
@@ -582,10 +657,10 @@ Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisa
 </div>
 </section>
 
-<!-- ======================= COMPLIANCE CERTIFICATE ================= -->
+<!-- ================= COMPLIANCE CERTIFICATE ================ -->
 <section class="ir-panel" data-ir-panel="compliance-certificate" id="compliance-certificate">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Compliance Certificate</h2>
+<h2>Compliance <span>Certificate</span></h2>
 <div class="resource-card">
 <div class="resource-type">Corporate Compliance</div>
 <h3>Compliance Certificate</h3>
@@ -594,10 +669,10 @@ Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisa
 </div>
 </section>
 
-<!-- ========================= COMPANY POLICIES ===================== -->
+<!-- ================= COMPANY POLICIES ================ -->
 <section class="ir-panel" data-ir-panel="policies" id="policies">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Company Policies</h2>
+<h2>Company <span>Policies</span></h2>
 <div class="resource-grid">
 <div class="resource-card">
 <div class="resource-type">Company Policies</div>
@@ -613,10 +688,10 @@ Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisa
 </div>
 </section>
 
-<!-- ====================== COMPLIANCE & DISCLOSURES ================ -->
+<!-- ================= COMPLIANCE & DISCLOSURES ================ -->
 <section class="ir-panel" data-ir-panel="compliance" id="compliance">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Compliance &amp; Disclosures</h2>
+<h2><span>Compliance</span> &amp; Disclosures</h2>
 <div class="resource-grid">
 <div class="resource-card">
 <h3>Corporate Governance</h3>
@@ -636,10 +711,10 @@ Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisa
 </div>
 </section>
 
-<!-- ========================= INVESTOR CONTACT ===================== -->
+<!-- ================= INVESTOR CONTACT ================ -->
 <section class="ir-panel" data-ir-panel="contact" id="contact">
 <div class="core-kicker">INVESTOR RELATIONS</div>
-<h2>Investor Contact</h2>
+<h2>Investor <span>Contact</span></h2>
 <div class="resource-grid">
 <div class="resource-card">
 <h3>Investor Relations</h3>
@@ -663,18 +738,17 @@ Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisa
 </div>
 </div>
 </section>
+
 </main>
+
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
 <script>
 (function(){
   var panel = document.getElementById('directors');
   if (!panel) return;
-  var cards = Array.prototype.slice.call(
-    panel.querySelectorAll('details.director-card')
-  );
+  var cards = Array.prototype.slice.call(panel.querySelectorAll('details.director-card'));
   if (!cards.length) return;
-
   var toggleBtn = document.getElementById('directorToggleAll');
 
   var updateButtonLabel = function(){
@@ -698,12 +772,8 @@ Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisa
       updateButtonLabel();
     });
   }
-
-  cards.forEach(function(c){
-    c.addEventListener('toggle', updateButtonLabel);
-  });
+  cards.forEach(function(c){ c.addEventListener('toggle', updateButtonLabel); });
   updateButtonLabel();
-
   window.addEventListener('beforeprint', function(){
     cards.forEach(function(c){ c.open = true; });
   });
