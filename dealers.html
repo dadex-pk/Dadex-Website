@@ -9,33 +9,52 @@
 <meta content="index, follow" name="robots"/>
 <meta content="strict-origin-when-cross-origin" name="referrer"/>
 <link href="https://www.dadex.com/dealers.html" rel="canonical"/>
+
+<!-- Open Graph -->
 <meta content="website" property="og:type"/>
 <meta content="Find a Dealer | Dadex Eternit Limited" property="og:title"/>
 <meta content="Find an approved Dadex dealer or distributor by province, city, area, product, or name." property="og:description"/>
 <meta content="https://www.dadex.com/dealers.html" property="og:url"/>
 <meta content="Dadex Eternit Limited" property="og:site_name"/>
 <meta content="en_PK" property="og:locale"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
-<link href="css/design-system.css" rel="stylesheet"/>
 <meta content="https://www.dadex.com/assets/images/dadex-logo.png" property="og:image"/>
 <meta content="Dadex Eternit Limited" property="og:image:alt"/>
+<meta content="176" property="og:image:width"/>
+<meta content="46" property="og:image:height"/>
+
+<!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Find a Dealer | Dadex Eternit Limited" name="twitter:title"/>
 <meta content="Find an approved Dadex dealer or distributor by province, city, area, product, or name." name="twitter:description"/>
 <meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
+
+<!-- Preconnect -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+
+<!-- Styles -->
+<link href="css/design-system.css" rel="stylesheet"/>
 </head>
 <body class="core-page">
+
 <a class="skip-link" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
+
 <div class="breadcrumb">
 <div class="container">
 <a href="index.html">Home</a><span>/</span><strong>Find a Dealer</strong>
 </div>
 </div>
+
 <main id="main-content">
+
 <section class="page-hero">
 <div class="container">
 <div class="eyebrow">DEALER NETWORK</div>
@@ -43,6 +62,7 @@
 <p>Find an approved Dadex dealer or distributor by location, product or dealer name.</p>
 </div>
 </section>
+
 <section class="page-main">
 <div class="container">
 <div class="dealer-finder">
@@ -52,8 +72,9 @@
 <h2>Find the right sales channel</h2>
 <p>Use the filters below to narrow the network by province, city, area or product, or search directly by dealer name.</p>
 </div>
-<a class="btn btn-outline" href="contact.html#sales-offices">Need dealer assistance <i class="fas fa-arrow-right"></i></a>
+<a class="btn btn-outline" href="contact.html#sales-offices">Need dealer assistance <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
 </div>
+
 <div class="dealer-filters">
 <label>Province / Region
 <select id="provinceFilter">
@@ -83,30 +104,73 @@
 </label>
 <button class="btn btn-outline" id="resetFilters" type="button">Clear Filters</button>
 </div>
-<div class="active-filter-summary" hidden="" id="activeFilterSummary"></div>
+
+<div class="active-filter-summary" hidden id="activeFilterSummary"></div>
+
 <div class="finder-meta">
 <p class="data-status" id="resultsSummary"></p>
 </div>
+
 <div class="dealer-grid" id="dealerGrid"></div>
+
 <div class="sales-office-note" id="dealer-help">
 <div class="sales-office-icon"><i aria-hidden="true" class="fas fa-headset"></i></div>
 <div>
 <h2>Can't find a dealer?</h2>
 <p>Our sales team can help identify the appropriate sales channel for your location or product requirement.</p>
-<a class="btn btn-primary" href="contact.html#sales-offices">Speak to Sales <i class="fas fa-arrow-right"></i></a>
+<a class="btn btn-primary" href="contact.html#sales-offices">Speak to Sales <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
 </div>
 </div>
 </div>
 </div>
 </section>
+
+<!-- ==================================================
+     Dealer card template — cloned by js/dealers.js
+     Inert until cloned; not rendered, not styled.
+     ================================================== -->
+<template id="dealerCardTemplate">
+<article class="dealer-card">
+<div class="dealer-card-top">
+<span class="dealer-type" data-field="type"></span>
+<i aria-hidden="true" class="fas fa-store"></i>
+</div>
+<h3 data-field="name"></h3>
+<p class="dealer-contact-name" data-field="contact-name"></p>
+<p class="dealer-location" data-field="location">
+<i aria-hidden="true" class="fas fa-location-dot"></i>
+<span></span>
+</p>
+<p class="dealer-address" data-field="address"></p>
+<a class="dealer-contact" data-field="phone" href="#">
+<i aria-hidden="true" class="fas fa-phone"></i>
+<span></span>
+</a>
+<a class="dealer-contact" data-field="email" href="#">
+<i aria-hidden="true" class="fas fa-envelope"></i>
+<span></span>
+</a>
+<div class="dealer-tags" data-field="tags"></div>
+<a class="dealer-context-link" data-field="context-link" href="#">
+<span></span>
+<i aria-hidden="true" class="fas fa-arrow-right"></i>
+</a>
+<a class="dealer-map" data-field="map" href="#" rel="noopener" target="_blank">
+View location <i aria-hidden="true" class="fas fa-arrow-up-right-from-square"></i>
+</a>
+</article>
+</template>
+
 <section class="page-cta">
 <div class="container">
 <h2>Looking for local product availability?</h2>
 <p>Start with the dealer finder or speak directly with the Dadex sales team.</p>
-<a class="btn btn-primary" href="contact.html#sales-offices">Speak to Sales <i class="fas fa-arrow-right"></i></a>
+<a class="btn btn-primary" href="contact.html#sales-offices">Speak to Sales <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
 </div>
 </section>
+
 </main>
+
 <div data-component="footer"></div>
 <script src="dealers-data.js"></script>
 <script src="js/dealers.js"></script>
