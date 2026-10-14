@@ -3,12 +3,12 @@
    - Header and footer injection
    - Navigation behaviour (mobile drawer, dropdowns, active state)
    - Dynamic text (footer year, company age)
-   - Project filter
+   - Project filter (event delegation)
    - Mailto contact form
    - Literature filter
    - Investor panel switcher
-   - Site search
-   - DEXPERT (lazy — content built on first interaction or idle)
+   - Site search (template-driven)
+   - DEXPERT (native <dialog>, template-driven, lazy)
    - Back to top
 
    Page-scoped modules (dealers) live in js/dealers.js.
@@ -27,7 +27,6 @@ const SCROLL_TOP_THRESHOLD = 600;
    Utilities
    ------------------------------------------------------------ */
 
-/* Hoisted so the replacement map is created once, not per match. */
 const HTML_ESCAPE_MAP = {
   '&': '&amp;',
   '<': '&lt;',
@@ -40,7 +39,6 @@ function escapeHTML(value){
   return String(value ?? '').replace(/[&<>"']/g, m => HTML_ESCAPE_MAP[m]);
 }
 
-/* Trailing-edge debounce. */
 function debounce(fn, wait){
   let timer = null;
   return function debounced(...args){
@@ -49,8 +47,6 @@ function debounce(fn, wait){
   };
 }
 
-/* Run non-critical work when the browser is idle. Falls back to
-   setTimeout for Safari < 15. */
 const scheduleIdle = (typeof requestIdleCallback === 'function')
   ? cb => requestIdleCallback(cb, { timeout: 2000 })
   : cb => setTimeout(cb, 200);
@@ -58,29 +54,29 @@ const scheduleIdle = (typeof requestIdleCallback === 'function')
 
 /* ------------------------------------------------------------
    Bootstrap
+
+   Header/footer are injected first — everything that touches the
+   shell runs after. Header is queried once and passed to the two
+   modules that need it, rather than being re-queried per module.
    ------------------------------------------------------------ */
 
 document.addEventListener('DOMContentLoaded', async () => {
-  /* Header and footer must be in the DOM before navigation binds
-     and active-link state is computed. */
   await loadSharedComponents();
 
-  /* Cheap, synchronous, always needed. */
+  const header = document.getElementById('siteHeader')
+              || document.querySelector('.site-header');
+
   initDynamicSiteText();
-  initHeaderState();
-  initNavigation();
+  initHeaderState(header);
+  initNavigation(header);
   setActiveNavigation();
 
-  /* Page-scoped modules. Each one exits immediately when its
-     markup is absent, so this block costs nothing on pages that
-     don't use them. */
   initProjectFilter();
   initMailtoForm();
   initLiteratureFilter();
   initInvestorPanels();
   initSiteSearch();
 
-  /* Global UI that is not on the critical path. */
   initDEXPERT();
   initBackToTop();
 });
@@ -111,15 +107,6 @@ async function loadSharedComponents(){
 
 /* ------------------------------------------------------------
    Dynamic text — current year and company age
-
-   Attributes handled:
-     data-current-year            → "2026"
-     data-company-age             → "67"
-     data-company-age-years       → "67 years"
-     data-company-age-over        → "over 67 years"
-     data-company-age-hyphenated  → "67-year-old"
-
-   The static HTML text is a fallback for JS-disabled readers.
    ------------------------------------------------------------ */
 
 function initDynamicSiteText(){
@@ -148,11 +135,10 @@ function initDynamicSiteText(){
 
 
 /* ------------------------------------------------------------
-   Header state flag (home vs internal)
+   Header state flag (home vs internal) — header passed in
    ------------------------------------------------------------ */
 
-function initHeaderState(){
-  const header = document.getElementById('siteHeader') || document.querySelector('.site-header');
+function initHeaderState(header){
   if (!header) return;
   const path = window.location.pathname;
   const isHome = document.body.classList.contains('home-page')
@@ -163,13 +149,12 @@ function initHeaderState(){
 
 
 /* ------------------------------------------------------------
-   Navigation
+   Navigation — header passed in
    ------------------------------------------------------------ */
 
-function initNavigation(){
-  const header = document.getElementById('siteHeader') || document.querySelector('.site-header');
-  const hamburger = document.querySelector('.menu-toggle');
+function initNavigation(header){
   const nav = document.getElementById('site-navigation');
+  const hamburger = document.querySelector('.menu-toggle');
   if (!header || !nav) return;
 
   const isMobile = () => window.innerWidth <= MOBILE_NAV_MAX;
@@ -192,7 +177,6 @@ function initNavigation(){
     nav.classList.contains('open') ||
     !!document.querySelector('.dropdown-menu.open');
 
-  /* Hamburger open / close */
   if (hamburger) {
     hamburger.addEventListener('click', () => {
       const open = !nav.classList.contains('open');
@@ -207,7 +191,6 @@ function initNavigation(){
     });
   }
 
-  /* Dropdown toggles */
   document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
     const menuId = toggle.getAttribute('aria-controls');
     const menu = menuId ? document.getElementById(menuId) : toggle.nextElementSibling;
@@ -243,7 +226,6 @@ function initNavigation(){
     });
   });
 
-  /* Close mobile drawer when a real navigation link is clicked. */
   document.querySelectorAll('.site-navigation a').forEach(link => {
     link.addEventListener('click', () => {
       if (link.classList.contains('dropdown-toggle') && isMobile()) return;
@@ -251,21 +233,17 @@ function initNavigation(){
     });
   });
 
-  /* Click outside the header closes menus. */
   document.addEventListener('click', event => {
     if (header.contains(event.target)) return;
     closeMenus();
   });
 
-  /* Global Escape — only acts when something is actually open,
-     so it never steals focus from a form field or search box. */
   document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;
     if (!anyMenuOpen()) return;
     closeMenus({ restoreFocus: true });
   });
 
-  /* Reset state when the viewport crosses back to desktop. */
   window.addEventListener('resize', debounce(() => {
     if (isMobile()) return;
     document.body.classList.remove('nav-open');
@@ -333,21 +311,28 @@ function setActiveNavigation(){
 
 /* ------------------------------------------------------------
    Project filter (projects.html)
+   Single delegated listener on the filter group.
    ------------------------------------------------------------ */
 
 function initProjectFilter(){
-  const buttons = document.querySelectorAll('#projectFilter .filter-btn[data-filter]');
+  const filterGroup = document.getElementById('projectFilter');
+  if (!filterGroup) return;
+
+  const buttons = filterGroup.querySelectorAll('.filter-btn[data-filter]');
   const cards = document.querySelectorAll('.project-card[data-category]');
   if (!buttons.length || !cards.length) return;
 
-  buttons.forEach(button => button.addEventListener('click', () => {
-    buttons.forEach(b => b.classList.remove('active'));
-    button.classList.add('active');
+  filterGroup.addEventListener('click', event => {
+    const button = event.target.closest('.filter-btn[data-filter]');
+    if (!button || !filterGroup.contains(button)) return;
+
+    buttons.forEach(b => b.classList.toggle('active', b === button));
+
     const value = button.dataset.filter;
     cards.forEach(card => {
       card.hidden = !(value === 'all' || card.dataset.category === value);
     });
-  }));
+  });
 }
 
 
@@ -377,15 +362,9 @@ function initMailtoForm(){
 /* ------------------------------------------------------------
    Literature filter (literature.html)
 
-   Handles:
-     - Free-text search across card name
-     - Type filter (All / Brochures / Flyers / Corporate)
-     - Per-card button visibility based on selected type
-     - Section visibility (hides sections with no visible cards)
-     - Result count line with aria-live
-     - Clear button (appears when any filter is active)
-     - Empty state with its own reset button
-     - Certificates routing card hidden when no products match
+   Predicate logic collapsed to single expressions. The old
+   if/else chain mapped each filter type to its matching data-type
+   value; that mapping is now the identity.
    ------------------------------------------------------------ */
 
 function initLiteratureFilter(){
@@ -414,17 +393,10 @@ function initLiteratureFilter(){
       const cardTypes = (card.dataset.types || '').split(/\s+/).filter(Boolean);
 
       const matchesSearch = !query || name.includes(query);
+      const matchesType   = type === 'all' || cardTypes.includes(type);
 
-      let matchesType = true;
-      if (type === 'brochure')       matchesType = cardTypes.includes('brochure');
-      else if (type === 'flyer')     matchesType = cardTypes.includes('flyer');
-      else if (type === 'corporate') matchesType = cardTypes.includes('corporate');
-
-      /* Within a matching card, hide non-matching download buttons. */
       card.querySelectorAll('.lit-btn[data-type]').forEach(btn => {
-        if (type === 'brochure')       btn.hidden = btn.dataset.type !== 'brochure';
-        else if (type === 'flyer')     btn.hidden = btn.dataset.type !== 'flyer';
-        else                           btn.hidden = false;
+        btn.hidden = type !== 'all' && btn.dataset.type !== type;
       });
 
       const show = matchesSearch && matchesType;
@@ -432,7 +404,6 @@ function initLiteratureFilter(){
       if (show) visibleCards++;
     });
 
-    /* Hide sections that contain no visible cards. */
     sections.forEach(section => {
       const anyVisible = Array.prototype.some.call(
         section.querySelectorAll('.lit-card'),
@@ -455,8 +426,7 @@ function initLiteratureFilter(){
     }
 
     if (clearBtn) {
-      const hasFilter = query !== '' || type !== 'all';
-      clearBtn.hidden = !hasFilter;
+      clearBtn.hidden = !(query !== '' || type !== 'all');
     }
   };
 
@@ -532,23 +502,31 @@ function initInvestorPanels(){
 
 /* ------------------------------------------------------------
    Site search (search.html)
+
+   Uses a <template id="searchResultTemplate"> declared in the
+   page. Result cards are cloned and populated with textContent —
+   no innerHTML, no escapeHTML, no string parsing.
    ------------------------------------------------------------ */
 
 function initSiteSearch(){
   const input = document.getElementById('siteSearchInput');
   if (!input) return;
 
-  const button = document.getElementById('siteSearchButton');
-  const clear = document.getElementById('searchClear');
-  const grid = document.getElementById('searchResults');
-  const empty = document.getElementById('searchEmpty');
-  const count = document.getElementById('searchCount');
+  const button   = document.getElementById('siteSearchButton');
+  const clear    = document.getElementById('searchClear');
+  const grid     = document.getElementById('searchResults');
+  const empty    = document.getElementById('searchEmpty');
+  const count    = document.getElementById('searchCount');
+  const template = document.getElementById('searchResultTemplate');
+
+  if (!grid || !template) return;
+
   const pages = Array.isArray(window.DADEX_SEARCH_INDEX) ? window.DADEX_SEARCH_INDEX : [];
 
   const render = () => {
     const q = input.value.trim().toLowerCase();
     if (!q) {
-      grid.innerHTML = '';
+      grid.replaceChildren();
       empty.hidden = true;
       count.textContent = 'Start searching';
       return;
@@ -557,14 +535,19 @@ function initSiteSearch(){
     const rows = pages
       .filter(p => terms.every(t => p.join(' ').toLowerCase().includes(t)))
       .slice(0, 60);
+
     count.textContent = `${rows.length} result${rows.length === 1 ? '' : 's'} found`;
-    grid.innerHTML = rows.map(p => `
-      <article class="search-result-card">
-        <span class="result-type">${escapeHTML(p[2])}</span>
-        <h3>${escapeHTML(p[0])}</h3>
-        <p>${escapeHTML(p[3])}</p>
-        <a href="${escapeHTML(p[1])}">Open page <i class="fas fa-arrow-right"></i></a>
-      </article>`).join('');
+
+    const frag = document.createDocumentFragment();
+    for (const p of rows) {
+      const card = template.content.firstElementChild.cloneNode(true);
+      card.querySelector('.result-type').textContent = p[2];
+      card.querySelector('h3').textContent = p[0];
+      card.querySelector('p').textContent = p[3];
+      card.querySelector('a').href = p[1];
+      frag.appendChild(card);
+    }
+    grid.replaceChildren(frag);
     empty.hidden = rows.length !== 0;
   };
 
@@ -581,10 +564,11 @@ function initSiteSearch(){
 /* ------------------------------------------------------------
    DEXPERT — floating assistant
 
-   Reference tables live at module scope so the array literals
-   are created once per page load, not on every DEXPERT init.
-   The dialog content is built lazily — first FAB click or when
-   the browser goes idle, whichever comes first.
+   - Native <dialog> with showModal() — free focus trap, Escape
+     close, focus return.
+   - Templates in components/dexpert.html — no string-literal HTML.
+   - Dialog shell is fetched during idle; FAB is injected
+     immediately so the button is always available.
    ------------------------------------------------------------ */
 
 const DEXPERT_PRODUCTS = [
@@ -620,213 +604,230 @@ const DEXPERT_APPS = [
 function initDEXPERT(){
   if (document.querySelector('.dexpert-fab')) return;
 
+  /* ---------- FAB — injected immediately ---------- */
   const fab = document.createElement('button');
   fab.className = 'dexpert-fab';
   fab.type = 'button';
   fab.setAttribute('aria-expanded', 'false');
   fab.setAttribute('aria-controls', 'dexpertDialog');
   fab.innerHTML = '<img src="assets/images/Dexpert.png" alt="" aria-hidden="true"><span>Ask DEXPERT</span>';
-
-  const dialog = document.createElement('section');
-  dialog.className = 'dexpert-dialog';
-  dialog.id = 'dexpertDialog';
-  dialog.setAttribute('role', 'dialog');
-  dialog.setAttribute('aria-modal', 'false');
-  dialog.setAttribute('aria-label', 'DEXPERT Dadex digital guide');
-  dialog.innerHTML = `
-    <div class="dexpert-head">
-      <div class="dexpert-brand"><strong>DEXPERT</strong><span>Dadex digital guide</span></div>
-      <button class="dexpert-close" type="button" aria-label="Close DEXPERT">×</button>
-    </div>
-    <div class="dexpert-body" id="dexpertBody"></div>`;
-
   document.body.appendChild(fab);
-  document.body.appendChild(dialog);
 
-  const body = dialog.querySelector('#dexpertBody');
+  /* ---------- Context ---------- */
   const title = (document.querySelector('main h1')?.textContent
     || document.title.replace(/\s*[|–-].*$/, '')).trim();
   const path = window.location.pathname.split('/').pop() || 'index.html';
-
-  const isProduct    = path.startsWith('product') && path !== 'products.html';
-  const isInvestor   = /investor|financial-reports/i.test(path);
-  const isResources  = /literature|calculators|videos|news/i.test(path);
+  const isProduct   = path.startsWith('product') && path !== 'products.html';
+  const isInvestor  = /investor|financial-reports/i.test(path);
+  const isResources = /literature|calculators|videos|news/i.test(path);
   const currentProduct = isProduct ? title : '';
 
-  const link = (href, label) => `<a href="${href}">${label}</a>`;
+  /* ---------- Dialog — lazy fetch ---------- */
+  let dialogPromise = null;
 
-  let isPopulated = false;
+  function loadDialog(){
+    if (dialogPromise) return dialogPromise;
+    dialogPromise = (async () => {
+      const res = await fetch('components/dexpert.html', { cache: 'force-cache' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const html = await res.text();
 
-  function home(){
-    let intro = 'What do you need?';
-    let actions = [];
+      const temp = document.createElement('div');
+      temp.innerHTML = html;
+
+      const dialog = temp.querySelector('dialog#dexpertDialog');
+      const homeTpl = temp.querySelector('template#dexpertHomeTemplate');
+      const resultTpl = temp.querySelector('template#dexpertResultTemplate');
+      const actionTpl = temp.querySelector('template#dexpertActionTemplate');
+
+      /* Move templates into the DOM so querySelector works later. */
+      document.body.appendChild(homeTpl);
+      document.body.appendChild(resultTpl);
+      document.body.appendChild(actionTpl);
+      document.body.appendChild(dialog);
+
+      wireDialog(dialog, homeTpl, resultTpl, actionTpl);
+      return dialog;
+    })();
+    return dialogPromise;
+  }
+
+  /* ---------- Content builders ---------- */
+
+  function buildActions(container, actions){
+    const frag = document.createDocumentFragment();
+    for (const [href, label] of actions) {
+      const a = document.createElement('a');
+      a.href = href;
+      a.textContent = label;
+      frag.appendChild(a);
+    }
+    container.replaceChildren(frag);
+  }
+
+  function renderHome(dialog, homeTpl){
+    const body = dialog.querySelector('#dexpertBody');
+    const node = homeTpl.content.firstElementChild.cloneNode(true);
+
+    let introText, actions;
     if (isProduct) {
-      intro = `<strong>${escapeHTML(currentProduct)}</strong>`;
+      introText = `Open the ${currentProduct} page`;
       actions = [
-        link('#technical', 'Technical information'),
-        link('literature.html', 'Literature'),
-        link('products.html', 'Related products'),
-        link('dealers.html', 'Find a dealer')
+        ['#technical', 'Technical information'],
+        ['literature.html', 'Literature'],
+        ['products.html', 'Related products'],
+        ['dealers.html', 'Find a dealer']
       ];
     } else if (isInvestor) {
-      intro = 'Investor information';
+      introText = 'Investor information';
       actions = [
-        link('investors.html', 'Investor Relations'),
-        link('investors.html#annual', 'Annual Reports'),
-        link('contact.html', 'Investor enquiry')
+        ['investors.html', 'Investor Relations'],
+        ['investors.html#annual', 'Annual Reports'],
+        ['contact.html', 'Investor enquiry']
       ];
     } else if (isResources) {
-      intro = 'Dadex Resources';
+      introText = 'Dadex Resources';
       actions = [
-        link('products.html', 'Find a product'),
-        link('literature.html', 'Literature'),
-        link('videos.html', 'Videos'),
-        link('calculators.html', 'Calculators'),
-        link('contact.html', 'Technical support')
+        ['products.html', 'Find a product'],
+        ['literature.html', 'Literature'],
+        ['videos.html', 'Videos'],
+        ['calculators.html', 'Calculators'],
+        ['contact.html', 'Technical support']
       ];
     } else {
       actions = [
-        link('products.html', 'Find a product'),
-        link('literature.html', 'Literature'),
-        link('videos.html', 'Videos'),
-        link('calculators.html', 'Calculators'),
-        link('dealers.html', 'Find a dealer')
+        ['products.html', 'Find a product'],
+        ['literature.html', 'Literature'],
+        ['videos.html', 'Videos'],
+        ['calculators.html', 'Calculators'],
+        ['dealers.html', 'Find a dealer']
       ];
     }
-    body.innerHTML = `
-      <div class="dexpert-context"><span>Current page</span><strong>${escapeHTML(title)}</strong></div>
-      <p class="dexpert-intro">${intro}</p>
-      <div class="dexpert-actions">${actions.join('')}</div>
-      <div class="dexpert-ask">
-        <label for="dexpertQuery">Search Dadex</label>
-        <div>
-          <input id="dexpertQuery" type="search" placeholder="Product or application" autocomplete="off">
-          <button type="button" id="dexpertAskBtn">Ask</button>
-        </div>
-      </div>
-      <p class="dexpert-note">Uses approved Dadex website information.</p>`;
+
+    node.querySelector('.dexpert-context strong').textContent = title;
+    node.querySelector('.dexpert-intro').textContent = introText || 'What do you need?';
+    buildActions(node.querySelector('.dexpert-actions'), actions);
+
+    body.replaceChildren(node);
 
     const q = body.querySelector('#dexpertQuery');
     const ask = body.querySelector('#dexpertAskBtn');
-    const run = () => answer(q.value.trim());
+    const run = () => renderAnswer(dialog, homeTpl, resultTpl, q.value.trim());
     ask.addEventListener('click', run);
     q.addEventListener('keydown', e => { if (e.key === 'Enter') run(); });
   }
 
-  function result(label, heading, message, href, cta){
-    body.innerHTML = `
-      <button class="dexpert-back" type="button">← Back</button>
-      <div class="dexpert-result">
-        <span>${escapeHTML(label)}</span>
-        <h4>${escapeHTML(heading)}</h4>
-        <p>${escapeHTML(message)}</p>
-        <a class="dexpert-result-link" href="${escapeHTML(href)}">${escapeHTML(cta)} →</a>
-      </div>`;
-    body.querySelector('.dexpert-back').addEventListener('click', home);
-  }
-
-  function answer(query){
+  function renderAnswer(dialog, homeTpl, resultTpl, query){
+    const body = dialog.querySelector('#dexpertBody');
     const q = query.toLowerCase();
+    let label, heading, message, href, cta;
+
     if (!q) {
-      result('DEXPERT', 'Try a search',
+      [label, heading, message, href, cta] = ['DEXPERT', 'Try a search',
         'Enter a product or application such as Aquadex, water supply or gas.',
-        'products.html', 'Browse products');
-      return;
+        'products.html', 'Browse products'];
+    } else {
+      const product = DEXPERT_PRODUCTS.find(p =>
+        q.includes(p[0].toLowerCase()) || p[0].toLowerCase().includes(q));
+      const app = !product && DEXPERT_APPS.find(a =>
+        q.includes(a[0].toLowerCase()) || a[0].toLowerCase().includes(q));
+
+      if (product) {
+        [label, heading, message, href, cta] = ['PRODUCT', product[0],
+          'Open the product page for its approved information.',
+          product[1], 'Open product'];
+      } else if (app) {
+        [label, heading, message, href, cta] = ['APPLICATION', app[0],
+          'Explore the systems listed for this application area.',
+          app[1], 'Explore'];
+      } else if (/report|annual|financial|investor|shareholder|agm/.test(q)) {
+        [label, heading, message, href, cta] = ['INVESTOR', 'Investor Relations',
+          'Find annual reports, financial information and shareholder references.',
+          'investors.html#annual', 'Open investor information'];
+      } else if (/brochure|flyer|leaflet|literature|document|datasheet|certificate|drawing/.test(q)) {
+        [label, heading, message, href, cta] = ['LITERATURE', 'Literature',
+          'Find brochures, flyers, corporate publications and technical documents.',
+          'literature.html', 'Open Literature'];
+      } else if (/video|installation|demonstration/.test(q)) {
+        [label, heading, message, href, cta] = ['VIDEOS', 'Videos',
+          'Installation guides, product overviews and application demonstrations.',
+          'videos.html', 'Open Videos'];
+      } else if (/calculator|pressure drop|flow|head loss|sizing/.test(q)) {
+        [label, heading, message, href, cta] = ['CALCULATORS', 'Calculators',
+          'Engineering calculators for pipe selection, hydraulic design and unit conversion.',
+          'calculators.html', 'Open Calculators'];
+      } else {
+        [label, heading, message, href, cta] = ['DEXPERT', 'No direct match',
+          'Try a product, application or resource term.',
+          'products.html', 'Browse products'];
+      }
     }
-    const product = DEXPERT_PRODUCTS.find(p =>
-      q.includes(p[0].toLowerCase()) || p[0].toLowerCase().includes(q));
-    if (product) {
-      result('PRODUCT', product[0],
-        'Open the product page for its approved information.',
-        product[1], 'Open product');
-      return;
-    }
-    const app = DEXPERT_APPS.find(a =>
-      q.includes(a[0].toLowerCase()) || a[0].toLowerCase().includes(q));
-    if (app) {
-      result('APPLICATION', app[0],
-        'Explore the systems listed for this application area.',
-        app[1], 'Explore');
-      return;
-    }
-    if (/report|annual|financial|investor|shareholder|agm/.test(q)) {
-      result('INVESTOR', 'Investor Relations',
-        'Find annual reports, financial information and shareholder references.',
-        'investors.html#annual', 'Open investor information');
-      return;
-    }
-    if (/brochure|flyer|leaflet|literature|document|datasheet|certificate|drawing/.test(q)) {
-      result('LITERATURE', 'Literature',
-        'Find brochures, flyers, corporate publications and technical documents.',
-        'literature.html', 'Open Literature');
-      return;
-    }
-    if (/video|installation|demonstration/.test(q)) {
-      result('VIDEOS', 'Videos',
-        'Installation guides, product overviews and application demonstrations.',
-        'videos.html', 'Open Videos');
-      return;
-    }
-    if (/calculator|pressure drop|flow|head loss|sizing/.test(q)) {
-      result('CALCULATORS', 'Calculators',
-        'Engineering calculators for pipe selection, hydraulic design and unit conversion.',
-        'calculators.html', 'Open Calculators');
-      return;
-    }
-    result('DEXPERT', 'No direct match',
-      'Try a product, application or resource term.',
-      'products.html', 'Browse products');
+
+    const node = resultTpl.content.firstElementChild.cloneNode(true);
+    node.querySelector('[data-label]').textContent = label;
+    node.querySelector('[data-heading]').textContent = heading;
+    node.querySelector('[data-message]').textContent = message;
+    node.querySelector('a').href = href;
+    node.querySelector('[data-cta]').textContent = cta;
+
+    body.replaceChildren(node);
+    node.querySelector('.dexpert-back').addEventListener('click',
+      () => renderHome(dialog, homeTpl));
   }
 
-  /* Build the panel body on first interaction, or when the browser
-     goes idle, whichever fires first. Content only renders once. */
-  function ensurePopulated(){
-    if (isPopulated) return;
-    isPopulated = true;
-    home();
+  /* ---------- Wire once, after fetch ---------- */
+
+  function wireDialog(dialog, homeTpl, resultTpl){
+    dialog.querySelector('.dexpert-close').addEventListener('click', () => dialog.close());
+
+    dialog.addEventListener('click', e => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    /* Native dialog fires `close` on Escape, X, backdrop click, or .close(). */
+    dialog.addEventListener('close', () => {
+      fab.setAttribute('aria-expanded', 'false');
+    });
+
+    dialog.addEventListener('cancel', () => {
+      /* Escape — let default behaviour proceed. */
+    });
+
+    /* Build home view once so first open feels instant. */
+    renderHome(dialog, homeTpl, resultTpl);
   }
 
-  const close = () => {
-    dialog.classList.remove('open');
-    fab.setAttribute('aria-expanded', 'false');
-  };
-  const open = () => {
-    ensurePopulated();
-    dialog.classList.add('open');
-    fab.setAttribute('aria-expanded', 'true');
-    setTimeout(() => dialog.querySelector('#dexpertQuery')?.focus(), 60);
+  /* ---------- Public interface ---------- */
+
+  const open = async () => {
+    try {
+      const dialog = await loadDialog();
+      if (dialog.open) return;
+      dialog.showModal();
+      fab.setAttribute('aria-expanded', 'true');
+      setTimeout(() => dialog.querySelector('#dexpertQuery')?.focus(), 60);
+    } catch (err) {
+      console.error('DEXPERT failed to load', err);
+    }
   };
 
-  fab.addEventListener('click', () => dialog.classList.contains('open') ? close() : open());
-  dialog.querySelector('.dexpert-close').addEventListener('click', close);
-
-  /* Escape closes the dialog and returns focus to the FAB.
-     Guarded so it does nothing when the dialog is closed —
-     otherwise Escape anywhere on the site would steal focus. */
-  document.addEventListener('keydown', e => {
-    if (e.key !== 'Escape') return;
-    if (!dialog.classList.contains('open')) return;
-    close();
-    fab.focus();
+  fab.addEventListener('click', () => {
+    if (fab.getAttribute('aria-expanded') === 'true') {
+      document.getElementById('dexpertDialog')?.close();
+    } else {
+      open();
+    }
   });
 
-  /* Click outside closes the dialog. Also handles [data-open-dexpert]
-     triggers elsewhere on the site. */
   document.addEventListener('click', e => {
     if (e.target.closest('[data-open-dexpert]')) {
       e.preventDefault();
       open();
-      return;
-    }
-    if (dialog.classList.contains('open') &&
-        !dialog.contains(e.target) &&
-        !fab.contains(e.target)) {
-      close();
     }
   });
 
-  /* Pre-build the panel during idle so the first open feels instant. */
-  scheduleIdle(ensurePopulated);
+  /* Pre-fetch and pre-render during idle. */
+  scheduleIdle(() => loadDialog().catch(() => {}));
 }
 
 
