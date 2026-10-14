@@ -1,31 +1,17 @@
 /* ============================================================
    DADEX DEALER & DISTRIBUTOR DIRECTORY
-   Page-scoped module. Loaded only from dealers.html.
-   Depends on: dealers-data.js (window.DADEX_DEALERS)
    ============================================================ */
 
 (function () {
   'use strict';
 
-  /* Hoisted so the map is not recreated on every replace call. */
-  const ESC_MAP = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    "'": '&#39;',
-    '"': '&quot;'
-  };
-
-  function esc(value) {
-    return String(value ?? '').replace(/[&<>'"]/g, c => ESC_MAP[c]);
-  }
+  /* ---------- Helpers ---------- */
 
   function unique(values) {
     return Array.from(new Set(values.filter(Boolean)))
-      .sort(function (a, b) { return String(a).localeCompare(String(b)); });
+      .sort((a, b) => String(a).localeCompare(String(b)));
   }
 
-  /* Trailing-edge debounce for filter inputs that rebuild the grid. */
   function debounce(fn, wait) {
     let timer = null;
     return function debounced(...args) {
@@ -34,9 +20,41 @@
     };
   }
 
+  /* Rebuild a <select>'s options from values, keeping the current
+     selection when it still exists in the new list. */
+  function fillOptions(select, values, placeholder) {
+    if (!select) return;
+    const current = select.value;
+
+    const frag = document.createDocumentFragment();
+
+    const placeholderOpt = document.createElement('option');
+    placeholderOpt.value = '';
+    placeholderOpt.textContent = placeholder;
+    frag.appendChild(placeholderOpt);
+
+    for (const v of values) {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = v;
+      frag.appendChild(opt);
+    }
+
+    select.replaceChildren(frag);
+    if (values.includes(current)) select.value = current;
+  }
+
+  /* ---------- Locator ---------- */
+
   function initDealerLocator() {
     const grid = document.getElementById('dealerGrid');
     if (!grid) return;
+
+    const cardTemplate = document.getElementById('dealerCardTemplate');
+    if (!cardTemplate) {
+      console.error('dealerCardTemplate not found. Add <template id="dealerCardTemplate"> to dealers.html.');
+      return;
+    }
 
     const province = document.getElementById('provinceFilter');
     const city     = document.getElementById('cityFilter');
@@ -50,6 +68,8 @@
     const all = Array.isArray(window.DADEX_DEALERS) ? window.DADEX_DEALERS : [];
     const dealers = all.filter(d => d && d.active !== false);
 
+    /* ---------- Initial state from URL ---------- */
+
     const params = new URLSearchParams(window.location.search);
     const initial = {
       province: params.get('province') || '',
@@ -59,18 +79,10 @@
       name: params.get('name') || ''
     };
 
-    /* ---------- Option list helpers ---------- */
-
-    function fill(select, values, placeholder) {
-      if (!select) return;
-      const current = select.value;
-      select.innerHTML = '<option value="">' + placeholder + '</option>'
-        + values.map(v => '<option value="' + esc(v) + '">' + esc(v) + '</option>').join('');
-      if (values.indexOf(current) !== -1) select.value = current;
-    }
+    /* ---------- Option lists ---------- */
 
     function refreshCities() {
-      fill(
+      fillOptions(
         city,
         unique(dealers
           .filter(d => !province.value || d.province === province.value)
@@ -80,13 +92,12 @@
     }
 
     function refreshAreas() {
-      fill(
+      fillOptions(
         area,
         unique(dealers
           .filter(d =>
             (!province.value || d.province === province.value) &&
-            (!city.value || d.city === city.value)
-          )
+            (!city.value || d.city === city.value))
           .map(d => d.area)),
         'All Areas'
       );
@@ -98,17 +109,14 @@
         (!city.value || d.city === city.value) &&
         (!area.value || d.area === area.value)
       );
-      fill(
+      fillOptions(
         product,
-        unique(scoped.reduce((acc, d) => {
-          if (Array.isArray(d.products)) acc = acc.concat(d.products);
-          return acc;
-        }, [])),
+        unique(scoped.flatMap(d => Array.isArray(d.products) ? d.products : [])),
         'All Products'
       );
     }
 
-    /* ---------- URL state ---------- */
+    /* ---------- URL sync ---------- */
 
     function syncUrl() {
       const next = new URLSearchParams();
@@ -121,6 +129,8 @@
       history.replaceState(null, '', window.location.pathname + (query ? '?' + query : ''));
     }
 
+    /* ---------- Active filter chips ---------- */
+
     function renderActiveFilters() {
       if (!activeSummary) return;
       const items = [
@@ -131,17 +141,30 @@
         ['Dealer', name.value.trim()]
       ].filter(pair => pair[1]);
 
-      activeSummary.innerHTML = items
-        .map(pair =>
-          '<span class="active-filter"><strong>' + esc(pair[0]) + ':</strong> ' + esc(pair[1]) + '</span>')
-        .join('');
-      activeSummary.hidden = items.length === 0;
+      if (!items.length) {
+        activeSummary.replaceChildren();
+        activeSummary.hidden = true;
+        return;
+      }
+
+      const frag = document.createDocumentFragment();
+      for (const [label, value] of items) {
+        const span = document.createElement('span');
+        span.className = 'active-filter';
+        const strong = document.createElement('strong');
+        strong.textContent = label + ':';
+        span.appendChild(strong);
+        span.appendChild(document.createTextNode(' ' + value));
+        frag.appendChild(span);
+      }
+      activeSummary.replaceChildren(frag);
+      activeSummary.hidden = false;
     }
 
-    /* ---------- Init ---------- */
+    /* ---------- Initial options ---------- */
 
     function initFilters() {
-      fill(province, unique(dealers.map(d => d.province)), 'All Provinces / Regions');
+      fillOptions(province, unique(dealers.map(d => d.province)), 'All Provinces / Regions');
       province.value = initial.province;
       refreshCities();
       city.value = initial.city;
@@ -152,7 +175,7 @@
       name.value = initial.name;
     }
 
-    /* ---------- Filtering ---------- */
+    /* ---------- Filter match ---------- */
 
     function matches(d) {
       const q = name.value.trim().toLowerCase();
@@ -160,9 +183,11 @@
       return (!province.value || d.province === province.value) &&
              (!city.value || d.city === city.value) &&
              (!area.value || d.area === area.value) &&
-             (!product.value || products.indexOf(product.value) !== -1) &&
-             (!q || String(d.name || '').toLowerCase().indexOf(q) !== -1);
+             (!product.value || products.includes(product.value)) &&
+             (!q || String(d.name || '').toLowerCase().includes(q));
     }
+
+    /* ---------- Clear ---------- */
 
     function clearAll() {
       province.value = '';
@@ -176,6 +201,136 @@
       render();
     }
 
+    /* ---------- Card builder ---------- */
+
+    function buildCard(d) {
+      const node = cardTemplate.content.firstElementChild.cloneNode(true);
+
+      const locationParts = [d.area, d.city, d.province].filter(Boolean);
+      const locationLabel = d.location || locationParts.join(', ');
+
+      /* Type + name — always present */
+      node.querySelector('[data-field="type"]').textContent = d.type || 'Dealer';
+      node.querySelector('[data-field="name"]').textContent = d.name || '';
+
+      /* Optional: contact name */
+      const contactNameEl = node.querySelector('[data-field="contact-name"]');
+      const contactName = d.contactName ? String(d.contactName).trim() : '';
+      if (contactName) contactNameEl.textContent = contactName;
+      else contactNameEl.remove();
+
+      /* Optional: location */
+      const locationEl = node.querySelector('[data-field="location"]');
+      if (locationLabel) locationEl.querySelector('span').textContent = locationLabel;
+      else locationEl.remove();
+
+      /* Optional: address */
+      const addressEl = node.querySelector('[data-field="address"]');
+      if (d.address) addressEl.textContent = d.address;
+      else addressEl.remove();
+
+      /* Optional: phone */
+      const phoneEl = node.querySelector('[data-field="phone"]');
+      if (d.phone) {
+        phoneEl.href = 'tel:' + String(d.phone).replace(/[^+\d]/g, '');
+        phoneEl.querySelector('span').textContent = d.phone;
+      } else {
+        phoneEl.remove();
+      }
+
+      /* Optional: email */
+      const emailEl = node.querySelector('[data-field="email"]');
+      if (d.email) {
+        emailEl.href = 'mailto:' + d.email;
+        emailEl.querySelector('span').textContent = d.email;
+      } else {
+        emailEl.remove();
+      }
+
+      /* Optional: product tags */
+      const tagsEl = node.querySelector('[data-field="tags"]');
+      if (Array.isArray(d.products) && d.products.length) {
+        const frag = document.createDocumentFragment();
+        for (const p of d.products) {
+          const span = document.createElement('span');
+          span.textContent = p;
+          frag.appendChild(span);
+        }
+        tagsEl.replaceChildren(frag);
+      } else {
+        tagsEl.remove();
+      }
+
+      /* Optional: context link (only when a product filter is active) */
+      const contextLink = node.querySelector('[data-field="context-link"]');
+      if (product.value) {
+        contextLink.href = 'products.html?q=' + encodeURIComponent(product.value);
+        contextLink.querySelector('span').textContent = 'View ' + product.value;
+      } else {
+        contextLink.remove();
+      }
+
+      /* Optional: map link */
+      const mapLink = node.querySelector('[data-field="map"]');
+      if (d.mapUrl) mapLink.href = d.mapUrl;
+      else mapLink.remove();
+
+      return node;
+    }
+
+    /* ---------- Status summary ---------- */
+
+    function updateSummary(visibleCount) {
+      if (!summary) return;
+      if (!dealers.length) {
+        summary.textContent = 'The dealer directory is ready for approved Sales data.';
+        return;
+      }
+      summary.replaceChildren();
+      summary.appendChild(document.createTextNode('Showing '));
+      const a = document.createElement('strong');
+      a.textContent = String(visibleCount);
+      summary.appendChild(a);
+      summary.appendChild(document.createTextNode(' of '));
+      const b = document.createElement('strong');
+      b.textContent = String(dealers.length);
+      summary.appendChild(b);
+      summary.appendChild(document.createTextNode(' listings.'));
+    }
+
+    /* ---------- Empty states ---------- */
+
+    function renderDirectoryEmpty() {
+      const div = document.createElement('div');
+      div.className = 'dealer-empty';
+      div.innerHTML =
+        '<i class="fas fa-store" aria-hidden="true"></i>' +
+        '<h3>Dealer &amp; Distributor Directory</h3>' +
+        '<p>Dealer and distributor records will appear here once the approved Dadex Sales master is connected.</p>';
+      const link = document.createElement('a');
+      link.className = 'btn btn-primary btn-sm';
+      link.href = 'contact.html';
+      link.textContent = 'Contact Dadex';
+      div.appendChild(link);
+      grid.replaceChildren(div);
+    }
+
+    function renderNoMatches() {
+      const div = document.createElement('div');
+      div.className = 'dealer-empty';
+      div.innerHTML =
+        '<i class="fas fa-magnifying-glass" aria-hidden="true"></i>' +
+        '<h3>No matching listings</h3>' +
+        '<p>Try a different province, city, area, product, or dealer name.</p>';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-outline btn-sm';
+      btn.dataset.action = 'clear-filters';
+      btn.textContent = 'Clear filters';
+      div.appendChild(btn);
+      grid.replaceChildren(div);
+    }
+
     /* ---------- Render ---------- */
 
     function render() {
@@ -183,88 +338,28 @@
       renderActiveFilters();
 
       const rows = dealers.filter(matches);
-
-      if (summary) {
-        summary.innerHTML = dealers.length
-          ? 'Showing <strong>' + rows.length + '</strong> of <strong>' + dealers.length + '</strong> listings.'
-          : 'The dealer directory is ready for approved Sales data.';
-      }
+      updateSummary(rows.length);
 
       if (!dealers.length) {
-        grid.innerHTML =
-          '<div class="dealer-empty">' +
-            '<i class="fas fa-store" aria-hidden="true"></i>' +
-            '<h3>Dealer &amp; Distributor Directory</h3>' +
-            '<p>Dealer and distributor records will appear here once the approved Dadex Sales master is connected.</p>' +
-            '<a class="btn btn-primary btn-sm" href="contact.html">Contact Dadex</a>' +
-          '</div>';
+        renderDirectoryEmpty();
         return;
       }
-
       if (!rows.length) {
-        grid.innerHTML =
-          '<div class="dealer-empty">' +
-            '<i class="fas fa-magnifying-glass" aria-hidden="true"></i>' +
-            '<h3>No matching listings</h3>' +
-            '<p>Try a different province, city, area, product, or dealer name.</p>' +
-            '<button class="btn btn-outline btn-sm" type="button" id="emptyReset">Clear filters</button>' +
-          '</div>';
-        const emptyReset = document.getElementById('emptyReset');
-        if (emptyReset) emptyReset.addEventListener('click', clearAll);
+        renderNoMatches();
         return;
       }
 
-      grid.innerHTML = rows.map(d => {
-        const locationParts = [d.area, d.city, d.province].filter(Boolean);
-        const locationLabel = d.location || locationParts.join(', ');
-        const contactName = d.contactName ? String(d.contactName).trim() : '';
-
-        const phoneHref = d.phone ? 'tel:' + esc(String(d.phone).replace(/[^+\d]/g, '')) : '';
-        const phoneLine = d.phone
-          ? '<a href="' + phoneHref + '" class="dealer-contact"><i class="fas fa-phone" aria-hidden="true"></i>' + esc(d.phone) + '</a>'
-          : '';
-
-        const emailLine = d.email
-          ? '<a href="mailto:' + esc(d.email) + '" class="dealer-contact"><i class="fas fa-envelope" aria-hidden="true"></i>' + esc(d.email) + '</a>'
-          : '';
-
-        const tags = (Array.isArray(d.products) && d.products.length)
-          ? '<div class="dealer-tags">' + d.products.map(x => '<span>' + esc(x) + '</span>').join('') + '</div>'
-          : '';
-
-        const contextLink = product.value
-          ? '<a class="dealer-context-link" href="products.html?q=' + encodeURIComponent(product.value) + '">View ' + esc(product.value) + ' <i class="fas fa-arrow-right" aria-hidden="true"></i></a>'
-          : '';
-
-        const mapLink = d.mapUrl
-          ? '<a class="dealer-map" href="' + esc(d.mapUrl) + '" target="_blank" rel="noopener">View location <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>'
-          : '';
-
-        return '<article class="dealer-card">' +
-          '<div class="dealer-card-top">' +
-            '<span class="dealer-type">' + esc(d.type || 'Dealer') + '</span>' +
-            '<i class="fas fa-store" aria-hidden="true"></i>' +
-          '</div>' +
-          '<h3>' + esc(d.name) + '</h3>' +
-          (contactName ? '<p class="dealer-contact-name">' + esc(contactName) + '</p>' : '') +
-          (locationLabel ? '<p class="dealer-location"><i class="fas fa-location-dot" aria-hidden="true"></i><span>' + esc(locationLabel) + '</span></p>' : '') +
-          (d.address ? '<p class="dealer-address">' + esc(d.address) + '</p>' : '') +
-          phoneLine +
-          emailLine +
-          tags +
-          contextLink +
-          mapLink +
-        '</article>';
-      }).join('');
+      const frag = document.createDocumentFragment();
+      for (const d of rows) frag.appendChild(buildCard(d));
+      grid.replaceChildren(frag);
     }
 
     /* ---------- Event binding ---------- */
 
-    /* Name search debounced — one rebuild per keystroke burst. */
     const renderDebounced = debounce(render, 120);
 
     if (province) {
-      province.addEventListener('change', function () {
+      province.addEventListener('change', () => {
         refreshCities(); city.value = '';
         refreshAreas(); area.value = '';
         refreshProducts(); product.value = '';
@@ -272,14 +367,14 @@
       });
     }
     if (city) {
-      city.addEventListener('change', function () {
+      city.addEventListener('change', () => {
         refreshAreas(); area.value = '';
         refreshProducts(); product.value = '';
         render();
       });
     }
     if (area) {
-      area.addEventListener('change', function () {
+      area.addEventListener('change', () => {
         refreshProducts(); product.value = '';
         render();
       });
@@ -287,6 +382,13 @@
     if (product) product.addEventListener('change', render);
     if (name) name.addEventListener('input', renderDebounced);
     if (reset) reset.addEventListener('click', clearAll);
+
+    /* Delegated — catches the "Clear filters" button in the empty state. */
+    grid.addEventListener('click', event => {
+      if (event.target.closest('[data-action="clear-filters"]')) clearAll();
+    });
+
+    /* ---------- Init ---------- */
 
     initFilters();
     render();
