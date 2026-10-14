@@ -25,7 +25,7 @@
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Search Dadex | Dadex Eternit Limited" name="twitter:title"/>
-<meta content="Search products, applications, projects, resources and corporate information across the Dadex website." name="twitter:description"/>
+<meta content="Search products, applications, projects, resources and corporate information." name="twitter:description"/>
 <meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
 
 <!-- Preconnect -->
@@ -46,20 +46,14 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Search Dadex | Dadex Eternit Limited",
+  "@type": "SearchResultsPage",
+  "name": "Search Dadex",
   "url": "https://www.dadex.com/search.html",
-  "description": "Search products, applications, projects, resources and corporate information across the Dadex website.",
-  "isPartOf": {
-    "@type": "WebSite",
-    "name": "Dadex Eternit Limited",
-    "url": "https://www.dadex.com/"
-  }
+  "isPartOf": { "@type": "WebSite", "name": "Dadex Eternit Limited", "url": "https://www.dadex.com/" }
 }
 </script>
 </head>
 <body>
-
 <a class="skip-link" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
 
@@ -68,7 +62,7 @@
 <section class="page-hero">
 <div class="container">
 <div class="eyebrow">SEARCH</div>
-<h1>Search Dadex</h1>
+<h1>Search <span>Dadex</span></h1>
 <p>Find products, applications, projects, resources and corporate information across the website.</p>
 </div>
 </section>
@@ -83,7 +77,7 @@
 <input autocomplete="off" id="siteSearchInput" placeholder="Search products, projects, resources…" type="search"/>
 <button id="siteSearchButton" type="button">Search</button>
 </div>
-<p class="search-hint">Try “Aquadex”, “water supply”, “projects”, “technical resources” or “investor”.</p>
+<p class="search-hint">Try "Aquadex", "water supply", "projects", "technical resources" or "investor".</p>
 </div>
 <div class="search-meta">
 <strong aria-live="polite" id="searchCount">Start searching</strong>
@@ -99,9 +93,19 @@
 </div>
 </section>
 
+<!-- Template for search result cards — cloned by main.js -->
+<template id="searchResultTemplate">
+<article class="search-result-card">
+<span class="result-type"></span>
+<h3></h3>
+<p></p>
+<a href="#">Open page <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
+</article>
+</template>
+
 <section class="page-cta">
 <div class="container">
-<h2>Can’t find what you need?</h2>
+<h2>Can't find <span>what you need?</span></h2>
 <p>Tell Dadex what information, product or technical guidance you are looking for.</p>
 <a class="btn btn-primary" href="contact.html#information-request">Tell Us What You Need <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
 </div>
