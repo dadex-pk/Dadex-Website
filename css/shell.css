@@ -3,16 +3,12 @@
    Refactored: rem sizing, token-driven. Mega-menu full-width
    panel anchored to products tier. Breakpoints @ 900px.
 
-   Updated for brand red #e50000 (CMYK 0 100 100 10).
-   Shadow and glow rgba() values match the new brand red.
-   DEXPERT gradients resolve from --dadex-red / --dadex-red-dark.
+   Header collapses on scroll (utility bar + products tier
+   retract); the main tier stays visible at all times.
    ============================================================ */
 
 /* ============================================================
    SHELL TOKENS
-   Motion and elevation alias the global tokens in root.css.
-   Header-height values stay local — they describe this
-   component, not the whole design system.
    ============================================================ */
 .site-header,
 .site-footer,
@@ -32,13 +28,6 @@
   --sh-el-1:var(--shadow-1);
   --sh-el-2:var(--shadow-2);
   --sh-el-3:var(--shadow-3);
-
-  /* --sticky-offset (root.css) = header-total + 0.625rem slack.
-     Do not "correct" these to match — the slack is deliberate. */
-  --sh-header-utility:2.375rem;
-  --sh-header-main:4.75rem;
-  --sh-header-products:2.75rem;
-  --sh-header-total:9.875rem;
 
   --sh-mega-max:77.5rem;
   --sh-mega-pad-x:1.25rem;
@@ -99,6 +88,30 @@
   box-shadow:var(--sh-el-2);
 }
 
+/* ---------- Scroll-driven collapse of the two outer tiers ----------
+   Utility bar and products tier retract via max-height. The main
+   tier (brand + primary nav) is untouched, so the header never
+   disappears. Transitions use the same duration as --sticky-offset
+   consumers, keeping the strips in sync. */
+.site-header .utility-bar,
+.site-header .header-products-tier{
+  overflow:hidden;
+  transition:max-height var(--sh-t-base) var(--sh-ease),
+             opacity var(--sh-t-fast) var(--sh-ease-io),
+             border-color var(--sh-t-base) var(--sh-ease-io),
+             padding var(--sh-t-base) var(--sh-ease-io);
+}
+.site-header .utility-bar{max-height:3rem}
+.site-header .header-products-tier{max-height:3.5rem}
+
+.site-header.is-scrolled .utility-bar,
+.site-header.is-scrolled .header-products-tier{
+  max-height:0;
+  opacity:0;
+  border-color:transparent;
+  pointer-events:none;
+}
+
 /* ============================================================
    HEADER — utility bar
    ============================================================ */
@@ -114,7 +127,7 @@
   pointer-events:none;
 }
 .site-header .utility-inner{
-  min-height:var(--sh-header-utility);
+  min-height:2.375rem;
   display:flex;align-items:center;justify-content:space-between;gap:1.375rem;
 }
 .site-header .utility-left,
@@ -163,7 +176,7 @@
   border-bottom:1px solid rgba(23,25,28,.04);
 }
 .site-header .header-main-tier .header-inner{
-  min-height:var(--sh-header-main);
+  min-height:4.75rem;
   display:flex;align-items:center;gap:1.5rem;
 }
 
@@ -261,7 +274,7 @@
   pointer-events:none;
 }
 .site-header .header-products-row{
-  min-height:var(--sh-header-products);
+  min-height:2.75rem;
   padding:.15rem .75rem .2rem;
   display:flex;align-items:center;justify-content:center;
   flex-wrap:wrap;gap:.05rem;width:100%;box-sizing:border-box;overflow:visible;
@@ -630,8 +643,11 @@
   .site-header .mega-columns{gap:1.5rem 2rem}
   .site-header .mega-columns section{min-width:10rem;max-width:14rem}
 }
+
+/* Mobile layout.
+   The header stays sticky — only its two outer tiers collapse on scroll
+   (via .is-scrolled on .site-header, handled above). */
 @media(max-width:900px){
-  .site-header{position:relative;top:auto}
   .site-header .utility-inner{justify-content:center;flex-wrap:wrap;min-height:2.25rem}
   .site-header .utility-left{display:none}
   .site-header .header-main-tier .header-inner{min-height:4.125rem}
@@ -864,8 +880,6 @@
    DEXPERT — floating assistant
    Native <dialog> element; showModal() provides focus trap,
    Escape close and focus return natively.
-   Gradients resolve from brand tokens so brand-red updates
-   propagate automatically.
    ============================================================ */
 .dexpert-fab{
   position:fixed;right:1.5rem;bottom:1.5rem;z-index:1100;
@@ -913,7 +927,6 @@
 }
 .dexpert-fab:focus-visible{outline:2px solid var(--dadex-red);outline-offset:4px}
 
-/* ---------- Dialog — native <dialog> ---------- */
 .dexpert-dialog{
   position:fixed;
   right:1.5rem;
@@ -1211,6 +1224,8 @@ body:has(.dexpert-dialog[open]) .back-to-top{
   .site-header .site-navigation,
   .site-header .dropdown-menu,
   .site-header .mega-menu,
+  .site-header .utility-bar,
+  .site-header .header-products-tier,
   .site-footer a,
   .dexpert-fab,
   .dexpert-fab img,
