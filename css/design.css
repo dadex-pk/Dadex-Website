@@ -1441,7 +1441,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   font-size:.92rem;
   line-height:1.8;
   color:#4f555c;
-  max-width:30rem;
+  max-width:25rem;
   margin:0 0 1rem;
 }
 .vm-section-content p:last-child{margin-bottom:0}
@@ -1450,11 +1450,11 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   font-size:clamp(1.125rem,1.8vw,1.375rem) !important;
   line-height:1.7 !important;
   color:#20252a !important;
-  font-weight:650;
-  border-left:3px solid var(--dadex-red);
+  font-weight:600;
+  border-left:4px solid var(--dadex-red);
   padding-left:1.5rem;
   margin:0 !important;
-  max-width:25rem;
+  max-width:19rem;
 }
 
 .vm-mission-list{
@@ -1471,7 +1471,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   font-size:.9375rem;
   line-height:1.75;
   color:#4f555c;
-  max-width:44rem;
+  max-width:40rem;
   counter-increment:mission;
 }
 .vm-mission-list p::before{
@@ -1479,8 +1479,8 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   position:absolute;
   left:.5rem;
   top:.85rem;
-  width:.375rem;
-  height:.375rem;
+  width:.5rem;
+  height:.5rem;
   border-radius:50%;
   background:var(--accent-light);
 }
@@ -1495,8 +1495,8 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 .vm-section-media img{
   display:block;
-  width:100%;
-  height:100%;
+  width:72%;
+  height:72%;
   object-fit:cover;
   object-position:center;
   transition:transform .4s ease;
