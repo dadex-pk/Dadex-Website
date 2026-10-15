@@ -1,14 +1,8 @@
 /* ============================================================
    CALCULATORS — page-scoped styles for calculators.html
    Scoped to .calculator-suite, .calc-toolbar, .calc-hero.
-   Requires: root.css (for --dadex-red, --sticky-offset).
    ============================================================ */
 
-/* ============================================================
-   TOKENS — scoped to .calculator-suite so they never leak.
-   Colour and border tokens alias root.css. Only local values
-   (bg, card, text) live here.
-   ============================================================ */
 .calculator-suite{
   --calc-bg:#f5f7fa;
   --calc-card:#ffffff;
@@ -23,7 +17,7 @@
   --calc-radius:12px;
   --calc-radius-sm:8px;
   --calc-transition:var(--duration-base) var(--ease-io);
-  --calc-focus:0 0 0 3px rgba(201,0,0,.12);
+  --calc-focus:0 0 0 3px rgba(229,0,0,.12);
 }
 
 /* ============================================================
@@ -37,7 +31,7 @@
 .calc-print-header{display:none}
 
 /* ============================================================
-   STICKY TOOLBAR
+   STICKY TOOLBAR — pinned below header at every breakpoint
    ============================================================ */
 .calc-toolbar{
   position:sticky;
@@ -50,6 +44,7 @@
   border-bottom:1px solid var(--calc-border);
   padding:.75rem 0;
   margin-bottom:1.5rem;
+  transition:top var(--duration-base) var(--ease-io);
 }
 .calc-toolbar-inner{
   display:flex;align-items:center;justify-content:space-between;
@@ -59,6 +54,7 @@
   display:flex;gap:.5rem;flex-wrap:wrap;margin-left:auto;
 }
 
+/* Action buttons — unit toggle, print / save PDF */
 .calc-action{
   display:inline-flex;align-items:center;gap:.5rem;
   min-height:2.25rem;padding:.5rem .9375rem;
@@ -78,35 +74,75 @@
     background:var(--calc-red-light);transform:translateY(-1px);
   }
 }
-.calc-action:focus-visible{outline:2px solid var(--calc-red);outline-offset:2px}
-.calc-action:active{transform:translateY(0)}
+.calc-action:focus-visible{
+  outline:2px solid var(--calc-red);
+  outline-offset:2px;
+}
+/* Press state — button visually returns to rest, fill lightens */
+.calc-action:active{
+  transform:translateY(0);
+  background:var(--calc-red-light);
+  border-color:var(--calc-red);
+  color:var(--calc-red);
+}
 
 /* ============================================================
-   MATERIAL SELECTOR
+   MATERIAL SELECTOR — lives inside the toolbar
    ============================================================ */
 .calc-toolbar .material-selector{
   display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;
 }
 .calc-toolbar .mat-btn{
-  padding:.5rem .9375rem;min-height:2.25rem;
+  padding:.5rem .9375rem;
+  min-height:2.25rem;
   border:1.5px solid var(--calc-border);
-  background:#fff;border-radius:999px;
-  font-family:'Inter',sans-serif;font-weight:700;font-size:.71875rem;
-  text-transform:uppercase;letter-spacing:.06em;
-  cursor:pointer;color:var(--calc-text-light);
-  transition:var(--calc-transition);
+  background:#fff;
+  border-radius:999px;
+  font-family:'Inter',sans-serif;
+  font-weight:700;
+  font-size:.71875rem;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  cursor:pointer;
+  color:var(--calc-text-light);
+  transition:var(--calc-transition),box-shadow var(--calc-transition);
 }
 @media (hover: hover) and (pointer: fine){
   .calc-toolbar .mat-btn:hover{
-    border-color:var(--calc-red);color:var(--calc-red);background:var(--calc-red-light);
+    border-color:var(--calc-red);
+    color:var(--calc-red);
+    background:var(--calc-red-light);
   }
 }
-.calc-toolbar .mat-btn:focus-visible{outline:2px solid var(--calc-red);outline-offset:2px}
-.calc-toolbar .mat-btn.active{
-  background:var(--calc-red);color:#fff;border-color:var(--calc-red);
-  box-shadow:0 4px 12px rgba(201,0,0,.25);
+.calc-toolbar .mat-btn:focus-visible{
+  outline:2px solid var(--calc-red);
+  outline-offset:3px;
 }
-.calc-toolbar .mat-btn.active:hover{background:var(--calc-red-dark)}
+/* Active material — solid red fill plus a soft outer ring.
+   The ring is what makes "selected" read distinct from "hovered". */
+.calc-toolbar .mat-btn.active{
+  background:var(--calc-red);
+  color:#fff;
+  border-color:var(--calc-red);
+  font-weight:800;
+  box-shadow:
+    0 0 0 3px rgba(229,0,0,.12),
+    0 4px 12px rgba(229,0,0,.28);
+}
+.calc-toolbar .mat-btn.active:hover{
+  background:var(--calc-red-dark);
+  border-color:var(--calc-red-dark);
+  color:#fff;
+  box-shadow:
+    0 0 0 3px rgba(229,0,0,.18),
+    0 6px 16px rgba(229,0,0,.38);
+}
+.calc-toolbar .mat-btn.active:active{
+  transform:translateY(0);
+  box-shadow:
+    0 0 0 2px rgba(229,0,0,.24),
+    0 2px 8px rgba(229,0,0,.24);
+}
 
 /* The "ACTIVE: UPVC" chip is redundant now that buttons reflect
    state. Kept in HTML for reuse but hidden here. */
@@ -303,15 +339,13 @@
 .calculator-suite .calc-disclaimer strong{color:var(--calc-text)}
 
 /* ============================================================
-   RESPONSIVE
+   RESPONSIVE — toolbar stays sticky at every breakpoint
    ============================================================ */
 @media(max-width:900px){
   .calc-toolbar{
-    position:static;background:transparent;
-    backdrop-filter:none;-webkit-backdrop-filter:none;
-    border:0;padding:.75rem 0 1rem;margin-bottom:0;
+    padding:.625rem 0;
   }
-  .calc-toolbar-inner{gap:.875rem}
+  .calc-toolbar-inner{gap:.875rem;flex-wrap:wrap}
   .calc-toolbar-actions{width:100%;margin-left:0}
   .calc-action{flex:1;justify-content:center}
 }
@@ -339,15 +373,10 @@
    PRINT — A4 / Letter, ink-friendly, page-break safe
    ============================================================ */
 @media print{
-
   @page{size:A4 portrait;margin:1.5cm}
 
-  html,body{
-    background:#fff !important;color:#000 !important;font-size:10pt;
-  }
-  .container{
-    width:100% !important;max-width:none !important;padding:0 !important;
-  }
+  html,body{background:#fff !important;color:#000 !important;font-size:10pt}
+  .container{width:100% !important;max-width:none !important;padding:0 !important}
   main,
   .core-content,
   .calculator-suite{
@@ -443,4 +472,5 @@
   .calculator-suite .copy-btn{transition:none !important}
   .calculator-suite .card:hover{transform:none !important}
   .calc-action:hover{transform:none !important}
+  .calc-toolbar .mat-btn.active:hover{transform:none !important}
 }
