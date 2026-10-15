@@ -4,19 +4,15 @@
    ============================================================ */
 
 :root{
-  /* ---------- Brand — primary red ----------
-     Source: CMYK 0 100 100 10
-     Digital equivalent: #E50000
-     If your brand book lists a different hex, change only the
-     two lines below — every downstream file inherits. */
+  /* ---------- Brand ---------- */
   --dadex-red:#e50000;
   --dadex-red-dark:#b50000;
   --d-red:#e50000;
   --d-red-dark:#c00000;
 
   /* ---------- Accent reds for two-colour headings ---------- */
-  --accent-light:#e50000;   /* on light backgrounds — passes AA at 4.5:1 */
-  --accent-dark:#ff6a6a;    /* on dark backgrounds — bright enough for contrast */
+  --accent-light:#e50000;
+  --accent-dark:#ff6a6a;
 
   /* ---------- Ink / text ---------- */
   --ink:#17191c;
@@ -47,7 +43,13 @@
   /* ---------- Layout ---------- */
   --max:1240px;
   --d-max:1240px;
-  --sticky-offset:10.5rem;
+
+  /* Header height state.
+     --header-h changes when body.header-scrolled is applied.
+     --sticky-offset recalculates from it, so any element using
+     top:var(--sticky-offset) auto-tracks the header's height. */
+  --header-h:9.875rem;
+  --sticky-offset:calc(var(--header-h) + 0.625rem);
 
   /* ---------- Radii ---------- */
   --radius:14px;
@@ -105,6 +107,19 @@
   --deco-grid-size:2.875rem;
   --deco-grid-color:rgba(255,255,255,.12);
   --deco-grid-opacity:.12;
+}
+
+/* ---------- Header collapse state ----------
+   Applied to <body> by main.js when the page scrolls past 60px.
+   Reduces --header-h, which cascades to --sticky-offset, so every
+   sticky filter strip (products, history, calculators, videos,
+   projects) tracks the header without per-page logic. */
+body.header-scrolled{
+  --header-h:4.75rem;
+}
+@media(max-width:900px){
+  :root{--header-h:6.5rem}
+  body.header-scrolled{--header-h:4.125rem}
 }
 
 /* ---------- Reset ---------- */
