@@ -1,6 +1,7 @@
 /* ============================================================
    DADEX ETERNIT LIMITED — SHARED UI
    - Header and footer injection
+   - Header scroll state (collapse on scroll)
    - Navigation behaviour (mobile drawer, dropdowns, active state)
    - Dynamic text (footer year, company age)
    - Project filter (event delegation)
@@ -21,7 +22,7 @@ const COMPANY_FOUNDED_YEAR = 1959;
 const COMPANY_ANNIVERSARY_MONTH = 3; /* April (0-indexed) */
 const COMPANY_ANNIVERSARY_DAY = 13;
 const SCROLL_TOP_THRESHOLD = 600;
-
+const HEADER_COLLAPSE_THRESHOLD = 60;
 
 /* ------------------------------------------------------------
    Utilities
@@ -51,13 +52,8 @@ const scheduleIdle = (typeof requestIdleCallback === 'function')
   ? cb => requestIdleCallback(cb, { timeout: 2000 })
   : cb => setTimeout(cb, 200);
 
-
 /* ------------------------------------------------------------
    Bootstrap
-
-   Header/footer are injected first — everything that touches the
-   shell runs after. Header is queried once and passed to the two
-   modules that need it, rather than being re-queried per module.
    ------------------------------------------------------------ */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -81,7 +77,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   initBackToTop();
 });
 
-
 /* ------------------------------------------------------------
    Shared header / footer injection
    ------------------------------------------------------------ */
@@ -103,7 +98,6 @@ async function loadSharedComponents(){
     }
   }));
 }
-
 
 /* ------------------------------------------------------------
    Dynamic text — current year and company age
@@ -133,23 +127,47 @@ function initDynamicSiteText(){
   setText('[data-company-age-hyphenated]', `${age}-year-old`);
 }
 
-
 /* ------------------------------------------------------------
-   Header state flag (home vs internal) — header passed in
+   Header state — home/internal flag + scroll-driven collapse
+
+   The `.is-scrolled` class on the header triggers the collapse
+   rules in shell.css (utility bar + products tier retract).
+   The `header-scrolled` class on <body> reduces --header-h,
+   which cascades to --sticky-offset so sticky filter strips
+   stay in sync with the header's height.
+
+   The listener is rAF-throttled and passive.
    ------------------------------------------------------------ */
 
 function initHeaderState(header){
   if (!header) return;
+
   const path = window.location.pathname;
   const isHome = document.body.classList.contains('home-page')
     || path === '/'
     || path.endsWith('/index.html');
   header.dataset.headerState = isHome ? 'home' : 'internal';
+
+  let ticking = false;
+
+  const update = () => {
+    const scrolled = window.scrollY > HEADER_COLLAPSE_THRESHOLD;
+    header.classList.toggle('is-scrolled', scrolled);
+    document.body.classList.toggle('header-scrolled', scrolled);
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(update);
+  }, { passive: true });
+
+  update();
 }
 
-
 /* ------------------------------------------------------------
-   Navigation — header passed in
+   Navigation
    ------------------------------------------------------------ */
 
 function initNavigation(header){
@@ -259,7 +277,6 @@ function initNavigation(header){
   }, 150), { passive: true });
 }
 
-
 /* ------------------------------------------------------------
    Active navigation (path-based)
    ------------------------------------------------------------ */
@@ -308,10 +325,8 @@ function setActiveNavigation(){
   });
 }
 
-
 /* ------------------------------------------------------------
    Project filter (projects.html)
-   Single delegated listener on the filter group.
    ------------------------------------------------------------ */
 
 function initProjectFilter(){
@@ -335,7 +350,6 @@ function initProjectFilter(){
   });
 }
 
-
 /* ------------------------------------------------------------
    Mailto contact form (contact.html)
    ------------------------------------------------------------ */
@@ -358,13 +372,8 @@ function initMailtoForm(){
   });
 }
 
-
 /* ------------------------------------------------------------
    Literature filter (literature.html)
-
-   Predicate logic collapsed to single expressions. The old
-   if/else chain mapped each filter type to its matching data-type
-   value; that mapping is now the identity.
    ------------------------------------------------------------ */
 
 function initLiteratureFilter(){
@@ -444,7 +453,6 @@ function initLiteratureFilter(){
   applyFilters();
 }
 
-
 /* ------------------------------------------------------------
    Investor panel switcher (investors.html)
    ------------------------------------------------------------ */
@@ -499,13 +507,8 @@ function initInvestorPanels(){
   sync();
 }
 
-
 /* ------------------------------------------------------------
    Site search (search.html)
-
-   Uses a <template id="searchResultTemplate"> declared in the
-   page. Result cards are cloned and populated with textContent —
-   no innerHTML, no escapeHTML, no string parsing.
    ------------------------------------------------------------ */
 
 function initSiteSearch(){
@@ -560,15 +563,8 @@ function initSiteSearch(){
   if (q) { input.value = q; render(); }
 }
 
-
 /* ------------------------------------------------------------
    DEXPERT — floating assistant
-
-   - Native <dialog> with showModal() — free focus trap, Escape
-     close, focus return.
-   - Templates in components/dexpert.html — no string-literal HTML.
-   - Dialog shell is fetched during idle; FAB is injected
-     immediately so the button is always available.
    ------------------------------------------------------------ */
 
 const DEXPERT_PRODUCTS = [
@@ -604,7 +600,6 @@ const DEXPERT_APPS = [
 function initDEXPERT(){
   if (document.querySelector('.dexpert-fab')) return;
 
-  /* ---------- FAB — injected immediately ---------- */
   const fab = document.createElement('button');
   fab.className = 'dexpert-fab';
   fab.type = 'button';
@@ -613,7 +608,6 @@ function initDEXPERT(){
   fab.innerHTML = '<img src="assets/images/Dexpert.png" alt="" aria-hidden="true"><span>Ask DEXPERT</span>';
   document.body.appendChild(fab);
 
-  /* ---------- Context ---------- */
   const title = (document.querySelector('main h1')?.textContent
     || document.title.replace(/\s*[|–-].*$/, '')).trim();
   const path = window.location.pathname.split('/').pop() || 'index.html';
@@ -622,7 +616,6 @@ function initDEXPERT(){
   const isResources = /literature|calculators|videos|news/i.test(path);
   const currentProduct = isProduct ? title : '';
 
-  /* ---------- Dialog — lazy fetch ---------- */
   let dialogPromise = null;
 
   function loadDialog(){
@@ -640,19 +633,16 @@ function initDEXPERT(){
       const resultTpl = temp.querySelector('template#dexpertResultTemplate');
       const actionTpl = temp.querySelector('template#dexpertActionTemplate');
 
-      /* Move templates into the DOM so querySelector works later. */
       document.body.appendChild(homeTpl);
       document.body.appendChild(resultTpl);
-      document.body.appendChild(actionTpl);
+      if (actionTpl) document.body.appendChild(actionTpl);
       document.body.appendChild(dialog);
 
-      wireDialog(dialog, homeTpl, resultTpl, actionTpl);
+      wireDialog(dialog, homeTpl, resultTpl);
       return dialog;
     })();
     return dialogPromise;
   }
-
-  /* ---------- Content builders ---------- */
 
   function buildActions(container, actions){
     const frag = document.createDocumentFragment();
@@ -775,29 +765,17 @@ function initDEXPERT(){
       () => renderHome(dialog, homeTpl));
   }
 
-  /* ---------- Wire once, after fetch ---------- */
-
   function wireDialog(dialog, homeTpl, resultTpl){
     dialog.querySelector('.dexpert-close').addEventListener('click', () => dialog.close());
-
     dialog.addEventListener('click', e => {
       if (e.target === dialog) dialog.close();
     });
-
-    /* Native dialog fires `close` on Escape, X, backdrop click, or .close(). */
     dialog.addEventListener('close', () => {
       fab.setAttribute('aria-expanded', 'false');
     });
 
-    dialog.addEventListener('cancel', () => {
-      /* Escape — let default behaviour proceed. */
-    });
-
-    /* Build home view once so first open feels instant. */
     renderHome(dialog, homeTpl, resultTpl);
   }
-
-  /* ---------- Public interface ---------- */
 
   const open = async () => {
     try {
@@ -826,10 +804,8 @@ function initDEXPERT(){
     }
   });
 
-  /* Pre-fetch and pre-render during idle. */
   scheduleIdle(() => loadDialog().catch(() => {}));
 }
-
 
 /* ------------------------------------------------------------
    Back to top — floating button, injected site-wide
