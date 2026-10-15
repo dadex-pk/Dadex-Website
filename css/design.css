@@ -14,6 +14,9 @@
    - Dark-red link colours consolidated to --dadex-red-dark
    - Breadcrumb compacted
    - Safety, Health & Environment list styling on Quality page
+   - Filter strips sticky on every breakpoint: products, history,
+     videos, projects, calculators. All read --sticky-offset, which
+     tracks the header via --header-h (see root.css).
    ============================================================ */
 
 /* ============================================================
@@ -381,7 +384,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .home-section-head{margin-bottom:2.35rem}
 .home-section-head-row{display:flex;align-items:end;justify-content:space-between;gap:1.875rem}
 
-/* Kicker on the homepage inherits the unified size (12px) and colour */
 .home-section-head h2,
 .home-intro h2,
 .home-quality h2{
@@ -417,7 +419,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .home-product-card:hover{box-shadow:0 18px 42px rgba(18,24,30,.095);z-index:2}
 .home-product-card.featured{background:#fffaf8}
 
-/* Loud homepage product number — 28px, brand red, top-right */
 .home-product-number{
   position:absolute;right:1.3125rem;top:1.125rem;
   font-family:'Manrope','Inter',sans-serif;
@@ -449,7 +450,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 .home-product-card p{font-size:.6875rem;color:#687078;margin:0}
 
-/* Circle-arrow pattern replaces the flat arrow */
 .home-card-arrow{
   position:absolute;right:1.375rem;bottom:1.25rem;
   display:grid;place-items:center;
@@ -789,6 +789,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   display:flex;gap:0;border-bottom:1px solid #ddd;
   position:sticky;top:var(--sticky-offset);z-index:90;
   background:rgba(255,255,255,.96);
+  transition:top var(--duration-base) var(--ease-io);
 }
 .p2-tabs a{
   padding:1.0625rem 1.5rem;color:#4a4a4a;text-decoration:none;
@@ -864,7 +865,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .p2-related-grid strong{font-size:.9375rem;line-height:1.35}
 .p2-related-grid span{font-size:.8125rem;color:#777}
 .p2-related-grid i{
-  /* Circle-arrow pattern */
   position:absolute;right:.9375rem;bottom:.9375rem;
   display:grid;place-items:center;
   width:1.875rem;height:1.875rem;
@@ -1227,6 +1227,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   background:#17191c;padding:2.125rem;
   box-shadow:0 1.125rem 2.8125rem rgba(16,18,20,.12);
   border-top:3px solid var(--core-red);color:#fff;
+  transition:top var(--duration-base) var(--ease-io);
 }
 .core-page .contact-form h2{font-size:1.6875rem;letter-spacing:-.03em;color:#fff;margin-bottom:.5rem}
 .core-page .contact-form p{color:#cbd0d3;margin-bottom:1.25rem}
@@ -1284,7 +1285,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 /* ============================================================
    8. ABOUT PAGE
    ============================================================ */
-/* About-page kickers inherit the unified 12px size and colour */
 .about-page .core-kicker{color:var(--accent-light)}
 .about-page .core-hero .core-kicker{color:var(--accent-dark)}
 .about-page .core-section-head{margin-bottom:1.5rem}
@@ -1317,13 +1317,12 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   display:flex;align-items:flex-start;justify-content:space-between;gap:.875rem;
   color:var(--core-ink);margin:0 0 .5rem;
 }
-.about-page .about-product-card h3 i{display:none} /* replaced by circle-arrow below */
+.about-page .about-product-card h3 i{display:none}
 .about-page .about-product-card p{margin:0}
 .about-page .about-product-card>span{
   font-size:.6875rem;font-weight:800;letter-spacing:.1em;
   text-transform:uppercase;color:var(--accent-light);
 }
-
 .about-page .about-product-card::after{
   content:"\f061";
   font-family:"Font Awesome 6 Free", "Font Awesome 6 Brands", sans-serif;
@@ -1613,12 +1612,15 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .history-legacy .history-kicker{color:var(--accent-dark)}
 .history-legacy .btn{margin-top:.875rem}
 
+/* Sticky decade strip — stays pinned at every breakpoint */
 .history-decades{
-  position:sticky;top:var(--sticky-offset);z-index:20;padding:.875rem 0;
+  position:sticky;top:var(--sticky-offset);z-index:100;
+  padding:.875rem 0;
   background:rgba(247,247,245,.94);
   backdrop-filter:blur(.625rem) saturate(160%);
   -webkit-backdrop-filter:blur(.625rem) saturate(160%);
   border-bottom:1px solid rgba(0,0,0,.055);
+  transition:top var(--duration-base) var(--ease-io);
 }
 .history-decades-inner{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
 .history-decade-chip{
@@ -1655,7 +1657,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .history-decade-chip.is-active .history-decade-year{color:rgba(255,255,255,.72);border-right-color:rgba(255,255,255,.28)}
 .history-decade-chip.is-active .history-decade-name{color:#fff}
 
-.history-era{margin-bottom:6rem;scroll-margin-top:12.5rem}
+.history-era{margin-bottom:6rem;scroll-margin-top:calc(var(--sticky-offset) + 2rem)}
 .history-era:last-child{margin-bottom:0}
 .history-era-header{max-width:42.5rem;margin:0 auto 3.75rem;text-align:center}
 .history-era-kicker{
@@ -1684,7 +1686,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 .history-events p{margin:0}
 
 @media(max-width:1100px){
-  .history-era{scroll-margin-top:11.875rem}
+  .history-era{scroll-margin-top:calc(var(--sticky-offset) + 2rem)}
 }
 @media(max-width:900px){
   .history-legacy-grid{grid-template-columns:1fr;gap:1.5rem}
@@ -1697,16 +1699,13 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   .history-event-right .history-marker{left:.1875rem;right:auto}
   .history-card{width:100%;max-width:none}
   .history-card:after{left:-3.25rem!important;right:auto!important;width:3.25rem}
-  .history-decades{
-    position:static;padding:.75rem 0;background:transparent;
-    backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:0;
-  }
+  /* Sticky strip stays sticky on mobile */
+  .history-decades{padding:.625rem 0}
   .history-decades-inner{
     justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;
     padding-bottom:.375rem;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
   }
   .history-decade-chip{flex:0 0 auto}
-  .history-era{scroll-margin-top:1.875rem}
   .history-era-header{margin-bottom:2.75rem}
 }
 @media(max-width:640px){
@@ -1718,7 +1717,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   .history-legacy{padding:3.4375rem 0 3.875rem}
   .history-card h4{font-size:1.3125rem}
   .history-events h4{font-size:1.0625rem}
-  .history-decades{padding:.625rem 0}
+  .history-decades{padding:.5rem 0}
   .history-decade-chip{padding:.5rem .8125rem}
   .history-decade-year{font-size:.6875rem;padding-right:.5rem;margin-right:.5rem}
   .history-decade-name{font-size:.75rem}
@@ -1979,6 +1978,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   position:sticky;top:var(--sticky-offset);z-index:2;
   background:#fff;border:1px solid #e3e6e8;
   box-shadow:var(--p3-shadow);
+  transition:top var(--duration-base) var(--ease-io);
 }
 .ir-side-group{border-bottom:1px solid #e8eaec}
 .ir-side-title{
@@ -2248,7 +2248,20 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 /* ============================================================
    15. PROJECTS
    ============================================================ */
-.project-filter{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 2.125rem;padding:0}
+/* Sticky sector filter */
+.project-filter{
+  position:sticky;
+  top:var(--sticky-offset);
+  z-index:100;
+  display:flex;flex-wrap:wrap;gap:.5rem;
+  padding:.75rem 0;
+  margin:-.75rem 0 1.75rem;
+  background:rgba(245,246,247,.94);
+  backdrop-filter:blur(.75rem) saturate(160%);
+  -webkit-backdrop-filter:blur(.75rem) saturate(160%);
+  border-bottom:1px solid rgba(0,0,0,.06);
+  transition:top var(--duration-base) var(--ease-io);
+}
 .filter-btn{
   display:inline-flex;align-items:center;padding:.5625rem 1rem;
   border-radius:999px;background:#fff;border:1px solid #e1e4e7;
@@ -2410,7 +2423,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   .sectors-grid{grid-template-columns:1fr 1fr}
   .sector-card{min-height:0;padding:1.25rem 1.125rem}
   .client-wall{grid-template-columns:1fr 1fr}
-  .project-filter{gap:.375rem}
+  .project-filter{gap:.375rem;padding:.5rem 0;margin:-.5rem 0 1.5rem}
   .filter-btn{padding:.5rem .8125rem;font-size:.75rem}
 }
 @media(max-width:480px){
@@ -2508,13 +2521,17 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 /* ============================================================
    18. PRODUCTS
    ============================================================ */
+/* Sticky category chip strip — pinned at every breakpoint */
 .products-strip{
-  position:sticky;top:var(--sticky-offset);z-index:20;
+  position:sticky;
+  top:var(--sticky-offset);
+  z-index:100;
   padding:.875rem 0;
   background:rgba(245,246,247,.94);
   backdrop-filter:blur(.75rem) saturate(160%);
   -webkit-backdrop-filter:blur(.75rem) saturate(160%);
   border-bottom:1px solid rgba(0,0,0,.06);
+  transition:top var(--duration-base) var(--ease-io);
 }
 .products-strip-inner{display:flex;flex-wrap:wrap;justify-content:center;gap:.625rem}
 .products-chip{
@@ -2665,20 +2682,18 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 }
 
 @media(max-width:900px){
-  .products-strip{
-    position:static;padding:.875rem 0;background:transparent;
-    backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:0;
-  }
+  /* Strip stays sticky — only inner layout changes */
+  .products-strip{padding:.625rem 0}
   .products-strip-inner{
     justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;
-    padding-bottom:.5rem;-webkit-overflow-scrolling:touch;
+    padding-bottom:.375rem;-webkit-overflow-scrolling:touch;
     scrollbar-width:none;gap:.5rem;
   }
   .products-strip-inner::-webkit-scrollbar{display:none}
   .products-chip{flex:0 0 auto}
   .products-catalogue .product-category,
   .product-tile,
-  .core-page .product-category{scroll-margin-top:1.875rem}
+  .core-page .product-category{scroll-margin-top:calc(var(--sticky-offset) + 1.5rem)}
 }
 @media(max-width:720px){
   .core-page .product-grid{grid-template-columns:1fr 1fr}
@@ -2948,8 +2963,20 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 /* ============================================================
    21. PRODUCT VIDEOS
    ============================================================ */
+/* Sticky video-type filter — pinned at every breakpoint */
 .video-filter{
-  display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 2.25rem;padding:0;justify-content:center;
+  position:sticky;
+  top:var(--sticky-offset);
+  z-index:100;
+  display:flex;flex-wrap:wrap;gap:.5rem;
+  padding:.75rem 0;
+  margin:-.75rem 0 1.5rem;
+  justify-content:center;
+  background:rgba(245,246,247,.94);
+  backdrop-filter:blur(.75rem) saturate(160%);
+  -webkit-backdrop-filter:blur(.75rem) saturate(160%);
+  border-bottom:1px solid rgba(0,0,0,.06);
+  transition:top var(--duration-base) var(--ease-io);
 }
 .video-filter-btn{
   display:inline-flex;align-items:center;
@@ -3051,7 +3078,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
 @media(max-width:1000px){.video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){
   .video-grid{grid-template-columns:1fr;gap:1.125rem}
-  .video-filter{justify-content:flex-start}
+  .video-filter{justify-content:flex-start;padding:.5rem 0;margin:-.5rem 0 1.25rem}
   .video-play{width:3rem;height:3rem;font-size:.9375rem}
 }
 
@@ -3074,7 +3101,6 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   text-decoration:underline;
 }
 
-/* Safety, Health & Environment list */
 .quality-shae-list{
   list-style:none;
   padding:0;
