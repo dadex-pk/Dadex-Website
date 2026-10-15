@@ -21,9 +21,9 @@
   border-bottom:1px solid var(--d-line);
   color:var(--d-muted);
   font-size:.75rem;
-  padding:.63rem 0;
+  padding:.3rem 0;
 }
-.breadcrumb .container{min-height:2rem;display:flex;align-items:center;gap:.5rem}
+.breadcrumb .container{min-height:0.2rem;display:flex;align-items:center;gap:.5rem}
 .breadcrumb a{color:#4d555b;text-decoration:none}
 .breadcrumb a:hover{color:var(--dadex-red)}
 .breadcrumb strong{color:#202428;font-weight:650}
