@@ -5,7 +5,7 @@
    This is the ONLY file that needs to be updated when replacing
    placeholder records with live, approved dealer data.
 
-   SCHEMA (all fields are read by js/main.js):
+   SCHEMA (all fields are read by js/dealers.js):
      name         : Dealer or distributor business name
      type         : "Dealer" | "Distributor"
      contactName  : Name of the contact person at the dealership
@@ -22,14 +22,105 @@
      mapUrl       : Google Maps share link
      whatsapp     : WhatsApp number (if different from phone)
 
-   Before publishing real records, confirm:
-     1. Written consent from the dealer to publish name, address, and phone.
-     2. Active status as a Dadex dealer or distributor.
-     3. Accurate list of products actually handled by the dealer.
 
+   CURRENT CONTENTS
+     · DISTRIBUTORS — 5 approved records
+     · DEALERS      — 10 placeholder records, awaiting official list
    ============================================================ */
 
 window.DADEX_DEALERS = [
+
+  /* ============================================================
+     DISTRIBUTORS — Approved records
+     Last updated: 15 October 2026
+     ============================================================ */
+
+  {
+    name: "Burhani Traders",
+    type: "Distributor",
+    contactName: "Mr. Yousuf Taheri",
+    province: "Sindh",
+    city: "Karachi",
+    area: "DHA Phase V",
+    address: "Plot # 2C, Shop # 5, 27th Tauheed Commercial Street, DHA Phase V, Karachi",
+    phone: "0300-8203417",
+    email: "taherisanitary7@gmail.com",
+    products: ["Thermoline"],
+    active: true
+  },
+
+  {
+    name: "Burhani Traders",
+    type: "Distributor",
+    contactName: "Mr. Juzer",
+    province: "Islamabad",
+    city: "Islamabad",
+    area: "PWD Road",
+    address: "C786, Block C, Sector C, Main PWD Road, Islamabad",
+    phone: "0303-8203417",
+    email: "juzer@burhanitraders.com",
+    products: ["Polyduct"],
+    active: true
+  },
+
+  {
+    name: "Galaxy Pipe Store",
+    type: "Distributor",
+    contactName: "Mr. Akhtar Nawaz",
+    province: "Sindh",
+    city: "Karachi",
+    area: "DHA Phase V",
+    address: "Shop No. 6E, Building No. 7E, 27th Tauheed Commercial Street, DHA Phase V, Karachi",
+    phone: "0300-2929567",
+    email: "akhtarnawaz38@gmail.com",
+    products: ["Polydex", "Nikasi"],
+    active: true
+  },
+
+  {
+    name: "M. Ilyas & Co.",
+    type: "Distributor",
+    contactName: "Mr. Ilyas",
+    province: "Punjab",
+    city: "Lahore",
+    area: "Qaddafi Market",
+    address: "11, Qaddafi Market Nishtar (Brandreth) Road, Lahore, Pakistan",
+    /* NOTE: source shows a second phone truncated as "042-3..."
+       — supply the full number and either append it here or add
+       as `whatsapp` if that's what it is. */
+    phone: "042-37668390",
+    email: "milyascom11@gmail.com",
+    products: ["Aquadex"],
+    active: true
+  },
+
+  {
+    name: "Tufail & Sons",
+    type: "Distributor",
+    contactName: "Mr. Riaz",
+    province: "Punjab",
+    city: "Lahore",
+    area: "Ferozpur Road",
+    address: "13-A Ferozpur Road near Tamaseel Hall, Lahore, Pakistan, 54000",
+    phone: "0325-6222206",
+    email: "info@mtsgroup.com.pk",
+    products: [
+      "Polydex Premium",
+      "Flow Line",
+      "Inspection Chambers",
+      "Manholes",
+      "Non-Return Valves"
+    ],
+    active: true
+  },
+
+  /* ============================================================
+     DEALERS — Placeholder records
+     These will be replaced once the official dealer list is provided.
+     Keep active:true so the directory shows a populated grid during
+     review; switch to active:false if the directory should be empty
+     until real data lands.
+     ============================================================ */
   {
     name: "Dealer A",
     type: "Dealer",
@@ -56,19 +147,7 @@ window.DADEX_DEALERS = [
     products: ["Polydex", "Polydex Premium", "Thermoline"],
     active: true
   },
-  {
-    name: "Distributor A",
-    type: "Distributor",
-    contactName: "Contact Name",
-    province: "Sindh",
-    city: "Karachi",
-    area: "Saddar",
-    address: "Sample Address, Saddar, Karachi",
-    phone: "021-0000003",
-    email: "distributor.a@example.com",
-    products: ["Aquadex", "T-Flex", "Flow Line"],
-    active: true
-  },
+  
   {
     name: "Dealer C",
     type: "Dealer",
@@ -82,19 +161,7 @@ window.DADEX_DEALERS = [
     products: ["Nikasi", "Polyduct"],
     active: true
   },
-  {
-    name: "Distributor B",
-    type: "Distributor",
-    contactName: "Contact Name",
-    province: "Punjab",
-    city: "Lahore",
-    area: "DHA Phase V",
-    address: "Sample Address, DHA Phase V, Lahore",
-    phone: "042-0000005",
-    email: "distributor.b@example.com",
-    products: ["PE Cable Duct", "Electrical Conduits"],
-    active: true
-  },
+ 
   {
     name: "Dealer D",
     type: "Dealer",
@@ -122,19 +189,6 @@ window.DADEX_DEALERS = [
     active: true
   },
   {
-    name: "Distributor C",
-    type: "Distributor",
-    contactName: "Contact Name",
-    province: "Khyber Pakhtunkhwa",
-    city: "Peshawar",
-    area: "University Road",
-    address: "Sample Address, University Road, Peshawar",
-    phone: "091-0000008",
-    email: "distributor.c@example.com",
-    products: ["T-Flex Gas"],
-    active: true
-  },
-  {
     name: "Dealer F",
     type: "Dealer",
     contactName: "Contact Name",
@@ -147,17 +201,4 @@ window.DADEX_DEALERS = [
     products: ["Flow Line", "Manholes", "Catchpits"],
     active: true
   },
-  {
-    name: "Distributor D",
-    type: "Distributor",
-    contactName: "Contact Name",
-    province: "Balochistan",
-    city: "Quetta",
-    area: "Jinnah Road",
-    address: "Sample Address, Jinnah Road, Quetta",
-    phone: "081-0000010",
-    email: "distributor.d@example.com",
-    products: ["Aquadex", "T-Flex"],
-    active: true
-  }
 ];
