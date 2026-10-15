@@ -1335,9 +1335,9 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   font-size:.6875rem;font-weight:800;letter-spacing:.1em;
   text-transform:uppercase;color:var(--accent-light);
 }
-/* Circle-arrow pattern for about-product-cards */
+
 .about-page .about-product-card::after{
-  content:"\f061"; /* fa-arrow-right */
+  content:"\f061"; 
   font-family:"Font Awesome 6 Free", "Font Awesome 6 Brands", sans-serif;
   font-weight:900;
   position:absolute;right:1.25rem;bottom:1.25rem;
@@ -1475,16 +1475,14 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   counter-increment:mission;
 }
 .vm-mission-list p::before{
-  content:counter(mission,decimal-leading-zero);
+  content:"";
   position:absolute;
-  left:0;
-  top:.125rem;
-  font-family:'Manrope','Inter',sans-serif;
-  font-size:.75rem;
-  font-weight:800;
-  letter-spacing:.08em;
-  color:var(--accent-light);
-  line-height:1.7;
+  left:.5rem;
+  top:.85rem;
+  width:.375rem;
+  height:.375rem;
+  border-radius:50%;
+  background:var(--accent-light);
 }
 
 .vm-section-media{
@@ -1492,7 +1490,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   border-radius:12px;
   overflow:hidden;
   background:#f4f5f6;
-  min-height:22rem;
+  min-height:17rem;
   align-self:stretch;
 }
 .vm-section-media img{
