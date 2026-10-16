@@ -43,7 +43,7 @@
   /* ---------- Layout ---------- */
   --max:1240px;
   --d-max:1240px;
-  --header-h:9.875rem;
+  --header-h:10.5rem;
   --sticky-offset:calc(var(--header-h) + 0.625rem);
 
   /* ---------- Radii ---------- */
@@ -105,11 +105,18 @@
 }
 
 body.header-scrolled{
-  --header-h:4.75rem;
+  --header-h:5rem;
+  --sticky-offset:calc(var(--header-h) + 0.625rem);
 }
 @media(max-width:900px){
-  :root{--header-h:6.5rem}
-  body.header-scrolled{--header-h:4.125rem}
+  :root{
+    --header-h:6.5rem;
+    --sticky-offset:calc(var(--header-h) + 0.625rem);
+  }
+  body.header-scrolled{
+    --header-h:4.375rem;
+    --sticky-offset:calc(var(--header-h) + 0.625rem);
+  }
 }
 
 /* ---------- Reset ---------- */
