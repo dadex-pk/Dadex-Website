@@ -200,7 +200,7 @@
   position:relative;border:0;background:transparent;
   color:var(--d-text);text-decoration:none;
   font:600 .8125rem/1.2 'Inter',system-ui,sans-serif;
-  padding:0.5rem .75rem;cursor:pointer;white-space:nowrap;
+  padding:1rem .75rem;cursor:pointer;white-space:nowrap;
   display:inline-flex;align-items:center;gap:.375rem;
   border-radius:.5625rem;letter-spacing:-.005em;
   transition:color var(--sh-t-fast) var(--sh-ease-io),
@@ -208,7 +208,7 @@
 }
 .site-header .site-navigation>a::before,
 .site-header .site-navigation .dropdown-toggle::before{
-  content:"";position:absolute;left:50%;right:50%;bottom:.625rem;height:2px;
+  content:"";position:absolute;left:50%;right:50%;bottom:.375rem;height:2px;
   background:var(--dadex-red);border-radius:2px;
   transition:left var(--sh-t-base) var(--sh-ease),
              right var(--sh-t-base) var(--sh-ease);
@@ -640,7 +640,7 @@
 @media(max-width:900px){
   .site-header .utility-inner{justify-content:center;flex-wrap:wrap;min-height:2.25rem}
   .site-header .utility-left{display:none}
-  .site-header .header-main-tier .header-inner{min-height:4.125rem}
+    .site-header .header-main-tier .header-inner{min-height:3.5rem}
   .site-header .brand-logo{width:10.5rem;height:2.75rem}
   .site-header .menu-toggle{display:grid;place-items:center}
 
