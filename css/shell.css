@@ -180,10 +180,12 @@
 }
 .site-header .brand:hover{opacity:.9}
 .site-header .brand-logo{
-  display:block;width:9.75rem;height:2.5rem;
+  display:block;width:8rem;height:auto;
   object-fit:contain;
-  transition:transform var(--sh-t-slow) var(--sh-ease);
+  transition:width var(--sh-t-base) var(--sh-ease),
+             transform var(--sh-t-slow) var(--sh-ease);
 }
+.site-header.is-scrolled .brand-logo{width:6.5rem}
 .site-header .brand:hover .brand-logo{transform:translateY(-1px)}
 .site-header .brand-name{
   font-size:1.625rem;letter-spacing:-.05em;font-weight:800;color:var(--d-text);
@@ -635,14 +637,12 @@
   .site-header .mega-columns section{min-width:10rem;max-width:14rem}
 }
 
-/* Mobile layout.
-   The header stays sticky — only its two outer tiers collapse on scroll
-   (via .is-scrolled on .site-header, handled above). */
 @media(max-width:900px){
   .site-header .utility-inner{justify-content:center;flex-wrap:wrap;min-height:2.25rem}
   .site-header .utility-left{display:none}
   .site-header .header-main-tier .header-inner{min-height:3.5rem}
-  .site-header .brand-logo{width:9rem;height:2.25rem}
+  .site-header .brand-logo{width:6.75rem;height:auto}
+  .site-header.is-scrolled .brand-logo{width:5.5rem}
   .site-header .menu-toggle{display:grid;place-items:center}
 
   .site-header .site-navigation{
@@ -692,7 +692,8 @@
   .site-header .mobile-products-menu{display:block;border-bottom:1px solid #eef0f2}
 }
 @media(max-width:700px){
-  .site-header .brand-logo{width:8.25rem;height:2.125rem}
+  .site-header .brand-logo{width:6.25rem;height:auto}
+  .site-header.is-scrolled .brand-logo{width:5.25rem}
   .site-header .nav-search-label{display:none}
   .site-header .nav-search{padding:.5625rem .75rem!important;margin-left:.25rem}
   .site-header .site-navigation{max-height:calc(100dvh - 3.875rem)}
@@ -701,7 +702,8 @@
   .site-header .utility-inner{min-height:2rem;font-size:.65625rem}
   .site-header .utility-links{gap:.6rem}
   .site-header .utility-links a i{width:1.25rem;height:1.25rem;font-size:.59375rem}
-  .site-header .brand-logo{width:8rem;height:2.0625rem}
+  .site-header .brand-logo{width:5.75rem;height:auto}
+  .site-header.is-scrolled .brand-logo{width:5rem}
   .site-header .header-main-tier .header-inner{min-height:3.25rem}
 }
 
