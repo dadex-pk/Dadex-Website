@@ -1,57 +1,44 @@
 /* ============================================================
    DADEX ETERNIT LIMITED — SHARED UI
-   ------------------------------------------------------------
-   - Header/footer injection (root-aware)
+   - Header and footer injection
    - Header scroll state (collapse on scroll)
    - Navigation behaviour (mobile drawer, dropdowns, active state)
    - Dynamic text (footer year, company age)
    - Project filter (event delegation)
-   - Mailto contact form (validated)
+   - Mailto contact form
    - Literature filter
    - Investor panel switcher
-   - Site search (template-driven, debounced)
-   - DEXPERT (native <dialog>, template-driven, lazy, retryable)
-   - Back to top (inline SVG, no icon-font dependency)
+   - Site search (template-driven)
+   - DEXPERT (native <dialog>, template-driven, lazy)
+   - Back to top
 
    Page-scoped modules (dealers) live in js/dealers.js.
-
-   IMPORTANT (sticky header — CSS side, not JS):
-     1. .site-header must be { position: sticky; top: 0; z-index: … }
-        with no later `position: relative` overriding it.
-     2. No ancestor may have `overflow` other than `visible`
-        — use `overflow-x: clip` instead of `overflow-x: hidden`
-        on html/body/wrappers.
-     3. The injected <header> must be a direct child of <body>
-        (or a wrapper that spans the full page height).
-     4. Add `[hidden] { display: none !important; }` to the
-        stylesheet — cards filtered here use the hidden attribute.
+   MOBILE_NAV_MAX must match the breakpoint used in shell.css
+   for .site-header .menu-toggle / .site-navigation — currently 900px.
    ============================================================ */
 
-'use strict';
-
-const MOBILE_NAV_MAX          = 900;
-const COMPANY_FOUNDED_YEAR    = 1959;
-const COMPANY_ANNIVERSARY_MONTH = 3;   /* April (0-indexed) */
-const COMPANY_ANNIVERSARY_DAY   = 13;
-const SCROLL_TOP_THRESHOLD      = 600;
+const MOBILE_NAV_MAX = 900;
+const COMPANY_FOUNDED_YEAR = 1959;
+const COMPANY_ANNIVERSARY_MONTH = 3; /* April (0-indexed) */
+const COMPANY_ANNIVERSARY_DAY = 13;
+const SCROLL_TOP_THRESHOLD = 600;
 const HEADER_COLLAPSE_THRESHOLD = 60;
-const SEARCH_DEBOUNCE_MS        = 120;
-
-/* Resolve site root from this script's own URL at parse time,
-   so nested pages (/products/foo.html) resolve components correctly.
-   Falls back to the origin root if the script src is unavailable. */
-const SITE_ROOT = (() => {
-  try {
-    const src = document.currentScript && document.currentScript.src;
-    return src ? new URL('../', src) : new URL('/', location.origin);
-  } catch {
-    return new URL('/', location.origin);
-  }
-})();
 
 /* ------------------------------------------------------------
    Utilities
    ------------------------------------------------------------ */
+
+const HTML_ESCAPE_MAP = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;'
+};
+
+function escapeHTML(value){
+  return String(value ?? '').replace(/[&<>"']/g, m => HTML_ESCAPE_MAP[m]);
+}
 
 function debounce(fn, wait){
   let timer = null;
@@ -64,21 +51,6 @@ function debounce(fn, wait){
 const scheduleIdle = (typeof requestIdleCallback === 'function')
   ? cb => requestIdleCallback(cb, { timeout: 2000 })
   : cb => setTimeout(cb, 200);
-
-function getScrollTop(){
-  return window.scrollY
-      ?? document.scrollingElement?.scrollTop
-      ?? document.documentElement.scrollTop
-      ?? 0;
-}
-
-/* Network-aware gate for optional prefetches. */
-function isConnectionSlow(){
-  const c = navigator.connection;
-  if (!c) return false;
-  if (c.saveData) return true;
-  return /(^|-)2g$/.test(c.effectiveType || '');
-}
 
 /* ------------------------------------------------------------
    Bootstrap
@@ -112,16 +84,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function loadSharedComponents(){
   const mounts = document.querySelectorAll('[data-component]');
   if (!mounts.length) return;
-
+  const base = new URL('.', window.location.href);
   await Promise.allSettled(Array.from(mounts).map(async mount => {
     const name = mount.getAttribute('data-component');
     if (name !== 'header' && name !== 'footer') return;
-
     try {
-      const url = new URL(`components/${name}.html`, SITE_ROOT);
-      const res = await fetch(url, { cache: 'no-cache' });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      mount.outerHTML = await res.text();
+      const response = await fetch(new URL(`components/${name}.html`, base), { cache: 'no-cache' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      mount.outerHTML = await response.text();
     } catch (error) {
       console.error(`Dadex component load failed: ${name}`, error);
       mount.setAttribute('data-component-error', name);
@@ -150,43 +120,49 @@ function initDynamicSiteText(){
     });
   };
 
-  setText('[data-current-year]',           String(now.getFullYear()));
-  setText('[data-company-age]',             String(age));
-  setText('[data-company-age-years]',       `${age} years`);
-  setText('[data-company-age-over]',        `over ${age} years`);
-  setText('[data-company-age-hyphenated]',  `${age}-year-old`);
+  setText('[data-current-year]', String(now.getFullYear()));
+  setText('[data-company-age]', String(age));
+  setText('[data-company-age-years]', `${age} years`);
+  setText('[data-company-age-over]', `over ${age} years`);
+  setText('[data-company-age-hyphenated]', `${age}-year-old`);
 }
 
 /* ------------------------------------------------------------
    Header state — home/internal flag + scroll-driven collapse
+
+   The `.is-scrolled` class on the header triggers the collapse
+   rules in shell.css (utility bar + products tier retract).
+   The `header-scrolled` class on <body> reduces --header-h,
+   which cascades to --sticky-offset so sticky filter strips
+   stay in sync with the header's height.
+
+   The listener is rAF-throttled and passive.
    ------------------------------------------------------------ */
 
 function initHeaderState(header){
   if (!header) return;
 
-  const path = location.pathname;
+  const path = window.location.pathname;
   const isHome = document.body.classList.contains('home-page')
     || path === '/'
-    || /\/index\.html?$/.test(path)
-    || path === '';
+    || path.endsWith('/index.html');
   header.dataset.headerState = isHome ? 'home' : 'internal';
 
   let ticking = false;
 
   const update = () => {
-    const scrolled = getScrollTop() > HEADER_COLLAPSE_THRESHOLD;
+    const scrolled = window.scrollY > HEADER_COLLAPSE_THRESHOLD;
     header.classList.toggle('is-scrolled', scrolled);
     document.body.classList.toggle('header-scrolled', scrolled);
     ticking = false;
   };
 
-  const onScroll = () => {
+  window.addEventListener('scroll', () => {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(update);
-  };
+    window.requestAnimationFrame(update);
+  }, { passive: true });
 
-  window.addEventListener('scroll', onScroll, { passive: true });
   update();
 }
 
@@ -201,22 +177,18 @@ function initNavigation(header){
 
   const isMobile = () => window.innerWidth <= MOBILE_NAV_MAX;
 
-  const closeDropdowns = () => {
+  const closeMenus = ({ restoreFocus = false } = {}) => {
     document.querySelectorAll('.dropdown-menu.open')
       .forEach(menu => menu.classList.remove('open'));
     document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]')
       .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
-  };
-
-  const closeMenus = ({ restoreFocus = false } = {}) => {
-    closeDropdowns();
     nav.classList.remove('open');
     if (hamburger) {
       hamburger.setAttribute('aria-expanded', 'false');
       hamburger.setAttribute('aria-label', 'Open navigation');
     }
     document.body.classList.remove('nav-open');
-    if (restoreFocus && isMobile() && hamburger) hamburger.focus();
+    if (restoreFocus && hamburger) hamburger.focus();
   };
 
   const anyMenuOpen = () =>
@@ -243,28 +215,17 @@ function initNavigation(header){
     if (!menu) return;
 
     toggle.addEventListener('click', event => {
-      if (!isMobile()) return;
-      event.preventDefault();
-      event.stopPropagation();
-
-      const willOpen = !menu.classList.contains('open');
-      // Close siblings before opening this one.
-      if (willOpen) {
-        document.querySelectorAll('.dropdown-menu.open').forEach(m => {
-          if (m !== menu) m.classList.remove('open');
-        });
-        document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]').forEach(b => {
-          if (b !== toggle) b.setAttribute('aria-expanded', 'false');
-        });
+      if (isMobile()) {
+        event.preventDefault();
+        event.stopPropagation();
+        const open = menu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
       }
-      menu.classList.toggle('open', willOpen);
-      toggle.setAttribute('aria-expanded', String(willOpen));
     });
 
     toggle.addEventListener('focusin', () => {
       if (!isMobile()) toggle.setAttribute('aria-expanded', 'true');
     });
-
     toggle.addEventListener('focusout', () => {
       if (isMobile()) return;
       setTimeout(() => {
@@ -292,8 +253,6 @@ function initNavigation(header){
 
   document.addEventListener('click', event => {
     if (header.contains(event.target)) return;
-    if (event.target.closest('dialog[open]')) return;   // don't fight overlays
-    if (event.target.closest('[data-open-dexpert]')) return;
     closeMenus();
   });
 
@@ -311,7 +270,10 @@ function initNavigation(header){
       hamburger.setAttribute('aria-expanded', 'false');
       hamburger.setAttribute('aria-label', 'Open navigation');
     }
-    closeDropdowns();
+    document.querySelectorAll('.dropdown-menu.open')
+      .forEach(menu => menu.classList.remove('open'));
+    document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]')
+      .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
   }, 150), { passive: true });
 }
 
@@ -320,7 +282,7 @@ function initNavigation(header){
    ------------------------------------------------------------ */
 
 function setActiveNavigation(){
-  const path = location.pathname.replace(/\/+$/, '') || '/';
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
 
   document.querySelectorAll('.site-navigation a').forEach(link => {
     link.classList.remove('nav-active');
@@ -328,12 +290,12 @@ function setActiveNavigation(){
     const href = link.getAttribute('href');
     if (!href || href.startsWith('#')) return;
     try {
-      const target = new URL(href, location.href).pathname.replace(/\/+$/, '') || '/';
+      const target = new URL(href, window.location.origin).pathname.replace(/\/+$/, '') || '/';
       if (target === path || (target !== '/' && path.startsWith(target + '/'))) {
         link.classList.add('nav-active');
         link.setAttribute('aria-current', 'page');
       }
-    } catch { /* ignore malformed hrefs */ }
+    } catch (_) {}
   });
 
   const markMatchingLinks = selector => {
@@ -341,22 +303,24 @@ function setActiveNavigation(){
       const href = item.getAttribute('href');
       if (!href || href.startsWith('#')) return;
       try {
-        const url = new URL(href, location.href);
+        const url = new URL(href, window.location.href);
         const target = url.pathname.replace(/\/+$/, '') || '/';
         const samePath = target === path || (target !== '/' && path.startsWith(target + '/'));
-        const hashMatches = !url.hash || url.hash === location.hash;
+        const hashMatches = !url.hash || url.hash === window.location.hash;
         if (samePath && hashMatches) {
           item.classList.add('nav-active');
           if (item.tagName === 'A') item.setAttribute('aria-current', 'page');
         }
-      } catch { /* ignore malformed hrefs */ }
+      } catch (_) {}
     });
   };
   markMatchingLinks('.header-products-row a, .mobile-products-menu a');
 
   document.querySelectorAll('.header-products-row .dropdown').forEach(dropdown => {
-    if (dropdown.querySelector('a.nav-active')) {
-      dropdown.querySelector('.dropdown-toggle')?.classList.add('nav-parent-active');
+    const active = dropdown.querySelector('a.nav-active');
+    if (active) {
+      const toggle = dropdown.querySelector('.dropdown-toggle');
+      if (toggle) toggle.classList.add('nav-parent-active');
     }
   });
 }
@@ -394,29 +358,14 @@ function initMailtoForm(){
   document.querySelectorAll('[data-mailto-form]').forEach(form => {
     form.addEventListener('submit', event => {
       event.preventDefault();
-
-      // Clear any prior custom validity.
-      form.querySelectorAll(':invalid').forEach(el => el.setCustomValidity(''));
-
       const data = new FormData(form);
-      const name    = String(data.get('name')    || '').trim();
-      const email   = String(data.get('email')   || '').trim();
+      const name = String(data.get('name') || '').trim();
+      const email = String(data.get('email') || '').trim();
       const subject = String(data.get('subject') || 'General Question').trim();
       const message = String(data.get('message') || '').trim();
-
-      let invalid = null;
-      if (!name)  invalid = form.elements.name;
-      else if (!email) invalid = form.elements.email;
-
-      if (invalid) {
-        invalid.setCustomValidity('Please complete this field.');
-        invalid.addEventListener('input', () => invalid.setCustomValidity(''), { once: true });
-        invalid.reportValidity();
-        return;
-      }
-
+      if (!name || !email) { form.reportValidity(); return; }
       const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-      location.href =
+      window.location.href =
         `mailto:info@dadex.com.pk?subject=${encodeURIComponent(subject)}` +
         `&body=${encodeURIComponent(body)}`;
     });
@@ -431,13 +380,13 @@ function initLiteratureFilter(){
   const grid = document.getElementById('resourceGrid');
   if (!grid) return;
 
-  const input      = document.getElementById('resourceSearch');
-  const typeSelect = document.getElementById('resourceType');
-  const clearBtn   = document.getElementById('resourceClear');
-  const emptyState = document.getElementById('resourceEmpty');
-  const emptyReset = document.getElementById('resourceEmptyReset');
-  const countLine  = document.getElementById('resourceCount');
-  const certsCard  = document.getElementById('litCertificates');
+  const input       = document.getElementById('resourceSearch');
+  const typeSelect  = document.getElementById('resourceType');
+  const clearBtn    = document.getElementById('resourceClear');
+  const emptyState  = document.getElementById('resourceEmpty');
+  const emptyReset  = document.getElementById('resourceEmptyReset');
+  const countLine   = document.getElementById('resourceCount');
+  const certsCard   = document.getElementById('litCertificates');
 
   const sections   = grid.querySelectorAll('.lit-section');
   const cards      = grid.querySelectorAll('.lit-card');
@@ -485,7 +434,9 @@ function initLiteratureFilter(){
       }
     }
 
-    if (clearBtn) clearBtn.hidden = !(query !== '' || type !== 'all');
+    if (clearBtn) {
+      clearBtn.hidden = !(query !== '' || type !== 'all');
+    }
   };
 
   const clearAll = () => {
@@ -494,16 +445,21 @@ function initLiteratureFilter(){
     applyFilters();
   };
 
-  input?.addEventListener('input', applyFilters);
-  typeSelect?.addEventListener('change', applyFilters);
-  clearBtn?.addEventListener('click', clearAll);
-  emptyReset?.addEventListener('click', clearAll);
+  if (input)      input.addEventListener('input', applyFilters);
+  if (typeSelect) typeSelect.addEventListener('change', applyFilters);
+  if (clearBtn)   clearBtn.addEventListener('click', clearAll);
+  if (emptyReset) emptyReset.addEventListener('click', clearAll);
 
   applyFilters();
 }
 
 /* ------------------------------------------------------------
    Investor panel switcher (investors.html)
+
+   The openGroupFor helper locates the sidebar link for a given
+   data-ir value by scanning attribute values via Array.find,
+   rather than constructing a CSS attribute selector. This
+   avoids any escaping concerns with future data-ir values.
    ------------------------------------------------------------ */
 
 function initInvestorPanels(){
@@ -511,22 +467,20 @@ function initInvestorPanels(){
   const panels = [...document.querySelectorAll('[data-ir-panel]')];
   if (!links.length || !panels.length) return;
 
-  const groups   = [...document.querySelectorAll('.ir-side-group')];
-  const isMobile = () => window.matchMedia(`(max-width:${MOBILE_NAV_MAX}px)`).matches;
+  const groups = [...document.querySelectorAll('.ir-side-group')];
+  const isMobile = () => window.matchMedia('(max-width:900px)').matches;
 
   const openGroupFor = id => {
     if (!isMobile()) return;
     groups.forEach(g => {
-      const link = g.querySelector(`[data-ir="${CSS.escape(id)}"]`);
-      const open = !!link;
-      g.classList.toggle('is-open', open);
-      g.querySelector('.ir-side-title')?.setAttribute('aria-expanded', String(open));
+      const hasLink = [...g.querySelectorAll('[data-ir]')]
+        .some(a => a.dataset.ir === id);
+      g.classList.toggle('is-open', hasLink);
     });
   };
 
   const activate = id => {
-    const known = id && panels.some(p => p.dataset.irPanel === id);
-    const target = known ? id : 'overview';
+    const target = id || 'overview';
     links.forEach(a => a.classList.toggle('active', a.dataset.ir === target));
     panels.forEach(p => p.classList.toggle('active', p.dataset.irPanel === target));
     openGroupFor(target);
@@ -540,14 +494,10 @@ function initInvestorPanels(){
     title.setAttribute('role', 'button');
     title.setAttribute('tabindex', '0');
     title.setAttribute('aria-expanded', 'false');
-
     const toggle = () => {
       if (!isMobile()) return;
       const open = !group.classList.contains('is-open');
-      groups.forEach(g => {
-        g.classList.remove('is-open');
-        g.querySelector('.ir-side-title')?.setAttribute('aria-expanded', 'false');
-      });
+      groups.forEach(g => g.classList.remove('is-open'));
       group.classList.toggle('is-open', open);
       title.setAttribute('aria-expanded', String(open));
     };
@@ -578,7 +528,7 @@ function initSiteSearch(){
   const count    = document.getElementById('searchCount');
   const template = document.getElementById('searchResultTemplate');
 
-  if (!grid || !template || !count || !empty) return;
+  if (!grid || !template) return;
 
   const pages = Array.isArray(window.DADEX_SEARCH_INDEX) ? window.DADEX_SEARCH_INDEX : [];
 
@@ -610,14 +560,10 @@ function initSiteSearch(){
     empty.hidden = rows.length !== 0;
   };
 
-  const debouncedRender = debounce(render, SEARCH_DEBOUNCE_MS);
-
-  button?.addEventListener('click', render);
-  input.addEventListener('input', debouncedRender);
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { e.preventDefault(); render(); }
-  });
-  clear?.addEventListener('click', () => { input.value = ''; render(); input.focus(); });
+  if (button) button.addEventListener('click', render);
+  input.addEventListener('input', render);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
+  if (clear) clear.addEventListener('click', () => { input.value = ''; render(); input.focus(); });
 
   const q = new URLSearchParams(location.search).get('q');
   if (q) { input.value = q; render(); }
@@ -625,6 +571,12 @@ function initSiteSearch(){
 
 /* ------------------------------------------------------------
    DEXPERT — floating assistant
+
+   Template references (homeTpl, resultTpl) live inside the
+   loadDialog closure. They are passed explicitly to every
+   function that needs them — renderHome, renderAnswer,
+   wireDialog — so the scope chain stays intact regardless of
+   when a callback fires.
    ------------------------------------------------------------ */
 
 const DEXPERT_PRODUCTS = [
@@ -657,38 +609,6 @@ const DEXPERT_APPS = [
   ['Roofing', 'products.html#roofing']
 ];
 
-/* Normalise for matching: lowercase, collapse punctuation to spaces. */
-function dxNorm(s){
-  return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-}
-
-/* Resolution order:
-   1. exact name match
-   2. query contains the name  → pick the LONGEST name (most specific)
-   3. name contains the query  → pick the SHORTEST name (least generic)
-   Requires query length >= 3 to avoid noise matches. */
-function findBestMatch(list, query){
-  const q = dxNorm(query);
-  if (q.length < 3) return null;
-
-  let contained = null;   // query contains name
-  let contains  = null;   // name contains query
-
-  for (const entry of list){
-    const name = dxNorm(entry[0]);
-    if (!name) continue;
-    if (name === q) return entry;
-
-    if (q.includes(name)) {
-      if (!contained || name.length > dxNorm(contained[0]).length) contained = entry;
-    }
-    if (name.includes(q)) {
-      if (!contains || name.length < dxNorm(contains[0]).length) contains = entry;
-    }
-  }
-  return contained || contains;
-}
-
 function initDEXPERT(){
   if (document.querySelector('.dexpert-fab')) return;
 
@@ -701,11 +621,11 @@ function initDEXPERT(){
   document.body.appendChild(fab);
 
   const title = (document.querySelector('main h1')?.textContent
-    || document.title.replace(/\s*[|–—-].*$/, '')).trim();
-  const file = location.pathname.split('/').pop() || 'index.html';
-  const isProduct   = /^product-/.test(file);
-  const isInvestor  = /investor|financial-reports/i.test(file);
-  const isResources = /literature|calculators|videos|news/i.test(file);
+    || document.title.replace(/\s*[|–-].*$/, '')).trim();
+  const path = window.location.pathname.split('/').pop() || 'index.html';
+  const isProduct   = path.startsWith('product') && path !== 'products.html';
+  const isInvestor  = /investor|financial-reports/i.test(path);
+  const isResources = /literature|calculators|videos|news/i.test(path);
   const currentProduct = isProduct ? title : '';
 
   let dialogPromise = null;
@@ -713,22 +633,17 @@ function initDEXPERT(){
   function loadDialog(){
     if (dialogPromise) return dialogPromise;
     dialogPromise = (async () => {
-      const res = await fetch(new URL('components/dexpert.html', SITE_ROOT),
-        { cache: 'force-cache' });
+      const res = await fetch('components/dexpert.html', { cache: 'force-cache' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const html = await res.text();
 
       const temp = document.createElement('div');
       temp.innerHTML = html;
 
-      const dialog    = temp.querySelector('dialog#dexpertDialog');
-      const homeTpl   = temp.querySelector('template#dexpertHomeTemplate');
+      const dialog = temp.querySelector('dialog#dexpertDialog');
+      const homeTpl = temp.querySelector('template#dexpertHomeTemplate');
       const resultTpl = temp.querySelector('template#dexpertResultTemplate');
       const actionTpl = temp.querySelector('template#dexpertActionTemplate');
-
-      if (!dialog || !homeTpl || !resultTpl) {
-        throw new Error('DEXPERT template markup incomplete');
-      }
 
       document.body.appendChild(homeTpl);
       document.body.appendChild(resultTpl);
@@ -737,11 +652,7 @@ function initDEXPERT(){
 
       wireDialog(dialog, homeTpl, resultTpl);
       return dialog;
-    })().catch(err => {
-      // Allow retry on next open instead of caching the failure.
-      dialogPromise = null;
-      throw err;
-    });
+    })();
     return dialogPromise;
   }
 
@@ -756,7 +667,7 @@ function initDEXPERT(){
     container.replaceChildren(frag);
   }
 
-  function renderHome(dialog, homeTpl){
+  function renderHome(dialog, homeTpl, resultTpl){
     const body = dialog.querySelector('#dexpertBody');
     const node = homeTpl.content.firstElementChild.cloneNode(true);
 
@@ -818,8 +729,10 @@ function initDEXPERT(){
         'Enter a product or application such as Aquadex, water supply or gas.',
         'products.html', 'Browse products'];
     } else {
-      const product = findBestMatch(DEXPERT_PRODUCTS, q);
-      const app = !product && findBestMatch(DEXPERT_APPS, q);
+      const product = DEXPERT_PRODUCTS.find(p =>
+        q.includes(p[0].toLowerCase()) || p[0].toLowerCase().includes(q));
+      const app = !product && DEXPERT_APPS.find(a =>
+        q.includes(a[0].toLowerCase()) || a[0].toLowerCase().includes(q));
 
       if (product) {
         [label, heading, message, href, cta] = ['PRODUCT', product[0],
@@ -853,7 +766,7 @@ function initDEXPERT(){
     }
 
     const node = resultTpl.content.firstElementChild.cloneNode(true);
-    node.querySelector('[data-label]').textContent   = label;
+    node.querySelector('[data-label]').textContent = label;
     node.querySelector('[data-heading]').textContent = heading;
     node.querySelector('[data-message]').textContent = message;
     node.querySelector('a').href = href;
@@ -861,11 +774,11 @@ function initDEXPERT(){
 
     body.replaceChildren(node);
     node.querySelector('.dexpert-back').addEventListener('click',
-      () => renderHome(dialog, homeTpl));
+      () => renderHome(dialog, homeTpl, resultTpl));
   }
 
   function wireDialog(dialog, homeTpl, resultTpl){
-    dialog.querySelector('.dexpert-close')?.addEventListener('click', () => dialog.close());
+    dialog.querySelector('.dexpert-close').addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', e => {
       if (e.target === dialog) dialog.close();
     });
@@ -903,10 +816,7 @@ function initDEXPERT(){
     }
   });
 
-  // Prefetch only when the connection is reasonable.
-  if (!isConnectionSlow()) {
-    scheduleIdle(() => { loadDialog().catch(() => {}); });
-  }
+  scheduleIdle(() => loadDialog().catch(() => {}));
 }
 
 /* ------------------------------------------------------------
@@ -920,24 +830,18 @@ function initBackToTop(){
   btn.className = 'back-to-top';
   btn.type = 'button';
   btn.setAttribute('aria-label', 'Back to top');
-  btn.innerHTML = `
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
-         fill="none" stroke="currentColor" stroke-width="2"
-         stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 19V5"/>
-      <path d="M5 12l7-7 7 7"/>
-    </svg>`;
+  btn.innerHTML = '<i class="fas fa-arrow-up" aria-hidden="true"></i>';
   document.body.appendChild(btn);
 
   const update = () => {
-    btn.classList.toggle('is-visible', getScrollTop() > SCROLL_TOP_THRESHOLD);
+    btn.classList.toggle('is-visible', window.scrollY > SCROLL_TOP_THRESHOLD);
   };
 
   window.addEventListener('scroll', update, { passive: true });
   update();
 
   btn.addEventListener('click', () => {
-    const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
   });
 }
