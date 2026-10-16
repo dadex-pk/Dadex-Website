@@ -83,6 +83,7 @@
   box-shadow:var(--sh-el-2);
 }
 
+/* ---------- Scroll-driven collapse of the two outer tiers ---------- */
 .site-header .utility-bar,
 .site-header .header-products-tier{
   overflow:hidden;
@@ -166,7 +167,7 @@
   border-bottom:1px solid rgba(23,25,28,.04);
 }
 .site-header .header-main-tier .header-inner{
-  min-height:4.75rem;
+  min-height:3.75rem;
   display:flex;align-items:center;gap:1.5rem;
 }
 
@@ -179,7 +180,7 @@
 }
 .site-header .brand:hover{opacity:.9}
 .site-header .brand-logo{
-  display:block;width:8rem;height:auto;
+  display:block;width:9.75rem;height:2.5rem;
   object-fit:contain;
   transition:transform var(--sh-t-slow) var(--sh-ease);
 }
@@ -640,8 +641,8 @@
 @media(max-width:900px){
   .site-header .utility-inner{justify-content:center;flex-wrap:wrap;min-height:2.25rem}
   .site-header .utility-left{display:none}
-    .site-header .header-main-tier .header-inner{min-height:3.5rem}
-  .site-header .brand-logo{width:10.5rem;height:2.75rem}
+  .site-header .header-main-tier .header-inner{min-height:3.5rem}
+  .site-header .brand-logo{width:9rem;height:2.25rem}
   .site-header .menu-toggle{display:grid;place-items:center}
 
   .site-header .site-navigation{
@@ -691,7 +692,7 @@
   .site-header .mobile-products-menu{display:block;border-bottom:1px solid #eef0f2}
 }
 @media(max-width:700px){
-  .site-header .brand-logo{width:9.375rem;height:2.5625rem}
+  .site-header .brand-logo{width:8.25rem;height:2.125rem}
   .site-header .nav-search-label{display:none}
   .site-header .nav-search{padding:.5625rem .75rem!important;margin-left:.25rem}
   .site-header .site-navigation{max-height:calc(100dvh - 3.875rem)}
@@ -700,8 +701,8 @@
   .site-header .utility-inner{min-height:2rem;font-size:.65625rem}
   .site-header .utility-links{gap:.6rem}
   .site-header .utility-links a i{width:1.25rem;height:1.25rem;font-size:.59375rem}
-  .site-header .brand-logo{width:9.125rem;height:2.5rem}
-  .site-header .header-main-tier .header-inner{min-height:3.875rem}
+  .site-header .brand-logo{width:8rem;height:2.0625rem}
+  .site-header .header-main-tier .header-inner{min-height:3.25rem}
 }
 
 /* ============================================================
@@ -747,7 +748,7 @@
 .site-footer .brand-footer .brand-sub{color:#888}
 .site-footer .footer-brand .brand-logo{
   filter:brightness(0) invert(1);opacity:.97;
-  width:11.5rem;height:2.9375rem;
+  width:9.75rem;height:2.5rem;
   transition:opacity var(--sh-t-base) var(--sh-ease),
              transform var(--sh-t-base) var(--sh-ease);
 }
@@ -868,8 +869,6 @@
 
 /* ============================================================
    DEXPERT — floating assistant
-   Native <dialog> element; showModal() provides focus trap,
-   Escape close and focus return natively.
    ============================================================ */
 .dexpert-fab{
   position:fixed;right:1.5rem;bottom:1.5rem;z-index:1100;
