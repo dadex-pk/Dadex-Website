@@ -101,8 +101,8 @@
              border-color var(--sh-t-base) var(--sh-ease-io),
              padding var(--sh-t-base) var(--sh-ease-io);
 }
-.site-header .utility-bar{max-height:3rem}
-.site-header .header-products-tier{max-height:3.5rem}
+.site-header .utility-bar{max-height:2.5rem}
+.site-header .header-products-tier{max-height:3.25rem}
 
 .site-header.is-scrolled .utility-bar,
 .site-header.is-scrolled .header-products-tier{
