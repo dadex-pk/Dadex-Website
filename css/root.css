@@ -13,6 +13,7 @@
   /* ---------- Accent reds for two-colour headings ---------- */
   --accent-light:#e50000;
   --accent-dark:#ff6a6a;
+  --accent-light-2:#f8dedec6;
 
   /* ---------- Ink / text ---------- */
   --ink:#17191c;
@@ -44,11 +45,6 @@
   --max:1240px;
   --d-max:1240px;
 
-  /* Header height state.
-     Expanded desktop header ≈ 152px (utility 39 + main 61 + products 52).
-     Collapsed desktop header ≈ 62px (main 61 + header border 1).
-     --sticky-offset recalculates from --header-h so every sticky
-     element using top:var(--sticky-offset) auto-tracks the header. */
   --header-h:9.5rem;
   --sticky-offset:calc(var(--header-h) + 0.625rem);
 
@@ -110,14 +106,6 @@
   --deco-grid-opacity:.12;
 }
 
-/* ---------- Header collapse state ----------
-   Applied to <body> by main.js when the page scrolls past 6px.
-   Reduces --header-h, which cascades to --sticky-offset, so every
-   sticky filter strip (products, history, calculators, videos,
-   projects) tracks the header without per-page logic.
-   --sticky-offset is re-declared here so browsers that don't
-   re-resolve nested var() after an override still get the right
-   value. */
 body.header-scrolled{
   --header-h:3.875rem;
   --sticky-offset:calc(var(--header-h) + 0.625rem);
