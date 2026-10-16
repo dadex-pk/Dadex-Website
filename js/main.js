@@ -22,7 +22,7 @@ const COMPANY_FOUNDED_YEAR = 1959;
 const COMPANY_ANNIVERSARY_MONTH = 3; /* April (0-indexed) */
 const COMPANY_ANNIVERSARY_DAY = 13;
 const SCROLL_TOP_THRESHOLD = 600;
-const HEADER_COLLAPSE_THRESHOLD = 60;
+const HEADER_COLLAPSE_THRESHOLD = 6;
 
 /* ------------------------------------------------------------
    Utilities
