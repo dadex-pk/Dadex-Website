@@ -109,27 +109,27 @@
 }
 @media (hover: hover) and (pointer: fine){
   .calc-toolbar .mat-btn:hover{
-    border-color:var(--calc-red);
-    color:var(--calc-red);
+    border-color: var(--dadex-red);
+    color: var(--dadex-red);
     background:var(--calc-red-light);
   }
 }
 .calc-toolbar .mat-btn:focus-visible{
-  outline:2px solid var(--calc-red);
+  outline:2px solid : var(--dadex-red);
   outline-offset:3px;
 }
 .calc-toolbar .mat-btn.active{
-  background:var(--calc-red);
+  background: var(--dadex-red);
   color:#fff;
-  border-color:var(--calc-red);
+  border-color: var(--dadex-red);
   font-weight:800;
   box-shadow:
     0 0 0 3px rgba(229,0,0,.12),
     0 4px 12px rgba(229,0,0,.28);
 }
 .calc-toolbar .mat-btn.active:hover{
-  background:var(--calc-red-dark);
-  border-color:var(--calc-red-dark);
+  background:var(--dadex-red-dark:);
+  border-color:: var(--dadex-red);
   color:#fff;
   box-shadow:
     0 0 0 3px rgba(229,0,0,.18),
