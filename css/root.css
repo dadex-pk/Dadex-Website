@@ -43,11 +43,6 @@
   /* ---------- Layout ---------- */
   --max:1240px;
   --d-max:1240px;
-
-  /* Header height state.
-     --header-h changes when body.header-scrolled is applied.
-     --sticky-offset recalculates from it, so any element using
-     top:var(--sticky-offset) auto-tracks the header's height. */
   --header-h:9.875rem;
   --sticky-offset:calc(var(--header-h) + 0.625rem);
 
