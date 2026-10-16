@@ -83,7 +83,7 @@
   transform:translateY(0);
   background:var(--calc-red-light);
   border-color:var(--calc-red);
-  color:#000;
+  color:var(--calc-red);
 }
 
 /* ============================================================
@@ -95,7 +95,7 @@
 .calc-toolbar .mat-btn{
   padding:.5rem .9375rem;
   min-height:2.25rem;
-  border:1.5px solid var(--calc-border);
+  border:1.5px solid var(--calc-red);
   background:#fff;
   border-radius:999px;
   font-family:'Inter',sans-serif;
@@ -118,8 +118,6 @@
   outline:2px solid var(--calc-red);
   outline-offset:3px;
 }
-/* Active material — solid red fill plus a soft outer ring.
-   The ring is what makes "selected" read distinct from "hovered". */
 .calc-toolbar .mat-btn.active{
   background:var(--calc-red);
   color:#fff;
@@ -144,8 +142,6 @@
     0 2px 8px rgba(229,0,0,.24);
 }
 
-/* The "ACTIVE: UPVC" chip is redundant now that buttons reflect
-   state. Kept in HTML for reuse but hidden here. */
 .calc-toolbar #current-mat-display{display:none}
 
 /* ============================================================
