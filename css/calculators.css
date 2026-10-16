@@ -109,19 +109,19 @@
 }
 @media (hover: hover) and (pointer: fine){
   .calc-toolbar .mat-btn:hover{
-    border-color: var(--dadex-red);
-    color: var(--dadex-red);
+    border-color:var(--dadex-red);
+    color:var(--dadex-red);
     background:var(--calc-red-light);
   }
 }
 .calc-toolbar .mat-btn:focus-visible{
-  outline:2px solid : var(--dadex-red);
+  outline:2px solid: var(--dadex-red);
   outline-offset:3px;
 }
 .calc-toolbar .mat-btn.active{
-  background: var(--dadex-red);
+  background:var(--dadex-red);
   color:#fff;
-  border-color: var(--dadex-red);
+  border-color:var(--dadex-red);
   font-weight:800;
   box-shadow:
     0 0 0 3px rgba(229,0,0,.12),
@@ -129,7 +129,7 @@
 }
 .calc-toolbar .mat-btn.active:hover{
   background:var(--dadex-red-dark:);
-  border-color:: var(--dadex-red);
+  border-color:var(--dadex-red);
   color:#fff;
   box-shadow:
     0 0 0 3px rgba(229,0,0,.18),
