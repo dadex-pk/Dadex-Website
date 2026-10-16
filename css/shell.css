@@ -1,10 +1,5 @@
 /* ============================================================
    SHELL — Header, Footer, DEXPERT, Back to top
-   Refactored: rem sizing, token-driven. Mega-menu full-width
-   panel anchored to products tier. Breakpoints @ 900px.
-
-   Header collapses on scroll (utility bar + products tier
-   retract); the main tier stays visible at all times.
    ============================================================ */
 
 /* ============================================================
@@ -189,7 +184,7 @@
 }
 .site-header .brand:hover{opacity:.9}
 .site-header .brand-logo{
-  display:block;width:11.5rem;height:2.9375rem;
+  display:block;width:8rem;height:auto;
   object-fit:contain;
   transition:transform var(--sh-t-slow) var(--sh-ease);
 }
