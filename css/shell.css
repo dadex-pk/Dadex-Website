@@ -83,11 +83,6 @@
   box-shadow:var(--sh-el-2);
 }
 
-/* ---------- Scroll-driven collapse of the two outer tiers ----------
-   Utility bar and products tier retract via max-height. The main
-   tier (brand + primary nav) is untouched, so the header never
-   disappears. Transitions use the same duration as --sticky-offset
-   consumers, keeping the strips in sync. */
 .site-header .utility-bar,
 .site-header .header-products-tier{
   overflow:hidden;
@@ -205,7 +200,7 @@
   position:relative;border:0;background:transparent;
   color:var(--d-text);text-decoration:none;
   font:600 .8125rem/1.2 'Inter',system-ui,sans-serif;
-  padding:1.5rem .75rem;cursor:pointer;white-space:nowrap;
+  padding:0.5rem .75rem;cursor:pointer;white-space:nowrap;
   display:inline-flex;align-items:center;gap:.375rem;
   border-radius:.5625rem;letter-spacing:-.005em;
   transition:color var(--sh-t-fast) var(--sh-ease-io),
