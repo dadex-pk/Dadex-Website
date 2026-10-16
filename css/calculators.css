@@ -78,12 +78,12 @@
   outline:2px solid var(--calc-red);
   outline-offset:2px;
 }
-/* Press state — button visually returns to rest, fill lightens */
+
 .calc-action:active{
   transform:translateY(0);
   background:var(--calc-red-light);
   border-color:var(--calc-red);
-  color:var(--calc-red);
+  color:#000;
 }
 
 /* ============================================================
