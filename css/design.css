@@ -1,22 +1,6 @@
 /* ============================================================
    DESIGN SYSTEM — components, layouts, page systems
    Requires: root.css (tokens, reset, base elements).
-   Loaded via design-system.css after root.css, before shell.css.
-
-   CHANGES IN THIS VERSION
-   - Brand red updated to #e50000 (CMYK 0 100 100 10)
-   - Micro-elements scaled up: kickers 12px, numbers 14px, arrows 15px
-   - Kicker trailing rule applied site-wide
-   - Two-colour heading support extended to heroes + section heads
-   - Homepage product numbers: loud treatment (28px, brand red)
-   - Circle-arrow pattern for card links
-   - All accent literals replaced with --accent-light / --accent-dark
-   - Dark-red link colours consolidated to --dadex-red-dark
-   - Breadcrumb compacted
-   - Safety, Health & Environment list styling on Quality page
-   - Filter strips sticky on every breakpoint: products, history,
-     videos, projects, calculators. All read --sticky-offset, which
-     tracks the header via --header-h (see root.css).
    ============================================================ */
 
 /* ============================================================
@@ -1569,7 +1553,7 @@ input::placeholder,textarea::placeholder{color:#8f969d}
   color:#5e666e;font-size:1.0625rem;line-height:1.75;margin:0 0 .9375rem;max-width:45rem;
 }
 .history-legacy p{color:#c4c8cd}
-.history-timeline-section{padding:1.625rem 0 5.625rem;background:#f7f7f5;overflow:hidden}
+.history-timeline-section{padding:1.625rem 0 5.625rem;background:#f7f7f5;overflow:visible}
 .history-timeline{position:relative;max-width:70rem;margin:0 auto;padding:2.125rem 0 1.25rem}
 .history-timeline:before{
   content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;
