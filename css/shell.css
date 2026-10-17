@@ -578,6 +578,7 @@
 .dexpert-fab{
   position:fixed;right:1.5rem;bottom:1.5rem;z-index:1100;
   display:inline-flex!important;align-items:center!important;gap:.6rem!important;
+   flex-direction: column;
   min-height:3.25rem;padding:0 1.25rem 0 .4375rem!important;
   background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%)!important;
   border:1px solid rgba(255,255,255,.14)!important;
@@ -706,11 +707,11 @@
 .dexpert-body{padding:1.25rem!important}
 .dexpert-welcome{
   display:block;font-size:.6875rem;font-weight:800;
-  color:var(--dadex-red);letter-spacing:.12em;
+  color:var(--dadex-red);letter-spacing:.1em;
   text-transform:uppercase;margin-bottom:.5rem;
 }
 .dexpert-body h4{
-  margin:.25rem 0 .55rem;font-size:1.1rem;color:#17191c;
+  margin:.25rem 0 .55rem;font-size:1rem;color:#17191c;
   letter-spacing:-.005em;line-height:1.25;
 }
 .dexpert-body p{margin:.25rem 0 .9rem;color:#4f565c;line-height:1.6;font-size:.8125rem}
