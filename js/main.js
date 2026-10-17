@@ -1,15 +1,36 @@
 /* ============================================================
    DADEX ETERNIT LIMITED — SHARED UI
+   - Header and footer injection
+   - Header scroll state (collapse on scroll)
+   - Navigation behaviour (mobile drawer, dropdowns, active state)
+   - Dynamic text (footer year, company age)
+   - Project filter (event delegation)
+   - Mailto contact form
+   - Literature filter
+   - Investor panel switcher
+   - Site search (template-driven)
+   - DEXPERT (native <dialog>, template-driven, lazy)
+   - Back to top
    ============================================================ */
 
 const MOBILE_NAV_MAX = 900;
 const COMPANY_FOUNDED_YEAR = 1959;
-const COMPANY_ANNIVERSARY_MONTH = 3;
+const COMPANY_ANNIVERSARY_MONTH = 3; /* April (0-indexed) */
 const COMPANY_ANNIVERSARY_DAY = 13;
 const SCROLL_TOP_THRESHOLD = 600;
 const HEADER_COLLAPSE_THRESHOLD = 70;
 
-const HTML_ESCAPE_MAP = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+/* ------------------------------------------------------------
+   Utilities
+   ------------------------------------------------------------ */
+
+const HTML_ESCAPE_MAP = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;'
+};
 
 function escapeHTML(value){
   return String(value ?? '').replace(/[&<>"']/g, m => HTML_ESCAPE_MAP[m]);
@@ -27,22 +48,34 @@ const scheduleIdle = (typeof requestIdleCallback === 'function')
   ? cb => requestIdleCallback(cb, { timeout: 2000 })
   : cb => setTimeout(cb, 200);
 
+/* ------------------------------------------------------------
+   Bootstrap
+   ------------------------------------------------------------ */
+
 document.addEventListener('DOMContentLoaded', async () => {
   await loadSharedComponents();
-  const header = document.getElementById('siteHeader') || document.querySelector('.site-header');
-  
+
+  const header = document.getElementById('siteHeader')
+              || document.querySelector('.site-header');
+
   initDynamicSiteText();
   initHeaderState(header);
   initNavigation(header);
   setActiveNavigation();
+
   initProjectFilter();
   initMailtoForm();
   initLiteratureFilter();
   initInvestorPanels();
   initSiteSearch();
+
   initDEXPERT();
   initBackToTop();
 });
+
+/* ------------------------------------------------------------
+   Shared header / footer injection
+   ------------------------------------------------------------ */
 
 async function loadSharedComponents(){
   const mounts = document.querySelectorAll('[data-component]');
@@ -62,13 +95,27 @@ async function loadSharedComponents(){
   }));
 }
 
+/* ------------------------------------------------------------
+   Dynamic text — current year and company age
+   ------------------------------------------------------------ */
+
 function initDynamicSiteText(){
   const now = new Date();
-  const anniversary = new Date(now.getFullYear(), COMPANY_ANNIVERSARY_MONTH, COMPANY_ANNIVERSARY_DAY);
-  const age = now < anniversary ? now.getFullYear() - COMPANY_FOUNDED_YEAR - 1 : now.getFullYear() - COMPANY_FOUNDED_YEAR;
+  const anniversary = new Date(
+    now.getFullYear(),
+    COMPANY_ANNIVERSARY_MONTH,
+    COMPANY_ANNIVERSARY_DAY
+  );
+  const age = now < anniversary
+    ? now.getFullYear() - COMPANY_FOUNDED_YEAR - 1
+    : now.getFullYear() - COMPANY_FOUNDED_YEAR;
+
   const setText = (selector, value) => {
-    document.querySelectorAll(selector).forEach(el => { el.textContent = value; });
+    document.querySelectorAll(selector).forEach(el => {
+      el.textContent = value;
+    });
   };
+
   setText('[data-current-year]', String(now.getFullYear()));
   setText('[data-company-age]', String(age));
   setText('[data-company-age-years]', `${age} years`);
@@ -76,29 +123,47 @@ function initDynamicSiteText(){
   setText('[data-company-age-hyphenated]', `${age}-year-old`);
 }
 
+/* ------------------------------------------------------------
+   Header state — home/internal flag + scroll-driven collapse
+   ------------------------------------------------------------ */
+
 function initHeaderState(header){
   if (!header) return;
+
   const path = window.location.pathname;
-  const isHome = document.body.classList.contains('home-page') || path === '/' || path.endsWith('/index.html');
+  const isHome = document.body.classList.contains('home-page')
+    || path === '/'
+    || path.endsWith('/index.html');
   header.dataset.headerState = isHome ? 'home' : 'internal';
+
   let ticking = false;
+
   const update = () => {
     const scrolled = window.scrollY > HEADER_COLLAPSE_THRESHOLD;
     header.classList.toggle('is-scrolled', scrolled);
     document.body.classList.toggle('header-scrolled', scrolled);
+    
+    // Adds inert to hidden tiers for accessibility
     const utilityBar = header.querySelector('.utility-bar');
     const productsTier = header.querySelector('.header-products-tier');
     if (utilityBar) utilityBar.inert = scrolled;
     if (productsTier) productsTier.inert = scrolled;
+
     ticking = false;
   };
+
   window.addEventListener('scroll', () => {
     if (ticking) return;
     ticking = true;
     window.requestAnimationFrame(update);
   }, { passive: true });
+
   update();
 }
+
+/* ------------------------------------------------------------
+   Navigation
+   ------------------------------------------------------------ */
 
 function initNavigation(header){
   const nav = document.getElementById('site-navigation');
@@ -106,9 +171,12 @@ function initNavigation(header){
   if (!header || !nav) return;
 
   const isMobile = () => window.innerWidth <= MOBILE_NAV_MAX;
+
   const closeMenus = ({ restoreFocus = false } = {}) => {
-    document.querySelectorAll('.dropdown-menu.open').forEach(menu => menu.classList.remove('open'));
-    document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+    document.querySelectorAll('.dropdown-menu.open')
+      .forEach(menu => menu.classList.remove('open'));
+    document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]')
+      .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
     nav.classList.remove('open');
     if (hamburger) {
       hamburger.setAttribute('aria-expanded', 'false');
@@ -118,7 +186,9 @@ function initNavigation(header){
     if (restoreFocus && hamburger) hamburger.focus();
   };
 
-  const anyMenuOpen = () => nav.classList.contains('open') || !!document.querySelector('.dropdown-menu.open');
+  const anyMenuOpen = () =>
+    nav.classList.contains('open') ||
+    !!document.querySelector('.dropdown-menu.open');
 
   if (hamburger) {
     hamburger.addEventListener('click', () => {
@@ -138,6 +208,7 @@ function initNavigation(header){
     const menuId = toggle.getAttribute('aria-controls');
     const menu = menuId ? document.getElementById(menuId) : toggle.nextElementSibling;
     if (!menu) return;
+
     toggle.addEventListener('click', event => {
       if (isMobile()) {
         event.preventDefault();
@@ -146,11 +217,19 @@ function initNavigation(header){
         toggle.setAttribute('aria-expanded', String(open));
       }
     });
-    toggle.addEventListener('focusin', () => { if (!isMobile()) toggle.setAttribute('aria-expanded', 'true'); });
+
+    toggle.addEventListener('focusin', () => {
+      if (!isMobile()) toggle.setAttribute('aria-expanded', 'true');
+    });
     toggle.addEventListener('focusout', () => {
       if (isMobile()) return;
-      setTimeout(() => { if (!menu.contains(document.activeElement)) toggle.setAttribute('aria-expanded', 'false'); }, 0);
+      setTimeout(() => {
+        if (!menu.contains(document.activeElement)) {
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      }, 0);
     });
+
     toggle.addEventListener('keydown', event => {
       if (event.key === 'Escape') {
         menu.classList.remove('open');
@@ -186,13 +265,20 @@ function initNavigation(header){
       hamburger.setAttribute('aria-expanded', 'false');
       hamburger.setAttribute('aria-label', 'Open navigation');
     }
-    document.querySelectorAll('.dropdown-menu.open').forEach(menu => menu.classList.remove('open'));
-    document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+    document.querySelectorAll('.dropdown-menu.open')
+      .forEach(menu => menu.classList.remove('open'));
+    document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]')
+      .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
   }, 150), { passive: true });
 }
 
+/* ------------------------------------------------------------
+   Active navigation (path-based)
+   ------------------------------------------------------------ */
+
 function setActiveNavigation(){
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
+
   document.querySelectorAll('.site-navigation a').forEach(link => {
     link.classList.remove('nav-active');
     link.removeAttribute('aria-current');
@@ -224,6 +310,7 @@ function setActiveNavigation(){
     });
   };
   markMatchingLinks('.header-products-row a, .mobile-products-menu a');
+
   document.querySelectorAll('.header-products-row .dropdown').forEach(dropdown => {
     const active = dropdown.querySelector('a.nav-active');
     if (active) {
@@ -233,20 +320,34 @@ function setActiveNavigation(){
   });
 }
 
+/* ------------------------------------------------------------
+   Project filter (projects.html)
+   ------------------------------------------------------------ */
+
 function initProjectFilter(){
   const filterGroup = document.getElementById('projectFilter');
   if (!filterGroup) return;
+
   const buttons = filterGroup.querySelectorAll('.filter-btn[data-filter]');
   const cards = document.querySelectorAll('.project-card[data-category]');
   if (!buttons.length || !cards.length) return;
+
   filterGroup.addEventListener('click', event => {
     const button = event.target.closest('.filter-btn[data-filter]');
     if (!button || !filterGroup.contains(button)) return;
+
     buttons.forEach(b => b.classList.toggle('active', b === button));
+
     const value = button.dataset.filter;
-    cards.forEach(card => { card.hidden = !(value === 'all' || card.dataset.category === value); });
+    cards.forEach(card => {
+      card.hidden = !(value === 'all' || card.dataset.category === value);
+    });
   });
 }
+
+/* ------------------------------------------------------------
+   Mailto contact form (contact.html)
+   ------------------------------------------------------------ */
 
 function initMailtoForm(){
   document.querySelectorAll('[data-mailto-form]').forEach(form => {
@@ -259,81 +360,124 @@ function initMailtoForm(){
       const message = String(data.get('message') || '').trim();
       if (!name || !email) { form.reportValidity(); return; }
       const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-      window.location.href = `mailto:info@dadex.com.pk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href =
+        `mailto:info@dadex.com.pk?subject=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(body)}`;
     });
   });
 }
 
+/* ------------------------------------------------------------
+   Literature filter (literature.html)
+   ------------------------------------------------------------ */
+
 function initLiteratureFilter(){
   const grid = document.getElementById('resourceGrid');
   if (!grid) return;
-  const input = document.getElementById('resourceSearch');
-  const typeSelect = document.getElementById('resourceType');
-  const clearBtn = document.getElementById('resourceClear');
-  const emptyState = document.getElementById('resourceEmpty');
-  const emptyReset = document.getElementById('resourceEmptyReset');
-  const countLine = document.getElementById('resourceCount');
-  const certsCard = document.getElementById('litCertificates');
-  const sections = grid.querySelectorAll('.lit-section');
-  const cards = grid.querySelectorAll('.lit-card');
+
+  const input       = document.getElementById('resourceSearch');
+  const typeSelect  = document.getElementById('resourceType');
+  const clearBtn    = document.getElementById('resourceClear');
+  const emptyState  = document.getElementById('resourceEmpty');
+  const emptyReset  = document.getElementById('resourceEmptyReset');
+  const countLine   = document.getElementById('resourceCount');
+  const certsCard   = document.getElementById('litCertificates');
+
+  const sections   = grid.querySelectorAll('.lit-section');
+  const cards      = grid.querySelectorAll('.lit-card');
   const totalCards = cards.length;
 
   const applyFilters = () => {
     const query = (input?.value || '').trim().toLowerCase();
-    const type = (typeSelect?.value || 'all').toLowerCase();
+    const type  = (typeSelect?.value || 'all').toLowerCase();
     let visibleCards = 0;
+
     cards.forEach(card => {
-      const name = (card.dataset.name || '').toLowerCase();
+      const name      = (card.dataset.name || '').toLowerCase();
       const cardTypes = (card.dataset.types || '').split(/\s+/).filter(Boolean);
+
       const matchesSearch = !query || name.includes(query);
-      const matchesType = type === 'all' || cardTypes.includes(type);
-      card.querySelectorAll('.lit-btn[data-type]').forEach(btn => { btn.hidden = type !== 'all' && btn.dataset.type !== type; });
+      const matchesType   = type === 'all' || cardTypes.includes(type);
+
+      card.querySelectorAll('.lit-btn[data-type]').forEach(btn => {
+        btn.hidden = type !== 'all' && btn.dataset.type !== type;
+      });
+
       const show = matchesSearch && matchesType;
       card.hidden = !show;
       if (show) visibleCards++;
     });
+
     sections.forEach(section => {
-      const anyVisible = Array.prototype.some.call(section.querySelectorAll('.lit-card'), c => !c.hidden);
+      const anyVisible = Array.prototype.some.call(
+        section.querySelectorAll('.lit-card'),
+        c => !c.hidden
+      );
       section.hidden = !anyVisible;
     });
+
     if (emptyState) emptyState.hidden = visibleCards !== 0;
-    if (certsCard) certsCard.hidden = visibleCards === 0;
+    if (certsCard)  certsCard.hidden  = visibleCards === 0;
+
     if (countLine) {
-      if (visibleCards === 0) countLine.textContent = 'No documents match your filters';
-      else if (visibleCards === totalCards) countLine.textContent = `Showing all ${totalCards} documents`;
-      else countLine.textContent = `Showing ${visibleCards} of ${totalCards} documents`;
+      if (visibleCards === 0) {
+        countLine.textContent = 'No documents match your filters';
+      } else if (visibleCards === totalCards) {
+        countLine.textContent = `Showing all ${totalCards} documents`;
+      } else {
+        countLine.textContent = `Showing ${visibleCards} of ${totalCards} documents`;
+      }
     }
-    if (clearBtn) clearBtn.hidden = !(query !== '' || type !== 'all');
+
+    if (clearBtn) {
+      clearBtn.hidden = !(query !== '' || type !== 'all');
+    }
   };
 
-  const clearAll = () => { if (input) input.value = ''; if (typeSelect) typeSelect.value = 'all'; applyFilters(); };
-  if (input) input.addEventListener('input', applyFilters);
+  const clearAll = () => {
+    if (input) input.value = '';
+    if (typeSelect) typeSelect.value = 'all';
+    applyFilters();
+  };
+
+  if (input)      input.addEventListener('input', applyFilters);
   if (typeSelect) typeSelect.addEventListener('change', applyFilters);
-  if (clearBtn) clearBtn.addEventListener('click', clearAll);
+  if (clearBtn)   clearBtn.addEventListener('click', clearAll);
   if (emptyReset) emptyReset.addEventListener('click', clearAll);
+
   applyFilters();
 }
 
+/* ------------------------------------------------------------
+   Investor panel switcher (investors.html)
+   ------------------------------------------------------------ */
+
 function initInvestorPanels(){
-  const links = [...document.querySelectorAll('[data-ir]')];
+  const links  = [...document.querySelectorAll('[data-ir]')];
   const panels = [...document.querySelectorAll('[data-ir-panel]')];
   if (!links.length || !panels.length) return;
+
   const groups = [...document.querySelectorAll('.ir-side-group')];
   const isMobile = () => window.matchMedia('(max-width:900px)').matches;
+
   const openGroupFor = id => {
     if (!isMobile()) return;
     groups.forEach(g => {
-      const hasLink = [...g.querySelectorAll('[data-ir]')].some(a => a.dataset.ir === id);
+      const hasLink = [...g.querySelectorAll('[data-ir]')]
+        .some(a => a.dataset.ir === id);
       g.classList.toggle('is-open', hasLink);
     });
   };
+
   const activate = id => {
     const target = id || 'overview';
     links.forEach(a => a.classList.toggle('active', a.dataset.ir === target));
     panels.forEach(p => p.classList.toggle('active', p.dataset.irPanel === target));
     openGroupFor(target);
   };
+
   const sync = () => activate((location.hash || '#overview').slice(1));
+
   groups.forEach(group => {
     const title = group.querySelector('.ir-side-title');
     if (!title) return;
@@ -348,25 +492,36 @@ function initInvestorPanels(){
       title.setAttribute('aria-expanded', String(open));
     };
     title.addEventListener('click', toggle);
-    title.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    title.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
   });
+
   links.forEach(a => a.addEventListener('click', () => setTimeout(sync, 0)));
   window.addEventListener('hashchange', sync);
   window.addEventListener('resize', debounce(sync, 150));
   sync();
 }
 
+/* ------------------------------------------------------------
+   Site search (search.html)
+   ------------------------------------------------------------ */
+
 function initSiteSearch(){
   const input = document.getElementById('siteSearchInput');
   if (!input) return;
-  const button = document.getElementById('siteSearchButton');
-  const clear = document.getElementById('searchClear');
-  const grid = document.getElementById('searchResults');
-  const empty = document.getElementById('searchEmpty');
-  const count = document.getElementById('searchCount');
+
+  const button   = document.getElementById('siteSearchButton');
+  const clear    = document.getElementById('searchClear');
+  const grid     = document.getElementById('searchResults');
+  const empty    = document.getElementById('searchEmpty');
+  const count    = document.getElementById('searchCount');
   const template = document.getElementById('searchResultTemplate');
+
   if (!grid || !template) return;
+
   const pages = Array.isArray(window.DADEX_SEARCH_INDEX) ? window.DADEX_SEARCH_INDEX : [];
+
   const render = () => {
     const q = input.value.trim().toLowerCase();
     if (!q) {
@@ -376,8 +531,12 @@ function initSiteSearch(){
       return;
     }
     const terms = q.split(/\s+/).filter(Boolean);
-    const rows = pages.filter(p => terms.every(t => p.join(' ').toLowerCase().includes(t))).slice(0, 60);
+    const rows = pages
+      .filter(p => terms.every(t => p.join(' ').toLowerCase().includes(t)))
+      .slice(0, 60);
+
     count.textContent = `${rows.length} result${rows.length === 1 ? '' : 's'} found`;
+
     const frag = document.createDocumentFragment();
     for (const p of rows) {
       const card = template.content.firstElementChild.cloneNode(true);
@@ -390,27 +549,47 @@ function initSiteSearch(){
     grid.replaceChildren(frag);
     empty.hidden = rows.length !== 0;
   };
+
   if (button) button.addEventListener('click', render);
   input.addEventListener('input', render);
   input.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
   if (clear) clear.addEventListener('click', () => { input.value = ''; render(); input.focus(); });
+
   const q = new URLSearchParams(location.search).get('q');
   if (q) { input.value = q; render(); }
 }
 
+/* ------------------------------------------------------------
+   DEXPERT — floating assistant
+   ------------------------------------------------------------ */
+
 const DEXPERT_PRODUCTS = [
-  ['Aquadex', 'product-aquadex.html'], ['T-Flex', 'product-tflex.html'], ['Polydex Premium', 'product-polydex-premium.html'],
-  ['Polydex', 'product-polydex.html'], ['Thermoline', 'product-thermoline.html'], ['Flow Line', 'product-flow-line.html'],
-  ['Inspection Chambers', 'product-inspection-chambers.html'], ['Manholes', 'product-manholes.html'], ['Catchpits', 'product-catchpits.html'],
-  ['Nikasi', 'product-nikasi.html'], ['Polyduct', 'product-polyduct.html'], ['PE Cable Duct', 'product-pe-cable-duct.html'],
-  ['Electrical Conduits', 'product-electrical-conduits.html'], ['Electroduct', 'product-electroduct.html'], ['Corrugated Sheets', 'product-corrugated-sheets.html'],
-  ['Non-Return Valves', 'product-non-return-valves.html'], ['T-Flex Gas', 'product-tflex-gas.html'], ['T-Flex Compressed Air', 'product-tflex-compressed-air.html'],
+  ['Aquadex', 'product-aquadex.html'],
+  ['T-Flex', 'product-tflex.html'],
+  ['Polydex Premium', 'product-polydex-premium.html'],
+  ['Polydex', 'product-polydex.html'],
+  ['Thermoline', 'product-thermoline.html'],
+  ['Flow Line', 'product-flow-line.html'],
+  ['Inspection Chambers', 'product-inspection-chambers.html'],
+  ['Manholes', 'product-manholes.html'],
+  ['Catchpits', 'product-catchpits.html'],
+  ['Nikasi', 'product-nikasi.html'],
+  ['Polyduct', 'product-polyduct.html'],
+  ['PE Cable Duct', 'product-pe-cable-duct.html'],
+  ['Electrical Conduits', 'product-electrical-conduits.html'],
+  ['Electroduct', 'product-electroduct.html'],
+  ['Corrugated Sheets', 'product-corrugated-sheets.html'],
+  ['Non-Return Valves', 'product-non-return-valves.html'],
+  ['T-Flex Gas', 'product-tflex-gas.html'],
+  ['T-Flex Compressed Air', 'product-tflex-compressed-air.html'],
   ['UPVC Tubewell Casing & Screen Pipes System', 'product-upvc-tubewell.html']
 ];
 
 const DEXPERT_APPS = [
-  ['Water Supply', 'products.html#water-supply'], ['Sewerage & Drainage', 'products.html#sewerage-drainage'],
-  ['Cable & Utility Ducting', 'products.html#cable-utility-ducting'], ['Specialised & Industrial', 'products.html#specialised-industrial'],
+  ['Water Supply', 'products.html#water-supply'],
+  ['Sewerage & Drainage', 'products.html#sewerage-drainage'],
+  ['Cable & Utility Ducting', 'products.html#cable-utility-ducting'],
+  ['Specialised & Industrial', 'products.html#specialised-industrial'],
   ['Roofing', 'products.html#roofing']
 ];
 
@@ -422,15 +601,22 @@ function initDEXPERT(){
   fab.type = 'button';
   fab.setAttribute('aria-expanded', 'false');
   fab.setAttribute('aria-controls', 'dexpertDialog');
-  fab.innerHTML = '<span class="dexpert-fab-icon"><svg><use href="#spark"/></svg></span><span class="dexpert-fab-text"><strong>Ask DEXPERT</strong><small>Your building solutions guide</small></span><span class="fab-dot"></span>';
+  
+  // Updated FAB structure to match the screenshot
+  fab.innerHTML = `
+    <img src="assets/images/Dexpert.png" alt="" aria-hidden="true">
+    <span>
+      <strong>Ask DEXPERT</strong>
+      <small>Your building solutions guide</small>
+    </span>
+    <span class="fab-dot"></span>
+  `;
   document.body.appendChild(fab);
 
-  const title = (document.querySelector('main h1')?.textContent || document.title.replace(/\s*[|–-].*$/, '')).trim();
   const path = window.location.pathname.split('/').pop() || 'index.html';
-  const isProduct = path.startsWith('product') && path !== 'products.html';
-  const isInvestor = /investor|financial-reports/i.test(path);
+  const isProduct   = path.startsWith('product') && path !== 'products.html';
+  const isInvestor  = /investor|financial-reports/i.test(path);
   const isResources = /literature|calculators|videos|news/i.test(path);
-  const currentProduct = isProduct ? title : '';
 
   let dialogPromise = null;
 
@@ -440,12 +626,14 @@ function initDEXPERT(){
       const res = await fetch('components/dexpert.html', { cache: 'force-cache' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const html = await res.text();
+
       const temp = document.createElement('div');
       temp.innerHTML = html;
+
       const dialog = temp.querySelector('dialog#dexpertDialog');
       const homeTpl = temp.querySelector('template#dexpertHomeTemplate');
       const resultTpl = temp.querySelector('template#dexpertResultTemplate');
-      
+
       document.body.appendChild(homeTpl);
       document.body.appendChild(resultTpl);
       document.body.appendChild(dialog);
@@ -456,22 +644,13 @@ function initDEXPERT(){
     return dialogPromise;
   }
 
-  function buildActions(container, actions, onSelect){
+  function buildActions(container, actions){
     const frag = document.createDocumentFragment();
-    for (const [href, label, subtitle] of actions) {
-      const isBtn = href.startsWith('#');
-      const el = document.createElement(isBtn ? 'button' : 'a');
-      
-      if (isBtn) {
-        el.type = 'button';
-        const keyword = href.replace('#', '');
-        el.onclick = () => onSelect(keyword);
-      } else {
-        el.href = href;
-      }
-      
-      el.innerHTML = `<span>${label}${subtitle ? `<small>${subtitle}</small>` : ''}</span><svg><use href="#arrow"/></svg>`;
-      frag.appendChild(el);
+    for (const [href, label] of actions) {
+      const a = document.createElement('a');
+      a.href = href;
+      a.innerHTML = `<span>${label}</span><i class="fas fa-arrow-right"></i>`;
+      frag.appendChild(a);
     }
     container.replaceChildren(frag);
   }
@@ -480,44 +659,40 @@ function initDEXPERT(){
     const body = dialog.querySelector('#dexpertBody');
     const node = homeTpl.content.firstElementChild.cloneNode(true);
 
-    let introText, actions;
+    let actions;
     if (isProduct) {
-      introText = `Let’s point you towards the right Dadex solution for ${currentProduct}.`;
       actions = [
-        ['#technical', 'Technical information', 'Specs and installation'],
-        ['literature.html', 'Literature', 'Brochures and documents'],
-        ['products.html', 'Related products', 'Explore similar solutions'],
-        ['dealers.html', 'Find a dealer', 'Locate a nearby partner']
+        ['#technical', 'Technical information'],
+        ['literature.html', 'Literature'],
+        ['products.html', 'Related products'],
+        ['dealers.html', 'Find a dealer']
       ];
     } else if (isInvestor) {
-      introText = 'Find annual reports, financial information and shareholder references.';
       actions = [
-        ['investors.html', 'Investor Relations', 'Overview and updates'],
-        ['investors.html#annual', 'Annual Reports', 'Financial performance'],
-        ['contact.html', 'Investor enquiry', 'Talk to our team']
+        ['investors.html', 'Investor Relations'],
+        ['investors.html#annual', 'Annual Reports'],
+        ['contact.html', 'Investor enquiry']
       ];
     } else if (isResources) {
-      introText = 'Find the resources and tools you need for your next project.';
       actions = [
-        ['products.html', 'Find a product', 'Browse our systems'],
-        ['literature.html', 'Literature', 'Brochures and guides'],
-        ['videos.html', 'Videos', 'Installation and overviews'],
-        ['calculators.html', 'Calculators', 'Engineering tools']
+        ['products.html', 'Find a product'],
+        ['literature.html', 'Literature'],
+        ['videos.html', 'Videos'],
+        ['calculators.html', 'Calculators'],
+        ['contact.html', 'Technical support']
       ];
     } else {
-      introText = 'Let’s point you towards the right Dadex solution. Choose a starting point below.';
       actions = [
-        ['#home', 'A home or residential project', 'Plumbing, interiors and more'],
-        ['#commercial', 'A commercial or industrial space', 'Roofing, cladding and building systems'],
-        ['#infrastructure', 'Infrastructure or agriculture', 'Water supply, drainage and irrigation']
+        ['products.html', 'Find a product'],
+        ['literature.html', 'Literature'],
+        ['videos.html', 'Videos'],
+        ['calculators.html', 'Calculators'],
+        ['dealers.html', 'Find a dealer']
       ];
     }
 
-    node.querySelector('.dexpert-intro').textContent = introText;
-    buildActions(node.querySelector('.dexpert-actions'), actions, (keyword) => {
-      renderAnswer(dialog, homeTpl, resultTpl, keyword);
-    });
-
+    // We removed the dynamic context box injection here.
+    buildActions(node.querySelector('.dexpert-actions'), actions);
     body.replaceChildren(node);
   }
 
@@ -527,31 +702,43 @@ function initDEXPERT(){
     let label, heading, message, href, cta;
 
     if (!q) {
-      [label, heading, message, href, cta] = ['DEXPERT', 'Try a search', 'Enter a product or application such as Aquadex, water supply or gas.', 'products.html', 'Browse products'];
+      [label, heading, message, href, cta] = ['DEXPERT', 'Try a search',
+        'Enter a product or application such as Aquadex, water supply or gas.',
+        'products.html', 'Browse products'];
     } else {
-      const product = DEXPERT_PRODUCTS.find(p => q.includes(p[0].toLowerCase()) || p[0].toLowerCase().includes(q));
-      const app = !product && DEXPERT_APPS.find(a => q.includes(a[0].toLowerCase()) || a[0].toLowerCase().includes(q));
+      const product = DEXPERT_PRODUCTS.find(p =>
+        q.includes(p[0].toLowerCase()) || p[0].toLowerCase().includes(q));
+      const app = !product && DEXPERT_APPS.find(a =>
+        q.includes(a[0].toLowerCase()) || a[0].toLowerCase().includes(q));
 
       if (product) {
-        [label, heading, message, href, cta] = ['PRODUCT', product[0], 'Open the product page for its approved information.', product[1], 'Open product'];
+        [label, heading, message, href, cta] = ['PRODUCT', product[0],
+          'Open the product page for its approved information.',
+          product[1], 'Open product'];
       } else if (app) {
-        [label, heading, message, href, cta] = ['APPLICATION', app[0], 'Explore the systems listed for this application area.', app[1], 'Explore'];
-      } else if (q === 'home' || q === 'residential') {
-        [label, heading, message, href, cta] = ['HOME', 'Residential Solutions', 'Explore PPR-C for hot and cold water, and uPVC for soil, waste and ventilation. Your installer should confirm sizes and ratings.', 'products.html#water-supply', 'Explore Home Systems'];
-      } else if (q === 'commercial' || q === 'industrial') {
-        [label, heading, message, href, cta] = ['COMMERCIAL', 'Commercial & Industrial', 'Explore roofing and cladding for your building envelope, with piping and interior systems to complete the project.', 'products.html#roofing', 'Explore Building Envelope'];
-      } else if (q === 'infrastructure' || q === 'agriculture') {
-        [label, heading, message, href, cta] = ['INFRASTRUCTURE', 'Infrastructure & Agriculture', 'Explore HDPE and uPVC piping solutions for water supply, drainage and irrigation.', 'products.html#water-supply', 'Explore Infrastructure'];
+        [label, heading, message, href, cta] = ['APPLICATION', app[0],
+          'Explore the systems listed for this application area.',
+          app[1], 'Explore'];
       } else if (/report|annual|financial|investor|shareholder|agm/.test(q)) {
-        [label, heading, message, href, cta] = ['INVESTOR', 'Investor Relations', 'Find annual reports, financial information and shareholder references.', 'investors.html#annual', 'Open investor information'];
+        [label, heading, message, href, cta] = ['INVESTOR', 'Investor Relations',
+          'Find annual reports, financial information and shareholder references.',
+          'investors.html#annual', 'Open investor information'];
       } else if (/brochure|flyer|leaflet|literature|document|datasheet|certificate|drawing/.test(q)) {
-        [label, heading, message, href, cta] = ['LITERATURE', 'Literature', 'Find brochures, flyers, corporate publications and technical documents.', 'literature.html', 'Open Literature'];
+        [label, heading, message, href, cta] = ['LITERATURE', 'Literature',
+          'Find brochures, flyers, corporate publications and technical documents.',
+          'literature.html', 'Open Literature'];
       } else if (/video|installation|demonstration/.test(q)) {
-        [label, heading, message, href, cta] = ['VIDEOS', 'Videos', 'Installation guides, product overviews and application demonstrations.', 'videos.html', 'Open Videos'];
+        [label, heading, message, href, cta] = ['VIDEOS', 'Videos',
+          'Installation guides, product overviews and application demonstrations.',
+          'videos.html', 'Open Videos'];
       } else if (/calculator|pressure drop|flow|head loss|sizing/.test(q)) {
-        [label, heading, message, href, cta] = ['CALCULATORS', 'Calculators', 'Engineering calculators for pipe selection, hydraulic design and unit conversion.', 'calculators.html', 'Open Calculators'];
+        [label, heading, message, href, cta] = ['CALCULATORS', 'Calculators',
+          'Engineering calculators for pipe selection, hydraulic design and unit conversion.',
+          'calculators.html', 'Open Calculators'];
       } else {
-        [label, heading, message, href, cta] = ['DEXPERT', 'No direct match', 'Try a product, application or resource term.', 'products.html', 'Browse products'];
+        [label, heading, message, href, cta] = ['DEXPERT', 'No direct match',
+          'Try a product, application or resource term.',
+          'products.html', 'Browse products'];
       }
     }
 
@@ -563,24 +750,35 @@ function initDEXPERT(){
     node.querySelector('[data-cta]').textContent = cta;
 
     body.replaceChildren(node);
-    node.querySelector('.dexpert-back').addEventListener('click', () => renderHome(dialog, homeTpl, resultTpl));
+    node.querySelector('.dexpert-back').addEventListener('click',
+      () => renderHome(dialog, homeTpl, resultTpl));
   }
 
   function wireDialog(dialog, homeTpl, resultTpl){
     dialog.querySelector('.dexpert-close').addEventListener('click', () => dialog.close());
-    dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
-    dialog.addEventListener('close', () => { fab.setAttribute('aria-expanded', 'false'); });
-    renderHome(dialog, homeTpl, resultTpl);
-
-    const form = dialog.querySelector('.dexpert-ask');
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const input = form.querySelector('input');
-      const q = input.value.trim();
-      if (!q) return;
-      renderAnswer(dialog, homeTpl, resultTpl, q);
-      input.value = '';
+    dialog.addEventListener('click', e => {
+      if (e.target === dialog) dialog.close();
     });
+    dialog.addEventListener('close', () => {
+      fab.setAttribute('aria-expanded', 'false');
+    });
+
+    // Wire the static form that lives outside #dexpertBody
+    const form = dialog.querySelector('.dexpert-ask');
+    const input = dialog.querySelector('#expert-input');
+    
+    if (form && input) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const query = input.value.trim();
+        if (query) {
+          renderAnswer(dialog, homeTpl, resultTpl, query);
+          input.value = ''; // Clear input after submission
+        }
+      });
+    }
+
+    renderHome(dialog, homeTpl, resultTpl);
   }
 
   const open = async () => {
@@ -596,28 +794,44 @@ function initDEXPERT(){
   };
 
   fab.addEventListener('click', () => {
-    if (fab.getAttribute('aria-expanded') === 'true') document.getElementById('dexpertDialog')?.close();
-    else open();
+    if (fab.getAttribute('aria-expanded') === 'true') {
+      document.getElementById('dexpertDialog')?.close();
+    } else {
+      open();
+    }
   });
 
   document.addEventListener('click', e => {
-    if (e.target.closest('[data-open-dexpert]')) { e.preventDefault(); open(); }
+    if (e.target.closest('[data-open-dexpert]')) {
+      e.preventDefault();
+      open();
+    }
   });
 
   scheduleIdle(() => loadDialog().catch(() => {}));
 }
 
+/* ------------------------------------------------------------
+   Back to top — floating button, injected site-wide
+   ------------------------------------------------------------ */
+
 function initBackToTop(){
   if (document.querySelector('.back-to-top')) return;
+
   const btn = document.createElement('button');
   btn.className = 'back-to-top';
   btn.type = 'button';
   btn.setAttribute('aria-label', 'Back to top');
   btn.innerHTML = '<i class="fas fa-arrow-up" aria-hidden="true"></i>';
   document.body.appendChild(btn);
-  const update = () => { btn.classList.toggle('is-visible', window.scrollY > SCROLL_TOP_THRESHOLD); };
+
+  const update = () => {
+    btn.classList.toggle('is-visible', window.scrollY > SCROLL_TOP_THRESHOLD);
+  };
+
   window.addEventListener('scroll', update, { passive: true });
   update();
+
   btn.addEventListener('click', () => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
