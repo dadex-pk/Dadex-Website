@@ -597,33 +597,48 @@
   background:linear-gradient(135deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 45%);
   pointer-events:none;border-radius:inherit;
 }
-.dexpert-fab img,
-.dexpert-fab .expert-icon {
+.dexpert-fab-icon {
   width: 2.5rem;
   height: 2.5rem;
-  flex: 0 0 2.5rem;
-  border-radius: 50%;
   background: #fff;
+  border-radius: 50%;
   display: grid;
   place-items: center;
-  padding: 0.375rem; /* Adds breathing room inside the circle */
-  box-sizing: border-box;
-  border: 1px solid rgba(255,255,255,.9);
+  flex: 0 0 2.5rem;
   box-shadow: 0 2px 8px rgba(0,0,0,.15);
   position: relative;
   z-index: 1;
-  transition: transform var(--sh-t-slow) var(--sh-ease);
 }
-.dexpert-fab .expert-icon svg {
-  width: 100%;
-  height: 100%;
-  fill: var(--dadex-red);
+.dexpert-fab-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--dadex-red);
+  stroke: currentColor;
+  fill: none;
 }
-.dexpert-fab span{
-  font-size:.78125rem;letter-spacing:.02em;line-height:1;
-  padding-right:.125rem;position:relative;z-index:1;
+.dexpert-fab-text {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:2px;
 }
-.dexpert-fab small{font-size:.5625rem;color:#f3d0d0;line-height:1}
+.dexpert-fab-text strong {
+  font-size:0.78rem;
+  font-weight:800;
+  line-height:1;
+}
+.dexpert-fab-text small {
+  font-size:0.56rem;
+  color:#f3d0d0;
+  line-height:1;
+}
+.dexpert-fab .fab-dot {
+  width:5px;
+  height:5px;
+  background:#fff;
+  border-radius:50%;
+  margin-left:5px;
+}
 .dexpert-fab[aria-expanded="true"]{
   background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%)!important;
   border-color:rgba(255,255,255,.24)!important;
@@ -691,6 +706,27 @@
   right:-2.5rem;top:-5rem;border:1px solid rgba(255,255,255,.08);
   pointer-events:none;
 }
+
+/* Header Icon Wrapper */
+.dexpert-head .dexpert-icon-wrapper {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.4);
+  display: grid;
+  place-items: center;
+  margin-right: 0.75rem;
+  position: relative;
+  z-index: 1;
+}
+.dexpert-head .dexpert-icon-wrapper svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #fff;
+  fill: none;
+  stroke: currentColor;
+}
+
 .dexpert-brand{display:block!important;position:relative;z-index:1}
 .dexpert-brand strong{font-size:1rem;letter-spacing:.005em}
 .dexpert-brand span{font-size:.6875rem;letter-spacing:.045em;opacity:.9}
@@ -708,51 +744,54 @@
   letter-spacing:-.012em;line-height:1.3;
 }
 .dexpert-body p{margin:.25rem 0 .9rem;color:#4f565c;line-height:1.6;font-size:.8125rem}
-.dexpert-context{
-  padding:0 0 .875rem!important;margin:0 0 .875rem!important;
-  border-bottom:1px solid var(--d-line);
-}
-.dexpert-context span{
-  display:block;font-size:.59375rem!important;
-  letter-spacing:.13em;text-transform:uppercase;
-  color:var(--d-muted);font-weight:800;margin-bottom:.25rem;
-}
-.dexpert-context strong{
-  font-size:.84375rem!important;color:#17191c;font-weight:700;letter-spacing:-.005em;
-}
-.dexpert-context.dexpert-intro{
-  font-size:.8125rem!important;margin:0 0 .875rem!important;
-  border-bottom:0;padding-bottom:0!important;
+
+.dexpert-kicker {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--dadex-red);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 12px;
 }
 
-/* Button Tweaks (Point 2 Applied) */
-.dexpert-actions{display:grid;gap:.5rem!important}
+/* Action Buttons */
+.dexpert-actions{display:grid;gap:.5rem!important;margin-top:1rem;}
 .dexpert-actions a,
 .dexpert-actions button{
   display:flex;align-items:center;gap:.75rem;
-  padding:.75rem 1rem!important; /* Tightened padding */
-  border-radius:.5rem!important; /* Sharper radius */
-  border:1px solid #e5e8ea;background:#fafbfb;
+  padding:.75rem 1rem!important;
+  border-radius:.5rem!important;
+  border:1px solid #e5e8ea;
+  background:#fff;
   color:#1d2328;text-decoration:none;cursor:pointer;
-  font:inherit;font-size:.78125rem!important;font-weight:650!important;
+  font:inherit;font-size:.78125rem!important;
   text-align:left;width:100%;position:relative;
   transition:border-color var(--sh-t-fast) var(--sh-ease-io),
              background var(--sh-t-fast) var(--sh-ease-io),
              color var(--sh-t-fast) var(--sh-ease-io),
-             transform var(--sh-t-fast) var(--sh-ease),
              box-shadow var(--sh-t-fast) var(--sh-ease-io);
 }
-.dexpert-actions a span,
-.dexpert-actions button span{display:block}
-.dexpert-actions small{
+.dexpert-actions span {
+  display:block;
+  font-weight:700;
+}
+.dexpert-actions small {
   display:block;font-size:.75rem;font-weight:400;
-  color:var(--d-muted);margin-top:.1875rem;line-height:1.4;
+  color:#687078;margin-top:4px;line-height:1.4;
   transition:color var(--sh-t-fast) var(--sh-ease-io);
+}
+.dexpert-actions svg {
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 .dexpert-ask{
-  margin-top:1.125rem!important;padding-top:1.125rem!important;
-  border-top:1px solid var(--d-line);
+  margin-top:0!important;
+  padding: 0 1.25rem 1.25rem 1.25rem !important;
 }
 .dexpert-ask label{
   display:block;font-size:.59375rem!important;letter-spacing:.13em!important;
@@ -761,7 +800,9 @@
 }
 .dexpert-ask>div{
   display:grid;grid-template-columns:1fr auto;gap:.375rem!important;
-  background:#f6f7f8;border:1px solid #e3e6e8;border-radius:.5rem;
+  background:#f4f5f5;
+  border:1px solid transparent;
+  border-radius:.5rem;
   padding:.25rem;
   transition:border-color var(--sh-t-fast) var(--sh-ease-io),
              background var(--sh-t-fast) var(--sh-ease-io),
@@ -780,7 +821,7 @@
 .dexpert-ask input::placeholder{color:#8f969d}
 .dexpert-ask button{
   min-width:3.75rem!important;border:0;border-radius:.375rem!important;
-  background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%);
+  background:var(--dadex-red);
   color:#fff;padding:.625rem .875rem!important;
   font:800 .6875rem/1 'Inter',system-ui,sans-serif!important;
   letter-spacing:.03em;cursor:pointer;
@@ -840,18 +881,21 @@
       0 6px 16px rgba(0,0,0,.14),
       0 22px 48px -6px rgba(229,0,0,.45);
   }
-  .dexpert-fab:hover img{transform:scale(1.05) rotate(-3deg)}
+  .dexpert-fab:hover .dexpert-fab-icon svg{transform:scale(1.05) rotate(-3deg)}
   .dexpert-close:hover{background:rgba(255,255,255,.24);transform:rotate(90deg)}
+  
   .dexpert-actions a:hover,
   .dexpert-actions button:hover{
-    border-color:rgba(229,0,0,.28);background:#fff6f6;color:var(--dadex-red);
-    transform:translateX(3px);
-    box-shadow:0 .375rem 1rem -.375rem rgba(229,0,0,.18);
+    border-color:var(--dadex-red);
+    background:#fffafa;
+    color:var(--dadex-red);
+    box-shadow:0 .375rem 1rem -.375rem rgba(229,0,0,.10);
   }
   .dexpert-actions a:hover small,
   .dexpert-actions button:hover small{color:#c03838}
+  
   .dexpert-ask button:hover{
-    background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%);
+    background:var(--dadex-red-dark);
     box-shadow:0 .375rem 1rem -.25rem rgba(229,0,0,.40);
     transform:translateY(-1px);
   }
@@ -867,14 +911,15 @@
     right:1rem!important;bottom:1rem!important;min-height:3rem;
     padding:0 1.125rem 0 .375rem!important;
   }
-  .dexpert-fab img{width:2.25rem;height:2.25rem;flex-basis:2.25rem}
-  .dexpert-fab small{display:none}
+  .dexpert-fab-icon{width:2.25rem;height:2.25rem;flex-basis:2.25rem}
+  .dexpert-fab-text small{display:none}
   .dexpert-dialog{left:1rem;right:1rem;bottom:5rem;width:auto}
 }
 @media(max-width:520px){
   .dexpert-dialog{max-height:80vh;overflow:auto;border-radius:1.125rem}
   .dexpert-head{padding:1rem 1.125rem!important}
-  .dexpert-body{padding:1.125rem!important}
+  .dexpert-body{padding:1.125rem 1.125rem 0 1.125rem!important}
+  .dexpert-ask{padding:0 1.125rem 1.125rem 1.125rem !important;}
 }
 
 /* ============================================================
