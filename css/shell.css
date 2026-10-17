@@ -275,17 +275,23 @@
   font-size:20px;letter-spacing:-.6px;margin-top:0;margin-bottom:14px;
   color:var(--d-text);
 }
-.site-header .mega-feature p{
-  color:var(--d-muted);font-size:12px;line-height:1.7;margin:0 0 20px;
+/* Targets your <span> instead of <p> */
+.site-header .mega-feature span{
+  display:block;color:var(--d-muted);font-size:12px;line-height:1.7;margin:0 0 20px;
 }
-.site-header .mega-feature a{
+/* Targets your .mega-overview class */
+.site-header .mega-feature a,
+.site-header .mega-overview{
   display:flex;align-items:center;gap:15px;color:var(--dadex-red);
-  font-weight:650;font-size:11px;text-decoration:none;
+  font-weight:650;font-size:11px;text-decoration:none;margin-top:auto;
 }
-.site-header .mega-feature a svg{width:16px;height:16px;}
-.site-header .mega-columns{display:flex;gap:45px;}
+.site-header .mega-feature a svg,
+.site-header .mega-overview svg{width:16px;height:16px;}
+.site-header .mega-columns{display:flex;gap:45px;width:100%;}
 .site-header .mega-columns section{flex:1;}
-.site-header .mega-columns h3{
+/* Targets your .mega-column-title div */
+.site-header .mega-columns h3,
+.site-header .mega-column-title{
   font-family:inherit;font-size:9px;letter-spacing:1.3px;color:#899198;
   padding:0 0 15px;border-bottom:1px solid #e6e9eb;margin:0 0 10px;
   font-weight:normal;
