@@ -1,29 +1,42 @@
 /* ============================================================
-   DADEX ETERNIT LIMITED — SHARED UI
-   - Header and footer injection
-   - Header scroll state (collapse on scroll)
-   - Navigation (mobile drawer, dropdowns, active state, focus trap)
-   - Dynamic text (footer year, company age)
-   - Project filter (event delegation)
-   - Mailto contact form
-   - Literature filter
-   - Investor panel switcher
-   - Site search (template-driven, defensive against stale index URLs)
-   - DEXPERT (native <dialog>, template-driven, lazy)
-   - Back to top
+   DADEX ETERNIT LIMITED — SHARED UI  (v3)
+   ------------------------------------------------------------
+   Modules
+     · Header and footer injection (from components/)
+     · Header scroll state (collapse on scroll)
+     · Navigation (mobile drawer, dropdowns, active state,
+       keyboard focus trap)
+     · Dynamic text (footer year, company age)
+     · Project filter (projects.html)
+     · Mailto contact form (contact.html)
+     · Literature filter (literature.html)
+     · Investor panel switcher (investors.html)
+     · Site search (search.html)
+     · DEXPERT floating assistant
+     · Back to top
 
    Page-scoped modules (dealers) live in js/dealers.js.
    MOBILE_NAV_MAX must match the breakpoint used in shell.css
-   for .site-header .menu-toggle / .site-navigation — currently 900px.
+   for .site-header .menu-toggle / .site-navigation — 900px.
 
-   v2 changes (marked /* ★ */):
-     - body scroll-lock class already handled in shell.css
-     - focus trap inside mobile drawer
-     - setActiveNavigation() normalises /index.html -> /
-     - site search filters out removed pages (careers, faq,
-       whistleblowing, technical-resources, solutions)
-     - search result previews truncated at ~160 chars
-     - DEXPERT dialogPromise resets on load failure
+   Folder assumptions (confirmed with you):
+     /components/header.html
+     /components/footer.html
+     /components/dexpert.html
+     /css/design-system.css
+     /js/main.js
+
+   v3 changes
+     · Component fetch path is components/ — CORRECT for this repo
+     · file:// protocol detected → visible banner explains why
+     · 404 / network error → visible banner + detailed console log
+     · Server-side 404 pages (full HTML, status 200) rejected so a
+       404 document never gets injected as the header
+     · setActiveNavigation() normalises /index.html -> /
+     · Mobile drawer focus trap (Tab cycles within drawer)
+     · Mobile drawer scroll-lock via body.nav-open (CSS side)
+     · Site search filters removed pages + truncates previews
+     · DEXPERT dialogPromise resets on load failure
    ============================================================ */
 
 const MOBILE_NAV_MAX = 900;
@@ -33,8 +46,8 @@ const COMPANY_ANNIVERSARY_DAY = 13;
 const SCROLL_TOP_THRESHOLD = 600;
 const HEADER_COLLAPSE_THRESHOLD = 70;
 
-/* ★ URLs removed from the site that may still appear in search-index.js.
-   Filtered defensively so search never links to a 404. */
+/* URLs removed from the site that may still be in search-index.js.
+   Filtered defensively so search never links to a dead page. */
 const REMOVED_SEARCH_URLS = new Set([
   'careers.html',
   'faq.html',
@@ -46,18 +59,6 @@ const REMOVED_SEARCH_URLS = new Set([
 /* ------------------------------------------------------------
    Utilities
    ------------------------------------------------------------ */
-
-const HTML_ESCAPE_MAP = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  "'": '&#39;'
-};
-
-function escapeHTML(value){
-  return String(value ?? '').replace(/[&<>"']/g, m => HTML_ESCAPE_MAP[m]);
-}
 
 function debounce(fn, wait){
   let timer = null;
@@ -98,24 +99,92 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /* ------------------------------------------------------------
    Shared header / footer injection
+   ------------------------------------------------------------
+   Files live in /components/. Loads run in parallel; one failure
+   does not block the other. Every failure produces a visible
+   banner so a blank header can never be silent.
    ------------------------------------------------------------ */
 
 async function loadSharedComponents(){
-  const mounts = document.querySelectorAll('[data-component]');
+  const mounts = Array.from(document.querySelectorAll('[data-component]'))
+    .filter(m => {
+      const n = m.getAttribute('data-component');
+      return n === 'header' || n === 'footer';
+    });
   if (!mounts.length) return;
-  const base = new URL('.', window.location.href);
-  await Promise.allSettled(Array.from(mounts).map(async mount => {
-    const name = mount.getAttribute('data-component');
-    if (name !== 'header' && name !== 'footer') return;
-    try {
-      const response = await fetch(new URL(`components/${name}.html`, base), { cache: 'no-cache' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      mount.outerHTML = await response.text();
-    } catch (error) {
-      console.error(`Dadex component load failed: ${name}`, error);
-      mount.setAttribute('data-component-error', name);
+
+  // file:// — every modern browser blocks fetch() from disk
+  if (location.protocol === 'file:') {
+    mounts.forEach(mount => renderComponentError(mount, {
+      name: mount.getAttribute('data-component'),
+      reason:
+        'The site was opened directly from disk (file:// protocol). ' +
+        'Browsers block file fetches for security. ' +
+        'Start a local server — for example ' +
+        '<code>python3 -m http.server 8080</code> — and open ' +
+        '<code>http://localhost:8080/</code>.'
+    }));
+    return;
+  }
+
+  const base = new URL('.', location.href);
+  console.log('[Dadex] Component base URL:', new URL('components/', base).href);
+
+  await Promise.allSettled(mounts.map(mount => loadOneComponent(mount, base)));
+}
+
+async function loadOneComponent(mount, base){
+  const name = mount.getAttribute('data-component');
+  const fetchUrl = new URL(`components/${name}.html`, base);
+
+  try {
+    const response = await fetch(fetchUrl, { cache: 'no-cache' });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} ${response.statusText}`);
     }
-  }));
+    const html = await response.text();
+
+    // A component file is a fragment, never a full document.
+    // If the server returns a 404 or SPA-fallback page with status 200,
+    // we must NOT inject it — that would replace the header with a page.
+    if (/^\s*<!DOCTYPE\s+html/i.test(html)) {
+      throw new Error(
+        'Server returned a full HTML document, not a component fragment. ' +
+        'Likely a server-side 404 or SPA fallback.'
+      );
+    }
+
+    mount.outerHTML = html;
+  } catch (error) {
+    console.error(
+      `[Dadex] Failed to load ${name}.html from ${fetchUrl.href}`,
+      error
+    );
+    renderComponentError(mount, {
+      name,
+      url: fetchUrl.href,
+      reason: error.message
+    });
+  }
+}
+
+function renderComponentError(mount, { name, url, reason }){
+  mount.setAttribute('data-component-error', name);
+  mount.innerHTML = `
+    <div style="
+      padding:14px 20px;
+      background:#fff4f4;
+      color:#8a0000;
+      font:600 13px/1.55 system-ui,-apple-system,sans-serif;
+      border-bottom:2px solid #e50000;
+    ">
+      <strong>Dadex component error — ${name}:</strong>
+      ${reason}
+      ${url ? `<br><small style="opacity:.75;font-weight:500;">
+        Attempted URL: <code>${url}</code>
+      </small>` : ''}
+    </div>
+  `;
 }
 
 /* ------------------------------------------------------------
@@ -293,8 +362,7 @@ function initNavigation(header){
       .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
   }, 150), { passive: true });
 
-  /* ★ Focus trap — the drawer overlays the page while body scroll is
-     locked, so Tab must not escape into hidden page content behind it. */
+  /* Focus trap — Tab must stay inside the open mobile drawer */
   const FOCUSABLE_SELECTOR =
     'a[href]:not([disabled]), button:not([disabled]), ' +
     'input:not([disabled]), select:not([disabled]), ' +
@@ -323,8 +391,8 @@ function initNavigation(header){
 
 /* ------------------------------------------------------------
    Active navigation (path-based)
-   ★ /index.html and /index.htm are normalised to / so the Home
-     link highlights correctly on directory-served URLs.
+   /index.html and /index.htm are normalised to / so the Home
+   link highlights correctly on directory-served URLs.
    ------------------------------------------------------------ */
 
 function setActiveNavigation(){
@@ -561,9 +629,7 @@ function initInvestorPanels(){
 
 /* ------------------------------------------------------------
    Site search (search.html)
-   ★ Filters stale index URLs (REMOVED_SEARCH_URLS) so no result
-     ever links to a 404.
-   ★ Truncates result previews to ~160 chars at a word boundary.
+   Filters stale index URLs + truncates long previews.
    ------------------------------------------------------------ */
 
 function initSiteSearch(){
@@ -633,9 +699,7 @@ function initSiteSearch(){
     render();
     input.focus();
     if (location.search) {
-      try {
-        history.replaceState(null, '', location.pathname);
-      } catch (_) {}
+      try { history.replaceState(null, '', location.pathname); } catch (_) {}
     }
   });
 
@@ -704,10 +768,23 @@ function initDEXPERT(){
 
   function loadDialog(){
     if (dialogPromise) return dialogPromise;
+
     dialogPromise = (async () => {
-      const res = await fetch('components/dexpert.html', { cache: 'no-store' });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const base = new URL('.', location.href);
+      const fetchUrl = new URL('components/dexpert.html', base);
+
+      const res = await fetch(fetchUrl, { cache: 'no-store' });
+      if (!res.ok) {
+        throw new Error(`${res.status} ${res.statusText} — ${fetchUrl.href}`);
+      }
       const html = await res.text();
+
+      if (/^\s*<!DOCTYPE\s+html/i.test(html)) {
+        throw new Error(
+          'Server returned a full HTML document instead of the DEXPERT fragment. ' +
+          'Likely a server-side 404 or SPA fallback.'
+        );
+      }
 
       const temp = document.createElement('div');
       temp.innerHTML = html;
@@ -715,6 +792,10 @@ function initDEXPERT(){
       const dialog = temp.querySelector('dialog#dexpertDialog');
       const homeTpl = temp.querySelector('template#dexpertHomeTemplate');
       const resultTpl = temp.querySelector('template#dexpertResultTemplate');
+
+      if (!dialog || !homeTpl || !resultTpl) {
+        throw new Error('dexpert.html is missing one of the required elements.');
+      }
 
       document.body.appendChild(homeTpl);
       document.body.appendChild(resultTpl);
@@ -724,7 +805,7 @@ function initDEXPERT(){
       return dialog;
     })();
 
-    /* ★ Reset cached promise on failure so the next click retries. */
+    // Reset cache on failure so the next click retries.
     dialogPromise.catch(() => { dialogPromise = null; });
 
     return dialogPromise;
@@ -873,7 +954,7 @@ function initDEXPERT(){
       fab.setAttribute('aria-expanded', 'true');
       setTimeout(() => dialog.querySelector('#expert-input')?.focus(), 60);
     } catch (err) {
-      console.error('DEXPERT failed to load', err);
+      console.error('[Dadex] DEXPERT failed to load:', err);
     }
   };
 
