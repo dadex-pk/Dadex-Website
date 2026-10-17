@@ -627,7 +627,7 @@ function initDEXPERT(){
   function loadDialog(){
     if (dialogPromise) return dialogPromise;
     dialogPromise = (async () => {
-      const res = await fetch('components/dexpert.html', { cache: 'force-cache' });
+      const res = await fetch('components/dexpert.html', { cache: 'no-store' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const html = await res.text();
 
