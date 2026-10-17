@@ -22,7 +22,7 @@ const COMPANY_FOUNDED_YEAR = 1959;
 const COMPANY_ANNIVERSARY_MONTH = 3; /* April (0-indexed) */
 const COMPANY_ANNIVERSARY_DAY = 13;
 const SCROLL_TOP_THRESHOLD = 600;
-const HEADER_COLLAPSE_THRESHOLD = 6;
+const HEADER_COLLAPSE_THRESHOLD = 70;
 
 /* ------------------------------------------------------------
    Utilities
@@ -154,6 +154,12 @@ function initHeaderState(header){
     const scrolled = window.scrollY > HEADER_COLLAPSE_THRESHOLD;
     header.classList.toggle('is-scrolled', scrolled);
     document.body.classList.toggle('header-scrolled', scrolled);
+    
+    const utilityBar = header.querySelector('.utility-bar');
+    const productsTier = header.querySelector('.header-products-tier');
+    if (utilityBar) utilityBar.inert = scrolled;
+    if (productsTier) productsTier.inert = scrolled;
+    
     ticking = false;
   };
 
