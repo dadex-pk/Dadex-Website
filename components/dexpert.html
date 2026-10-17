@@ -1,45 +1,45 @@
-<dialog aria-label="DEXPERT Dadex digital guide" class="dexpert-dialog" id="dexpertDialog">
-  <div class="dexpert-head">
-    <div class="dexpert-brand">
-      <strong>DEXPERT</strong>
-      <span>Dadex digital guide</span>
-    </div>
-    <button aria-label="Close DEXPERT" class="dexpert-close" type="button">×</button>
-  </div>
-  <div class="dexpert-body" id="dexpertBody"></div>
-</dialog>
-
 <template id="dexpertHomeTemplate">
-  <div>
-    <div class="dexpert-context">
-      <span>Current page</span>
-      <strong></strong>
-    </div>
-    <p class="dexpert-intro"></p>
-    <div class="dexpert-actions"></div>
-    <div class="dexpert-ask">
-      <label for="dexpertQuery">Search Dadex</label>
-      <div>
-        <input autocomplete="off" id="dexpertQuery" placeholder="Product or application" type="search"/>
-        <button id="dexpertAskBtn" type="button">Ask</button>
-      </div>
-    </div>
-    <p class="dexpert-note">Uses approved Dadex website information.</p>
-  </div>
+  <div class="dexpert-kicker">A STRONGER START TO YOUR PROJECT</div>
+  <h4>What are you building?</h4>
+  <p class="dexpert-intro"></p>
+  <div class="dexpert-actions"></div>
 </template>
 
 <template id="dexpertResultTemplate">
-  <div>
-    <button class="dexpert-back" type="button">← Back</button>
-    <div class="dexpert-result">
-      <span data-label></span>
-      <h4 data-heading></h4>
-      <p data-message></p>
-      <a class="dexpert-result-link" href="#"><span data-cta></span> →</a>
-    </div>
+  <button class="dexpert-back">← Back to all options</button>
+  <div class="dexpert-result">
+    <span data-label></span>
+    <h4 data-heading></h4>
+    <p data-message></p>
+    <a class="dexpert-result-link" href="#">
+      <span data-cta></span>
+      <svg style="width:16px;height:16px;"><use href="#arrow"/></svg>
+    </a>
   </div>
 </template>
 
-<template id="dexpertActionTemplate">
-  <a href="#"></a>
-</template>
+<dialog class="dexpert-dialog" id="dexpertDialog" aria-labelledby="expert-title">
+  <div class="dexpert-head">
+    <div class="dexpert-icon-wrapper">
+      <svg><use href="#spark"/></svg>
+    </div>
+    <div class="dexpert-brand">
+      <strong id="expert-title">DEXPERT</strong>
+      <span>Your building solutions guide</span>
+    </div>
+    <button class="dexpert-close" aria-label="Close assistant">×</button>
+  </div>
+  
+  <div class="dexpert-body" id="dexpertBody">
+    <!-- Dynamic content injects here -->
+  </div>
+
+  <form class="dexpert-ask">
+    <label for="expert-input">OR TELL US WHAT YOU’RE BUILDING</label>
+    <div>
+      <input id="expert-input" placeholder="e.g. Plumbing for a new home" required>
+      <button aria-label="Send question"><svg><use href="#arrow"/></svg></button>
+    </div>
+    <small>Product guidance to help you take the next step.</small>
+  </form>
+</dialog>
