@@ -206,8 +206,9 @@
   transition:color .2s;
 }
 .site-header .header-products-row .dropdown-toggle svg,
-.site-header .header-products-row .dropdown-toggle i{
-  height:11px;width:11px;
+.site-header .header-products-row .dropdown-toggle i,
+.site-header .header-products-row .dropdown-toggle .arrow {
+  height:11px;width:11px; display:inline-block;
 }
 .site-header .header-products-row a:hover{
   color:var(--dadex-red);
