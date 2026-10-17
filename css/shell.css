@@ -597,7 +597,7 @@
   background:linear-gradient(135deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 45%);
   pointer-events:none;border-radius:inherit;
 }
-/* Image perfectly centered in the FAB */
+
 .dexpert-fab img{
   width:2.5rem;height:2.5rem;object-fit:cover;border-radius:50%;
   background:#fff;display:block;flex:0 0 2.5rem;
@@ -664,7 +664,7 @@
 
 .dexpert-head{
   display:flex;align-items:center;justify-content:space-between;
-  padding:1.125rem 1.25rem!important;
+  padding:1rem 1.1rem!important;
   background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%)!important;
   color:#fff!important;position:relative;overflow:hidden;
 }
@@ -673,7 +673,6 @@
   right:-6.25rem;top:-7.5rem;border:1px solid rgba(255,255,255,.12);
   pointer-events:none;
 }
-/* Keep identity but wrap in a circle */
 .dexpert-head .expert-icon {
   width: 2.25rem;
   height: 2.25rem;
@@ -711,17 +710,17 @@
   text-transform:uppercase;margin-bottom:.5rem;
 }
 .dexpert-body h4{
-  margin:.25rem 0 .55rem;font-size:1.35rem;color:#17191c;
-  letter-spacing:-.015em;line-height:1.25;
+  margin:.25rem 0 .55rem;font-size:1.1rem;color:#17191c;
+  letter-spacing:-.005em;line-height:1.25;
 }
 .dexpert-body p{margin:.25rem 0 .9rem;color:#4f565c;line-height:1.6;font-size:.8125rem}
 
 /* --- Action Buttons --- */
-.dexpert-actions{display:grid;gap:.5rem!important; margin-top: 1.25rem;}
+.dexpert-actions{display:grid;gap:.5rem!important; margin-top: 1rem;}
 .dexpert-actions a,
 .dexpert-actions button{
   display:flex;align-items:center;justify-content:space-between;
-  padding:.85rem 1rem!important;
+  padding:.63rem 1rem!important;
   border-radius:.5rem!important;
   border:1px solid #e5e8ea;background:#fff;
   color:#1d2328;text-decoration:none;cursor:pointer;
@@ -732,7 +731,7 @@
              color var(--sh-t-fast) var(--sh-ease-io),
              box-shadow var(--sh-t-fast) var(--sh-ease-io);
 }
-/* Remove the translateX shift */
+
 @media (hover: hover) and (pointer: fine){
   .dexpert-actions a:hover,
   .dexpert-actions button:hover{
@@ -800,31 +799,7 @@
   .dexpert-head{padding:1rem 1.125rem!important}
   .dexpert-body{padding:1.125rem!important}
 }
-/* ============================================================
-   DEXPERT — Quick Chips Addition
-   ============================================================ */
-.dexpert-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem;
-  margin: 0.75rem 0 0.25rem;
-}
-.dexpert-chip {
-  background: #f1f3f5;
-  border: 1px solid #e2e5e7;
-  color: #495057;
-  font-size: 0.71875rem;
-  font-weight: 700;
-  padding: 0.3125rem 0.625rem;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
-}
-.dexpert-chip:hover {
-  background: var(--dadex-red);
-  color: #fff;
-  border-color: var(--dadex-red);
-}
+
 /* ============================================================
    BACK TO TOP
    ============================================================ */
