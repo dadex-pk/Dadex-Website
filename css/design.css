@@ -26,8 +26,8 @@
 .btn-secondary,
 .home-btn{
   min-height:2.75rem;
-  padding:.75rem 1.5rem; /* Tightened */
-  border-radius:.25rem; /* Sharper 4px radius instead of 6px */
+  padding:.75rem 1.5rem;
+  border-radius:.25rem;
   display:inline-flex;align-items:center;justify-content:center;
   gap:.5rem;
   font-weight:700;line-height:1.2;text-decoration:none;
