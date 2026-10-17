@@ -45,7 +45,7 @@
   --max:1240px;
   --d-max:1240px;
 
-  --header-h:9.5rem;
+  --header-h:10rem;
   --sticky-offset:calc(var(--header-h) + 0.625rem);
 
   /* ---------- Radii ---------- */
@@ -107,7 +107,7 @@
 }
 
 body.header-scrolled{
-  --header-h:3.875rem;
+  --header-h:4rem;
   --sticky-offset:calc(var(--header-h) + 0.625rem);
 }
 @media(max-width:900px){
@@ -116,7 +116,7 @@ body.header-scrolled{
     --sticky-offset:calc(var(--header-h) + 0.625rem);
   }
   body.header-scrolled{
-    --header-h:3.5rem;
+    --header-h:4rem;
     --sticky-offset:calc(var(--header-h) + 0.625rem);
   }
 }
