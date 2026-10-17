@@ -252,7 +252,7 @@
 .site-header .dropdown.open>.mega-menu{
   opacity:1;visibility:visible;transform:none;
 }
-.site-header .mega-dropdown{position:static;}
+.site-header .dropdown-wide{position:static;}
 
 .site-header .mega-menu{
   position:absolute;top:100%;left:0;right:0;background:white;
