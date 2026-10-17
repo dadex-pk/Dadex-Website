@@ -1,5 +1,5 @@
 /* ============================================================
-   DADEX ETERNIT LIMITED — SHARED UI
+   DADEX ETERNIT LIMITED — SHARED UI (Optimized Complete)
    - Header and footer injection
    - Header scroll state (collapse on scroll)
    - Navigation behaviour (mobile drawer, dropdowns, active state)
@@ -9,7 +9,7 @@
    - Literature filter
    - Investor panel switcher
    - Site search (template-driven)
-   - DEXPERT (native <dialog>, template-driven, lazy)
+   - DEXPERT (native <dialog>, template-driven, lazy, chips support)
    - Back to top
    ============================================================ */
 
@@ -143,7 +143,6 @@ function initHeaderState(header){
     header.classList.toggle('is-scrolled', scrolled);
     document.body.classList.toggle('header-scrolled', scrolled);
     
-    // Adds inert to hidden tiers for accessibility
     const utilityBar = header.querySelector('.utility-bar');
     const productsTier = header.querySelector('.header-products-tier');
     if (utilityBar) utilityBar.inert = scrolled;
@@ -560,29 +559,29 @@ function initSiteSearch(){
 }
 
 /* ------------------------------------------------------------
-   DEXPERT — floating assistant
+   DEXPERT — floating assistant (Optimized & Upgraded)
    ------------------------------------------------------------ */
 
 const DEXPERT_PRODUCTS = [
-  ['Aquadex', 'product-aquadex.html'],
-  ['T-Flex', 'product-tflex.html'],
-  ['Polydex Premium', 'product-polydex-premium.html'],
-  ['Polydex', 'product-polydex.html'],
-  ['Thermoline', 'product-thermoline.html'],
-  ['Flow Line', 'product-flow-line.html'],
-  ['Inspection Chambers', 'product-inspection-chambers.html'],
-  ['Manholes', 'product-manholes.html'],
-  ['Catchpits', 'product-catchpits.html'],
-  ['Nikasi', 'product-nikasi.html'],
-  ['Polyduct', 'product-polyduct.html'],
-  ['PE Cable Duct', 'product-pe-cable-duct.html'],
-  ['Electrical Conduits', 'product-electrical-conduits.html'],
-  ['Electroduct', 'product-electroduct.html'],
-  ['Corrugated Sheets', 'product-corrugated-sheets.html'],
-  ['Non-Return Valves', 'product-non-return-valves.html'],
-  ['T-Flex Gas', 'product-tflex-gas.html'],
-  ['T-Flex Compressed Air', 'product-tflex-compressed-air.html'],
-  ['UPVC Tubewell Casing & Screen Pipes System', 'product-upvc-tubewell.html']
+  ['Aquadex', 'product-aquadex.html', 'UPVC pressure pipe system for potable water.'],
+  ['T-Flex', 'product-tflex.html', 'PE 100 flexible piping system.'],
+  ['Polydex Premium', 'product-polydex-premium.html', 'PP-RCT hot and cold water system.'],
+  ['Polydex', 'product-polydex.html', 'PP-R water supply system.'],
+  ['Thermoline', 'product-thermoline.html', 'PP-R hot and cold water piping.'],
+  ['Flow Line', 'product-flow-line.html', 'UPVC underground sewerage.'],
+  ['Inspection Chambers', 'product-inspection-chambers.html', 'Modular underground chambers.'],
+  ['Manholes', 'product-manholes.html', 'Complete sewer access system.'],
+  ['Catchpits', 'product-catchpits.html', 'Lightweight PP rainwater pits.'],
+  ['Nikasi', 'product-nikasi.html', 'UPVC soil, waste and ventilation system.'],
+  ['Polyduct', 'product-polyduct.html', 'Low-noise SWV drainage system.'],
+  ['PE Cable Duct', 'product-pe-cable-duct.html', 'PE and UPVC cable ducting.'],
+  ['Electrical Conduits', 'product-electrical-conduits.html', 'UPVC electrical conduits.'],
+  ['Electroduct', 'product-electroduct.html', 'UPVC electrical conduits to EN 50086.'],
+  ['Corrugated Sheets', 'product-corrugated-sheets.html', 'Roofing and wall cladding.'],
+  ['Non-Return Valves', 'product-non-return-valves.html', 'Backflow protection valves.'],
+  ['T-Flex Gas', 'product-tflex-gas.html', 'PE 80 and PE 100 gas piping.'],
+  ['T-Flex Compressed Air', 'product-tflex-compressed-air.html', 'PE 100 compressed-air piping.'],
+  ['UPVC Tubewell Casing & Screen Pipes System', 'product-upvc-tubewell.html', 'Casing and screen pipes for water wells.']
 ];
 
 const DEXPERT_APPS = [
@@ -602,7 +601,6 @@ function initDEXPERT(){
   fab.setAttribute('aria-expanded', 'false');
   fab.setAttribute('aria-controls', 'dexpertDialog');
   
-  // Updated FAB structure to match the screenshot
   fab.innerHTML = `
     <img src="assets/images/Dexpert.png" alt="" aria-hidden="true">
     <span>
@@ -649,7 +647,7 @@ function initDEXPERT(){
     for (const [href, label] of actions) {
       const a = document.createElement('a');
       a.href = href;
-      a.innerHTML = `<span>${label}</span><i class="fas fa-arrow-right"></i>`;
+      a.innerHTML = `<span>${label}</span><i class="fas fa-arrow-right" aria-hidden="true"></i>`;
       frag.appendChild(a);
     }
     container.replaceChildren(frag);
@@ -691,8 +689,15 @@ function initDEXPERT(){
       ];
     }
 
-    // We removed the dynamic context box injection here.
     buildActions(node.querySelector('.dexpert-actions'), actions);
+
+    node.querySelectorAll('.dexpert-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const query = chip.getAttribute('data-query');
+        renderAnswer(dialog, homeTpl, resultTpl, query);
+      });
+    });
+
     body.replaceChildren(node);
   }
 
@@ -707,37 +712,37 @@ function initDEXPERT(){
         'products.html', 'Browse products'];
     } else {
       const product = DEXPERT_PRODUCTS.find(p =>
-        q.includes(p[0].toLowerCase()) || p[0].toLowerCase().includes(q));
+        q.includes(p[0].toLowerCase()) || p[0].toLowerCase().includes(q) || p[2].toLowerCase().includes(q));
       const app = !product && DEXPERT_APPS.find(a =>
         q.includes(a[0].toLowerCase()) || a[0].toLowerCase().includes(q));
 
       if (product) {
         [label, heading, message, href, cta] = ['PRODUCT', product[0],
-          'Open the product page for its approved information.',
+          product[2] || 'Open the product page for approved information.',
           product[1], 'Open product'];
       } else if (app) {
         [label, heading, message, href, cta] = ['APPLICATION', app[0],
-          'Explore the systems listed for this application area.',
+          'Explore the specialized systems listed for this application area.',
           app[1], 'Explore'];
       } else if (/report|annual|financial|investor|shareholder|agm/.test(q)) {
         [label, heading, message, href, cta] = ['INVESTOR', 'Investor Relations',
-          'Find annual reports, financial information and shareholder references.',
+          'Find annual reports, financial briefings and corporate disclosures.',
           'investors.html#annual', 'Open investor information'];
       } else if (/brochure|flyer|leaflet|literature|document|datasheet|certificate|drawing/.test(q)) {
         [label, heading, message, href, cta] = ['LITERATURE', 'Literature',
-          'Find brochures, flyers, corporate publications and technical documents.',
+          'Access technical documentation, brochures, and catalogs.',
           'literature.html', 'Open Literature'];
       } else if (/video|installation|demonstration/.test(q)) {
         [label, heading, message, href, cta] = ['VIDEOS', 'Videos',
-          'Installation guides, product overviews and application demonstrations.',
+          'Watch installation guides and product demonstrations.',
           'videos.html', 'Open Videos'];
       } else if (/calculator|pressure drop|flow|head loss|sizing/.test(q)) {
         [label, heading, message, href, cta] = ['CALCULATORS', 'Calculators',
-          'Engineering calculators for pipe selection, hydraulic design and unit conversion.',
+          'Use engineering tools for pipe sizing and design calculations.',
           'calculators.html', 'Open Calculators'];
       } else {
         [label, heading, message, href, cta] = ['DEXPERT', 'No direct match',
-          'Try a product, application or resource term.',
+          'Try searching for another specific product line or application category.',
           'products.html', 'Browse products'];
       }
     }
@@ -761,9 +766,9 @@ function initDEXPERT(){
     });
     dialog.addEventListener('close', () => {
       fab.setAttribute('aria-expanded', 'false');
+      fab.focus();
     });
 
-    // Wire the static form that lives outside #dexpertBody
     const form = dialog.querySelector('.dexpert-ask');
     const input = dialog.querySelector('#expert-input');
     
@@ -773,7 +778,7 @@ function initDEXPERT(){
         const query = input.value.trim();
         if (query) {
           renderAnswer(dialog, homeTpl, resultTpl, query);
-          input.value = ''; // Clear input after submission
+          input.value = '';
         }
       });
     }
