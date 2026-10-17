@@ -1,4 +1,4 @@
-<dialog id="dexpertDialog" class="dexpert-dialog" aria-labelledby="expert-title">
+<dialog id="dexpertDialog" class="dexpert-dialog">
   <div class="dexpert-head">
     <div class="expert-icon">
       <img src="assets/images/Dexpert.png" alt="" aria-hidden="true">
@@ -10,15 +10,13 @@
     <button class="dexpert-close" aria-label="Close assistant">×</button>
   </div>
   <div class="dexpert-body">
-    <!-- Live region for accessibility updates -->
-    <div id="dexpertBody" aria-live="polite"></div>
-    
+    <div id="dexpertBody"></div>
     <form class="dexpert-ask">
       <label for="expert-input">OR TELL US WHAT YOU’RE BUILDING</label>
       <div>
         <input id="expert-input" placeholder="e.g. Plumbing for a new home" required>
-        <button aria-label="Send question" type="submit">
-          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        <button aria-label="Send question">
+          <i class="fas fa-arrow-right"></i>
         </button>
       </div>
       <small>Product guidance to help you take the next step.</small>
@@ -26,21 +24,12 @@
   </div>
 </dialog>
 
-<!-- Home Template with Quick Action Chips -->
+<!-- Home Template -->
 <template id="dexpertHomeTemplate">
   <div class="dexpert-home">
     <span class="dexpert-welcome">A STRONGER START TO YOUR PROJECT</span>
     <h4>What are you building?</h4>
-    <p class="dexpert-intro">Let’s point you towards the right Dadex solution. Choose a starting point or tap a quick filter below.</p>
-    
-    <!-- Quick-tap suggestion chips -->
-    <div class="dexpert-chips" aria-label="Quick suggestions">
-      <button type="button" class="dexpert-chip" data-query="Water Supply">Water Supply</button>
-      <button type="button" class="dexpert-chip" data-query="Drainage">Drainage</button>
-      <button type="button" class="dexpert-chip" data-query="Gas">Gas Piping</button>
-      <button type="button" class="dexpert-chip" data-query="Literature">Literature</button>
-    </div>
-
+    <p class="dexpert-intro">Let’s point you towards the right Dadex solution. Choose a starting point below.</p>
     <div class="dexpert-actions"></div>
   </div>
 </template>
@@ -48,13 +37,13 @@
 <!-- Result Template -->
 <template id="dexpertResultTemplate">
   <div class="dexpert-result">
-    <button class="dexpert-back" type="button">← Back to all options</button>
+    <button class="dexpert-back">← Back to all options</button>
     <span data-label></span>
     <h4 data-heading></h4>
     <p data-message></p>
     <a href="#" class="dexpert-result-link">
       <span data-cta></span>
-      <i class="fas fa-arrow-right" aria-hidden="true"></i>
+      <i class="fas fa-arrow-right"></i>
     </a>
   </div>
 </template>
