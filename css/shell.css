@@ -374,7 +374,7 @@
    ============================================================ */
 .site-footer{
   background:linear-gradient(180deg,#14171a 0%,#0d0f11 100%);
-  color:#fff;padding:5rem 0 1.875rem;
+  color:#fff;padding:5rem 0 6rem; /* Increased bottom padding to clear FAB */
   position:relative;overflow:hidden;
   border-top:1px solid rgba(255,255,255,.06);
 }
@@ -564,7 +564,7 @@
   }
 }
 @media(max-width:600px){
-  .site-footer{padding-top:3.5rem}
+  .site-footer{padding:3.5rem 0 6rem} /* Ensure bottom padding is applied */
   .site-footer .footer-grid.footer-journey{grid-template-columns:1fr;gap:1.875rem}
   .site-footer .footer-brand{grid-column:auto}
   .site-footer h2 i,.site-footer h3 i,.site-footer h4 i{
