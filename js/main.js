@@ -2,27 +2,46 @@
    DADEX ETERNIT LIMITED — SHARED UI
    - Header and footer injection
    - Header scroll state (collapse on scroll)
-   - Navigation behaviour (mobile drawer, dropdowns, active state)
+   - Navigation (mobile drawer, dropdowns, active state, focus trap)
    - Dynamic text (footer year, company age)
    - Project filter (event delegation)
    - Mailto contact form
    - Literature filter
    - Investor panel switcher
-   - Site search (template-driven)
+   - Site search (template-driven, defensive against stale index URLs)
    - DEXPERT (native <dialog>, template-driven, lazy)
    - Back to top
 
    Page-scoped modules (dealers) live in js/dealers.js.
    MOBILE_NAV_MAX must match the breakpoint used in shell.css
    for .site-header .menu-toggle / .site-navigation — currently 900px.
+
+   v2 changes (marked /* ★ */):
+     - body scroll-lock class already handled in shell.css
+     - focus trap inside mobile drawer
+     - setActiveNavigation() normalises /index.html -> /
+     - site search filters out removed pages (careers, faq,
+       whistleblowing, technical-resources, solutions)
+     - search result previews truncated at ~160 chars
+     - DEXPERT dialogPromise resets on load failure
    ============================================================ */
 
 const MOBILE_NAV_MAX = 900;
 const COMPANY_FOUNDED_YEAR = 1959;
-const COMPANY_ANNIVERSARY_MONTH = 3; /* April (0-indexed) */
+const COMPANY_ANNIVERSARY_MONTH = 3;
 const COMPANY_ANNIVERSARY_DAY = 13;
 const SCROLL_TOP_THRESHOLD = 600;
 const HEADER_COLLAPSE_THRESHOLD = 70;
+
+/* ★ URLs removed from the site that may still appear in search-index.js.
+   Filtered defensively so search never links to a 404. */
+const REMOVED_SEARCH_URLS = new Set([
+  'careers.html',
+  'faq.html',
+  'whistleblowing.html',
+  'technical-resources.html',
+  'solutions.html'
+]);
 
 /* ------------------------------------------------------------
    Utilities
@@ -146,8 +165,7 @@ function initHeaderState(header){
     const scrolled = window.scrollY > HEADER_COLLAPSE_THRESHOLD;
     header.classList.toggle('is-scrolled', scrolled);
     document.body.classList.toggle('header-scrolled', scrolled);
-    
-    // Adds inert to hidden tiers for accessibility
+
     const utilityBar = header.querySelector('.utility-bar');
     const productsTier = header.querySelector('.header-products-tier');
     if (utilityBar) utilityBar.inert = scrolled;
@@ -274,14 +292,48 @@ function initNavigation(header){
     document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]')
       .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
   }, 150), { passive: true });
+
+  /* ★ Focus trap — the drawer overlays the page while body scroll is
+     locked, so Tab must not escape into hidden page content behind it. */
+  const FOCUSABLE_SELECTOR =
+    'a[href]:not([disabled]), button:not([disabled]), ' +
+    'input:not([disabled]), select:not([disabled]), ' +
+    'textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])';
+
+  const getDrawerFocusables = () =>
+    Array.from(nav.querySelectorAll(FOCUSABLE_SELECTOR))
+      .filter(el => el.offsetParent !== null && !el.hasAttribute('inert'));
+
+  nav.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    if (!isMobile() || !nav.classList.contains('open')) return;
+    const items = getDrawerFocusables();
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
 }
 
 /* ------------------------------------------------------------
    Active navigation (path-based)
+   ★ /index.html and /index.htm are normalised to / so the Home
+     link highlights correctly on directory-served URLs.
    ------------------------------------------------------------ */
 
 function setActiveNavigation(){
-  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  const normalisePath = p => {
+    const norm = String(p || '').replace(/\/+$/, '') || '/';
+    return (norm === '/index.html' || norm === '/index.htm') ? '/' : norm;
+  };
+
+  const path = normalisePath(window.location.pathname);
 
   document.querySelectorAll('.site-navigation a').forEach(link => {
     link.classList.remove('nav-active');
@@ -289,7 +341,7 @@ function setActiveNavigation(){
     const href = link.getAttribute('href');
     if (!href || href.startsWith('#')) return;
     try {
-      const target = new URL(href, window.location.origin).pathname.replace(/\/+$/, '') || '/';
+      const target = normalisePath(new URL(href, window.location.origin).pathname);
       if (target === path || (target !== '/' && path.startsWith(target + '/'))) {
         link.classList.add('nav-active');
         link.setAttribute('aria-current', 'page');
@@ -303,7 +355,7 @@ function setActiveNavigation(){
       if (!href || href.startsWith('#')) return;
       try {
         const url = new URL(href, window.location.href);
-        const target = url.pathname.replace(/\/+$/, '') || '/';
+        const target = normalisePath(url.pathname);
         const samePath = target === path || (target !== '/' && path.startsWith(target + '/'));
         const hashMatches = !url.hash || url.hash === window.location.hash;
         if (samePath && hashMatches) {
@@ -509,6 +561,9 @@ function initInvestorPanels(){
 
 /* ------------------------------------------------------------
    Site search (search.html)
+   ★ Filters stale index URLs (REMOVED_SEARCH_URLS) so no result
+     ever links to a 404.
+   ★ Truncates result previews to ~160 chars at a word boundary.
    ------------------------------------------------------------ */
 
 function initSiteSearch(){
@@ -524,7 +579,23 @@ function initSiteSearch(){
 
   if (!grid || !template) return;
 
-  const pages = Array.isArray(window.DADEX_SEARCH_INDEX) ? window.DADEX_SEARCH_INDEX : [];
+  const rawPages = Array.isArray(window.DADEX_SEARCH_INDEX)
+    ? window.DADEX_SEARCH_INDEX
+    : [];
+
+  const pages = rawPages.filter(p => {
+    if (!p || !p[1]) return false;
+    const url = String(p[1]).replace(/^\/+/, '');
+    return !REMOVED_SEARCH_URLS.has(url);
+  });
+
+  const truncatePreview = (text, max = 160) => {
+    const clean = String(text || '').replace(/\s+/g, ' ').trim();
+    if (clean.length <= max) return clean;
+    const cut = clean.slice(0, max);
+    const lastSpace = cut.lastIndexOf(' ');
+    return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut) + '…';
+  };
 
   const render = () => {
     const q = input.value.trim().toLowerCase();
@@ -546,7 +617,7 @@ function initSiteSearch(){
       const card = template.content.firstElementChild.cloneNode(true);
       card.querySelector('.result-type').textContent = p[2];
       card.querySelector('h3').textContent = p[0];
-      card.querySelector('p').textContent = p[3];
+      card.querySelector('p').textContent = truncatePreview(p[3]);
       card.querySelector('a').href = p[1];
       frag.appendChild(card);
     }
@@ -557,7 +628,16 @@ function initSiteSearch(){
   if (button) button.addEventListener('click', render);
   input.addEventListener('input', render);
   input.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
-  if (clear) clear.addEventListener('click', () => { input.value = ''; render(); input.focus(); });
+  if (clear) clear.addEventListener('click', () => {
+    input.value = '';
+    render();
+    input.focus();
+    if (location.search) {
+      try {
+        history.replaceState(null, '', location.pathname);
+      } catch (_) {}
+    }
+  });
 
   const q = new URLSearchParams(location.search).get('q');
   if (q) { input.value = q; render(); }
@@ -605,15 +685,13 @@ function initDEXPERT(){
   fab.type = 'button';
   fab.setAttribute('aria-expanded', 'false');
   fab.setAttribute('aria-controls', 'dexpertDialog');
-  
-  // Updated FAB structure to match the screenshot
+
   fab.innerHTML = `
     <img src="assets/images/Dexpert.png" alt="" aria-hidden="true">
     <span>
       <strong>Ask DEXPERT</strong>
       <small>Your building solutions guide</small>
     </span>
-    <span class="fab-dot"></span>
   `;
   document.body.appendChild(fab);
 
@@ -645,6 +723,10 @@ function initDEXPERT(){
       wireDialog(dialog, homeTpl, resultTpl);
       return dialog;
     })();
+
+    /* ★ Reset cached promise on failure so the next click retries. */
+    dialogPromise.catch(() => { dialogPromise = null; });
+
     return dialogPromise;
   }
 
@@ -659,7 +741,7 @@ function initDEXPERT(){
     container.replaceChildren(frag);
   }
 
-  function renderHome(dialog, homeTpl, resultTpl){
+  function renderHome(dialog, homeTpl){
     const body = dialog.querySelector('#dexpertBody');
     const node = homeTpl.content.firstElementChild.cloneNode(true);
 
@@ -695,7 +777,6 @@ function initDEXPERT(){
       ];
     }
 
-    // We removed the dynamic context box injection here.
     buildActions(node.querySelector('.dexpert-actions'), actions);
     body.replaceChildren(node);
   }
@@ -755,7 +836,7 @@ function initDEXPERT(){
 
     body.replaceChildren(node);
     node.querySelector('.dexpert-back').addEventListener('click',
-      () => renderHome(dialog, homeTpl, resultTpl));
+      () => renderHome(dialog, homeTpl));
   }
 
   function wireDialog(dialog, homeTpl, resultTpl){
@@ -767,22 +848,21 @@ function initDEXPERT(){
       fab.setAttribute('aria-expanded', 'false');
     });
 
-    // Wire the static form that lives outside #dexpertBody
     const form = dialog.querySelector('.dexpert-ask');
     const input = dialog.querySelector('#expert-input');
-    
+
     if (form && input) {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const query = input.value.trim();
         if (query) {
           renderAnswer(dialog, homeTpl, resultTpl, query);
-          input.value = ''; // Clear input after submission
+          input.value = '';
         }
       });
     }
 
-    renderHome(dialog, homeTpl, resultTpl);
+    renderHome(dialog, homeTpl);
   }
 
   const open = async () => {
