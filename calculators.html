@@ -9,6 +9,8 @@
 <meta content="index, follow" name="robots"/>
 <meta content="strict-origin-when-cross-origin" name="referrer"/>
 <link href="https://www.dadex.com/calculators.html" rel="canonical"/>
+
+<!-- Open Graph -->
 <meta content="website" property="og:type"/>
 <meta content="Technical Calculators | Dadex Eternit Limited" property="og:title"/>
 <meta content="Professional engineering calculators for pipe material selection, hydraulic design, thermal expansion, buried deflection, water hammer and unit conversion — supporting UPVC, HDPE, PPR and PP-RCT systems." property="og:description"/>
@@ -17,25 +19,38 @@
 <meta content="en_PK" property="og:locale"/>
 <meta content="https://www.dadex.com/assets/images/dadex-logo.png" property="og:image"/>
 <meta content="Dadex Eternit Limited" property="og:image:alt"/>
+
+<!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Technical Calculators | Dadex Eternit Limited" name="twitter:title"/>
 <meta content="Professional engineering calculators for pipe material selection, hydraulic design, thermal expansion, buried deflection, water hammer and unit conversion — supporting UPVC, HDPE, PPR and PP-RCT systems." name="twitter:description"/>
 <meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
+
+<!-- Preconnect -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
+
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+
+<!-- Icons (bumped from 6.0.0-beta3 to 6.7.2 to match the rest of the site) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+
+<!-- Styles -->
 <link href="css/design-system.css" rel="stylesheet"/>
 <link href="css/calculators.css" rel="stylesheet"/>
 </head>
 <body class="core-page">
 <a class="skip-link" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
+
 <div class="breadcrumb">
 <div class="container">
-<a href="index.html">Home</a><span>/</span><a href="technical-resources.html">Technical Resources</a><span>/</span><strong>Calculators</strong>
+<a href="index.html">Home</a><span>/</span><strong>Calculators</strong>
 </div>
 </div>
+
 <main id="main-content">
 
 <section class="core-hero calc-hero">
@@ -66,7 +81,7 @@
 <span id="current-mat-display">ACTIVE: UPVC</span>
 </div>
 <div class="calc-toolbar-actions" role="group" aria-label="Display and output options">
-<button aria-label="Toggle unit system" class="calc-action" id="unitToggle" type="button">
+<button aria-label="Switch to imperial units" class="calc-action" id="unitToggle" title="Switch all labels, inputs, and results to imperial units" type="button">
 <i aria-hidden="true" class="fas fa-globe"></i> <span data-unit-label>Imperial</span>
 </button>
 <button aria-label="Print or save these results as PDF" class="calc-action" id="printBtn" type="button">
@@ -108,10 +123,107 @@
 <script>
 /* ============================================================
    DADEX ENGINEERING CALCULATOR SUITE
-   V5.0 — toolbar, print, unit conversion.
+   V6.0 — full imperial support.
+
+   Design:
+     · state.inputs always holds METRIC values — never changes.
+     · toDisplay(inp, metric) converts metric → current unit system
+       for rendering inputs, sliders and labels.
+     · toMetric(inp, displayed) converts back before storing.
+     · Compute functions receive metric input unchanged.
+     · Results are converted at display time via UNIT_CONV.
+
+   This makes unit switching fully bidirectional:
+     metric entry → imperial display → edit in imperial → back
+     to metric silently, with correct math at every step.
+
+   Delta vs absolute temperature:
+     · der-t and vac-t use °C/°F (absolute, with +32 offset).
+     · exp-t uses Δ°C/Δ°F (delta — ratio only, no offset).
+     Adding +32 to a delta temperature would corrupt the
+     thermal expansion result.
+
+   Fixes carried forward from v5.1:
+     · Removed faulty updateConverterLabels() (labels no
+       longer lie about input units).
+     · Two invalid CSS declarations corrected in calculators.css
+       (not this file, but part of the same fix set).
    ============================================================ */
 
 const BAR_PSI = 14.5038;
+
+/* ---------- Unit conversion registry ----------
+   Single source of truth for every unit that appears in the
+   UI (input labels, results, and primary/secondary outputs).
+   Imperial labels are identity (to/from return value) so that
+   already-imperial results (e.g. PSI secondary) pass through. */
+const UNIT_CONV = {
+  // Metric → Imperial
+  'mm':     { label:'in',      to: v => v / 25.4,       from: v => v * 25.4 },
+  'm':      { label:'ft',      to: v => v * 3.28084,    from: v => v / 3.28084 },
+  'm³/hr':  { label:'GPM',     to: v => v * 4.40287,    from: v => v / 4.40287 },
+  'L/s':    { label:'GPM',     to: v => v * 15.8503,    from: v => v / 15.8503 },
+  'm/s':    { label:'ft/s',    to: v => v * 3.28084,    from: v => v / 3.28084 },
+  'kg/m':   { label:'lb/ft',   to: v => v * 0.671969,   from: v => v / 0.671969 },
+  'N/m':    { label:'lbf/ft',  to: v => v * 0.0685218,  from: v => v / 0.0685218 },
+  '°C':     { label:'°F',      to: v => v * 9/5 + 32,   from: v => (v - 32) * 5/9 },  // absolute
+  'Δ°C':    { label:'Δ°F',     to: v => v * 9/5,        from: v => v * 5/9 },         // delta
+  'PN/Bar': { label:'PSI',     to: v => v * BAR_PSI,    from: v => v / BAR_PSI },
+  'BAR':    { label:'PSI',     to: v => v * BAR_PSI,    from: v => v / BAR_PSI },
+  'm/100m': { label:'ft/100ft',to: v => v * 3.28084,    from: v => v / 3.28084 },
+  '%':      { label:'%',       to: v => v,              from: v => v },              // unitless
+  'OD/t':   { label:'OD/t',    to: v => v,              from: v => v },              // SDR ratio
+
+  // Already imperial — identity (for secondary result units)
+  'PSI':    { label:'PSI',     to: v => v,              from: v => v },
+  'GPM':    { label:'GPM',     to: v => v,              from: v => v },
+  'ft/s':   { label:'ft/s',    to: v => v,              from: v => v },
+  'in':     { label:'in',      to: v => v,              from: v => v },
+  'ft':     { label:'ft',      to: v => v,              from: v => v }
+};
+
+/* ---------- Pure display ↔ state conversion ---------- */
+
+function getUnitLabel(unit){
+  if (state.unitSystem === 'metric') return unit;
+  const c = UNIT_CONV[unit];
+  return c ? c.label : unit;
+}
+
+function toDisplay(unit, metricValue){
+  if (state.unitSystem === 'metric' || metricValue == null) return metricValue;
+  const c = UNIT_CONV[unit];
+  return c ? c.to(metricValue) : metricValue;
+}
+
+function toMetric(unit, displayValue){
+  if (state.unitSystem === 'metric' || displayValue == null) return displayValue;
+  const c = UNIT_CONV[unit];
+  return c ? c.from(displayValue) : displayValue;
+}
+
+/* Format for display in number inputs — trim trailing zeros
+   without losing useful precision. */
+function formatInputValue(n){
+  if (!isFinite(n)) return '';
+  return String(Math.round(n * 10000) / 10000);
+}
+
+/* Choose a sensible slider step for the displayed range.
+   Picks 1×, 2×, 5× or 10× of the nearest power of ten to
+   (range / 100), so sliders stay usable across unit systems. */
+function niceStep(range){
+  if (!isFinite(range) || range <= 0) return 1;
+  const raw = range / 100;
+  const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const norm = raw / mag;
+  if (norm <= 1) return mag;
+  if (norm <= 2) return 2 * mag;
+  if (norm <= 5) return 5 * mag;
+  return 10 * mag;
+}
+
+/* ---------- Material properties ---------- */
 
 const matProps = {
   UPVC:  { n:0.009, alpha:0.08, stress:50, eModulus:3000, kLoop:34, derate:t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.015) },
@@ -119,6 +231,10 @@ const matProps = {
   PPR:   { n:0.007, alpha:0.15, stress:70, eModulus:800,  kLoop:30, derate:t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.018) },
   PPRCT: { n:0.007, alpha:0.07, stress:85, eModulus:900,  kLoop:30, derate:t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.011) }
 };
+
+/* ---------- Calculator definitions ----------
+   All `default`, `min`, `max`, `step` values are METRIC.
+   The unit field drives conversion; compute() always gets metric. */
 
 const CALCULATORS = [
   { id:'derating', title:'1. Pressure Derating',
@@ -159,7 +275,7 @@ const CALCULATORS = [
       const fq = vals['h-q'] / 3600, fd = vals['h-d'] / 1000;
       if (fd <= 0 || fq <= 0) return null;
       const hloss = (10.67 * 100 * Math.pow(fq, 1.852)) / (Math.pow(150, 1.852) * Math.pow(fd, 4.87));
-      return { primary:hloss, secondary:hloss * 0.0980665, primaryUnit:'m/100m', secondaryUnit:'Bar' };
+      return { primary:hloss, secondary:hloss * 0.0980665, primaryUnit:'m/100m', secondaryUnit:'BAR' };
     },
     status:res => res.primary < 2 ? { label:'✅ Low Loss', cls:'safe' }
                 : res.primary < 5 ? { label:'⚠️ Moderate', cls:'warn' }
@@ -168,7 +284,8 @@ const CALCULATORS = [
   { id:'thermal', title:'4. Thermal Expansion',
     inputs:[
       { id:'exp-l', label:'Pipeline Length', default:100, min:1, max:1000, step:1, unit:'m' },
-      { id:'exp-t', label:'Temperature ΔT', default:30, min:1, max:80, step:1, unit:'°C' }
+      /* Δ°C — DELTA temperature. Ratio-only conversion (no +32). */
+      { id:'exp-t', label:'Temperature ΔT', default:30, min:1, max:80, step:1, unit:'Δ°C' }
     ],
     compute:(props, vals) => ({ primary: vals['exp-l'] * vals['exp-t'] * props.alpha, primaryUnit:'mm' }),
     status:null
@@ -298,44 +415,20 @@ const CALCULATORS = [
   }
 ];
 
-const UNIT_TO_IMPERIAL = {
-  'mm':'in', 'm':'ft', 'm³/hr':'GPM', 'L/s':'GPM', 'm/s':'ft/s',
-  'kg/m':'lb/ft', 'N/m':'lbf/ft', '°C':'°F', 'PN/Bar':'PSI',
-  'BAR':'PSI', 'PSI':'BAR', 'OD/t':'OD/t', '%':'%', 'm/100m':'ft/100ft'
-};
-
-function toImperialUnitLabel(metricUnit){
-  return UNIT_TO_IMPERIAL[metricUnit] || metricUnit;
-}
-
-function convertToImperial(value, unit){
-  if (!unit) return null;
-  const u = unit.toLowerCase();
-  if (u === 'mm')    return value / 25.4;
-  if (u === 'm')     return value * 3.28084;
-  if (u === 'm³/hr') return value * 4.40287;
-  if (u === 'l/s')   return value * 15.8503;
-  if (u === 'm/s')   return value * 3.28084;
-  if (u === 'kg/m')  return value * 0.671969;
-  if (u === 'n/m')   return value * 0.0685218;
-  if (u === '°c')    return (value * 9 / 5) + 32;
-  if (u === 'bar')   return value * BAR_PSI;
-  if (u === 'm/100m') return value;
-  return null;
-}
+/* ---------- Application state ---------- */
 
 const state = {
   material:'UPVC',
   unitSystem:'metric',
-  inputs:{},
+  inputs:{},   // ALWAYS metric. Never touched by the toggle.
   results:{}
 };
 
 /* ---------- Rendering ---------- */
+
 function renderAll(){
   renderCalculators();
   renderMaterialSelector();
-  updateConverterLabels();
 }
 
 function renderCalculators(){
@@ -348,6 +441,7 @@ function renderCalculators(){
     card.setAttribute('role','article');
     card.setAttribute('aria-label', cfg.title);
 
+    /* Card header */
     const header = document.createElement('div');
     header.className = 'card-header';
     const title = document.createElement('h3');
@@ -363,61 +457,21 @@ function renderCalculators(){
     header.appendChild(copyBtn);
     card.appendChild(header);
 
+    /* Inputs */
     cfg.inputs.forEach(inp => {
       const group = document.createElement('div');
       group.className = 'input-group';
 
       const label = document.createElement('label');
       label.htmlFor = inp.id;
-      const unitLabel = state.unitSystem === 'metric'
-        ? inp.unit
-        : toImperialUnitLabel(inp.unit);
-      label.innerHTML = `${inp.label} <span class="unit-hint">(${unitLabel})</span>`;
+      label.innerHTML = `${inp.label} <span class="unit-hint">(${getUnitLabel(inp.unit)})</span>`;
       group.appendChild(label);
 
       const row = document.createElement('div');
       row.className = 'input-row';
 
-      const numInput = document.createElement('input');
-      numInput.type = 'number';
-      numInput.id = inp.id;
-      numInput.name = inp.id;
-      numInput.value = state.inputs[inp.id] ?? inp.default;
-      if (inp.min !== undefined) numInput.min = inp.min;
-      if (inp.max !== undefined) numInput.max = inp.max;
-      if (inp.step !== undefined) numInput.step = inp.step;
-      numInput.setAttribute('aria-label', inp.label);
-      numInput.dataset.calcId = cfg.id;
-      numInput.addEventListener('input', () => {
-        const val = parseFloat(numInput.value);
-        if (!isNaN(val)) {
-          state.inputs[inp.id] = val;
-          const slider = group.querySelector('input[type="range"]');
-          if (slider) slider.value = val;
-          scheduleCompute();
-        }
-      });
-
-      if (inp.min !== undefined && inp.max !== undefined && inp.step !== undefined && !inp.options) {
-        const slider = document.createElement('input');
-        slider.type = 'range';
-        slider.min = inp.min;
-        slider.max = inp.max;
-        slider.step = inp.step;
-        slider.value = state.inputs[inp.id] ?? inp.default;
-        slider.setAttribute('aria-label', `${inp.label} slider`);
-        slider.addEventListener('input', () => {
-          const val = parseFloat(slider.value);
-          if (!isNaN(val)) {
-            state.inputs[inp.id] = val;
-            numInput.value = val;
-            scheduleCompute();
-          }
-        });
-        row.appendChild(slider);
-      }
-
       if (inp.options) {
+        /* Select — no unit conversion possible */
         const select = document.createElement('select');
         select.id = inp.id;
         select.name = inp.id;
@@ -434,6 +488,58 @@ function renderCalculators(){
         });
         row.appendChild(select);
       } else {
+        /* Numeric input — display current unit, store metric */
+        const metricValue = state.inputs[inp.id] ?? inp.default;
+        const displayValue = toDisplay(inp.unit, metricValue);
+
+        const numInput = document.createElement('input');
+        numInput.type = 'number';
+        numInput.id = inp.id;
+        numInput.name = inp.id;
+        numInput.value = formatInputValue(displayValue);
+        if (state.unitSystem === 'metric') {
+          if (inp.min !== undefined) numInput.min = inp.min;
+          if (inp.max !== undefined) numInput.max = inp.max;
+          if (inp.step !== undefined) numInput.step = inp.step;
+        } else {
+          /* Imperial mode: accept any decimal, don't force metric steps */
+          numInput.step = 'any';
+          if (inp.min !== undefined) numInput.min = formatInputValue(toDisplay(inp.unit, inp.min));
+          if (inp.max !== undefined) numInput.max = formatInputValue(toDisplay(inp.unit, inp.max));
+        }
+        numInput.setAttribute('aria-label', inp.label);
+        numInput.dataset.calcId = cfg.id;
+        numInput.addEventListener('input', () => {
+          const displayed = parseFloat(numInput.value);
+          if (isNaN(displayed)) return;
+          const metric = toMetric(inp.unit, displayed);
+          state.inputs[inp.id] = metric;
+          const slider = group.querySelector('input[type="range"]');
+          if (slider) slider.value = formatInputValue(displayed);
+          scheduleCompute();
+        });
+
+        /* Slider — only when metric definition supplies full range */
+        if (inp.min !== undefined && inp.max !== undefined && inp.step !== undefined) {
+          const slider = document.createElement('input');
+          slider.type = 'range';
+          slider.min = formatInputValue(toDisplay(inp.unit, inp.min));
+          slider.max = formatInputValue(toDisplay(inp.unit, inp.max));
+          slider.value = formatInputValue(displayValue);
+          const range = (toDisplay(inp.unit, inp.max) ?? inp.max) - (toDisplay(inp.unit, inp.min) ?? inp.min);
+          slider.step = String(niceStep(range));
+          slider.setAttribute('aria-label', `${inp.label} slider`);
+          slider.addEventListener('input', () => {
+            const displayed = parseFloat(slider.value);
+            if (isNaN(displayed)) return;
+            const metric = toMetric(inp.unit, displayed);
+            state.inputs[inp.id] = metric;
+            numInput.value = formatInputValue(displayed);
+            scheduleCompute();
+          });
+          row.appendChild(slider);
+        }
+
         row.appendChild(numInput);
       }
 
@@ -441,6 +547,7 @@ function renderCalculators(){
       card.appendChild(group);
     });
 
+    /* Result box */
     const resBox = document.createElement('div');
     resBox.className = 'res-box';
     resBox.id = `res-${cfg.id}`;
@@ -485,14 +592,8 @@ function renderMaterialSelector(){
   if (display) display.textContent = `ACTIVE: ${state.material}`;
 }
 
-function updateConverterLabels(){
-  const isMetric = state.unitSystem === 'metric';
-  const labels = document.querySelectorAll('#converterGrid .input-group label');
-  if (labels[0]) labels[0].textContent = `Pressure (${isMetric ? 'BAR' : 'PSI'})`;
-  if (labels[1]) labels[1].textContent = `Pressure (${isMetric ? 'PSI' : 'BAR'})`;
-}
-
 /* ---------- Compute ---------- */
+
 let computeTimeout = null;
 function scheduleCompute(){
   if (computeTimeout) clearTimeout(computeTimeout);
@@ -507,18 +608,17 @@ function computeAll(){
     const vals = {};
     let hasValid = false;
     cfg.inputs.forEach(inp => {
+      if (inp.options) {
+        const select = document.getElementById(inp.id);
+        vals[inp.id] = select ? select.value : inp.default;
+        return;
+      }
       const val = state.inputs[inp.id];
       if (val !== undefined && val !== null && val !== '' && !isNaN(val)) {
         vals[inp.id] = parseFloat(val);
         hasValid = true;
       } else {
         vals[inp.id] = inp.default;
-      }
-    });
-    cfg.inputs.forEach(inp => {
-      if (inp.options) {
-        const select = document.getElementById(inp.id);
-        if (select) vals[inp.id] = select.value;
       }
     });
 
@@ -533,30 +633,14 @@ function computeAll(){
     const statusDiv = document.getElementById(`res-status-${cfg.id}`);
 
     if (result && result.primary !== undefined && !isNaN(result.primary) && isFinite(result.primary)) {
-      const isImperial = state.unitSystem === 'imperial';
-
-      let displayValue = result.primary.toFixed(2);
-      let displayUnit = result.primaryUnit || '';
-      if (isImperial) {
-        const converted = convertToImperial(result.primary, result.primaryUnit);
-        if (converted !== null) {
-          displayValue = converted.toFixed(2);
-          displayUnit = toImperialUnitLabel(result.primaryUnit);
-        }
-      }
-      valDiv.textContent = `${displayValue} ${displayUnit}`;
+      const displayPrimary = toDisplay(result.primaryUnit, result.primary);
+      const displayPrimaryUnit = getUnitLabel(result.primaryUnit);
+      valDiv.textContent = `${Number(displayPrimary).toFixed(2)} ${displayPrimaryUnit}`;
 
       if (result.secondary !== undefined && !isNaN(result.secondary) && isFinite(result.secondary)) {
-        let secValue = result.secondary.toFixed(2);
-        let secUnit = result.secondaryUnit || '';
-        if (isImperial) {
-          const conv = convertToImperial(result.secondary, result.secondaryUnit);
-          if (conv !== null) {
-            secValue = conv.toFixed(2);
-            secUnit = toImperialUnitLabel(result.secondaryUnit);
-          }
-        }
-        subDiv.textContent = `${secValue} ${secUnit}`;
+        const displaySecondary = toDisplay(result.secondaryUnit, result.secondary);
+        const displaySecondaryUnit = getUnitLabel(result.secondaryUnit);
+        subDiv.textContent = `${Number(displaySecondary).toFixed(2)} ${displaySecondaryUnit}`;
       } else {
         subDiv.textContent = '';
       }
@@ -582,6 +666,7 @@ function computeAll(){
 }
 
 /* ---------- Copy ---------- */
+
 function copyResults(calcId){
   const valDiv = document.getElementById(`res-val-${calcId}`);
   const subDiv = document.getElementById(`res-sub-${calcId}`);
@@ -603,7 +688,8 @@ function copyResults(calcId){
   }
 }
 
-/* ---------- Converter ---------- */
+/* ---------- Converter (BAR ⇌ PSI) — always metric labels ---------- */
+
 function initConverter(){
   const barInput = document.getElementById('q-bar');
   const psiInput = document.getElementById('q-psi');
@@ -618,6 +704,7 @@ function initConverter(){
 }
 
 /* ---------- Material selector ---------- */
+
 function initMaterialSelector(){
   document.querySelectorAll('.mat-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -629,24 +716,32 @@ function initMaterialSelector(){
 }
 
 /* ---------- Unit toggle ---------- */
+
 function initUnitToggle(){
   const btn = document.getElementById('unitToggle');
   const label = btn.querySelector('[data-unit-label]');
 
   const applyUnit = () => {
-    label.textContent = state.unitSystem === 'metric' ? 'Imperial' : 'Metric';
+    const isMetric = state.unitSystem === 'metric';
+    label.textContent = isMetric ? 'Imperial' : 'Metric';
+    btn.setAttribute('aria-label', isMetric ? 'Switch to imperial units' : 'Switch to metric units');
+    btn.title = isMetric
+      ? 'Switch all labels, inputs, and results to imperial units'
+      : 'Switch all labels, inputs, and results to metric units';
   };
   applyUnit();
 
   btn.addEventListener('click', () => {
+    /* Toggle state, then rebuild. Since state.inputs is metric,
+       rendering converts to the new unit system automatically. */
     state.unitSystem = state.unitSystem === 'metric' ? 'imperial' : 'metric';
     applyUnit();
-    updateConverterLabels();
     renderCalculators();
   });
 }
 
 /* ---------- Print / Save PDF ---------- */
+
 function initPrint(){
   const btn = document.getElementById('printBtn');
   const dateSpan = document.querySelector('[data-print-date]');
@@ -668,7 +763,6 @@ function initPrint(){
     });
   }
 
-  /* Also catch Ctrl/Cmd+P and browser menu print. */
   window.addEventListener('beforeprint', stampDate);
   if (window.matchMedia) {
     const mq = window.matchMedia('print');
@@ -679,6 +773,7 @@ function initPrint(){
 }
 
 /* ---------- Init ---------- */
+
 function init(){
   CALCULATORS.forEach(cfg => {
     cfg.inputs.forEach(inp => {
