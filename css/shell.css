@@ -213,7 +213,7 @@ body.nav-open{overflow:hidden;}
 }
 .site-header .nav-search svg,
 .site-header .nav-search i{
-  width:16px;height:16px;
+  width:17px;height:17px; color:var(--dadex-red);
   transition:transform .5s var(--sh-ease);
 }
 .site-header .nav-search:hover{
@@ -298,19 +298,18 @@ body.nav-open{overflow:hidden;}
   border-top:2px solid var(--dadex-red);box-shadow:0 24px 40px #15212c22;
   opacity:0;visibility:hidden;transform:translateY(6px);
   transition:opacity .25s, transform .25s, visibility .25s;
-  padding:35px 0 40px;z-index:5;
+  padding:2.5rem 0 2.5rem;z-index:5;
 }
 .site-header .mega-menu-inner{
   width:min(calc(100% - 112px),var(--sh-mega-max));margin:auto;
   display:grid;grid-template-columns:240px 1fr;gap:50px;
 }
-.site-header .mega-feature{border-right:1px solid #e6e9eb;padding-right:30px;}
+.site-header .mega-feature{border-right:2px solid #e6e9eb;padding-right:30px;}
 .site-header .mega-feature strong{
-  color:var(--dadex-red);font-size:9px;letter-spacing:1.5px;
-  display:block;margin-bottom:14px;
+  color:var(--dadex-red);font-size:0.92rem;letter-spacing:0.5px; display:block; margin-bottom:14px;
 }
 .site-header .mega-feature h3{
-  font-size:20px;letter-spacing:-.6px;margin-top:0;margin-bottom:14px;color:var(--d-text);
+  font-size:20px;letter-spacing:-.6px;margin-top:0;margin-bottom:14px; color:var(--d-text);
 }
 .site-header .mega-feature span{
   display:block;color:var(--d-muted);font-size:12px;line-height:1.7;margin:0 0 20px;
@@ -326,12 +325,12 @@ body.nav-open{overflow:hidden;}
 .site-header .mega-columns section{flex:1;}
 .site-header .mega-columns h3,
 .site-header .mega-column-title{
-  font-family:inherit;font-size:9px;letter-spacing:1.3px;color:#899198;
-  padding:0 0 15px;border-bottom:1px solid #e6e9eb;margin:0 0 10px;font-weight:normal;
+  font-family:inherit;font-size:1rem;letter-spacing:0em;color:#899198;
+  padding:0 0 11px;border-bottom:1px solid #e6e9eb;margin:0 0 10px;font-weight:normal;
 }
 
 .site-header .mega-columns a{
-  display:block;padding:11px 0;font-size:12px;color:var(--d-text);
+  display:block;padding:11px 0;font-size:0.72rem;color:var(--d-text);
   text-decoration:none;opacity:0;transform:translateY(4px);
   transition:opacity .25s var(--sh-ease),
              transform .25s var(--sh-ease),
