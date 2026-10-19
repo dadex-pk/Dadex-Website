@@ -1,6 +1,12 @@
 /* ============================================================
    CALCULATORS — page-scoped styles for calculators.html
    Scoped to .calculator-suite, .calc-toolbar, .calc-hero.
+
+   v2 fixes:
+     · .calc-toolbar .mat-btn:focus-visible — outline shorthand
+       had a stray colon (`2px solid:` → `2px solid`)
+     · .calc-toolbar .mat-btn.active:hover — invalid var() call
+       (`var(--dadex-red-dark:)` → `var(--dadex-red-dark)`)
    ============================================================ */
 
 .calculator-suite{
@@ -115,7 +121,8 @@
   }
 }
 .calc-toolbar .mat-btn:focus-visible{
-  outline:2px solid: var(--dadex-red);
+  /* FIXED: was `outline:2px solid: var(...)` with stray colon */
+  outline:2px solid var(--dadex-red);
   outline-offset:3px;
 }
 .calc-toolbar .mat-btn.active{
@@ -128,7 +135,8 @@
     0 4px 12px rgba(229,0,0,.28);
 }
 .calc-toolbar .mat-btn.active:hover{
-  background:var(--dadex-red-dark:);
+  /* FIXED: was `background:var(--dadex-red-dark:)` with stray colon */
+  background:var(--dadex-red-dark);
   border-color:var(--dadex-red);
   color:#fff;
   box-shadow:
@@ -338,9 +346,7 @@
    RESPONSIVE — toolbar stays sticky at every breakpoint
    ============================================================ */
 @media(max-width:900px){
-  .calc-toolbar{
-    padding:.625rem 0;
-  }
+  .calc-toolbar{padding:.625rem 0;}
   .calc-toolbar-inner{gap:.875rem;flex-wrap:wrap}
   .calc-toolbar-actions{width:100%;margin-left:0}
   .calc-action{flex:1;justify-content:center}

@@ -1,44 +1,64 @@
 /* ============================================================
-   DADEX ETERNIT LIMITED — SHARED UI
-   - Header and footer injection
-   - Header scroll state (collapse on scroll)
-   - Navigation behaviour (mobile drawer, dropdowns, active state)
-   - Dynamic text (footer year, company age)
-   - Project filter (event delegation)
-   - Mailto contact form
-   - Literature filter
-   - Investor panel switcher
-   - Site search (template-driven)
-   - DEXPERT (native <dialog>, template-driven, lazy)
-   - Back to top
+   DADEX ETERNIT LIMITED — SHARED UI  (v3)
+   ------------------------------------------------------------
+   Modules
+     · Header and footer injection (from components/)
+     · Header scroll state (collapse on scroll)
+     · Navigation (mobile drawer, dropdowns, active state,
+       keyboard focus trap)
+     · Dynamic text (footer year, company age)
+     · Project filter (projects.html)
+     · Mailto contact form (contact.html)
+     · Literature filter (literature.html)
+     · Investor panel switcher (investors.html)
+     · Site search (search.html)
+     · DEXPERT floating assistant
+     · Back to top
 
    Page-scoped modules (dealers) live in js/dealers.js.
    MOBILE_NAV_MAX must match the breakpoint used in shell.css
-   for .site-header .menu-toggle / .site-navigation — currently 900px.
+   for .site-header .menu-toggle / .site-navigation — 900px.
+
+   Folder assumptions (confirmed with you):
+     /components/header.html
+     /components/footer.html
+     /components/dexpert.html
+     /css/design-system.css
+     /js/main.js
+
+   v3 changes
+     · Component fetch path is components/ — CORRECT for this repo
+     · file:// protocol detected → visible banner explains why
+     · 404 / network error → visible banner + detailed console log
+     · Server-side 404 pages (full HTML, status 200) rejected so a
+       404 document never gets injected as the header
+     · setActiveNavigation() normalises /index.html -> /
+     · Mobile drawer focus trap (Tab cycles within drawer)
+     · Mobile drawer scroll-lock via body.nav-open (CSS side)
+     · Site search filters removed pages + truncates previews
+     · DEXPERT dialogPromise resets on load failure
    ============================================================ */
 
 const MOBILE_NAV_MAX = 900;
 const COMPANY_FOUNDED_YEAR = 1959;
-const COMPANY_ANNIVERSARY_MONTH = 3; /* April (0-indexed) */
+const COMPANY_ANNIVERSARY_MONTH = 3;
 const COMPANY_ANNIVERSARY_DAY = 13;
 const SCROLL_TOP_THRESHOLD = 600;
-const HEADER_COLLAPSE_THRESHOLD = 6;
+const HEADER_COLLAPSE_THRESHOLD = 70;
+
+/* URLs removed from the site that may still be in search-index.js.
+   Filtered defensively so search never links to a dead page. */
+const REMOVED_SEARCH_URLS = new Set([
+  'careers.html',
+  'faq.html',
+  'whistleblowing.html',
+  'technical-resources.html',
+  'solutions.html'
+]);
 
 /* ------------------------------------------------------------
    Utilities
    ------------------------------------------------------------ */
-
-const HTML_ESCAPE_MAP = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  "'": '&#39;'
-};
-
-function escapeHTML(value){
-  return String(value ?? '').replace(/[&<>"']/g, m => HTML_ESCAPE_MAP[m]);
-}
 
 function debounce(fn, wait){
   let timer = null;
@@ -79,24 +99,92 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /* ------------------------------------------------------------
    Shared header / footer injection
+   ------------------------------------------------------------
+   Files live in /components/. Loads run in parallel; one failure
+   does not block the other. Every failure produces a visible
+   banner so a blank header can never be silent.
    ------------------------------------------------------------ */
 
 async function loadSharedComponents(){
-  const mounts = document.querySelectorAll('[data-component]');
+  const mounts = Array.from(document.querySelectorAll('[data-component]'))
+    .filter(m => {
+      const n = m.getAttribute('data-component');
+      return n === 'header' || n === 'footer';
+    });
   if (!mounts.length) return;
-  const base = new URL('.', window.location.href);
-  await Promise.allSettled(Array.from(mounts).map(async mount => {
-    const name = mount.getAttribute('data-component');
-    if (name !== 'header' && name !== 'footer') return;
-    try {
-      const response = await fetch(new URL(`components/${name}.html`, base), { cache: 'no-cache' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      mount.outerHTML = await response.text();
-    } catch (error) {
-      console.error(`Dadex component load failed: ${name}`, error);
-      mount.setAttribute('data-component-error', name);
+
+  // file:// — every modern browser blocks fetch() from disk
+  if (location.protocol === 'file:') {
+    mounts.forEach(mount => renderComponentError(mount, {
+      name: mount.getAttribute('data-component'),
+      reason:
+        'The site was opened directly from disk (file:// protocol). ' +
+        'Browsers block file fetches for security. ' +
+        'Start a local server — for example ' +
+        '<code>python3 -m http.server 8080</code> — and open ' +
+        '<code>http://localhost:8080/</code>.'
+    }));
+    return;
+  }
+
+  const base = new URL('.', location.href);
+  console.log('[Dadex] Component base URL:', new URL('components/', base).href);
+
+  await Promise.allSettled(mounts.map(mount => loadOneComponent(mount, base)));
+}
+
+async function loadOneComponent(mount, base){
+  const name = mount.getAttribute('data-component');
+  const fetchUrl = new URL(`components/${name}.html`, base);
+
+  try {
+    const response = await fetch(fetchUrl, { cache: 'no-cache' });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} ${response.statusText}`);
     }
-  }));
+    const html = await response.text();
+
+    // A component file is a fragment, never a full document.
+    // If the server returns a 404 or SPA-fallback page with status 200,
+    // we must NOT inject it — that would replace the header with a page.
+    if (/^\s*<!DOCTYPE\s+html/i.test(html)) {
+      throw new Error(
+        'Server returned a full HTML document, not a component fragment. ' +
+        'Likely a server-side 404 or SPA fallback.'
+      );
+    }
+
+    mount.outerHTML = html;
+  } catch (error) {
+    console.error(
+      `[Dadex] Failed to load ${name}.html from ${fetchUrl.href}`,
+      error
+    );
+    renderComponentError(mount, {
+      name,
+      url: fetchUrl.href,
+      reason: error.message
+    });
+  }
+}
+
+function renderComponentError(mount, { name, url, reason }){
+  mount.setAttribute('data-component-error', name);
+  mount.innerHTML = `
+    <div style="
+      padding:14px 20px;
+      background:#fff4f4;
+      color:#8a0000;
+      font:600 13px/1.55 system-ui,-apple-system,sans-serif;
+      border-bottom:2px solid #e50000;
+    ">
+      <strong>Dadex component error — ${name}:</strong>
+      ${reason}
+      ${url ? `<br><small style="opacity:.75;font-weight:500;">
+        Attempted URL: <code>${url}</code>
+      </small>` : ''}
+    </div>
+  `;
 }
 
 /* ------------------------------------------------------------
@@ -129,14 +217,6 @@ function initDynamicSiteText(){
 
 /* ------------------------------------------------------------
    Header state — home/internal flag + scroll-driven collapse
-
-   The `.is-scrolled` class on the header triggers the collapse
-   rules in shell.css (utility bar + products tier retract).
-   The `header-scrolled` class on <body> reduces --header-h,
-   which cascades to --sticky-offset so sticky filter strips
-   stay in sync with the header's height.
-
-   The listener is rAF-throttled and passive.
    ------------------------------------------------------------ */
 
 function initHeaderState(header){
@@ -154,6 +234,12 @@ function initHeaderState(header){
     const scrolled = window.scrollY > HEADER_COLLAPSE_THRESHOLD;
     header.classList.toggle('is-scrolled', scrolled);
     document.body.classList.toggle('header-scrolled', scrolled);
+
+    const utilityBar = header.querySelector('.utility-bar');
+    const productsTier = header.querySelector('.header-products-tier');
+    if (utilityBar) utilityBar.inert = scrolled;
+    if (productsTier) productsTier.inert = scrolled;
+
     ticking = false;
   };
 
@@ -275,14 +361,47 @@ function initNavigation(header){
     document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]')
       .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
   }, 150), { passive: true });
+
+  /* Focus trap — Tab must stay inside the open mobile drawer */
+  const FOCUSABLE_SELECTOR =
+    'a[href]:not([disabled]), button:not([disabled]), ' +
+    'input:not([disabled]), select:not([disabled]), ' +
+    'textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])';
+
+  const getDrawerFocusables = () =>
+    Array.from(nav.querySelectorAll(FOCUSABLE_SELECTOR))
+      .filter(el => el.offsetParent !== null && !el.hasAttribute('inert'));
+
+  nav.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    if (!isMobile() || !nav.classList.contains('open')) return;
+    const items = getDrawerFocusables();
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
 }
 
 /* ------------------------------------------------------------
    Active navigation (path-based)
+   /index.html and /index.htm are normalised to / so the Home
+   link highlights correctly on directory-served URLs.
    ------------------------------------------------------------ */
 
 function setActiveNavigation(){
-  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  const normalisePath = p => {
+    const norm = String(p || '').replace(/\/+$/, '') || '/';
+    return (norm === '/index.html' || norm === '/index.htm') ? '/' : norm;
+  };
+
+  const path = normalisePath(window.location.pathname);
 
   document.querySelectorAll('.site-navigation a').forEach(link => {
     link.classList.remove('nav-active');
@@ -290,7 +409,7 @@ function setActiveNavigation(){
     const href = link.getAttribute('href');
     if (!href || href.startsWith('#')) return;
     try {
-      const target = new URL(href, window.location.origin).pathname.replace(/\/+$/, '') || '/';
+      const target = normalisePath(new URL(href, window.location.origin).pathname);
       if (target === path || (target !== '/' && path.startsWith(target + '/'))) {
         link.classList.add('nav-active');
         link.setAttribute('aria-current', 'page');
@@ -304,7 +423,7 @@ function setActiveNavigation(){
       if (!href || href.startsWith('#')) return;
       try {
         const url = new URL(href, window.location.href);
-        const target = url.pathname.replace(/\/+$/, '') || '/';
+        const target = normalisePath(url.pathname);
         const samePath = target === path || (target !== '/' && path.startsWith(target + '/'));
         const hashMatches = !url.hash || url.hash === window.location.hash;
         if (samePath && hashMatches) {
@@ -455,11 +574,6 @@ function initLiteratureFilter(){
 
 /* ------------------------------------------------------------
    Investor panel switcher (investors.html)
-
-   The openGroupFor helper locates the sidebar link for a given
-   data-ir value by scanning attribute values via Array.find,
-   rather than constructing a CSS attribute selector. This
-   avoids any escaping concerns with future data-ir values.
    ------------------------------------------------------------ */
 
 function initInvestorPanels(){
@@ -515,6 +629,7 @@ function initInvestorPanels(){
 
 /* ------------------------------------------------------------
    Site search (search.html)
+   Filters stale index URLs + truncates long previews.
    ------------------------------------------------------------ */
 
 function initSiteSearch(){
@@ -530,7 +645,23 @@ function initSiteSearch(){
 
   if (!grid || !template) return;
 
-  const pages = Array.isArray(window.DADEX_SEARCH_INDEX) ? window.DADEX_SEARCH_INDEX : [];
+  const rawPages = Array.isArray(window.DADEX_SEARCH_INDEX)
+    ? window.DADEX_SEARCH_INDEX
+    : [];
+
+  const pages = rawPages.filter(p => {
+    if (!p || !p[1]) return false;
+    const url = String(p[1]).replace(/^\/+/, '');
+    return !REMOVED_SEARCH_URLS.has(url);
+  });
+
+  const truncatePreview = (text, max = 160) => {
+    const clean = String(text || '').replace(/\s+/g, ' ').trim();
+    if (clean.length <= max) return clean;
+    const cut = clean.slice(0, max);
+    const lastSpace = cut.lastIndexOf(' ');
+    return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut) + '…';
+  };
 
   const render = () => {
     const q = input.value.trim().toLowerCase();
@@ -552,7 +683,7 @@ function initSiteSearch(){
       const card = template.content.firstElementChild.cloneNode(true);
       card.querySelector('.result-type').textContent = p[2];
       card.querySelector('h3').textContent = p[0];
-      card.querySelector('p').textContent = p[3];
+      card.querySelector('p').textContent = truncatePreview(p[3]);
       card.querySelector('a').href = p[1];
       frag.appendChild(card);
     }
@@ -563,7 +694,14 @@ function initSiteSearch(){
   if (button) button.addEventListener('click', render);
   input.addEventListener('input', render);
   input.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
-  if (clear) clear.addEventListener('click', () => { input.value = ''; render(); input.focus(); });
+  if (clear) clear.addEventListener('click', () => {
+    input.value = '';
+    render();
+    input.focus();
+    if (location.search) {
+      try { history.replaceState(null, '', location.pathname); } catch (_) {}
+    }
+  });
 
   const q = new URLSearchParams(location.search).get('q');
   if (q) { input.value = q; render(); }
@@ -571,12 +709,6 @@ function initSiteSearch(){
 
 /* ------------------------------------------------------------
    DEXPERT — floating assistant
-
-   Template references (homeTpl, resultTpl) live inside the
-   loadDialog closure. They are passed explicitly to every
-   function that needs them — renderHome, renderAnswer,
-   wireDialog — so the scope chain stays intact regardless of
-   when a callback fires.
    ------------------------------------------------------------ */
 
 const DEXPERT_PRODUCTS = [
@@ -617,25 +749,42 @@ function initDEXPERT(){
   fab.type = 'button';
   fab.setAttribute('aria-expanded', 'false');
   fab.setAttribute('aria-controls', 'dexpertDialog');
-  fab.innerHTML = '<img src="assets/images/Dexpert.png" alt="" aria-hidden="true"><span>Ask DEXPERT</span>';
+
+  fab.innerHTML = `
+    <img src="assets/images/Dexpert.png" alt="" aria-hidden="true">
+    <span>
+      <strong>Ask DEXPERT</strong>
+      <small>Your building solutions guide</small>
+    </span>
+  `;
   document.body.appendChild(fab);
 
-  const title = (document.querySelector('main h1')?.textContent
-    || document.title.replace(/\s*[|–-].*$/, '')).trim();
   const path = window.location.pathname.split('/').pop() || 'index.html';
   const isProduct   = path.startsWith('product') && path !== 'products.html';
   const isInvestor  = /investor|financial-reports/i.test(path);
   const isResources = /literature|calculators|videos|news/i.test(path);
-  const currentProduct = isProduct ? title : '';
 
   let dialogPromise = null;
 
   function loadDialog(){
     if (dialogPromise) return dialogPromise;
+
     dialogPromise = (async () => {
-      const res = await fetch('components/dexpert.html', { cache: 'force-cache' });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const base = new URL('.', location.href);
+      const fetchUrl = new URL('components/dexpert.html', base);
+
+      const res = await fetch(fetchUrl, { cache: 'no-store' });
+      if (!res.ok) {
+        throw new Error(`${res.status} ${res.statusText} — ${fetchUrl.href}`);
+      }
       const html = await res.text();
+
+      if (/^\s*<!DOCTYPE\s+html/i.test(html)) {
+        throw new Error(
+          'Server returned a full HTML document instead of the DEXPERT fragment. ' +
+          'Likely a server-side 404 or SPA fallback.'
+        );
+      }
 
       const temp = document.createElement('div');
       temp.innerHTML = html;
@@ -643,16 +792,22 @@ function initDEXPERT(){
       const dialog = temp.querySelector('dialog#dexpertDialog');
       const homeTpl = temp.querySelector('template#dexpertHomeTemplate');
       const resultTpl = temp.querySelector('template#dexpertResultTemplate');
-      const actionTpl = temp.querySelector('template#dexpertActionTemplate');
+
+      if (!dialog || !homeTpl || !resultTpl) {
+        throw new Error('dexpert.html is missing one of the required elements.');
+      }
 
       document.body.appendChild(homeTpl);
       document.body.appendChild(resultTpl);
-      if (actionTpl) document.body.appendChild(actionTpl);
       document.body.appendChild(dialog);
 
       wireDialog(dialog, homeTpl, resultTpl);
       return dialog;
     })();
+
+    // Reset cache on failure so the next click retries.
+    dialogPromise.catch(() => { dialogPromise = null; });
+
     return dialogPromise;
   }
 
@@ -661,19 +816,18 @@ function initDEXPERT(){
     for (const [href, label] of actions) {
       const a = document.createElement('a');
       a.href = href;
-      a.textContent = label;
+      a.innerHTML = `<span>${label}</span><i class="fas fa-arrow-right"></i>`;
       frag.appendChild(a);
     }
     container.replaceChildren(frag);
   }
 
-  function renderHome(dialog, homeTpl, resultTpl){
+  function renderHome(dialog, homeTpl){
     const body = dialog.querySelector('#dexpertBody');
     const node = homeTpl.content.firstElementChild.cloneNode(true);
 
-    let introText, actions;
+    let actions;
     if (isProduct) {
-      introText = `Open the ${currentProduct} page`;
       actions = [
         ['#technical', 'Technical information'],
         ['literature.html', 'Literature'],
@@ -681,14 +835,12 @@ function initDEXPERT(){
         ['dealers.html', 'Find a dealer']
       ];
     } else if (isInvestor) {
-      introText = 'Investor information';
       actions = [
         ['investors.html', 'Investor Relations'],
         ['investors.html#annual', 'Annual Reports'],
         ['contact.html', 'Investor enquiry']
       ];
     } else if (isResources) {
-      introText = 'Dadex Resources';
       actions = [
         ['products.html', 'Find a product'],
         ['literature.html', 'Literature'],
@@ -706,17 +858,8 @@ function initDEXPERT(){
       ];
     }
 
-    node.querySelector('.dexpert-context strong').textContent = title;
-    node.querySelector('.dexpert-intro').textContent = introText || 'What do you need?';
     buildActions(node.querySelector('.dexpert-actions'), actions);
-
     body.replaceChildren(node);
-
-    const q = body.querySelector('#dexpertQuery');
-    const ask = body.querySelector('#dexpertAskBtn');
-    const run = () => renderAnswer(dialog, homeTpl, resultTpl, q.value.trim());
-    ask.addEventListener('click', run);
-    q.addEventListener('keydown', e => { if (e.key === 'Enter') run(); });
   }
 
   function renderAnswer(dialog, homeTpl, resultTpl, query){
@@ -774,7 +917,7 @@ function initDEXPERT(){
 
     body.replaceChildren(node);
     node.querySelector('.dexpert-back').addEventListener('click',
-      () => renderHome(dialog, homeTpl, resultTpl));
+      () => renderHome(dialog, homeTpl));
   }
 
   function wireDialog(dialog, homeTpl, resultTpl){
@@ -786,7 +929,21 @@ function initDEXPERT(){
       fab.setAttribute('aria-expanded', 'false');
     });
 
-    renderHome(dialog, homeTpl, resultTpl);
+    const form = dialog.querySelector('.dexpert-ask');
+    const input = dialog.querySelector('#expert-input');
+
+    if (form && input) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const query = input.value.trim();
+        if (query) {
+          renderAnswer(dialog, homeTpl, resultTpl, query);
+          input.value = '';
+        }
+      });
+    }
+
+    renderHome(dialog, homeTpl);
   }
 
   const open = async () => {
@@ -795,9 +952,9 @@ function initDEXPERT(){
       if (dialog.open) return;
       dialog.showModal();
       fab.setAttribute('aria-expanded', 'true');
-      setTimeout(() => dialog.querySelector('#dexpertQuery')?.focus(), 60);
+      setTimeout(() => dialog.querySelector('#expert-input')?.focus(), 60);
     } catch (err) {
-      console.error('DEXPERT failed to load', err);
+      console.error('[Dadex] DEXPERT failed to load:', err);
     }
   };
 

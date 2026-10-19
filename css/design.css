@@ -27,7 +27,7 @@
 .home-btn{
   min-height:2.75rem;
   padding:.75rem 1.5rem;
-  border-radius:var(--radius-sm);
+  border-radius:.25rem;
   display:inline-flex;align-items:center;justify-content:center;
   gap:.5rem;
   font-weight:700;line-height:1.2;text-decoration:none;
@@ -36,6 +36,13 @@
              color var(--duration-fast) var(--ease-io),
              box-shadow var(--duration-base) var(--ease-io),
              transform var(--duration-base) var(--ease-io);
+}
+.btn svg,
+.btn i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -1px; 
 }
 .btn-sm{min-height:2.5rem;padding:.5625rem 1.125rem;font-size:.875rem}
 
