@@ -1,27 +1,11 @@
 /* ============================================================
    SHELL — Header, Skip Link, DEXPERT, Back to top
    ------------------------------------------------------------
-   Contains every header chrome rule, including:
-   • CLS-safe scroll collapse (interpolate-size)
-   • Accessible mobile drawer (visibility + pointer-events)
-   • 44px touch targets in the utility bar
-   • Frosted-glass sticky header
-   • Animated nav underlines + chevron rotation
-   • Staggered mega-menu reveal
-   • Search pill polish + brand hover lift
-   • DEXPERT with overscroll containment
-   ------------------------------------------------------------
-   v2 (this revision):
-   • Utility bar 10px → 11px
-   • Main nav   11px → 13px (padding 12/10 → 14/12)
-   • Products   9px  → 11px (padding 15/4  → 14/6, gap 20 → 16,
-                              letter-spacing 1.25px → 1px)
-   • Search pill 11px → 12px (padding 10/14 → 11/16)
-   • Dropdowns dock to the toggle: top: calc(100% - 1px),
-     translateY reduced from 6px/8px → 4px/6px
-   • Header inner gains 4px block padding to keep the taller
-     nav from feeling cramped against the 76px min-height
-   • Products row min-height 44px → 46px
+   v4 (this revision):
+   • DEXPERT FAB is now a permanent horizontal pill.
+   • Subtitle removed; only "Ask DEXPERT" is visible.
+   • Avatar image fixed to show the complete character.
+   • Dialog spacing tightened.
    ============================================================ */
 
 /* ============================================================
@@ -70,7 +54,6 @@
   outline:2px solid #fff;outline-offset:2px;
 }
 
-/* Global scroll lock when the mobile drawer is open */
 body.nav-open{overflow:hidden;}
 
 /* ============================================================
@@ -86,11 +69,9 @@ body.nav-open{overflow:hidden;}
              background var(--sh-t-base) var(--sh-ease);
   isolation:isolate;
   contain:layout style;
-  /* CLS-safe scroll collapse: allow `auto` heights to interpolate */
   interpolate-size:allow-keywords;
 }
 
-/* Frosted-glass on scroll */
 .site-header.is-scrolled{
   box-shadow:var(--sh-el-2);
   background:rgba(255,255,255,.86);
@@ -105,8 +86,6 @@ body.nav-open{overflow:hidden;}
   }
 }
 
-/* ---------- Scroll-driven collapse ----------
-   `height` (not max-height) + interpolate-size → smooth, CLS-safe */
 .site-header .utility-bar,
 .site-header .header-products-tier{
   overflow:hidden;
@@ -117,7 +96,7 @@ body.nav-open{overflow:hidden;}
 }
 .site-header .header-inner{
   min-height:76px;
-  padding-block:4px;              /* ★ new — breathing room for the taller nav */
+  padding-block:4px;
   transition:min-height var(--sh-t-base) var(--sh-ease);
 }
 .site-header.is-scrolled .utility-bar,
@@ -127,11 +106,11 @@ body.nav-open{overflow:hidden;}
 .site-header.is-scrolled .header-inner{min-height:64px;}
 
 /* ============================================================
-   HEADER — utility bar  (font 10px → 11px)
+   HEADER — utility bar
    ============================================================ */
 .site-header .utility-bar{
   display:block;
-  background:#171b1e;color:#c0c5c8;font-size:11px;    /* was 10px */
+  background:#171b1e;color:#c0c5c8;font-size:11px;
   border-bottom:1px solid #ffffff30;
 }
 .site-header .utility-inner{
@@ -139,19 +118,18 @@ body.nav-open{overflow:hidden;}
 }
 .site-header .utility-left{display:flex;align-items:center;gap:18px;letter-spacing:.1px;}
 .site-header .utility-left strong{
-  color:#f2f3f3;font-size:11px;letter-spacing:.25px;   /* was 10px */
+  color:#f2f3f3;font-size:11px;letter-spacing:.25px;
   border-right:1px solid #ffffff30;padding-right:18px;
   display:inline-flex;align-items:center;
 }
 .site-header .utility-links{display:flex;gap:25px;}
 .site-header .utility-links a{
-  display:flex;align-items:center;gap:7px;font-size:11px; /* was 10px */
+  display:flex;align-items:center;gap:7px;font-size:11px;
   color:#c0c5c8;text-decoration:none;transition:color .2s;
 }
 .site-header .utility-links a svg,
 .site-header .utility-links a i{
-  width:13px;height:13px;                                 /* was 12px */
-  color:#ff7777;background:transparent;
+  width:13px;height:13px;color:#ff7777;background:transparent;
 }
 .site-header .utility-links a:hover{color:white;}
 
@@ -163,7 +141,6 @@ body.nav-open{overflow:hidden;}
 }
 .site-header .header-main-tier .header-inner{display:flex;gap:30px;align-items:center;}
 
-/* ---------- Brand ---------- */
 .site-header .brand{
   display:inline-flex;align-items:center;flex-shrink:0;
   text-decoration:none;line-height:1;
@@ -177,16 +154,14 @@ body.nav-open{overflow:hidden;}
 .site-header.is-scrolled .brand-logo{width:6.5rem}
 
 /* ============================================================
-   HEADER — primary nav (tier 1)  (font 11px → 13px)
+   HEADER — primary nav
    ============================================================ */
 .site-header .site-navigation{
   margin-left:auto;display:flex;align-items:center;gap:12px;
 }
 .site-header .site-navigation>a,
 .site-header .site-navigation .dropdown-toggle{
-  padding:14px 12px;                                      /* was 12px 10px */
-  font-size:13px;                                         /* was 11px */
-  font-weight:650;
+  padding:14px 12px;font-size:13px;font-weight:650;
   background:transparent;display:flex;align-items:center;gap:5px;
   white-space:nowrap;position:relative;border-radius:5px;
   border:0;color:var(--d-text);text-decoration:none;cursor:pointer;
@@ -197,7 +172,6 @@ body.nav-open{overflow:hidden;}
 
 .site-header .site-navigation .nav-active{color:var(--dadex-red);}
 
-/* Animated nav underline — draws in from the right on hover, holds on active */
 .site-header .site-navigation>a:not(.nav-search)::after,
 .site-header .site-navigation .dropdown-toggle::after{
   content:'';position:absolute;left:10px;right:10px;bottom:4px;
@@ -213,16 +187,12 @@ body.nav-open{overflow:hidden;}
 .site-header .dropdown-wide:focus-within>.dropdown-toggle::after{
   transform:scaleX(1);transform-origin:left center;
 }
-
 .site-header .site-navigation>a:hover,
 .site-header .site-navigation .dropdown-toggle:hover{
   color:var(--dadex-red);background:#e5000008;
 }
-
-/* Chevron rotation on open/hover */
 .site-header .site-navigation .dropdown-toggle .arrow{
-  width:14px;height:14px;                                 /* was 12px */
-  color:#8b9399;margin-left:0;
+  width:14px;height:14px;color:#8b9399;margin-left:0;
   display:inline-flex;align-items:center;justify-content:center;
   transition:transform .25s var(--sh-ease), color .2s;
 }
@@ -232,12 +202,10 @@ body.nav-open{overflow:hidden;}
   transform:rotate(180deg);color:var(--dadex-red);
 }
 
-/* ---------- Search pill  (font 11px → 12px) ---------- */
 .site-header .nav-search{
   display:flex;align-items:center;gap:8px;
-  background:#f2f3f3;border-radius:30px;
-  padding:11px 16px;                                      /* was 10px 14px */
-  font-size:12px;font-weight:600;margin-left:12px;        /* was 11px */
+  background:#f2f3f3;border-radius:30px;padding:11px 16px;
+  font-size:12px;font-weight:600;margin-left:12px;
   color:var(--d-text);text-decoration:none;
   border:1px solid transparent;cursor:pointer;
   transition:color .2s, background .2s, border-color .2s,
@@ -245,7 +213,7 @@ body.nav-open{overflow:hidden;}
 }
 .site-header .nav-search svg,
 .site-header .nav-search i{
-  width:16px;height:16px;                                 /* was 15px */
+  width:16px;height:16px;
   transition:transform .5s var(--sh-ease);
 }
 .site-header .nav-search:hover{
@@ -259,7 +227,7 @@ body.nav-open{overflow:hidden;}
 }
 
 /* ============================================================
-   HEADER — products tier (tier 2)  (font 9px → 11px)
+   HEADER — products tier
    ============================================================ */
 .site-header .header-products-tier{
   display:block;
@@ -268,40 +236,30 @@ body.nav-open{overflow:hidden;}
   box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
 }
 .site-header .header-products-row{
-  display:flex;
-  min-height:46px;                                        /* was 44px */
-  align-items:center;justify-content:center;
-  gap:16px;                                               /* was 20px */
+  display:flex;min-height:46px;align-items:center;justify-content:center;gap:16px;
 }
 .site-header .products-label{
-  font-size:9px;                                          /* was 8px */
-  letter-spacing:1.4px;color:#92999e;margin-right:20px;
+  font-size:9px;letter-spacing:1.4px;color:#92999e;margin-right:20px;
 }
 .site-header .header-products-row .dropdown-toggle,
 .site-header .header-products-row .tier2-link,
 .site-header .header-products-row .tier2-services{
-  padding:14px 6px;                                       /* was 15px 4px */
-  font-size:11px;                                         /* was 9px */
-  letter-spacing:1px;                                     /* was 1.25px */
-  text-transform:uppercase;font-weight:750;
-  display:flex;align-items:center;gap:7px;
-  background:transparent;white-space:nowrap;border:none;
+  padding:14px 6px;font-size:11px;letter-spacing:1px;
+  text-transform:uppercase;font-weight:750;display:flex;align-items:center;
+  gap:7px;background:transparent;white-space:nowrap;border:none;
   color:var(--d-text);text-decoration:none;cursor:pointer;
   transition:color .2s;
 }
 .site-header .header-products-row .dropdown-toggle svg,
 .site-header .header-products-row .dropdown-toggle i,
 .site-header .header-products-row .dropdown-toggle .arrow{
-  height:12px;width:12px;display:inline-block;            /* was 11px */
+  height:12px;width:12px;display:inline-block;
 }
 .site-header .header-products-row a:hover,
 .site-header .header-products-row .dropdown-toggle:hover{
   color:var(--dadex-red);
 }
-.site-header .header-products-row .tier2-services{
-  font-size:10px;                                         /* was 8px */
-  color:#59636a;
-}
+.site-header .header-products-row .tier2-services{font-size:10px;color:#59636a;}
 .site-header .header-products-row .tier2-services span{color:var(--dadex-red);font-size:13px;}
 .site-header .header-products-row .tier-divider{height:15px;width:1px;background:#cbd0d2;}
 .site-header .header-products-row .tier2-link::after,
@@ -315,27 +273,15 @@ body.nav-open{overflow:hidden;}
 
 /* ============================================================
    HEADER — Dropdowns & Mega Menu
-   ------------------------------------------------------------
-   ★ Dropdowns dock to the toggle:
-     · top: calc(100% - 1px)  ← removes the sub-pixel hairline
-     · translateY reduced      ← tighter, less “floating” entry
    ============================================================ */
 .site-header .dropdown{position:relative;}
 .site-header .dropdown-wide{position:static;}
 
 .site-header .dropdown-menu{
-  position:absolute;
-  top:calc(100% - 1px);                                   /* was top:100% */
-  left:0;
-  min-width:210px;
-  background:white;
-  box-shadow:0 15px 30px #15212c20;
-  border-top:2px solid var(--dadex-red);
-  border-radius:0 0 10px 10px;
-  padding:12px;
-  opacity:0;visibility:hidden;
-  transform:translateY(4px);                              /* was 6px */
-  transition:opacity .2s var(--ease), transform .2s var(--ease), visibility .2s;
+  position:absolute;top:calc(100% - 1px);left:0;min-width:210px;background:white;
+  box-shadow:0 15px 30px #15212c20;border-top:2px solid var(--dadex-red);
+  border-radius:0 0 10px 10px;padding:12px;opacity:0;visibility:hidden;
+  transform:translateY(4px);transition:opacity .2s, transform .2s, visibility .2s;
 }
 .site-header .dropdown-menu a{
   display:block;font-size:12px;padding:12px;border-radius:5px;
@@ -348,15 +294,10 @@ body.nav-open{overflow:hidden;}
 }
 
 .site-header .mega-menu{
-  position:absolute;
-  top:calc(100% - 1px);                                   /* was top:100% */
-  left:0;right:0;
-  background:white;
-  border-top:2px solid var(--dadex-red);
-  box-shadow:0 24px 40px #15212c22;
-  opacity:0;visibility:hidden;
-  transform:translateY(6px);                              /* was 8px */
-  transition:opacity .25s var(--ease), transform .25s var(--ease), visibility .25s;
+  position:absolute;top:calc(100% - 1px);left:0;right:0;background:white;
+  border-top:2px solid var(--dadex-red);box-shadow:0 24px 40px #15212c22;
+  opacity:0;visibility:hidden;transform:translateY(6px);
+  transition:opacity .25s, transform .25s, visibility .25s;
   padding:35px 0 40px;z-index:5;
 }
 .site-header .mega-menu-inner{
@@ -389,7 +330,6 @@ body.nav-open{overflow:hidden;}
   padding:0 0 15px;border-bottom:1px solid #e6e9eb;margin:0 0 10px;font-weight:normal;
 }
 
-/* Staggered mega-menu reveal */
 .site-header .mega-columns a{
   display:block;padding:11px 0;font-size:12px;color:var(--d-text);
   text-decoration:none;opacity:0;transform:translateY(4px);
@@ -423,7 +363,6 @@ body.nav-open{overflow:hidden;}
   }
 }
 
-/* Keyboard reveal — WCAG 2.1.1 */
 .site-header .dropdown:focus-within > .dropdown-menu,
 .site-header .dropdown-wide:focus-within > .mega-menu{
   opacity:1;visibility:visible;transform:translateY(0);
@@ -445,10 +384,6 @@ body.nav-open{overflow:hidden;}
 
 @media(max-width:900px){
   .site-header .utility-left span{display:none;}
-
-  /* A11y fix: drawer stays in the layout tree and is hidden with
-     visibility + pointer-events, so transitions fire and AT sees a
-     genuine hidden→visible change. */
   .site-header .site-navigation{
     position:absolute;top:100%;left:0;right:0;flex-direction:column;
     align-items:stretch;background:#fff;padding:20px 28px;
@@ -476,12 +411,9 @@ body.nav-open{overflow:hidden;}
     opacity:1;
     transform:translateY(0);
   }
-
-  /* Staggered drawer items */
   .site-header .site-navigation>*{
     opacity:0;transform:translateY(6px);
-    transition:opacity .3s var(--sh-ease),
-               transform .3s var(--sh-ease);
+    transition:opacity .3s var(--sh-ease), transform .3s var(--sh-ease);
   }
   .site-header .site-navigation.open>*{opacity:1;transform:none;}
   .site-header .site-navigation.open>*:nth-child(1){transition-delay:60ms}
@@ -491,14 +423,11 @@ body.nav-open{overflow:hidden;}
   .site-header .site-navigation.open>*:nth-child(5){transition-delay:180ms}
   .site-header .site-navigation.open>*:nth-child(6){transition-delay:210ms}
 
-  /* Explicit focus ring — the global ring is easy to miss on white */
   .site-header .site-navigation>a:focus-visible,
   .site-header .site-navigation .dropdown-toggle:focus-visible,
   .site-header .nav-search:focus-visible,
   .site-header .menu-toggle:focus-visible{
-    outline:2px solid var(--dadex-red);
-    outline-offset:2px;
-    border-radius:6px;
+    outline:2px solid var(--dadex-red);outline-offset:2px;border-radius:6px;
   }
 
   .site-header .site-navigation>a,
@@ -515,7 +444,6 @@ body.nav-open{overflow:hidden;}
   .site-header .menu-toggle{display:grid;place-items:center;}
   .site-header .header-products-tier{display:none;}
 
-  /* Mobile dropdown — accept .open on either the menu OR parent */
   .site-header .dropdown-menu{
     position:static;display:none;opacity:1;visibility:visible;
     box-shadow:none;transform:none;border-top:0;
@@ -530,7 +458,6 @@ body.nav-open{overflow:hidden;}
     color:var(--dadex-red);background:#fff4f4;border-color:#f3c9c9;
   }
 
-  /* Collapsible Products & Systems menu */
   .site-header .mobile-products-menu{
     display:block;margin-top:10px;padding-top:12px;
     border-top:1px solid #eef0f2;
@@ -591,15 +518,11 @@ body.nav-open{overflow:hidden;}
 }
 
 @media(max-width:600px){
-  /* 44px utility bar so the global @media(pointer:coarse) rule is not clipped */
   .site-header .utility-inner{min-height:44px;}
   .site-header .utility-left strong{font-size:8px;border:0;padding:0;}
   .site-header .utility-links{gap:10px;}
   .site-header .utility-links a{
-    font-size:9px;
-    min-height:44px;
-    padding:12px 6px;
-    align-items:center;
+    font-size:9px;min-height:44px;padding:12px 6px;align-items:center;
   }
   .site-header .utility-links svg,
   .site-header .utility-links i{width:10px;}
@@ -608,21 +531,20 @@ body.nav-open{overflow:hidden;}
   .site-header .header-inner{min-height:62px;}
   .site-header .brand-logo{width:5.8rem;height:auto;}
   .site-header.is-scrolled .brand-logo{width:5rem;}
-  /* NOTE: --header-h in tokens may need a resize listener if hard-coded;
-     the mobile utility bar now measures ~44px, not ~31px. */
 }
 
 /* ============================================================
-   DEXPERT — floating assistant
+   DEXPERT — floating assistant (Horizontal Pill)
    ============================================================ */
 .dexpert-fab{
   position:fixed;right:1.5rem;bottom:1.5rem;z-index:1100;
-  display:inline-flex!important;align-items:center!important;gap:.6rem!important;
-  min-height:3.25rem;padding:0 1.25rem 0 .4375rem!important;
+  display:inline-flex!important;align-items:center!important;
+  height:3.25rem; /* 52px */
+  padding:0 1.25rem 0 .4375rem!important; 
   background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%)!important;
   border:1px solid rgba(255,255,255,.14)!important;
   border-radius:999px;color:#fff!important;
-  font-size:.78125rem;font-weight:800;letter-spacing:.02em;
+  font-size:.8125rem;font-weight:800;letter-spacing:.02em;
   box-shadow:
     0 1px 2px rgba(0,0,0,.08),
     0 4px 12px rgba(0,0,0,.12),
@@ -632,26 +554,42 @@ body.nav-open{overflow:hidden;}
              box-shadow var(--sh-t-base) var(--sh-ease-io),
              background var(--sh-t-base) var(--sh-ease-io);
   contain:layout style;
+  white-space:nowrap;
 }
+
 .dexpert-fab::before{
   content:"";position:absolute;inset:0;
   background:linear-gradient(135deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 45%);
-  pointer-events:none;border-radius:inherit;
+  pointer-events:none;border-radius:inherit;z-index:0;
 }
+
+/* Fix image cropping: object-fit:contain + slight padding */
 .dexpert-fab img{
-  width:2.5rem;height:2.5rem;object-fit:cover;border-radius:50%;
-  background:#fff;display:block;flex:0 0 2.5rem;
-  border:2px solid rgba(255,255,255,.9);
-  box-shadow:0 2px 8px rgba(0,0,0,.15);
+  width:2.5rem;height:2.5rem;
+  flex:0 0 2.5rem;
+  object-fit:contain; 
+  padding:2px;
+  background:#fff;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.9);
   position:relative;z-index:1;
   transition:transform var(--sh-t-slow) var(--sh-ease);
 }
+
 .dexpert-fab span{
-  font-size:.78125rem;letter-spacing:.02em;line-height:1;
-  padding-right:.125rem;position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;
+  padding-left:.75rem;padding-right:.25rem;
+  position:relative;z-index:1;
 }
-.dexpert-fab small{font-size:.5625rem;color:#f3d0d0;line-height:1}
-.dexpert-fab[aria-expanded="true"]{
+
+.dexpert-fab strong{
+  font-size:.875rem; /* 14px */
+  letter-spacing:.02em;line-height:1;font-weight:800;
+}
+
+.dexpert-fab small{display:none;} /* Hide subtitle */
+
+.dexpert-fab:hover{
   background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%)!important;
   border-color:rgba(255,255,255,.24)!important;
   transform:translateY(-3px);
@@ -660,8 +598,12 @@ body.nav-open{overflow:hidden;}
     0 6px 16px rgba(0,0,0,.14),
     0 22px 48px -6px rgba(229,0,0,.45);
 }
+.dexpert-fab:hover img{
+  transform:scale(1.05) rotate(-3deg);
+}
 .dexpert-fab:focus-visible{outline:2px solid var(--dadex-red);outline-offset:4px}
 
+/* ---------- Dialog ---------- */
 .dexpert-dialog{
   position:fixed;right:1.5rem;bottom:5.625rem;left:auto;top:auto;
   margin:0;padding:0;max-width:none;max-height:none;z-index:1101;
@@ -690,7 +632,7 @@ body.nav-open{overflow:hidden;}
 }
 @keyframes dexpertBackdropIn{from{opacity:0}to{opacity:1}}
 
-/* ---------- Header ---------- */
+/* ---------- Dialog Header ---------- */
 .dexpert-head{
   display:flex;align-items:center;justify-content:space-between;
   padding:1.125rem 1.25rem!important;
@@ -709,7 +651,9 @@ body.nav-open{overflow:hidden;}
   border:1px solid rgba(255,255,255,.2);
 }
 .dexpert-head .expert-icon img{
-  width:100%;height:100%;object-fit:cover;border-radius:50%;
+  width:100%;height:100%;object-fit:contain; /* Fix cropping in dialog too */
+  padding:2px;
+  border-radius:50%;
 }
 .dexpert-brand{
   display:flex;flex-direction:column;justify-content:center;
@@ -731,7 +675,7 @@ body.nav-open{overflow:hidden;}
              transform var(--sh-t-base) var(--sh-ease);
 }
 
-/* ---------- Body ---------- */
+/* ---------- Dialog Body ---------- */
 .dexpert-body{padding:1.25rem!important}
 .dexpert-welcome{
   display:block;font-size:.6875rem;font-weight:800;
@@ -744,7 +688,7 @@ body.nav-open{overflow:hidden;}
 }
 .dexpert-body p{margin:.25rem 0 .75rem;color:#4f565c;line-height:1.55;font-size:.8125rem}
 
-/* ---------- Actions ---------- */
+/* ---------- Dialog Actions ---------- */
 .dexpert-actions{display:grid;gap:.45rem!important;margin-top:1rem;}
 .dexpert-actions a,
 .dexpert-actions button{
@@ -767,7 +711,7 @@ body.nav-open{overflow:hidden;}
   }
 }
 
-/* ---------- Form / Input ---------- */
+/* ---------- Dialog Form ---------- */
 .dexpert-ask{
   margin-top:1.25rem!important;padding-top:1.25rem!important;
   border-top:1px solid var(--d-line);
@@ -810,7 +754,7 @@ body.nav-open{overflow:hidden;}
   line-height:1.45;font-size:.65625rem;
 }
 
-/* ---------- Misc / Result ---------- */
+/* ---------- Dialog Misc / Result ---------- */
 .dexpert-note{
   font-size:.625rem!important;line-height:1.5!important;
   margin:.625rem 0 0!important;color:var(--d-muted)!important;letter-spacing:.005em;
@@ -850,18 +794,8 @@ body.nav-open{overflow:hidden;}
   pointer-events:none;
 }
 
-/* ---------- Hover Interactions ---------- */
+/* ---------- Dialog Hover Interactions ---------- */
 @media (hover: hover) and (pointer: fine){
-  .dexpert-fab:hover{
-    background:linear-gradient(135deg,var(--dadex-red) 0%,var(--dadex-red-dark) 100%)!important;
-    border-color:rgba(255,255,255,.24)!important;
-    transform:translateY(-3px);
-    box-shadow:
-      0 2px 4px rgba(0,0,0,.10),
-      0 6px 16px rgba(0,0,0,.14),
-      0 22px 48px -6px rgba(229,0,0,.45);
-  }
-  .dexpert-fab:hover img{transform:scale(1.05) rotate(-3deg)}
   .dexpert-close:hover{background:rgba(255,255,255,.24);transform:rotate(90deg)}
   .dexpert-actions a:hover,
   .dexpert-actions button:hover{
@@ -879,15 +813,16 @@ body.nav-open{overflow:hidden;}
 }
 .dexpert-ask button:active{transform:translateY(0)}
 
-/* ---------- Responsive / Mobile ---------- */
+/* ---------- Dialog Responsive ---------- */
 @media(max-width:700px){
   .dexpert-fab{
-    right:1rem!important;bottom:1rem!important;min-height:3.25rem;
-    padding:0 1.125rem 0 .375rem!important;
+    right:1rem!important;bottom:1rem!important;
+    /* Keep the horizontal layout but slightly tighter */
+    height:3rem; 
+    padding:0 1rem 0 .375rem!important;
   }
   .dexpert-fab img{width:2.25rem;height:2.25rem;flex-basis:2.25rem}
-  .dexpert-fab small{display:none}
-
+  
   .dexpert-dialog{
     left:0;right:0;bottom:0;width:100%;max-width:none;
     max-height:88vh;border-radius:1.5rem 1.5rem 0 0;
@@ -895,7 +830,6 @@ body.nav-open{overflow:hidden;}
   .dexpert-head{padding:1rem 1.125rem!important}
   .dexpert-body{padding:1rem!important}
   
-  /* Squeeze vertical space a bit more on smaller screens */
   .dexpert-actions{gap:.4rem!important;margin-top:.875rem;}
   .dexpert-actions a, .dexpert-actions button{padding:.65rem .75rem!important}
   .dexpert-ask{margin-top:1rem!important;padding-top:1rem!important;}
@@ -903,6 +837,7 @@ body.nav-open{overflow:hidden;}
 @media(max-width:520px){
   .dexpert-dialog{max-height:80vh;border-radius:1.25rem 1.25rem 0 0;}
 }
+
 /* ============================================================
    BACK TO TOP
    ============================================================ */
@@ -960,7 +895,6 @@ select:focus-visible{
   *::-webkit-scrollbar-thumb:hover{background:rgba(229,0,0,.45);}
 }
 
-/* Reduced-motion: covers every animated element in this file */
 @media (prefers-reduced-motion:reduce){
   .site-header,
   .site-header .site-navigation,
@@ -991,7 +925,6 @@ select:focus-visible{
     transition:none!important;animation:none!important;
     transition-delay:0s!important;
   }
-  /* Reset stagger starting-state so links remain visible */
   .site-header .mega-columns a{opacity:1;transform:none;}
   .site-header .site-navigation>*{opacity:1!important;transform:none!important;}
 }
@@ -1016,7 +949,7 @@ select:focus-visible{
 }
 
 /* ============================================================
-   SHELL TOKENS (footer scope)
+   SHELL — Footer
    ============================================================ */
 .site-footer{
   --sh-ease:var(--ease-out);
@@ -1032,12 +965,7 @@ select:focus-visible{
   --sh-el-1:var(--shadow-1);
   --sh-el-2:var(--shadow-2);
   --sh-el-3:var(--shadow-3);
-}
 
-/* ============================================================
-   FOOTER — base
-   ============================================================ */
-.site-footer{
   background:linear-gradient(180deg,#14171a 0%,#0d0f11 100%);
   color:#fff;padding:5rem 0 6rem;
   position:relative;overflow:hidden;
@@ -1067,10 +995,6 @@ select:focus-visible{
   margin-inline:auto;padding-left:0;padding-right:0;
   position:relative;z-index:1;
 }
-
-/* ============================================================
-   FOOTER — grid & brand block
-   ============================================================ */
 .site-footer .footer-grid.footer-journey{
   display:grid;grid-template-columns:1.7fr repeat(5,minmax(0,1fr));
   gap:2.125rem;padding-bottom:3.5rem;
@@ -1091,10 +1015,6 @@ select:focus-visible{
   max-width:19.375rem;color:#9aa0a6;font-size:.8125rem;
   line-height:1.7;margin:1.25rem 0 0;
 }
-
-/* ============================================================
-   FOOTER — headings (h2 / h3 / h4)
-   ============================================================ */
 .site-footer h2,
 .site-footer h3,
 .site-footer h4{
@@ -1115,7 +1035,6 @@ select:focus-visible{
 .site-footer .footer-grid>div:hover>h4::after{
   width:3.25rem;
 }
-
 .site-footer h2 i,
 .site-footer h3 i,
 .site-footer h4 i{
@@ -1128,10 +1047,6 @@ select:focus-visible{
              color var(--sh-t-base) var(--sh-ease-io),
              transform var(--sh-t-base) var(--sh-ease);
 }
-
-/* ============================================================
-   FOOTER — links
-   ============================================================ */
 .site-footer a{
   position:relative;display:block;margin:0 0 .6875rem;padding-left:.875rem;
   color:#9ca3aa;text-decoration:none;font-size:.78125rem;line-height:1.5;
@@ -1157,37 +1072,6 @@ select:focus-visible{
 .site-footer .footer-nav-link{display:flex!important;align-items:center;gap:.5rem}
 .site-footer .footer-nav-link .fa-arrow-right{font-size:.7rem;opacity:.8;flex:0 0 auto}
 
-/* ============================================================
-   FOOTER — brand block enhancements (CTA + social + trust)
-   ------------------------------------------------------------
-   Expected template additions inside `.footer-brand`:
-
-   <div class="footer-brand-actions">
-     <a href="/contact" class="footer-cta-btn">
-       Talk to a specialist
-       <svg aria-hidden="true" width="14" height="14"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2.5" stroke-linecap="round"
-            stroke-linejoin="round">
-         <path d="M5 12h14M13 6l6 6-6 6"/>
-       </svg>
-     </a>
-   </div>
-
-   <div class="social-links" aria-label="Follow us">
-     <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-     <a href="#" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
-     <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-   </div>
-
-   <div class="footer-trust">
-     <span><strong>SSL</strong> secured checkout</span>
-     <span><strong>ISO</strong> 9001 certified</span>
-     <span><strong>4.9/5</strong> support rating</span>
-   </div>
-   ============================================================ */
-
-/* ---------- CTA button ---------- */
 .site-footer .footer-brand-actions{
   display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem;
 }
@@ -1211,7 +1095,6 @@ select:focus-visible{
 }
 .site-footer .footer-cta-btn:hover svg{transform:translateX(3px);}
 
-/* ---------- Social row ---------- */
 .site-footer .social-links{
   display:flex;gap:.65rem;margin-top:1.5rem;flex-wrap:wrap;
 }
@@ -1233,7 +1116,6 @@ select:focus-visible{
   box-shadow:0 10px 20px -8px rgba(229,0,0,.5);
 }
 
-/* ---------- Trust strip ---------- */
 .site-footer .footer-trust{
   display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;
   margin-top:1.75rem;padding-top:1.5rem;
@@ -1243,9 +1125,6 @@ select:focus-visible{
 .site-footer .footer-trust span{display:inline-flex;align-items:center;gap:.4rem;}
 .site-footer .footer-trust strong{color:#c8ccd0;font-weight:700;}
 
-/* ============================================================
-   FOOTER — bottom bar
-   ============================================================ */
 .site-footer .footer-bottom{
   border-top:1px solid rgba(255,255,255,.08);
   padding-top:1.625rem;padding-bottom:.625rem;
@@ -1265,9 +1144,6 @@ select:focus-visible{
 }
 .site-footer .footer-bottom p{color:#8f9499;font-size:.75rem;margin:0}
 
-/* ============================================================
-   FOOTER — legal links
-   ============================================================ */
 .site-footer .footer-legal{
   display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;
 }
@@ -1289,9 +1165,6 @@ select:focus-visible{
   color:#fff;padding-left:0!important;
 }
 
-/* ============================================================
-   FOOTER — disclaimer
-   ============================================================ */
 .site-footer .disclaimer{
   max-width:36.25rem;margin:0;
   color:#666d73;font-size:.6875rem;line-height:1.6;
@@ -1308,9 +1181,6 @@ select:focus-visible{
   color:#fff;border-bottom-color:var(--sh-red-on-dark);
 }
 
-/* ============================================================
-   FOOTER — hover-only states
-   ============================================================ */
 @media (hover: hover) and (pointer: fine){
   .site-footer .footer-brand .brand:hover .brand-logo{
     opacity:1;transform:translateY(-1px);
@@ -1332,9 +1202,6 @@ select:focus-visible{
   }
 }
 
-/* ============================================================
-   FOOTER — responsive
-   ============================================================ */
 @media(max-width:1180px){
   .site-footer .footer-grid.footer-journey{
     grid-template-columns:1.6fr repeat(3,minmax(0,1fr));
@@ -1359,7 +1226,6 @@ select:focus-visible{
   .site-footer .footer-legal{flex-direction:column;align-items:flex-start;gap:.75rem;}
 }
 
-/* 44px tap targets for legal links on touch */
 @media (pointer:coarse){
   .site-footer .footer-legal a,
   .site-footer .footer-legal button{
@@ -1368,9 +1234,6 @@ select:focus-visible{
   .site-footer .social-links a{width:2.75rem;height:2.75rem;}
 }
 
-/* ============================================================
-   FOOTER — reduced motion
-   ============================================================ */
 @media (prefers-reduced-motion:reduce){
   .site-footer a,
   .site-footer .footer-brand .brand-logo,
@@ -1395,9 +1258,6 @@ select:focus-visible{
   }
 }
 
-/* ============================================================
-   FOOTER — print
-   ============================================================ */
 @media print{
   .site-footer{background:#fff!important;color:#000!important;}
   .site-footer a{color:#000!important;}
