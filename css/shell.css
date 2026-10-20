@@ -231,7 +231,7 @@ body.nav-open{overflow:hidden;}
    ============================================================ */
 .site-header .header-products-tier{
   display:block;
-  background:#F6F6F3;
+  background:#F6F6F4; 
   border-bottom:1px solid #d7dcdf;
 }
 .site-header .header-products-row{
