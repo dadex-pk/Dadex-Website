@@ -219,7 +219,7 @@ body.nav-open{overflow:hidden;}
 .site-header .nav-search:hover{
   color:#fff;background:var(--dadex-red);
   border-color:var(--dadex-red);
-  box-shadow:0 8px 20px -8px rgba(229,0,0,.5);
+  box-shadow:0 8px 20px -8px rgba(229,0,0,.35);
 }
 .site-header .nav-search:hover svg,
 .site-header .nav-search:hover i{
@@ -231,12 +231,11 @@ body.nav-open{overflow:hidden;}
    ============================================================ */
 .site-header .header-products-tier{
   display:block;
-  background:linear-gradient(180deg,#f3f5f6 0%,#e7ebed 100%);
+  background:#F6F6F3;
   border-bottom:1px solid #d7dcdf;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
 }
 .site-header .header-products-row{
-  display:flex;min-height:46px;align-items:center;justify-content:center;gap:16px;
+  display:flex;min-height:30px;align-items:center;justify-content:center;gap:16px;
 }
 .site-header .products-label{
   font-size:9px;letter-spacing:1.4px;color:#92999e;margin-right:20px;
@@ -253,7 +252,7 @@ body.nav-open{overflow:hidden;}
 .site-header .header-products-row .dropdown-toggle svg,
 .site-header .header-products-row .dropdown-toggle i,
 .site-header .header-products-row .dropdown-toggle .arrow{
-  height:12px;width:12px;display:inline-block;
+  height:12px;width:12px;display:inline-block; display:flex;align-items:center;
 }
 .site-header .header-products-row a:hover,
 .site-header .header-products-row .dropdown-toggle:hover{
