@@ -142,8 +142,7 @@ body.nav-open{overflow:hidden;}
 .site-header .header-main-tier .header-inner{display:flex;gap:30px;align-items:center;}
 
 .site-header .brand{
-  display:inline-flex;align-items:center;flex-shrink:0;
-  text-decoration:none;line-height:1;
+  display:inline-flex;align-items:center;flex-shrink:0;text-decoration:none;line-height:1;
 }
 .site-header .brand-logo{
   display:block;width:8rem;height:auto;object-fit:contain;
