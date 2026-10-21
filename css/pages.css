@@ -1,0 +1,124 @@
+/* ============================================================
+   PAGE-SPECIFIC WIDGETS (Filters, Video Grids, Dealers)
+   ============================================================ */
+
+/* --- Filter Chips (Projects, Videos) --- */
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--ink-light);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--brand-red);
+  border-color: var(--brand-red);
+  color: #fff;
+}
+
+/* --- Video Grid --- */
+.video-card {
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+.video-thumbnail {
+  position: relative;
+  aspect-ratio: 16/9;
+  background: #eceeef;
+}
+.video-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.video-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: rgba(229, 0, 0, 0.9);
+  color: #fff;
+  border-radius: 50%;
+  border: none;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.video-card:hover .video-play { transform: scale(1.1); }
+.video-body { padding: 1.5rem; }
+.video-category { font-size: 0.6875rem; font-weight: 800; color: var(--brand-red); text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* --- Video Lightbox --- */
+.video-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.video-lightbox.open { display: flex; }
+.video-lightbox-inner {
+  position: relative;
+  width: min(100%, 64rem);
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.video-lightbox-close {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* --- Dealers Layout --- */
+.dealer-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  margin-bottom: 2rem;
+}
+.dealer-filters select, .dealer-filters input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+/* --- Legal / Text Pages --- */
+.legal-content {
+  background: #fff;
+  padding: 3rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  max-width: 900px;
+  margin: 0 auto;
+}
+.legal-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.5rem; }
+.legal-content p, .legal-content li { color: var(--muted); font-size: 1rem; line-height: 1.8; }
