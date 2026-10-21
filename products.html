@@ -4,6 +4,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Products &amp; Systems | Dadex Eternit Limited</title>
+<meta content="Explore Dadex piping, drainage, ducting, specialised and roofing systems — 19 products across 5 application categories, with technical information and product support." name="description"/>
+<link href="https://www.dadex.com/products.html" rel="canonical"/>
 <link href="css/root.css" rel="stylesheet"/>
 <link href="css/base.css" rel="stylesheet"/>
 <link href="css/layout.css" rel="stylesheet"/>
@@ -18,9 +20,14 @@
 <main id="main-content">
   <section class="page-hero">
     <div class="container">
-      <div class="kicker">Product Portfolio</div>
+      <div class="kicker">Product &amp; System Portfolio</div>
       <h1>Products &amp; <span>Systems</span></h1>
       <p>Explore the current Dadex range by application and project context, then move to the relevant system and technical information.</p>
+      <div class="flex" style="margin-top: 2rem; gap: 2rem; color: #fff; flex-wrap: wrap;">
+        <div class="flex" style="align-items: center; gap: 0.5rem;"><i class="fas fa-boxes-stacked" style="color: var(--brand-accent-dark);"></i> <strong>19</strong> Products</div>
+        <div class="flex" style="align-items: center; gap: 0.5rem;"><i class="fas fa-layer-group" style="color: var(--brand-accent-dark);"></i> <strong>5</strong> Categories</div>
+        <div class="flex" style="align-items: center; gap: 0.5rem;"><i class="fas fa-flask" style="color: var(--brand-accent-dark);"></i> <strong>4</strong> Material families</div>
+      </div>
     </div>
   </section>
 
@@ -224,9 +231,32 @@
       </div>
     </div>
   </section>
+
+  <section class="section section--dark" style="border-top: 1px solid #333;">
+    <div class="container flex-between" style="flex-wrap: wrap; gap: 3rem;">
+      <div>
+        <h2 style="margin-bottom: 0;">Know <span>what you need?</span></h2>
+      </div>
+      <div style="max-width: 500px;">
+        <p style="margin-bottom: 1.5rem;">Tell us the application, project or system requirement and move from the product range to the right Dadex support route.</p>
+        <a class="btn btn--primary" href="contact.html#product-enquiry">Discuss Your Requirement <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
 </main>
 
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
+
+<!-- Products category strip — scroll-spy -->
+<script>
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.products-chip'));
+  if (!chips.length) return;
+  // Since we removed the sticky category strip in the new design to simplify,
+  // this script is kept as a placeholder in case it's added back.
+})();
+</script>
 </body>
 </html>
