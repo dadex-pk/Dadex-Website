@@ -1,7 +1,5 @@
-/* ============================================================
-   MAIN — CSS entry point
-   ============================================================ */
-
 @import url("root.css");
-@import url("design.css");
-@import url("shell.css");
+@import url("base.css");
+@import url("layout.css");
+@import url("components.css");
+@import url("shell.css"); /* Keep your shell.css for now */
