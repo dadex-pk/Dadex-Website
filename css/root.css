@@ -1,152 +1,57 @@
 /* ============================================================
-   ROOT — Design tokens, reset, base elements, global a11y
+   ROOT — Design Tokens
    ============================================================ */
 
-:root{
-  /* ---------- Brand Colors ---------- */
-  --dadex-red:#e50000;
-  --dadex-red-dark:#b50000;
-  --accent-dark:#ff6a6a; /* Used on dark backgrounds */
+:root {
+  /* --- Brand Colors --- */
+  --brand-red: #e50000;
+  --brand-red-dark: #b50000;
+  --brand-accent-dark: #ff6a6a; /* Use on dark backgrounds */
+  
+  /* --- Text & Ink --- */
+  --ink: #17191c;
+  --ink-light: #24272a;
+  --muted: #687078;
+  --muted-light: #8f969d;
 
-  /* ---------- Ink / Text ---------- */
-  --d-ink:#17191c;
-  --d-text:#24272a;
-  --d-muted:#687078;
-  --d-muted-light:#8f969d;
+  /* --- Surfaces (Backgrounds) --- */
+  --bg-body: #f6f7f8;
+  --bg-surface: #ffffff;
+  --bg-mist: #f4f5f6;
+  --bg-dark: #17191c;
 
-  /* ---------- Surfaces ---------- */
-  --white:#fff;
-  --surface:#f5f6f7;
-  --paper:#ffffff;
-  --mist:#f4f5f6;
-  --steel:#eef1f3;
-  --d-bg:#f6f7f8;
+  /* --- Lines & Borders --- */
+  --line: #e4e7ea;
+  --line-soft: #eef0f2;
 
-  /* ---------- Lines ---------- */
-  --d-line:#e4e7ea;
-  --d-line-soft:#eef0f2;
+  /* --- Shadows --- */
+  --shadow-sm: 0 1px 3px rgba(15,18,21,.05);
+  --shadow-md: 0 10px 30px rgba(15,18,21,.08);
+  --shadow-lg: 0 24px 48px -12px rgba(15,18,21,.15);
 
-  /* ---------- Layout ---------- */
-  --max:1240px;
-  --header-h:10rem;
-  --sticky-offset:calc(var(--header-h) + 0.625rem);
+  /* --- Layout & Spacing --- */
+  --container: 1240px;
+  --section-pad: clamp(3.5rem, 6vw, 6rem); /* Fluid padding */
+  
+  /* --- Radii --- */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
 
-  /* ---------- Radii ---------- */
-  --radius:14px;
-  --radius-sm:6px;
-  --radius-md:10px;
-  --radius-lg:14px;
-  --radius-pill:999px;
-
-  /* ---------- Motion ---------- */
-  --ease-out:cubic-bezier(.2,.65,.2,1);
-  --ease-io:cubic-bezier(.4,0,.2,1);
-  --ease-spring:cubic-bezier(.34,1.4,.5,1);
-  --duration-fast:.18s;
-  --duration-base:.26s;
-  --duration-slow:.44s;
-
-  /* ---------- Elevation ---------- */
-  --shadow-soft:0 14px 40px rgba(18,24,30,.08);
-  --shadow-1:0 1px 2px rgba(15,18,21,.04),0 1px 3px rgba(15,18,21,.05);
-  --shadow-2:0 1px 2px rgba(15,18,21,.04),0 6px 12px -3px rgba(15,18,21,.07),0 12px 28px -8px rgba(15,18,21,.09);
-  --shadow-3:0 2px 4px rgba(15,18,21,.04),0 14px 28px -6px rgba(15,18,21,.10),0 28px 56px -14px rgba(15,18,21,.16);
-  --p3-shadow:0 12px 32px rgba(18,24,30,.055);
-  --p3-shadow-hover:0 16px 38px rgba(18,24,30,.085);
-
-  /* ---------- Decorative Rings ---------- */
-  --ring-a-size:38.75rem;
-  --ring-a-thickness:6.875rem;
-  --ring-a-color:rgba(229,0,0,.10);
-  --ring-a-right:-16.875rem;
-  --ring-a-top:-17.5rem;
-  --ring-b-size:19.375rem;
-  --ring-b-color:rgba(255,255,255,.08);
-  --ring-b-right:6.875rem;
-  --ring-b-bottom:-13.125rem;
+  /* --- Transitions --- */
+  --ease: cubic-bezier(0.2, 0.65, 0.2, 1);
+  --transition: 0.25s var(--ease);
+  
+  /* --- Sticky Header Offset (Calculated automatically) --- */
+  --header-h: 10rem;
+  --sticky-offset: calc(var(--header-h) + 1rem);
 }
 
-/* Header Scroll States */
-body.header-scrolled{
-  --header-h:4rem;
-  --sticky-offset:calc(var(--header-h) + 0.625rem);
+body.header-scrolled {
+  --header-h: 4rem;
 }
-
-/* ---------- Reset ---------- */
-*,*::before,*::after{box-sizing:border-box}
-
-html{
-  scroll-behavior:smooth;
-  overflow-x:clip;
-  text-rendering:optimizeLegibility;
-}
-body{
-  margin:0;
-  overflow-x:clip;
-  background:var(--d-bg);
-  color:var(--d-text);
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-}
-
-/* ---------- Base Elements ---------- */
-a{text-decoration:none;color:inherit}
-img{max-width:100%;display:block;height:auto}
-svg,video,iframe{max-width:100%;height:auto}
-h1,h2,h3,h4,h5,h6{font-weight:700;line-height:1.2;color:var(--d-ink)}
-main p,main li{color:var(--d-muted)}
-main strong,main b{color:var(--d-text)}
-small{color:var(--d-muted)}
-button,input,select,textarea{font:inherit}
-button,a,input,select,textarea{touch-action:manipulation}
-
-/* ---------- A11y ---------- */
-:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{
-  outline:3px solid var(--dadex-red);
-  outline-offset:3px;
-  border-radius:2px;
-}
-:where([id]){scroll-margin-top:var(--sticky-offset)}
-
-/* ---------- Utilities ---------- */
-[hidden]{display:none!important}
-.sr-only{
-  position:absolute!important;width:1px!important;height:1px!important;
-  padding:0!important;margin:-1px!important;overflow:hidden!important;
-  clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;
-}
-.text-red{color:var(--dadex-red)!important}
-.text-gray,.text-muted,.muted-small{color:var(--d-muted)!important}
-.bg-dark{background:#17191b!important}
-.muted-kicker{color:#6b7379!important}
-.section-note{margin-top:14px!important}
-.container{width:min(100% - 40px,var(--max));margin-inline:auto}
-
-/* Tables */
-.report-table-wrap,.table-responsive,.data-table-wrap{
-  max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;
-}
-table{max-width:100%}
-
-/* ---------- Standard Breakpoints ---------- */
-@media(max-width:1024px){
-  :root{--header-h:6rem;--sticky-offset:calc(var(--header-h) + 0.625rem);}
-  body.header-scrolled{--header-h:4rem;--sticky-offset:calc(var(--header-h) + 0.625rem);}
-}
-@media(max-width:768px){
-  .container{padding-left:18px;padding-right:18px}
-}
-
-/* ---------- Reduced Motion ---------- */
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto!important}
-  *,*::before,*::after{
-    scroll-behavior:auto!important;transition:none!important;
-    animation:none!important;animation-duration:.01ms!important;animation-iteration-count:1!important;
-  }
-}
-
-@media print{
-  a{text-decoration:underline}
-}
+@media (max-width: 1024px) {
+  :root { --header-h: 6rem; }
+  body.header-scrolled { --header-h: 4rem; }
+   }
