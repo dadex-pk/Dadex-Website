@@ -2,107 +2,51 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Page Not Found – Dadex Eternit Limited</title>
-<meta content="The page you were looking for could not be found. Explore products, search the site, or contact Dadex." name="description"/>
-<meta content="#c90000" name="theme-color"/>
-<meta content="noindex, follow" name="robots"/>
-<meta content="strict-origin-when-cross-origin" name="referrer"/>
-<link href="https://www.dadex.com/404.html" rel="canonical"/>
-
-<!-- Open Graph -->
-<meta content="website" property="og:type"/>
-<meta content="Page Not Found – Dadex Eternit Limited" property="og:title"/>
-<meta content="The page you were looking for could not be found." property="og:description"/>
-<meta content="https://www.dadex.com/404.html" property="og:url"/>
-<meta content="Dadex Eternit Limited" property="og:site_name"/>
-<meta content="en_PK" property="og:locale"/>
-<meta content="https://www.dadex.com/assets/images/dadex-logo.png" property="og:image"/>
-<meta content="Dadex Eternit Limited" property="og:image:alt"/>
-
-<!-- Twitter -->
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="Page Not Found – Dadex Eternit Limited" name="twitter:title"/>
-<meta content="The page you were looking for could not be found." name="twitter:description"/>
-<meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
-
-<!-- Preconnect -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-
-<!-- Icons -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
-
-<!-- Styles -->
-<link href="css/design-system.css" rel="stylesheet"/>
-<link href="css/design.css" rel="stylesheet"/>
+<link href="css/root.css" rel="stylesheet"/>
+<link href="css/base.css" rel="stylesheet"/>
+<link href="css/layout.css" rel="stylesheet"/>
+<link href="css/components.css" rel="stylesheet"/>
+<link href="css/shell.css" rel="stylesheet"/>
+<link href="css/core.css" rel="stylesheet"/>
 </head>
-<body class="core-page">
-<a class="skip-link" href="#main-content">Skip to content</a>
+<body>
 <div data-component="header"></div>
+<main>
+  <section class="page-hero" style="padding: 8rem 0; text-align: center;">
+    <div class="container">
+      <h1 style="font-size: 6rem; margin-bottom: 1rem; color: var(--brand-red);">404</h1>
+      <h2>Page Not Found</h2>
+      <p style="margin: 1rem auto 2rem; max-width: 40rem;">The page you were looking for could not be found. It may have been moved, renamed or removed.</p>
+      <a href="index.html" class="btn btn--primary">Return to Home</a>
+    </div>
+  </section>
 
-<main id="main-content">
-
-<section class="core-hero">
-<div class="container">
-<div class="core-kicker">Page Not Found</div>
-<h1>Page <span>Not Found</span></h1>
-<p>The page you were looking for could not be found. It may have been moved, renamed or removed.</p>
-</div>
-</section>
-
-<section class="core-content">
-<div class="container">
-<div class="core-section-head">
-<div>
-<div class="core-kicker">Find your way</div>
-<h2>Explore Dadex <span>from here.</span></h2>
-</div>
-<p>Use the options below to find products, search the site, or reach the appropriate Dadex team.</p>
-</div>
-<div class="card-grid">
-<article class="content-card is-link">
-<a class="solution-card-link" href="products.html">
-<span class="card-index">01</span>
-<h2>Browse products</h2>
-<p>Explore the current Dadex product range by application and segment.</p>
-<span aria-hidden="true" class="card-arrow">→</span>
-</a>
-</article>
-<article class="content-card is-link">
-<a class="solution-card-link" href="search.html">
-<span class="card-index">02</span>
-<h2>Search the site</h2>
-<p>Find products, applications, projects, resources and corporate information.</p>
-<span aria-hidden="true" class="card-arrow">→</span>
-</a>
-</article>
-<article class="content-card is-link">
-<a class="solution-card-link" href="contact.html">
-<span class="card-index">03</span>
-<h2>Contact Dadex</h2>
-<p>Reach the right Dadex team for product, technical or commercial support.</p>
-<span aria-hidden="true" class="card-arrow">→</span>
-</a>
-</article>
-</div>
-</div>
-</section>
-
-<section class="page-cta">
-<div class="container">
-<h2>Return to the <span>home page</span></h2>
-<p>Or explore the Dadex product range and technical resources.</p>
-<a class="btn btn-primary" href="index.html">Back to Home <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
-</div>
-</section>
-
+  <section class="section">
+    <div class="container">
+      <div class="section-header center">
+        <h2>Explore Dadex <span>from here.</span></h2>
+      </div>
+      <div class="grid grid-3">
+        <a href="products.html" class="card text-center" style="padding: 3rem 2rem;">
+          <i class="fas fa-boxes-stacked" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+          <h3>Browse Products</h3>
+          <p>Explore the current Dadex product range.</p>
+        </a>
+        <a href="search.html" class="card text-center" style="padding: 3rem 2rem;">
+          <i class="fas fa-magnifying-glass" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+          <h3>Search the Site</h3>
+          <p>Find products, applications and corporate information.</p>
+        </a>
+        <a href="contact.html" class="card text-center" style="padding: 3rem 2rem;">
+          <i class="fas fa-envelope" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+          <h3>Contact Dadex</h3>
+          <p>Reach the right Dadex team for support.</p>
+        </a>
+      </div>
+    </div>
+  </section>
 </main>
-
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
 </body>
