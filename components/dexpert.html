@@ -1,4 +1,4 @@
-<dialog id="dexpertDialog" class="dexpert-dialog">
+<dialog id="dexpertDialog" class="dexpert-dialog" aria-labelledby="expert-title">
   <div class="dexpert-head">
     <div class="expert-icon">
       <img src="assets/images/Dexpert.png" alt="" aria-hidden="true">
@@ -7,16 +7,18 @@
       <strong id="expert-title">DEXPERT</strong>
       <span>Your building solutions guide</span>
     </div>
-    <button class="dexpert-close" aria-label="Close assistant">×</button>
+    <button class="dexpert-close" aria-label="Close assistant" type="button">×</button>
   </div>
+  
   <div class="dexpert-body">
     <div id="dexpertBody"></div>
+    
     <form class="dexpert-ask">
       <label for="expert-input">OR TELL US WHAT YOU’RE BUILDING</label>
       <div>
-        <input id="expert-input" placeholder="e.g. Plumbing for a new home" required>
-        <button aria-label="Send question">
-          <i class="fas fa-arrow-right"></i>
+        <input id="expert-input" type="text" placeholder="e.g. Plumbing for a new home" required aria-label="Ask DEXPERT a question">
+        <button type="submit" aria-label="Send question">
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
         </button>
       </div>
       <small>Product guidance to help you take the next step.</small>
@@ -37,13 +39,13 @@
 <!-- Result Template -->
 <template id="dexpertResultTemplate">
   <div class="dexpert-result">
-    <button class="dexpert-back">← Back to all options</button>
+    <button class="dexpert-back" type="button" aria-label="Back to all options">← Back to all options</button>
     <span data-label></span>
     <h4 data-heading></h4>
     <p data-message></p>
     <a href="#" class="dexpert-result-link">
       <span data-cta></span>
-      <i class="fas fa-arrow-right"></i>
+      <i class="fas fa-arrow-right" aria-hidden="true"></i>
     </a>
   </div>
 </template>
