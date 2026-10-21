@@ -27,15 +27,49 @@
 <link href="css/components.css" rel="stylesheet"/>
 <link href="css/shell.css" rel="stylesheet"/>
 <link href="css/home.css" rel="stylesheet"/>
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.dadex.com/#organization",
+      "name": "Dadex Eternit Limited",
+      "url": "https://www.dadex.com/",
+      "telephone": "+92-21-111-000-789",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal",
+        "addressLocality": "Karachi",
+        "postalCode": "75400",
+        "addressCountry": "PK"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "name": "Dadex Eternit Limited",
+      "url": "https://www.dadex.com/",
+      "publisher": { "@id": "https://www.dadex.com/#organization" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.dadex.com/search.html?q={q}",
+        "query-input": "required name=q"
+      }
+    }
+  ]
+}
+</script>
 </head>
-<body>
+<body class="home-page">
 <a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
 
 <main id="main-content">
 
 <!-- ==================================================
-     HERO SECTION (Split Layout)
+     HERO SECTION
      ================================================== -->
 <section class="home-hero">
   <div class="container home-hero__inner">
@@ -45,7 +79,14 @@
       <p>From humble beginnings in 1959 to industry leadership, Dadex delivers quality thermoplastic and roofing systems across Pakistan and beyond.</p>
       <div class="home-hero__actions">
         <a class="btn btn--primary" href="projects.html">Plan a Project <i class="fas fa-arrow-right"></i></a>
-        <a class="btn btn--outline" href="services.html">Our Services <i class="fas fa-arrow-right"></i></a>
+        <a class="btn btn--outline" href="services.html" style="border-color: rgba(255,255,255,0.3); color: #fff;">Our Services <i class="fas fa-arrow-right"></i></a>
+      </div>
+      
+      <!-- Hero Stats -->
+      <div class="home-hero__meta">
+        <div><strong>1959</strong><span>Established</span></div>
+        <div><strong data-company-age>67+</strong><span>Years of excellence</span></div>
+        <div><strong>ISO</strong><span>Quality systems</span></div>
       </div>
     </div>
     <div class="home-hero__visual">
@@ -59,7 +100,7 @@
 </section>
 
 <!-- ==================================================
-     PRODUCTS (Unified Grid)
+     PRODUCTS (All 6 Cards)
      ================================================== -->
 <section class="section section--light">
   <div class="container">
@@ -82,7 +123,7 @@
       </a>
 
       <a class="card card--product" href="products.html">
-        <img alt="Drainage" src="assets/images/products/nikasi.webp"/>
+        <img alt="Building Drainage" src="assets/images/products/nikasi.webp"/>
         <div class="card__body">
           <div class="kicker" style="margin-bottom: 0.5rem; font-size: 0.65rem;">Buildings &amp; Housing</div>
           <h3>Building Drainage Systems</h3>
@@ -94,8 +135,35 @@
         <img alt="Infrastructure" src="assets/images/products/flowline.webp"/>
         <div class="card__body">
           <div class="kicker" style="margin-bottom: 0.5rem; font-size: 0.65rem;">Infrastructure</div>
-          <h3>Underground Systems</h3>
+          <h3>Underground &amp; Infrastructure</h3>
           <p>UPVC underground systems</p>
+        </div>
+      </a>
+
+      <a class="card card--product" href="products.html">
+        <img alt="Cable Ducting" src="assets/images/products/cable-duct.webp"/>
+        <div class="card__body">
+          <div class="kicker" style="margin-bottom: 0.5rem; font-size: 0.65rem;">Cable &amp; Utility Ducting</div>
+          <h3>Conduits &amp; Cable Ducts</h3>
+          <p>UPVC · PE</p>
+        </div>
+      </a>
+
+      <a class="card card--product" href="products.html">
+        <img alt="Specialist Systems" src="assets/images/products/tflex-gas.webp"/>
+        <div class="card__body">
+          <div class="kicker" style="margin-bottom: 0.5rem; font-size: 0.65rem;">Specialised &amp; Industrial</div>
+          <h3>Specialist Systems</h3>
+          <p>Verified specialised systems</p>
+        </div>
+      </a>
+
+      <a class="card card--product" href="products.html">
+        <img alt="Corrugated Sheets" src="assets/images/products/corrugated-sheets.webp"/>
+        <div class="card__body">
+          <div class="kicker" style="margin-bottom: 0.5rem; font-size: 0.65rem;">Roofing</div>
+          <h3>Corrugated Sheets</h3>
+          <p>Roofing systems</p>
         </div>
       </a>
     </div>
@@ -103,7 +171,7 @@
 </section>
 
 <!-- ==================================================
-     INTRO (Split Content)
+     INTRO
      ================================================== -->
 <section class="section bg-white">
   <div class="container grid grid-2" style="align-items: center; gap: 4rem;">
@@ -120,7 +188,7 @@
 </section>
 
 <!-- ==================================================
-     VALUES (Modern Grid)
+     VALUES (All 5 Cards with Numbers)
      ================================================== -->
 <section class="section section--dark">
   <div class="container">
@@ -132,26 +200,31 @@
 
     <div class="grid grid-5">
       <div class="card card--dark">
+        <div class="kicker" style="margin-bottom: 1rem;">01</div>
         <i class="fas fa-users" style="font-size: 2rem; color: var(--brand-accent-dark); margin-bottom: 1.5rem;"></i>
         <h3>Customer Focus</h3>
         <p>Superior Customer Support — Magnified Focus</p>
       </div>
       <div class="card card--dark">
+        <div class="kicker" style="margin-bottom: 1rem;">02</div>
         <i class="fas fa-lightbulb" style="font-size: 2rem; color: var(--brand-accent-dark); margin-bottom: 1.5rem;"></i>
         <h3>Innovation</h3>
         <p>Boundless Thinking. Timeless Innovation.</p>
       </div>
       <div class="card card--dark">
+        <div class="kicker" style="margin-bottom: 1rem;">03</div>
         <i class="fas fa-check-double" style="font-size: 2rem; color: var(--brand-accent-dark); margin-bottom: 1.5rem;"></i>
         <h3>Quality</h3>
         <p>Quality Assured is Quality Delivered.</p>
       </div>
       <div class="card card--dark">
+        <div class="kicker" style="margin-bottom: 1rem;">04</div>
         <i class="fas fa-handshake" style="font-size: 2rem; color: var(--brand-accent-dark); margin-bottom: 1.5rem;"></i>
         <h3>Reliability</h3>
         <p>Reliability and Trust — A Secure Balance.</p>
       </div>
       <div class="card card--dark">
+        <div class="kicker" style="margin-bottom: 1rem;">05</div>
         <i class="fas fa-scale-balanced" style="font-size: 2rem; color: var(--brand-accent-dark); margin-bottom: 1.5rem;"></i>
         <h3>Ethical Practices</h3>
         <p>Solid Links to Strong Principles.</p>
@@ -161,9 +234,57 @@
 </section>
 
 <!-- ==================================================
-     ACTION CARDS (Knowledge Section)
+     SERVICES (All 5 Cards Restored)
      ================================================== -->
 <section class="section">
+  <div class="container">
+    <div class="flex-between" style="margin-bottom: 3rem; align-items: flex-end; flex-wrap: wrap; gap: 2rem;">
+      <div class="section-header" style="margin-bottom: 0;">
+        <div class="kicker">Support Beyond the Product</div>
+        <h2>Technical expertise <br> <span>when you need it.</span></h2>
+      </div>
+      <a class="btn btn--outline" href="services.html">Explore services</a>
+    </div>
+
+    <div class="grid grid-5">
+      <a href="services.html" class="card" style="text-decoration: none;">
+        <div class="kicker">01</div>
+        <i class="fas fa-headset" style="font-size: 2rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+        <h3 style="font-size: 1.125rem;">Technical Support</h3>
+        <p>Pre-sales, during-sales and post-sales support</p>
+      </a>
+      <a href="services.html" class="card" style="text-decoration: none;">
+        <div class="kicker">02</div>
+        <i class="fas fa-ruler-combined" style="font-size: 2rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+        <h3 style="font-size: 1.125rem;">Design, BOQ &amp; Estimates</h3>
+        <p>Support for system planning and requirements</p>
+      </a>
+      <a href="services.html" class="card" style="text-decoration: none;">
+        <div class="kicker">03</div>
+        <i class="fas fa-screwdriver-wrench" style="font-size: 2rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+        <h3 style="font-size: 1.125rem;">Tools Availability</h3>
+        <p>Installation tools and related assistance</p>
+      </a>
+      <a href="services.html" class="card" style="text-decoration: none;">
+        <div class="kicker">04</div>
+        <i class="fas fa-chalkboard-user" style="font-size: 2rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+        <h3 style="font-size: 1.125rem;">Demonstrations &amp; Training</h3>
+        <p>Practical guidance and demonstrations</p>
+      </a>
+      <a href="services.html" class="card" style="text-decoration: none;">
+        <div class="kicker">05</div>
+        <i class="fas fa-circle-check" style="font-size: 2rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+        <h3 style="font-size: 1.125rem;">General Activities</h3>
+        <p>Product selection, design, laying and testing</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================
+     KNOWLEDGE / ACTION CARDS
+     ================================================== -->
+<section class="section section--light">
   <div class="container grid grid-2" style="align-items: center;">
     <div>
       <div class="kicker">Knowledge, at your fingertips</div>
@@ -175,7 +296,7 @@
           <i class="fas fa-file-lines" style="font-size: 2rem; color: var(--brand-red);"></i>
           <div>
             <h3 style="margin-bottom: 0.25rem;">Product catalogues</h3>
-            <p>Explore our systems and specifications</p>
+            <p style="margin: 0;">Explore our systems and specifications</p>
           </div>
         </div>
         <i class="fas fa-arrow-right" style="color: var(--brand-red);"></i>
@@ -185,7 +306,7 @@
           <i class="fas fa-wand-magic-sparkles" style="font-size: 2rem; color: var(--brand-red);"></i>
           <div>
             <h3 style="margin-bottom: 0.25rem;">Technical support</h3>
-            <p>Expert guidance at every stage</p>
+            <p style="margin: 0;">Expert guidance at every stage</p>
           </div>
         </div>
         <i class="fas fa-arrow-right" style="color: var(--brand-red);"></i>
@@ -195,7 +316,7 @@
 </section>
 
 <!-- ==================================================
-     QUALITY (Certifications)
+     QUALITY & COMPLIANCE
      ================================================== -->
 <section class="section bg-white">
   <div class="container grid grid-2" style="align-items: center; gap: 4rem;">
