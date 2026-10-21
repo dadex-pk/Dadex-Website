@@ -1,69 +1,42 @@
 /* ============================================================
    ROOT — Design tokens, reset, base elements, global a11y
-   Load first. Every other stylesheet depends on these tokens.
    ============================================================ */
 
 :root{
-  /* ---------- Brand ---------- */
+  /* ---------- Brand Colors ---------- */
   --dadex-red:#e50000;
   --dadex-red-dark:#b50000;
-  --d-red:#e50000;
-  --d-red-dark:#c00000;
+  --accent-dark:#ff6a6a; /* Used on dark backgrounds */
 
-  /* ---------- Accent reds for two-colour headings ---------- */
-  --accent-light:#e50000;
-  --accent-dark:#ff6a6a;
-  --accent-light-2:#f8dedec6;
-
-  /* ---------- Ink / text ---------- */
-  --ink:#17191c;
+  /* ---------- Ink / Text ---------- */
   --d-ink:#17191c;
-  --d-ink-2:#171a1d;
   --d-text:#24272a;
-  --muted:#687078;
   --d-muted:#687078;
   --d-muted-light:#8f969d;
 
   /* ---------- Surfaces ---------- */
   --white:#fff;
-  --d-white:#fff;
   --surface:#f5f6f7;
-  --d-paper:#ffffff;
-  --d-mist:#f4f5f6;
-  --d-steel:#eef1f3;
   --paper:#ffffff;
   --mist:#f4f5f6;
   --steel:#eef1f3;
   --d-bg:#f6f7f8;
 
   /* ---------- Lines ---------- */
-  --line:#e4e7ea;
   --d-line:#e4e7ea;
   --d-line-soft:#eef0f2;
 
   /* ---------- Layout ---------- */
   --max:1240px;
-  --d-max:1240px;
-
   --header-h:10rem;
   --sticky-offset:calc(var(--header-h) + 0.625rem);
 
   /* ---------- Radii ---------- */
   --radius:14px;
-  --d-radius:14px;
   --radius-sm:6px;
   --radius-md:10px;
   --radius-lg:14px;
   --radius-pill:999px;
-
-  /* ---------- Spacing scale ---------- */
-  --space-xs:.25rem;
-  --space-sm:.5rem;
-  --space-md:1rem;
-  --space-lg:1.5rem;
-  --space-xl:2rem;
-  --space-2xl:3rem;
-  --space-3xl:4rem;
 
   /* ---------- Motion ---------- */
   --ease-out:cubic-bezier(.2,.65,.2,1);
@@ -75,56 +48,33 @@
 
   /* ---------- Elevation ---------- */
   --shadow-soft:0 14px 40px rgba(18,24,30,.08);
-  --d-shadow:0 14px 40px rgba(18,24,30,.08);
   --shadow-1:0 1px 2px rgba(15,18,21,.04),0 1px 3px rgba(15,18,21,.05);
-  --shadow-2:0 1px 2px rgba(15,18,21,.04),
-             0 6px 12px -3px rgba(15,18,21,.07),
-             0 12px 28px -8px rgba(15,18,21,.09);
-  --shadow-3:0 2px 4px rgba(15,18,21,.04),
-             0 14px 28px -6px rgba(15,18,21,.10),
-             0 28px 56px -14px rgba(15,18,21,.16);
+  --shadow-2:0 1px 2px rgba(15,18,21,.04),0 6px 12px -3px rgba(15,18,21,.07),0 12px 28px -8px rgba(15,18,21,.09);
+  --shadow-3:0 2px 4px rgba(15,18,21,.04),0 14px 28px -6px rgba(15,18,21,.10),0 28px 56px -14px rgba(15,18,21,.16);
+  --p3-shadow:0 12px 32px rgba(18,24,30,.055);
+  --p3-shadow-hover:0 16px 38px rgba(18,24,30,.085);
 
-  /* ---------- Decorative — hero rings & grid ---------- */
+  /* ---------- Decorative Rings ---------- */
   --ring-a-size:38.75rem;
   --ring-a-thickness:6.875rem;
   --ring-a-color:rgba(229,0,0,.10);
   --ring-a-right:-16.875rem;
   --ring-a-top:-17.5rem;
-
-  --ring-a-size-mobile:26.25rem;
-  --ring-a-thickness-mobile:5rem;
-  --ring-a-right-mobile:-11.25rem;
-  --ring-a-top-mobile:-11.25rem;
-
   --ring-b-size:19.375rem;
   --ring-b-color:rgba(255,255,255,.08);
   --ring-b-right:6.875rem;
   --ring-b-bottom:-13.125rem;
-
-  --deco-grid-size:2.875rem;
-  --deco-grid-color:rgba(255,255,255,.12);
-  --deco-grid-opacity:.12;
 }
 
+/* Header Scroll States */
 body.header-scrolled{
   --header-h:4rem;
   --sticky-offset:calc(var(--header-h) + 0.625rem);
-}
-@media(max-width:900px){
-  :root{
-    --header-h:6rem;
-    --sticky-offset:calc(var(--header-h) + 0.625rem);
-  }
-  body.header-scrolled{
-    --header-h:4rem;
-    --sticky-offset:calc(var(--header-h) + 0.625rem);
-  }
 }
 
 /* ---------- Reset ---------- */
 *,*::before,*::after{box-sizing:border-box}
 
-/* ---------- Document ---------- */
 html{
   scroll-behavior:smooth;
   overflow-x:clip;
@@ -138,39 +88,26 @@ body{
   font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   line-height:1.65;
   -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
 }
 
-/* ---------- Base elements ---------- */
+/* ---------- Base Elements ---------- */
 a{text-decoration:none;color:inherit}
 img{max-width:100%;display:block;height:auto}
 svg,video,iframe{max-width:100%;height:auto}
-
-h1,h2,h3,h4,h5,h6{
-  font-weight:700;
-  line-height:1.2;
-  color:var(--d-ink);
-}
+h1,h2,h3,h4,h5,h6{font-weight:700;line-height:1.2;color:var(--d-ink)}
 main p,main li{color:var(--d-muted)}
 main strong,main b{color:var(--d-text)}
 small{color:var(--d-muted)}
-
 button,input,select,textarea{font:inherit}
 button,a,input,select,textarea{touch-action:manipulation}
 
-/* ---------- Global focus ---------- */
+/* ---------- A11y ---------- */
 :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{
   outline:3px solid var(--dadex-red);
   outline-offset:3px;
   border-radius:2px;
 }
-
-/* ---------- Anchor jump safety ---------- */
 :where([id]){scroll-margin-top:var(--sticky-offset)}
-
-/* ---------- Overflow protection ---------- */
-pre,code,.spec-table,.data-table{max-width:100%}
-pre,code{overflow-wrap:anywhere}
 
 /* ---------- Utilities ---------- */
 [hidden]{display:none!important}
@@ -184,30 +121,32 @@ pre,code{overflow-wrap:anywhere}
 .bg-dark{background:#17191b!important}
 .muted-kicker{color:#6b7379!important}
 .section-note{margin-top:14px!important}
-
-/* ---------- Container ---------- */
 .container{width:min(100% - 40px,var(--max));margin-inline:auto}
-@media(max-width:640px){.container{padding-left:18px;padding-right:18px}}
 
-/* ---------- Overflow protection ---------- */
+/* Tables */
 .report-table-wrap,.table-responsive,.data-table-wrap{
   max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;
 }
 table{max-width:100%}
 
-/* ---------- Reduced motion ---------- */
+/* ---------- Standard Breakpoints ---------- */
+@media(max-width:1024px){
+  :root{--header-h:6rem;--sticky-offset:calc(var(--header-h) + 0.625rem);}
+  body.header-scrolled{--header-h:4rem;--sticky-offset:calc(var(--header-h) + 0.625rem);}
+}
+@media(max-width:768px){
+  .container{padding-left:18px;padding-right:18px}
+}
+
+/* ---------- Reduced Motion ---------- */
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto!important}
   *,*::before,*::after{
-    scroll-behavior:auto!important;
-    transition:none!important;
-    animation:none!important;
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;transition:none!important;
+    animation:none!important;animation-duration:.01ms!important;animation-iteration-count:1!important;
   }
 }
 
-/* ---------- Print ---------- */
 @media print{
   a{text-decoration:underline}
 }
