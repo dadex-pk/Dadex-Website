@@ -1,5 +1,5 @@
 /* ============================================================
-   PRODUCT PAGES
+   PRODUCT PAGES (All 19 Products)
    ============================================================ */
 
 /* --- Product Hero --- */
@@ -10,28 +10,32 @@
 }
 .product-hero__inner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 4rem;
   align-items: center;
 }
 @media (max-width: 900px) {
   .product-hero__inner { grid-template-columns: 1fr; gap: 2rem; }
 }
-.product-hero__content h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 0.5rem; }
+.product-hero__content h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.03em; }
 .product-hero__subtitle {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--brand-red);
   margin-bottom: 1.5rem;
 }
-.product-hero__desc { font-size: 1.125rem; color: var(--muted); margin-bottom: 2rem; }
-.product-hero__image img {
-  width: 100%;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+.product-hero__desc { font-size: 1.125rem; color: var(--muted); margin-bottom: 2rem; max-width: 50ch; }
+.product-hero__image {
   background: #fff;
   padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1/1;
 }
+.product-hero__image img { width: 100%; height: 100%; object-fit: contain; }
 
 /* --- Product Features (Checkmarks) --- */
 .product-features {
@@ -54,30 +58,95 @@
   font-weight: 900;
 }
 
-/* --- Sticky Product Tabs --- */
+/* --- Product Strip (4 boxes) --- */
+.product-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin: 3rem 0;
+}
+.product-strip-item {
+  background: #fff;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.product-strip-label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.08em;
+}
+.product-strip-item strong { color: var(--brand-red); font-size: 1.125rem; }
+@media (max-width: 768px) {
+  .product-strip { grid-template-columns: 1fr 1fr; }
+}
+
+/* --- Product Tabs --- */
 .product-tabs {
   display: flex;
   gap: 2rem;
   border-bottom: 1px solid var(--line);
   position: sticky;
-  top: var(--header-h);
+  top: calc(var(--header-h) + 1rem);
   background: rgba(255,255,255,0.95);
   backdrop-filter: blur(10px);
   z-index: 90;
   padding: 1rem 0;
+  margin-bottom: 2rem;
 }
 .product-tabs a {
   font-weight: 700;
   color: var(--muted);
   padding-bottom: 0.5rem;
   border-bottom: 2px solid transparent;
+  text-decoration: none;
 }
 .product-tabs a:hover, .product-tabs a.active {
   color: var(--brand-red);
   border-bottom-color: var(--brand-red);
 }
 
-/* --- Spec Tables --- */
+/* --- Technical Summary --- */
+.p2-tech-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin: 2rem 0;
+}
+.p2-tech-summary-item {
+  background: #fff;
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.p2-tech-summary-item span {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+.p2-tech-summary-item strong { color: var(--brand-red); font-size: 1.125rem; }
+@media (max-width: 768px) {
+  .p2-tech-summary { grid-template-columns: 1fr 1fr; }
+}
+
+/* --- Spec Table --- */
 .spec-table {
   width: 100%;
   border-collapse: collapse;
@@ -86,6 +155,7 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  border: 1px solid var(--line);
 }
 .spec-table th, .spec-table td {
   padding: 1rem 1.5rem;
@@ -100,3 +170,76 @@
   color: var(--ink);
 }
 .spec-table td { color: var(--muted); }
+.spec-table tr:last-child th, .spec-table tr:last-child td { border-bottom: none; }
+
+/* --- Tech Notes --- */
+.p2-tech-notes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.p2-tech-note {
+  display: flex;
+  gap: 1rem;
+  background: var(--bg-mist);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+}
+.p2-tech-note i { font-size: 1.5rem; color: var(--brand-red); }
+.p2-tech-note h4 { margin-bottom: 0.25rem; font-size: 1rem; }
+.p2-tech-note p { font-size: 0.875rem; color: var(--muted); margin: 0; line-height: 1.5; }
+@media (max-width: 900px) {
+  .p2-tech-notes { grid-template-columns: 1fr; }
+}
+
+/* --- Banners (Downloads & Support) --- */
+.p2-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  background: var(--bg-mist);
+  border: 1px solid var(--line);
+  margin: 3rem 0;
+}
+.p2-banner.dark { background: var(--bg-dark); color: #fff; border: none; }
+.p2-banner.dark h3 { color: #fff; margin-bottom: 0.5rem; }
+.p2-banner.dark p { color: #b3b3b8; margin: 0; }
+@media (max-width: 768px) {
+  .p2-banner { flex-direction: column; align-items: flex-start; }
+}
+
+/* --- Related Products --- */
+.p2-related {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+.p2-related a {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: #fff;
+}
+.p2-related a:hover {
+  border-color: var(--brand-red);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+}
+.p2-related h4 { font-size: 1rem; margin-bottom: 0.25rem; color: var(--ink); }
+.p2-related span { font-size: 0.8125rem; color: var(--muted); }
+@media (max-width: 900px) {
+  .p2-related { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .p2-related { grid-template-columns: 1fr; }
+}
