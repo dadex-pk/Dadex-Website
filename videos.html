@@ -2,351 +2,119 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Videos — Dadex Eternit Limited</title>
-<meta content="Installation guides, product overviews and application videos for Dadex piping, drainage, ducting and roofing systems." name="description"/>
-<meta content="#c90000" name="theme-color"/>
-<meta content="index, follow" name="robots"/>
-<meta content="strict-origin-when-cross-origin" name="referrer"/>
-<link href="https://www.dadex.com/videos.html" rel="canonical"/>
-
-<!-- Open Graph -->
-<meta content="website" property="og:type"/>
-<meta content="Videos — Dadex Eternit Limited" property="og:title"/>
-<meta content="Installation guides, product overviews and application videos for Dadex systems." property="og:description"/>
-<meta content="https://www.dadex.com/videos.html" property="og:url"/>
-<meta content="Dadex Eternit Limited" property="og:site_name"/>
-<meta content="en_PK" property="og:locale"/>
-<meta content="https://www.dadex.com/assets/images/products/aquadex.webp" property="og:image"/>
-<meta content="Aquadex installation guide" property="og:image:alt"/>
-<meta content="1615" property="og:image:width"/>
-<meta content="1990" property="og:image:height"/>
-
-<!-- Twitter -->
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="Videos — Dadex Eternit Limited" name="twitter:title"/>
-<meta content="Installation guides, product overviews and application videos for Dadex systems." name="twitter:description"/>
-<meta content="https://www.dadex.com/assets/images/products/aquadex.webp" name="twitter:image"/>
-
-<!-- Preconnect -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-
-<!-- Icons -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
-
-<!-- Styles -->
-<link href="css/design-system.css" rel="stylesheet"/>
-
-<!-- Structured data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "Videos — Dadex Eternit Limited",
-  "url": "https://www.dadex.com/videos.html",
-  "description": "Installation guides, product overviews and application videos for Dadex systems.",
-  "isPartOf": { "@type": "WebSite", "name": "Dadex Eternit Limited", "url": "https://www.dadex.com/" }
-}
-</script>
+<link href="css/root.css" rel="stylesheet"/>
+<link href="css/base.css" rel="stylesheet"/>
+<link href="css/layout.css" rel="stylesheet"/>
+<link href="css/components.css" rel="stylesheet"/>
+<link href="css/shell.css" rel="stylesheet"/>
+<link href="css/pages.css" rel="stylesheet"/>
+<style>
+  .video-card[hidden] { display: none !important; }
+</style>
 </head>
-<body class="core-page">
-<a class="skip-link" href="#main-content">Skip to content</a>
+<body>
 <div data-component="header"></div>
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <div class="kicker">Resources</div>
+      <h1>Product <span>Videos</span></h1>
+      <p>Installation guides, product overviews and application demonstrations.</p>
+    </div>
+  </section>
+  
+  <section class="section section--light">
+    <div class="container">
+      
+      <div class="filter-group">
+        <button class="filter-btn active" data-video-filter="all">All Videos</button>
+        <button class="filter-btn" data-video-filter="installation">Installation Guides</button>
+        <button class="filter-btn" data-video-filter="overview">Product Overviews</button>
+      </div>
 
-<div class="breadcrumb">
-<div class="container">
-<a href="index.html">Home</a><span>/</span><strong>Videos</strong>
-</div>
-</div>
+      <div class="grid grid-3" id="videoGrid">
+        
+        <article class="card video-card" data-category="installation">
+          <div class="video-thumbnail">
+            <img src="assets/images/products/aquadex.webp" alt="Aquadex installation guide">
+            <button class="video-play" data-video="https://www.youtube.com/embed/VIDEO_ID_AQUADEX" data-video-type="youtube"><i class="fas fa-play"></i></button>
+          </div>
+          <div class="video-body">
+            <span class="video-category">Installation</span>
+            <h3 style="margin: 0.5rem 0;">Aquadex — Installation Guide</h3>
+            <p style="margin: 0;">Step-by-step procedure for cutting, jointing and laying Aquadex UPVC pressure pipes.</p>
+          </div>
+        </article>
 
-<main id="main-content">
+        <article class="card video-card" data-category="installation">
+          <div class="video-thumbnail">
+            <img src="assets/images/products/tflex.webp" alt="T-Flex butt fusion jointing">
+            <button class="video-play" data-video="https://www.youtube.com/embed/VIDEO_ID_TFLEX" data-video-type="youtube"><i class="fas fa-play"></i></button>
+          </div>
+          <div class="video-body">
+            <span class="video-category">Installation</span>
+            <h3 style="margin: 0.5rem 0;">T-Flex — Butt Fusion Jointing</h3>
+            <p style="margin: 0;">Correct technique for butt fusion jointing T-Flex PE 100 pipes for water supply infrastructure.</p>
+          </div>
+        </article>
 
-<section class="core-hero">
-<div class="container">
-<div class="core-kicker">Resources</div>
-<h1>Product <span>Videos</span></h1>
-<p>Installation guides, product overviews and application demonstrations — short films prepared by Dadex technical teams.</p>
-</div>
-</section>
+        <article class="card video-card" data-category="overview">
+          <div class="video-thumbnail">
+            <img src="assets/images/products/tflex-gas.webp" alt="T-Flex Gas product overview">
+            <button class="video-play" data-video="https://www.youtube.com/embed/VIDEO_ID_TFLEXGAS" data-video-type="youtube"><i class="fas fa-play"></i></button>
+          </div>
+          <div class="video-body">
+            <span class="video-category">Product Overview</span>
+            <h3 style="margin: 0.5rem 0;">T-Flex Gas — PE 80 &amp; PE 100</h3>
+            <p style="margin: 0;">Overview of the T-Flex Gas piping system for gas distribution networks.</p>
+          </div>
+        </article>
 
-<section class="core-content">
-<div class="container">
+      </div>
+    </div>
+  </section>
 
-<div aria-label="Filter videos by type" class="video-filter" role="group">
-<button aria-pressed="true" class="video-filter-btn is-active" data-video-filter="all" type="button">All Videos</button>
-<button aria-pressed="false" class="video-filter-btn" data-video-filter="installation" type="button">Installation Guides</button>
-<button aria-pressed="false" class="video-filter-btn" data-video-filter="overview" type="button">Product Overviews</button>
-<button aria-pressed="false" class="video-filter-btn" data-video-filter="corporate" type="button">Corporate</button>
-</div>
-
-<div class="video-grid" id="videoGrid">
-
-<article class="video-card" data-category="installation">
-<div class="video-thumbnail">
-<img alt="Aquadex installation guide" decoding="async" loading="lazy" src="assets/images/products/aquadex.webp"/>
-<button aria-label="Play Aquadex installation guide" class="video-play" data-video="https://www.youtube.com/embed/VIDEO_ID_AQUADEX" data-video-type="youtube" type="button">
-<i aria-hidden="true" class="fas fa-play"></i>
-</button>
-<span class="video-duration">4:32</span>
-</div>
-<div class="video-body">
-<span class="video-category">Installation</span>
-<h3>Aquadex — Installation Guide</h3>
-<p>Step-by-step procedure for cutting, jointing and laying Aquadex UPVC pressure pipes on site.</p>
-</div>
-</article>
-
-<article class="video-card" data-category="installation">
-<div class="video-thumbnail">
-<img alt="T-Flex butt fusion jointing" decoding="async" loading="lazy" src="assets/images/products/tflex.webp"/>
-<button aria-label="Play T-Flex butt fusion jointing video" class="video-play" data-video="https://www.youtube.com/embed/VIDEO_ID_TFLEX" data-video-type="youtube" type="button">
-<i aria-hidden="true" class="fas fa-play"></i>
-</button>
-<span class="video-duration">6:15</span>
-</div>
-<div class="video-body">
-<span class="video-category">Installation</span>
-<h3>T-Flex — Butt Fusion Jointing</h3>
-<p>Correct technique for butt fusion jointing T-Flex PE 100 pipes for water supply infrastructure.</p>
-</div>
-</article>
-
-<article class="video-card" data-category="installation">
-<div class="video-thumbnail">
-<img alt="Polydex heat fusion demonstration" decoding="async" loading="lazy" src="assets/images/products/polydex.webp"/>
-<button aria-label="Play Polydex heat fusion demonstration video" class="video-play" data-video-file="assets/videos/sample-polydex-heat-fusion.mp4" data-video-poster="assets/images/products/polydex.webp" data-video-type="self" type="button">
-<i aria-hidden="true" class="fas fa-play"></i>
-</button>
-<span class="video-duration">5:48</span>
-</div>
-<div class="video-body">
-<span class="video-category">Installation</span>
-<h3>Polydex — Heat Fusion Demonstration</h3>
-<p>Heat fusion jointing process for Polydex PP-R hot and cold water piping systems.</p>
-</div>
-</article>
-
-<article class="video-card" data-category="installation">
-<div class="video-thumbnail">
-<img alt="Flow Line underground installation" decoding="async" loading="lazy" src="assets/images/products/flowline.webp"/>
-<button aria-label="Play Flow Line underground installation video" class="video-play" data-video="https://www.youtube.com/embed/VIDEO_ID_FLOWLINE" data-video-type="youtube" type="button">
-<i aria-hidden="true" class="fas fa-play"></i>
-</button>
-<span class="video-duration">7:20</span>
-</div>
-<div class="video-body">
-<span class="video-category">Installation</span>
-<h3>Flow Line — Underground Installation</h3>
-<p>Preparing trenches, laying, jointing and backfilling Flow Line UPVC underground sewerage pipes.</p>
-</div>
-</article>
-
-<article class="video-card" data-category="overview">
-<div class="video-thumbnail">
-<img alt="Nikasi SWV system overview" decoding="async" loading="lazy" src="assets/images/products/nikasi.webp"/>
-<button aria-label="Play Nikasi SWV system overview video" class="video-play" data-video="https://www.youtube.com/embed/VIDEO_ID_NIKASI" data-video-type="youtube" type="button">
-<i aria-hidden="true" class="fas fa-play"></i>
-</button>
-<span class="video-duration">3:45</span>
-</div>
-<div class="video-body">
-<span class="video-category">Product Overview</span>
-<h3>Nikasi — SWV System Overview</h3>
-<p>Introduction to the Nikasi UPVC soil, waste and ventilation system for building drainage.</p>
-</div>
-</article>
-
-<article class="video-card" data-category="overview">
-<div class="video-thumbnail">
-<img alt="T-Flex Gas product overview" decoding="async" loading="lazy" src="assets/images/products/tflex-gas.webp"/>
-<button aria-label="Play T-Flex Gas product overview video" class="video-play" data-video="https://www.youtube.com/embed/VIDEO_ID_TFLEXGAS" data-video-type="youtube" type="button">
-<i aria-hidden="true" class="fas fa-play"></i>
-</button>
-<span class="video-duration">4:10</span>
-</div>
-<div class="video-body">
-<span class="video-category">Product Overview</span>
-<h3>T-Flex Gas — PE 80 &amp; PE 100</h3>
-<p>Overview of the T-Flex Gas piping system for gas distribution networks, including sizes and jointing methods.</p>
-</div>
-</article>
-
-<article class="video-card" data-category="corporate">
-<div class="video-thumbnail">
-<img alt="Dadex company introduction" decoding="async" loading="lazy" src="assets/images/corporate/product-range.webp"/>
-<button aria-label="Play Dadex company introduction video" class="video-play" data-video-file="assets/videos/sample-dadex-corporate.mp4" data-video-poster="assets/images/corporate/product-range.webp" data-video-type="self" type="button">
-<i aria-hidden="true" class="fas fa-play"></i>
-</button>
-<span class="video-duration">2:50</span>
-</div>
-<div class="video-body">
-<span class="video-category">Corporate</span>
-<h3>Dadex — Company Introduction</h3>
-<p>A short introduction to Dadex Eternit Limited — our history, manufacturing capability and product portfolio.</p>
-</div>
-</article>
-
-</div>
-
-<div class="dealer-empty" hidden id="videoEmpty">
-<i aria-hidden="true" class="fas fa-video"></i>
-<h3>No videos in this category</h3>
-<p>Try a different filter or view all videos.</p>
-</div>
-
-<div class="sales-office-note">
-<div class="sales-office-icon"><i aria-hidden="true" class="fas fa-headset"></i></div>
-<div>
-<h2>Need <span>installation support?</span></h2>
-<p>Our technical team can arrange on-site training, demonstrations and site supervision for your project.</p>
-<a class="btn btn-primary" href="contact.html#technical-support">Contact Technical Support <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
-</div>
-</div>
-
-</div>
-</section>
-
-<section class="page-cta">
-<div class="container">
-<h2>Looking for <span>product literature?</span></h2>
-<p>Download brochures, technical data sheets and certificates for the full Dadex range.</p>
-<a class="btn btn-primary" href="literature.html">Literature <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
-</div>
-</section>
+  <div class="video-lightbox" id="videoLightbox">
+    <div class="video-lightbox-inner">
+      <button class="video-lightbox-close" type="button">×</button>
+      <div id="videoLightboxFrame" style="width:100%;height:100%"></div>
+    </div>
+  </div>
 
 </main>
-
-<div aria-label="Video player" aria-modal="true" class="video-lightbox" id="videoLightbox" role="dialog">
-<div class="video-lightbox-inner">
-<button aria-label="Close video" class="video-lightbox-close" type="button">×</button>
-<div id="videoLightboxFrame" style="width:100%;height:100%"></div>
-</div>
-</div>
-
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
 <script>
 (function(){
   var filterBtns = document.querySelectorAll('[data-video-filter]');
   var cards = document.querySelectorAll('.video-card');
-  var empty = document.getElementById('videoEmpty');
-
+  
   filterBtns.forEach(function(btn){
     btn.addEventListener('click', function(){
       var value = btn.dataset.videoFilter;
-      filterBtns.forEach(function(b){
-        var active = b === btn;
-        b.classList.toggle('is-active', active);
-        b.setAttribute('aria-pressed', active ? 'true' : 'false');
-      });
-      var visible = 0;
+      filterBtns.forEach(function(b){ b.classList.toggle('active', b === btn); });
       cards.forEach(function(card){
-        var show = value === 'all' || card.dataset.category === value;
-        card.hidden = !show;
-        if (show) visible++;
+        card.hidden = !(value === 'all' || card.dataset.category === value);
       });
-      if (empty) empty.hidden = visible !== 0;
     });
   });
 
   var lightbox = document.getElementById('videoLightbox');
   var frame = document.getElementById('videoLightboxFrame');
-  if (!lightbox || !frame) return;
-
-  var isPlaceholder = function(value){
-    if (!value) return true;
-    return value.indexOf('VIDEO_ID_') !== -1 ||
-           value.indexOf('/sample-') !== -1 ||
-           value === '#';
-  };
-
-  var showPlaceholder = function(){
-    frame.innerHTML =
-      '<div style="width:100%;height:100%;display:grid;place-items:center;text-align:center;color:#fff;padding:2rem;background:#14171a;font-family:inherit;">' +
-        '<div>' +
-          '<i class="fas fa-video" aria-hidden="true" style="font-size:2rem;opacity:.6;margin-bottom:1rem;display:block;"></i>' +
-          '<h3 style="margin:0 0 .5rem;font-size:1.25rem;color:#fff;">Video coming soon</h3>' +
-          '<p style="margin:0;color:#a9afb5;font-size:.875rem;line-height:1.6;">' +
-            'This video is being prepared by the Dadex technical team.<br>' +
-            'In the meantime, please <a href="contact.html#technical-support" style="color:#ff5c5c;">contact technical support</a> for guidance.' +
-          '</p>' +
-        '</div>' +
-      '</div>';
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-
-  var openYouTube = function(src){
-    frame.innerHTML = '';
-    var iframe = document.createElement('iframe');
-    iframe.src = src;
-    iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
-    iframe.setAttribute('allowfullscreen', '');
-    iframe.setAttribute('title', 'Video player');
-    frame.appendChild(iframe);
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-
-  var openSelfHosted = function(src, poster){
-    frame.innerHTML = '';
-    var video = document.createElement('video');
-    video.src = src;
-    if (poster) video.poster = poster;
-    video.controls = true;
-    video.autoplay = true;
-    video.playsInline = true;
-    video.setAttribute('playsinline', '');
-    video.style.width = '100%';
-    video.style.height = '100%';
-    video.style.display = 'block';
-    video.style.background = '#000';
-    frame.appendChild(video);
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-
-  var open = function(btn){
-    var type = btn.getAttribute('data-video-type') || 'youtube';
-    if (type === 'self') {
-      var file = btn.getAttribute('data-video-file');
-      var poster = btn.getAttribute('data-video-poster');
-      if (isPlaceholder(file)) { showPlaceholder(); return; }
-      openSelfHosted(file, poster);
-    } else {
-      var src = btn.getAttribute('data-video');
-      if (isPlaceholder(src)) { showPlaceholder(); return; }
-      openYouTube(src);
-    }
-  };
-
-  var close = function(){
-    var video = frame.querySelector('video');
-    if (video) {
-      video.pause();
-      video.removeAttribute('src');
-      video.load();
-    }
-    frame.innerHTML = '';
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-  };
+  var closeBtn = document.querySelector('.video-lightbox-close');
 
   document.querySelectorAll('.video-play').forEach(function(btn){
-    btn.addEventListener('click', function(){ open(btn); });
+    btn.addEventListener('click', function(){
+      var src = btn.getAttribute('data-video');
+      frame.innerHTML = '<iframe src="'+src+'" style="width:100%;height:100%;border:0;" allow="autoplay; fullscreen"></iframe>';
+      lightbox.classList.add('open');
+    });
   });
 
-  lightbox.addEventListener('click', function(e){
-    if (e.target === lightbox) close();
-  });
-  lightbox.querySelector('.video-lightbox-close').addEventListener('click', close);
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && lightbox.classList.contains('open')) close();
+  closeBtn.addEventListener('click', function(){
+    frame.innerHTML = '';
+    lightbox.classList.remove('open');
   });
 })();
 </script>
