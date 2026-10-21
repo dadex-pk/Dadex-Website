@@ -1,0 +1,82 @@
+/* ============================================================
+   INVESTOR RELATIONS PAGE
+   ============================================================ */
+
+.ir-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .ir-layout { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* Sidebar Navigation */
+.ir-sidebar {
+  position: sticky;
+  top: calc(var(--header-h) + 2rem);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.ir-side-group { border-bottom: 1px solid var(--line); }
+.ir-side-group:last-child { border-bottom: none; }
+
+.ir-side-title {
+  padding: 1rem 1.25rem;
+  font-weight: 800;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--bg-mist);
+}
+
+.ir-side-link {
+  display: block;
+  padding: 0.75rem 1.25rem;
+  color: var(--ink-light);
+  font-size: 0.9375rem;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.ir-side-link:hover, .ir-side-link.active {
+  background: #fdf5f5;
+  color: var(--brand-red);
+  border-left-color: var(--brand-red);
+}
+
+/* Content Panels */
+.ir-panel { display: none; }
+.ir-panel.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+.ir-panel h2 { margin-bottom: 1.5rem; }
+.ir-panel h2 span { color: var(--brand-red); }
+
+/* Data Tables */
+.share-table { overflow-x: auto; margin-bottom: 2rem; border-radius: var(--radius-sm); border: 1px solid var(--line); }
+.share-table table { width: 100%; border-collapse: collapse; text-align: left; background: #fff; }
+.share-table th, .share-table td { padding: 0.875rem 1.25rem; border-bottom: 1px solid var(--line); }
+.share-table th { background: var(--bg-mist); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 800; }
+.share-table tr:last-child td { border-bottom: none; }
+
+/* Stat Blocks */
+.ir-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.ir-stat { background: #fff; border: 1px solid var(--line); padding: 1.5rem; border-radius: var(--radius-md); }
+.ir-stat span { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 800; margin-bottom: 0.5rem; }
+.ir-stat strong { display: block; font-size: 2rem; color: var(--ink); line-height: 1; }
+
+/* Mobile Accordion Sidebar */
+@media (max-width: 900px) {
+  .ir-sidebar { position: static; }
+  .ir-side-title { cursor: pointer; position: relative; }
+  .ir-side-title::after { content: "+"; position: absolute; right: 1.25rem; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--brand-red); }
+  .ir-side-group.is-open .ir-side-title::after { content: "−"; }
+  .ir-side-group:not(.is-open) .ir-side-link { display: none; }
+}
