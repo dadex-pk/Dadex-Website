@@ -1,0 +1,52 @@
+/* ============================================================
+   LAYOUT — Containers, Sections, Grids
+   ============================================================ */
+
+/* --- Container --- */
+.container {
+  width: min(100% - 2rem, var(--container));
+  margin-inline: auto;
+}
+@media (min-width: 768px) {
+  .container { width: min(100% - 4rem, var(--container)); }
+}
+
+/* --- Sections --- */
+.section {
+  padding-block: var(--section-pad);
+}
+.section--light { background-color: var(--bg-mist); }
+.section--dark { 
+  background-color: var(--bg-dark); 
+  color: #fff; 
+}
+.section--dark h2, 
+.section--dark h3, 
+.section--dark p { color: #fff; }
+
+/* --- Section Headers --- */
+.section-header {
+  max-width: 48rem;
+  margin-bottom: 3rem;
+}
+.section-header.center { margin-inline: auto; text-align: center; }
+.section-header p {
+  font-size: 1.125rem;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+/* --- Unified Responsive Grids --- */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+/* auto-fit and minmax handle the responsive stacking automatically! */
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+
+/* --- Flex Utilities --- */
+.flex { display: flex; gap: 1rem; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
