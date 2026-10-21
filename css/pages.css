@@ -1,8 +1,18 @@
 /* ============================================================
-   PAGE-SPECIFIC WIDGETS (Filters, Video Grids, Dealers)
+   PAGE-SPECIFIC WIDGETS & LAYOUTS
+   (Projects, Videos, Dealers, Search, Literature, Legal)
    ============================================================ */
 
-/* --- Filter Chips (Projects, Videos) --- */
+/* ============================================================
+   1. GENERAL UTILITIES & HELPERS
+   ============================================================ */
+.bg-white { background-color: var(--bg-surface); }
+.bg-mist { background-color: var(--bg-mist); }
+.text-center { text-align: center; }
+
+/* ============================================================
+   2. FILTER BARS (Projects, Videos)
+   ============================================================ */
 .filter-group {
   display: flex;
   flex-wrap: wrap;
@@ -20,22 +30,40 @@
   cursor: pointer;
   transition: all var(--transition);
 }
-.filter-btn:hover, .filter-btn.active {
+.filter-btn:hover, 
+.filter-btn.active {
   background: var(--brand-red);
   border-color: var(--brand-red);
   color: #fff;
 }
 
-/* --- Video Grid --- */
+/* ============================================================
+   3. PROJECTS PAGE
+   ============================================================ */
+.project-card {
+  padding: 0;
+  overflow: hidden;
+}
+.project-card [style*="height: 200px"] {
+  background: #f7f7f5; /* Fallback background for transparent images */
+}
+
+/* ============================================================
+   4. VIDEOS PAGE
+   ============================================================ */
 .video-card {
   padding: 0;
   overflow: hidden;
   cursor: pointer;
 }
+.video-card[hidden] {
+  display: none !important;
+}
 .video-thumbnail {
   position: relative;
   aspect-ratio: 16/9;
   background: #eceeef;
+  overflow: hidden;
 }
 .video-thumbnail img {
   width: 100%;
@@ -57,12 +85,23 @@
   font-size: 1rem;
   cursor: pointer;
   transition: transform 0.2s ease;
+  z-index: 2;
 }
-.video-card:hover .video-play { transform: scale(1.1); }
-.video-body { padding: 1.5rem; }
-.video-category { font-size: 0.6875rem; font-weight: 800; color: var(--brand-red); text-transform: uppercase; letter-spacing: 0.1em; }
+.video-card:hover .video-play { 
+  transform: scale(1.1); 
+}
+.video-body { 
+  padding: 1.5rem; 
+}
+.video-category { 
+  font-size: 0.6875rem; 
+  font-weight: 800; 
+  color: var(--brand-red); 
+  text-transform: uppercase; 
+  letter-spacing: 0.1em; 
+}
 
-/* --- Video Lightbox --- */
+/* Video Lightbox Modal */
 .video-lightbox {
   position: fixed;
   inset: 0;
@@ -73,7 +112,9 @@
   justify-content: center;
   padding: 2rem;
 }
-.video-lightbox.open { display: flex; }
+.video-lightbox.open { 
+  display: flex; 
+}
 .video-lightbox-inner {
   position: relative;
   width: min(100%, 64rem);
@@ -81,6 +122,7 @@
   background: #000;
   border-radius: var(--radius-md);
   overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 .video-lightbox-close {
   position: absolute;
@@ -91,9 +133,12 @@
   color: #fff;
   font-size: 2rem;
   cursor: pointer;
+  line-height: 1;
 }
 
-/* --- Dealers Layout --- */
+/* ============================================================
+   5. DEALERS PAGE
+   ============================================================ */
 .dealer-filters {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -104,21 +149,205 @@
   border: 1px solid var(--line);
   margin-bottom: 2rem;
 }
-.dealer-filters select, .dealer-filters input {
+.dealer-filters select, 
+.dealer-filters input {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.875rem;
+}
+.dealer-filters select:focus, 
+.dealer-filters input:focus {
+  outline: none;
+  border-color: var(--brand-red);
 }
 
-/* --- Legal / Text Pages --- */
+/* Active Filter Summary */
+.active-filter-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.active-filter-summary[hidden] {
+  display: none !important;
+}
+.active-filter {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  background: var(--bg-mist);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  font-size: 0.8125rem;
+  color: var(--ink-light);
+}
+.active-filter strong { 
+  margin-right: 0.25rem; 
+}
+
+/* Dealer Tags & Links */
+.dealer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: 1rem;
+}
+.dealer-tags span {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--bg-mist);
+  color: var(--muted);
+}
+.dealer-context-link, 
+.dealer-map {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--brand-red);
+  text-decoration: none;
+}
+.dealer-context-link { 
+  margin-right: 1rem; 
+}
+.dealer-context-link:hover, 
+.dealer-map:hover { 
+  text-decoration: underline; 
+}
+
+/* Empty States */
+.dealer-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #fff;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+  color: var(--muted);
+}
+.dealer-empty i {
+  font-size: 2.5rem;
+  color: var(--line);
+  margin-bottom: 1rem;
+}
+.dealer-empty h3 {
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+}
+
+/* ============================================================
+   6. SEARCH PAGE
+   ============================================================ */
+.search-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.search-bar input {
+  flex: 1;
+  min-width: 250px;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  font-size: 1rem;
+}
+.search-bar input:focus {
+  outline: none;
+  border-color: var(--brand-red);
+}
+.search-result-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.search-result-card .result-type {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--brand-red);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+.search-result-card h3 {
+  margin-bottom: 0.5rem;
+}
+.search-result-card p {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+/* ============================================================
+   7. LITERATURE PAGE
+   ============================================================ */
+.lit-card {
+  display: flex;
+  flex-direction: column;
+}
+.lit-card .flex {
+  margin-top: auto;
+}
+.lit-card .btn {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+/* ============================================================
+   8. LEGAL PAGES (Privacy Policy, Terms)
+   ============================================================ */
 .legal-content {
   background: #fff;
-  padding: 3rem;
+  padding: 4rem;
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
   max-width: 900px;
   margin: 0 auto;
 }
-.legal-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.5rem; }
-.legal-content p, .legal-content li { color: var(--muted); font-size: 1rem; line-height: 1.8; }
+.legal-content h2 { 
+  margin-top: 3rem; 
+  margin-bottom: 1rem; 
+  font-size: 1.5rem; 
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 0.5rem;
+}
+.legal-content p, 
+.legal-content li { 
+  color: var(--muted); 
+  font-size: 1rem; 
+  line-height: 1.8; 
+  margin-bottom: 1rem;
+}
+.legal-content ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.legal-content a {
+  color: var(--brand-red);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-content a:hover {
+  color: var(--brand-red-dark);
+}
+
+/* --- Mobile Adjustments --- */
+@media (max-width: 768px) {
+  .legal-content {
+    padding: 2rem 1.5rem;
+  }
+  .search-bar {
+    flex-direction: column;
+  }
+  .search-bar button {
+    width: 100%;
+  }
+}
