@@ -54,4 +54,4 @@ body.header-scrolled {
 @media (max-width: 1024px) {
   :root { --header-h: 6rem; }
   body.header-scrolled { --header-h: 4rem; }
-   }
+}
