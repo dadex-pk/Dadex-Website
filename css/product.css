@@ -1,0 +1,102 @@
+/* ============================================================
+   PRODUCT PAGES
+   ============================================================ */
+
+/* --- Product Hero --- */
+.product-hero {
+  background: var(--bg-surface);
+  padding: clamp(3rem, 6vw, 5rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+.product-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .product-hero__inner { grid-template-columns: 1fr; gap: 2rem; }
+}
+.product-hero__content h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 0.5rem; }
+.product-hero__subtitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--brand-red);
+  margin-bottom: 1.5rem;
+}
+.product-hero__desc { font-size: 1.125rem; color: var(--muted); margin-bottom: 2rem; }
+.product-hero__image img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  background: #fff;
+  padding: 2rem;
+}
+
+/* --- Product Features (Checkmarks) --- */
+.product-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.product-features span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.product-features span::before {
+  content: "✓";
+  color: var(--brand-red);
+  font-weight: 900;
+}
+
+/* --- Sticky Product Tabs --- */
+.product-tabs {
+  display: flex;
+  gap: 2rem;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: var(--header-h);
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  z-index: 90;
+  padding: 1rem 0;
+}
+.product-tabs a {
+  font-weight: 700;
+  color: var(--muted);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid transparent;
+}
+.product-tabs a:hover, .product-tabs a.active {
+  color: var(--brand-red);
+  border-bottom-color: var(--brand-red);
+}
+
+/* --- Spec Tables --- */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  background: #fff;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.spec-table th, .spec-table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9375rem;
+}
+.spec-table th {
+  width: 30%;
+  background: var(--bg-mist);
+  font-weight: 700;
+  color: var(--ink);
+}
+.spec-table td { color: var(--muted); }
