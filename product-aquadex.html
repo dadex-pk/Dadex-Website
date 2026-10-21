@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Aquadex — Dadex Eternit Limited</title>
 <link href="css/root.css" rel="stylesheet"/>
 <link href="css/base.css" rel="stylesheet"/>
@@ -12,10 +11,8 @@
 <link href="css/product.css" rel="stylesheet"/>
 </head>
 <body>
-<a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
-
-<main id="main-content">
+<main>
   <section class="product-hero">
     <div class="container product-hero__inner">
       <div class="product-hero__content">
@@ -23,39 +20,38 @@
         <h1>Aquadex</h1>
         <div class="product-hero__subtitle">UPVC Pressure Pipe System</div>
         <p class="product-hero__desc">A permanent solution for main potable water supply, distribution and transmission systems.</p>
-        
         <div class="product-features">
-          <span>Corrosion resistant</span>
-          <span>Lightweight</span>
-          <span>Durable</span>
-          <span>Easy to install</span>
+          <span>Corrosion resistant</span><span>Lightweight</span><span>Durable</span><span>Easy to install</span>
         </div>
-        
         <div class="flex">
           <a class="btn btn--primary" href="#technical">Technical Info <i class="fas fa-arrow-down"></i></a>
           <a class="btn btn--outline" href="dealers.html">Find a Dealer</a>
         </div>
       </div>
-      <div class="product-hero__image">
-        <img src="assets/images/products/aquadex.webp" alt="Aquadex">
-      </div>
+      <div class="product-hero__image"><img src="assets/images/products/aquadex.webp" alt="Aquadex"></div>
     </div>
   </section>
-
   <div class="container">
+    <div class="product-strip">
+      <div class="product-strip-item"><span class="product-strip-label">Product</span><strong>Aquadex</strong></div>
+      <div class="product-strip-item"><span class="product-strip-label">Application</span><strong>Water Supply</strong></div>
+      <div class="product-strip-item"><span class="product-strip-label">Segment</span><strong>Infrastructure</strong></div>
+      <div class="product-strip-item"><span class="product-strip-label">Classification</span><strong>UPVC Pressure Pipe</strong></div>
+    </div>
     <nav class="product-tabs">
       <a href="#overview" class="active">Overview</a>
-      <a href="#technical">Technical Data</a>
+      <a href="#technical">Technical Information</a>
+      <a href="#downloads">Downloads</a>
     </nav>
   </div>
-
   <section class="section" id="overview">
     <div class="container grid grid-2" style="gap: 4rem;">
       <div>
+        <div class="kicker">Product Overview</div>
         <h2>Reliable pressure piping for <span>potable water.</span></h2>
         <p style="font-size: 1.125rem;">Aquadex pressure pipe system is a permanent solution for the main potable water supply pipeline. Aquadex pipes are safe for cold potable water distribution and transmission systems and can also be used for transportation of certain chemicals.</p>
       </div>
-      <div class="card" style="background: var(--bg-mist);">
+      <div class="card" style="background: var(--bg-mist); border-top: 3px solid var(--brand-red);">
         <h3 style="color: var(--brand-red); margin-bottom: 1.5rem;">Why Aquadex?</h3>
         <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1rem;">
           <li style="display: flex; gap: 0.75rem;"><i class="fas fa-check" style="color: var(--brand-red); margin-top: 4px;"></i> Resistance to corrosion, abrasion and algae/fungi growth</li>
@@ -66,13 +62,15 @@
       </div>
     </div>
   </section>
-
   <section class="section section--light" id="technical">
     <div class="container">
-      <div class="section-header">
-        <h2>Technical Specifications</h2>
+      <div class="section-header"><h2>Specifications & range</h2></div>
+      <div class="p2-tech-summary">
+        <div class="p2-tech-summary-item"><span>Material</span><strong>UPVC</strong></div>
+        <div class="p2-tech-summary-item"><span>Standard Lengths</span><strong>4m & 6m</strong></div>
+        <div class="p2-tech-summary-item"><span>Pressure Classes</span><strong>6–16 bar</strong></div>
+        <div class="p2-tech-summary-item"><span>Jointing</span><strong>Solvent / Z-joint</strong></div>
       </div>
-      
       <table class="spec-table">
         <tbody>
           <tr><th>Material</th><td>Unplasticised polyvinyl chloride (UPVC)</td></tr>
@@ -85,10 +83,33 @@
           <tr><th>Jointing method</th><td>Solvent cement jointing and Z-joint with rubber rings.</td></tr>
         </tbody>
       </table>
+      <div class="p2-tech-notes">
+        <div class="p2-tech-note"><i class="fas fa-shield-halved"></i><div><h4>Performance</h4><p>Corrosion resistant, lightweight and durable, with a smooth bore that supports efficient water flow.</p></div></div>
+        <div class="p2-tech-note"><i class="fas fa-file-lines"></i><div><h4>Standards</h4><p>Aquadex pipes and fittings are manufactured and specified against the standards listed above.</p></div></div>
+        <div class="p2-tech-note"><i class="fas fa-screwdriver-wrench"></i><div><h4>Installation</h4><p>Solvent cement and rubber-ring Z-jointing options support straightforward installation.</p></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="downloads">
+    <div class="container">
+      <div class="p2-banner">
+        <div><div class="kicker">Downloads</div><h3>Technical resources</h3><p>Approved product literature can be connected here as the resource library is finalized.</p></div>
+        <a class="btn btn--primary" href="literature.html">Browse Resources</a>
+      </div>
+      <div class="section-header"><h2>More in <span>Water Supply</span></h2></div>
+      <div class="p2-related">
+        <a href="product-tflex.html"><h4>T-Flex</h4><span>PE 100 flexible piping system</span></a>
+        <a href="product-polydex-premium.html"><h4>Polydex Premium</h4><span>PP-RCT hot and cold water system</span></a>
+        <a href="product-polydex.html"><h4>Polydex</h4><span>PP-R water supply system</span></a>
+        <a href="product-thermoline.html"><h4>Thermoline</h4><span>PP-R hot and cold water system</span></a>
+      </div>
+      <div class="p2-banner dark">
+        <div><h3>Need help choosing the right system?</h3><p>Contact Dadex for product information and technical assistance.</p></div>
+        <a class="btn btn--primary" href="contact.html">Contact Dadex</a>
+      </div>
     </div>
   </section>
 </main>
-
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
 </body>
