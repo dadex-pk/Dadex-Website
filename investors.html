@@ -5,24 +5,61 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Investor Relations | Dadex Eternit Limited</title>
 <meta content="Investor Relations for Dadex Eternit Limited — company information, governance, shareholding, financial results, reports, AGM notices and investor contact." name="description"/>
+<meta content="#c90000" name="theme-color"/>
+<meta content="index, follow" name="robots"/>
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
 <link href="https://www.dadex.com/investors.html" rel="canonical"/>
+
+<!-- Open Graph -->
+<meta content="website" property="og:type"/>
+<meta content="Investor Relations | Dadex Eternit Limited" property="og:title"/>
+<meta content="Company information, governance, shareholding, financial results, reports, AGM notices and investor contact." property="og:description"/>
+<meta content="https://www.dadex.com/investors.html" property="og:url"/>
+<meta content="Dadex Eternit Limited" property="og:site_name"/>
+<meta content="en_PK" property="og:locale"/>
+<meta content="https://www.dadex.com/assets/images/dadex-logo.png" property="og:image"/>
+<meta content="Dadex Eternit Limited" property="og:image:alt"/>
+<meta content="176" property="og:image:width"/>
+<meta content="46" property="og:image:height"/>
+
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Investor Relations | Dadex Eternit Limited" name="twitter:title"/>
+<meta content="Company information, governance, shareholding, financial results, reports, AGM notices and investor contact." name="twitter:description"/>
+<meta content="https://www.dadex.com/assets/images/dadex-logo.png" name="twitter:image"/>
+
+<!-- Preconnect -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+
+<!-- Styles -->
 <link href="css/root.css" rel="stylesheet"/>
 <link href="css/base.css" rel="stylesheet"/>
 <link href="css/layout.css" rel="stylesheet"/>
 <link href="css/components.css" rel="stylesheet"/>
 <link href="css/shell.css" rel="stylesheet"/>
 <link href="css/investors.css" rel="stylesheet"/>
+
+<!-- Structured data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": "Investor Relations — Dadex Eternit Limited",
   "url": "https://www.dadex.com/investors.html",
+  "description": "Company information, governance, shareholding, financial results and disclosures.",
   "isPartOf": { "@type": "WebSite", "name": "Dadex Eternit Limited", "url": "https://www.dadex.com/" }
 }
 </script>
 </head>
-<body>
+<body class="core-page">
 <a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
 
@@ -229,7 +266,6 @@
                 <p style="margin-top: 1rem;">Mr. Sikander Dada occupies a prominent position within the corporate sphere, with a multifaceted journey that warrants attention...</p>
               </div>
             </details>
-            <!-- Add the rest of the directors similarly if needed -->
           </div>
         </div>
 
@@ -339,7 +375,6 @@
           </div>
         </div>
         
-        <!-- Add the rest of the panels using the exact same structure as above -->
         <div class="ir-panel" data-ir-panel="eps" id="eps"><h2>Earnings Per Share</h2></div>
         <div class="ir-panel" data-ir-panel="registrar" id="registrar"><h2>Share Registrar</h2></div>
         <div class="ir-panel" data-ir-panel="free-float" id="free-float"><h2>Free Float Shares</h2></div>
@@ -368,7 +403,6 @@
   if (!panel) return;
   var cards = Array.prototype.slice.call(panel.querySelectorAll('details.director-card'));
   if (!cards.length) return;
-  // Note: Script is kept intact from original but adapted to details/summary
   cards.forEach(function(c){ c.addEventListener('toggle', function(){}); });
 })();
 </script>
