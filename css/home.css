@@ -117,13 +117,26 @@ h2 span { color: var(--brand-red); }
    COMBINED TRUST SECTION (Stats + Cards)
    ============================================================ */
 .trust-section {
-  background: var(--bg-body);
+
+  background: transparent; 
   padding-bottom: clamp(3rem, 6vw, 5rem);
   position: relative;
   z-index: 10;
 }
 
-/* --- Stats Bar (Overlapping the Hero) --- */
+
+.trust-section::before {
+  content: "";
+  position: absolute;
+  top: 4rem; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-body);
+  z-index: -1;
+}
+
+
 .home-hero__stats {
   display: flex;
   justify-content: center;
@@ -132,35 +145,10 @@ h2 span { color: var(--brand-red); }
   padding: 2rem;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  margin: -4rem auto 3rem auto; /* Pulls it up into the dark hero */
+  margin: -4rem auto 3rem auto; 
   max-width: 800px;
   position: relative;
   z-index: 2;
-}
-
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.stat-item strong {
-  font-family: 'Manrope', 'Inter', sans-serif;
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--ink);
-  line-height: 1;
-  margin-bottom: 0.35rem;
-  letter-spacing: -0.02em;
-}
-
-.stat-item span {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--brand-red);
-  font-weight: 700;
 }
 
 /* --- Trust Cards --- */
@@ -215,7 +203,7 @@ h2 span { color: var(--brand-red); }
   .home-hero__stats {
     flex-direction: column;
     gap: 2rem;
-    margin-top: -2rem; /* Less overlap on mobile */
+    margin-top: -2rem; 
   }
 }
 /* ============================================================
