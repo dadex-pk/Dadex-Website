@@ -159,14 +159,34 @@ h2 span { color: var(--brand-red); }
   transform: scaleX(1);
 }
 
-/* Top row holding the Number and Icon */
+/* Top row holding the Icon and Number */
 .card-feature-top {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 2rem;
 }
 
+/* Icon Styling (Top Left) */
+.home-product-icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--bg-mist);
+  color: var(--muted);
+  font-size: 1.125rem;
+  transition: all var(--transition);
+}
+
+.card--text-feature:hover .home-product-icon {
+  background: var(--brand-red);
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* Number Styling (Top Right) */
 .home-product-number {
   font-family: 'Manrope', 'Inter', sans-serif;
   font-size: 2.5rem;
@@ -179,17 +199,6 @@ h2 span { color: var(--brand-red); }
 
 .card--text-feature:hover .home-product-number {
   color: var(--brand-red); /* Turns red on hover */
-}
-
-.home-product-icon {
-  font-size: 1.5rem;
-  color: var(--line); /* Subtle icon color */
-  transition: color var(--transition), transform var(--transition);
-}
-
-.card--text-feature:hover .home-product-icon {
-  color: var(--brand-red);
-  transform: scale(1.1);
 }
 
 /* Typography inside the card */
@@ -210,8 +219,12 @@ h2 span { color: var(--brand-red); }
   color: var(--brand-red);
 }
 
-.card--text-feature p {
-  font-size: 0.875rem;
+/* The Product Names List */
+.card--text-feature .product-list {
+  font-size: 0.8125rem;
   color: var(--muted);
   margin: 0;
+  line-height: 1.6;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
