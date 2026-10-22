@@ -55,36 +55,6 @@ h2 span { color: var(--brand-red); }
   margin-bottom: 3.5rem;
 }
 
-/* --- Trust Bar / Stats --- */
-.home-hero__stats {
-  display: flex;
-  gap: 3rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  padding-top: 2rem;
-}
-
-.stat-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-item strong {
-  font-family: 'Manrope', 'Inter', sans-serif;
-  font-size: 2.25rem;
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1;
-  margin-bottom: 0.35rem;
-  letter-spacing: -0.02em;
-}
-
-.stat-item span {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--brand-accent-dark);
-  font-weight: 700;
-}
 
 /* --- Hero Visual (Collage) --- */
 .home-hero__visual {
@@ -144,8 +114,60 @@ h2 span { color: var(--brand-red); }
 }
 
 /* ============================================================
-   2. TRUST INDICATORS (Floating Cards)
+   COMBINED TRUST SECTION (Stats + Cards)
    ============================================================ */
+.trust-section {
+  background: var(--bg-body);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  position: relative;
+  z-index: 10;
+}
+
+/* --- Stats Bar (Overlapping the Hero) --- */
+.home-hero__stats {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  margin: -4rem auto 3rem auto; /* Pulls it up into the dark hero */
+  max-width: 800px;
+  position: relative;
+  z-index: 2;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-item strong {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.stat-item span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-red);
+  font-weight: 700;
+}
+
+/* --- Trust Cards --- */
+.trust-cards-grid {
+  margin-top: 2rem;
+}
+
 .trust-card {
   display: flex;
   flex-direction: column;
@@ -188,6 +210,14 @@ h2 span { color: var(--brand-red); }
   line-height: 1.3;
 }
 
+/* --- Mobile Adjustments --- */
+@media (max-width: 768px) {
+  .home-hero__stats {
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: -2rem; /* Less overlap on mobile */
+  }
+}
 /* ============================================================
    3. TEXT-ONLY PRODUCT FEATURE CARDS
    ============================================================ */
