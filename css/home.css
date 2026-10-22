@@ -81,37 +81,6 @@ h2 span { color: var(--brand-red); }
   transform: scale(1.05);
 }
 
-.home-hero__badge {
-  position: absolute;
-  bottom: 2rem;
-  left: -1.5rem;
-  background: rgba(23, 25, 28, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 1.25rem 1.75rem;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(255,255,255,0.1);
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.home-hero__badge strong {
-  font-size: 2rem;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1;
-}
-
-.home-hero__badge span {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--brand-accent-dark);
-  margin-top: 0.25rem;
-  font-weight: 700;
-}
-
 /* ============================================================
    2. UNIFIED TRUST DASHBOARD
    ============================================================ */
@@ -126,7 +95,7 @@ h2 span { color: var(--brand-red); }
   background: #ffffff;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg); 
-  margin-top: -5rem; /* Pulls the panel up into the dark hero */
+  margin-top: -5rem;
   position: relative;
   z-index: 2;
   overflow: hidden;
@@ -233,6 +202,7 @@ h2 span { color: var(--brand-red); }
   text-decoration: none;
   transition: all var(--transition);
   overflow: hidden;
+  height: 100%;
 }
 
 .card--text-feature::after {
@@ -262,7 +232,7 @@ h2 span { color: var(--brand-red); }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .home-product-icon {
@@ -283,13 +253,12 @@ h2 span { color: var(--brand-red); }
   transform: scale(1.05);
 }
 
-/* Fixed: Made the number visible */
 .home-product-number {
   font-family: 'Manrope', 'Inter', sans-serif;
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   font-weight: 800;
   line-height: 1;
-  color: #e5e7eb; /* Light grey so it's visible on white */
+  color: #e5e7eb;
   letter-spacing: -0.04em;
   transition: color var(--transition);
 }
@@ -316,16 +285,44 @@ h2 span { color: var(--brand-red); }
 }
 
 .card--text-feature .product-list {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--muted);
   margin: 0;
   line-height: 1.6;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+}
+
+.card-arrow {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--line);
+  transition: all var(--transition);
+}
+
+.card--text-feature:hover .card-arrow {
+  color: var(--brand-red);
+  transform: translateX(3px);
+}
+
+/* --- 6th Card: Discovery Variation --- */
+.card--discovery {
+  background: #fffafa;
+  border-color: rgba(229, 0, 0, 0.1);
+}
+
+.card--discovery .home-product-icon {
+  background: #fce8e8;
+  color: var(--brand-red);
+}
+
+.card--discovery:hover .home-product-icon {
+  background: var(--brand-red);
+  color: #ffffff;
 }
 
 /* ============================================================
-   4. GRID FIXES (Forces grids to work even if layout.css fails)
+   4. GRID FIXES
    ============================================================ */
 @media (min-width: 1024px) {
   .grid-5 {
@@ -351,7 +348,6 @@ h2 span { color: var(--brand-red); }
    5. RESPONSIVE DESIGN
    ============================================================ */
 @media (max-width: 1024px) {
-  /* --- Hero Stacking --- */
   .home-hero__inner {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -368,13 +364,6 @@ h2 span { color: var(--brand-red); }
     margin: 0 auto;
   }
 
-  .home-hero__badge {
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 1rem;
-  }
-
-  /* --- Trust Dashboard Stacking --- */
   .trust-stats {
     flex-direction: column;
     gap: 1.5rem;
@@ -405,7 +394,6 @@ h2 span { color: var(--brand-red); }
     border-bottom: none;
   }
 
-  /* --- Grid Adjustments --- */
   .grid-5, .grid-3 {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
@@ -414,7 +402,6 @@ h2 span { color: var(--brand-red); }
 }
 
 @media (max-width: 600px) {
-  /* Collapse grids to 1 column on mobile */
   .grid-5, .grid-3, .grid-2 {
     display: grid !important;
     grid-template-columns: 1fr !important;
