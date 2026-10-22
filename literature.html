@@ -3,281 +3,352 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Literature | Dadex Eternit Limited</title>
+<title>Literature &amp; Downloads | Dadex Eternit Limited</title>
+<meta content="Download product brochures, flyers, corporate publications and technical documents for the entire Dadex range." name="description"/>
+<meta content="#c90000" name="theme-color"/>
+<meta content="index, follow" name="robots"/>
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
+<link href="https://www.dadex.com/literature.html" rel="canonical"/>
+
+<!-- Preconnect -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+
+<!-- Styles -->
 <link href="css/root.css" rel="stylesheet"/>
 <link href="css/base.css" rel="stylesheet"/>
 <link href="css/layout.css" rel="stylesheet"/>
 <link href="css/components.css" rel="stylesheet"/>
 <link href="css/shell.css" rel="stylesheet"/>
 <link href="css/pages.css" rel="stylesheet"/>
+
 </head>
-<body>
+<body class="core-page">
 <a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
 
 <main id="main-content">
   <section class="page-hero">
-    <div class="container">
-      <div class="kicker">Resources</div>
+    <div class="container" style="text-align: center;">
+      <div class="kicker" style="justify-content: center;">Resources</div>
       <h1>Product <span>Literature</span></h1>
-      <p>Product brochures, flyers, corporate publications and technical documents for the Dadex range.</p>
+      <p style="margin: 0 auto; max-width: 600px;">Download product brochures, technical data sheets, flyers, and corporate publications for the Dadex range.</p>
     </div>
   </section>
 
-  <section class="section section--light">
+  <section class="section">
     <div class="container">
       
-      <!-- Toolbar -->
-      <div class="search-bar">
-        <input type="search" id="resourceSearch" placeholder="Search literature..." aria-label="Search literature">
-        <select id="resourceType" aria-label="Filter by document type">
-          <option value="all">All Documents</option>
-          <option value="brochure">Brochures</option>
-          <option value="flyer">Flyers</option>
-          <option value="corporate">Corporate</option>
-        </select>
-        <button class="btn btn--outline" id="resourceClear">Clear</button>
+      <!-- Filter Bar -->
+      <div class="lit-filter-bar">
+        <button class="lit-filter-btn active" data-filter="all">All Documents</button>
+        <button class="lit-filter-btn" data-filter="water">Water Supply</button>
+        <button class="lit-filter-btn" data-filter="drainage">Sewerage &amp; Drainage</button>
+        <button class="lit-filter-btn" data-filter="ducting">Cable &amp; Ducting</button>
+        <button class="lit-filter-btn" data-filter="special">Specialised</button>
+        <button class="lit-filter-btn" data-filter="roofing">Roofing</button>
+        <button class="lit-filter-btn" data-filter="corporate">Corporate</button>
       </div>
 
-      <div id="resourceGrid">
-        
-        <!-- Section: Water Supply -->
-        <div class="section-header" style="margin-top: 2rem; max-width: 100%; border-bottom: 1px solid var(--line); padding-bottom: 1rem;">
-          <h2>Water Supply</h2>
-        </div>
-        <div class="grid grid-3" style="margin-bottom: 3rem;">
-          <div class="card lit-card" data-name="aquadex upvc pressure pipe system" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+      <!-- Grid -->
+      <div class="grid grid-3" id="literatureGrid">
+
+        <!-- WATER SUPPLY -->
+        <article class="card lit-card" data-category="water">
+          <div class="lit-card-media"><img src="assets/images/products/aquadex.webp" alt="Aquadex"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Water Supply</div>
             <h3>Aquadex</h3>
-            <p style="margin-bottom: 1.5rem;">UPVC Pressure Pipe System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_aquadex.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_aquadex.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>UPVC Pressure Pipe System for potable water supply.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_aquadex.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_aquadex.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="t-flex pe 100 flexible piping system" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="water">
+          <div class="lit-card-media"><img src="assets/images/products/tflex.webp" alt="T-Flex"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Water Supply</div>
             <h3>T-Flex</h3>
-            <p style="margin-bottom: 1.5rem;">PE 100 Flexible Piping System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_tflex.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_tflex.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>PE 100 Flexible Piping System for water infrastructure.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_tflex.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_tflex.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="polydex premium pp-rct hot cold water" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="water">
+          <div class="lit-card-media"><img src="assets/images/products/polydex-premium.webp" alt="Polydex Premium"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Water Supply</div>
             <h3>Polydex Premium</h3>
-            <p style="margin-bottom: 1.5rem;">PP-RCT Hot &amp; Cold Water System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_polydex-premium.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_polydex-premium.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>PP-RCT Hot &amp; Cold Water System for buildings.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_polydex-premium.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_polydex-premium.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="polydex pp-r water supply system" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="water">
+          <div class="lit-card-media"><img src="assets/images/products/polydex.webp" alt="Polydex"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Water Supply</div>
             <h3>Polydex</h3>
-            <p style="margin-bottom: 1.5rem;">PP-R Water Supply System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_polydex.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_polydex.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>PP-R Water Supply System for buildings.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_polydex.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_polydex.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="thermoline pp-r hot cold water" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="water">
+          <div class="lit-card-media"><img src="assets/images/products/thermoline.webp" alt="Thermoline"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Water Supply</div>
             <h3>Thermoline</h3>
-            <p style="margin-bottom: 1.5rem;">PP-R Hot &amp; Cold Water System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_thermoline.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_thermoline.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>PP-R Hot &amp; Cold Water System.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_thermoline.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_thermoline.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-        </div>
+        </article>
 
-        <!-- Section: Sewerage & Drainage -->
-        <div class="section-header" style="margin-top: 2rem; max-width: 100%; border-bottom: 1px solid var(--line); padding-bottom: 1rem;">
-          <h2>Sewerage &amp; Drainage</h2>
-        </div>
-        <div class="grid grid-3" style="margin-bottom: 3rem;">
-          <div class="card lit-card" data-name="flow line upvc underground sewerage" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        <!-- SEWERAGE & DRAINAGE -->
+        <article class="card lit-card" data-category="drainage">
+          <div class="lit-card-media"><img src="assets/images/products/flowline.webp" alt="Flow Line"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Sewerage &amp; Drainage</div>
             <h3>Flow Line</h3>
-            <p style="margin-bottom: 1.5rem;">UPVC Underground Sewerage System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_flow-line.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_flow-line.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>UPVC Underground Sewerage System.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_flow-line.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_flow-line.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="inspection chambers modular underground" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="drainage">
+          <div class="lit-card-media"><img src="assets/images/products/inspection-chambers.webp" alt="Inspection Chambers"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Sewerage &amp; Drainage</div>
             <h3>Inspection Chambers</h3>
-            <p style="margin-bottom: 1.5rem;">Modular Underground Chamber System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_inspection-chambers.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_inspection-chambers.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>Modular Underground Chamber System.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_inspection-chambers.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_inspection-chambers.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="manholes underground sewer access" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="drainage">
+          <div class="lit-card-media"><img src="assets/images/products/manholes.webp" alt="Manholes"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Sewerage &amp; Drainage</div>
             <h3>Manholes</h3>
-            <p style="margin-bottom: 1.5rem;">Underground Sewer Access System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_manholes.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_manholes.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>Complete underground sewer access system.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_manholes.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_manholes.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="catchpits polypropylene rainwater surface drainage" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="drainage">
+          <div class="lit-card-media"><img src="assets/images/products/catchpit.webp" alt="Catchpits"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Sewerage &amp; Drainage</div>
             <h3>Catchpits</h3>
-            <p style="margin-bottom: 1.5rem;">Lightweight PP Rainwater &amp; Surface Drainage Pits</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_catchpits.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_catchpits.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>Lightweight PP Rainwater &amp; Surface Drainage Pits.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_catchpits.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_catchpits.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="non-return valves backflow protection" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="drainage">
+          <div class="lit-card-media"><img src="assets/images/products/non-return-valves.webp" alt="Non-Return Valves"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Sewerage &amp; Drainage</div>
             <h3>Non-Return Valves</h3>
-            <p style="margin-bottom: 1.5rem;">Backflow Protection for Sewerage Systems</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_non-return-valves.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_non-return-valves.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>Backflow protection for sewerage systems.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_non-return-valves.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_non-return-valves.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="nikasi upvc soil waste ventilation swv" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="drainage">
+          <div class="lit-card-media"><img src="assets/images/products/nikasi.webp" alt="Nikasi"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Sewerage &amp; Drainage</div>
             <h3>Nikasi</h3>
-            <p style="margin-bottom: 1.5rem;">UPVC Soil, Waste &amp; Ventilation System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_nikasi.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_nikasi.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>UPVC Soil, Waste &amp; Ventilation System.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_nikasi.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_nikasi.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="polyduct low noise swv drainage" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="drainage">
+          <div class="lit-card-media"><img src="assets/images/products/polyduct.webp" alt="Polyduct"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Sewerage &amp; Drainage</div>
             <h3>Polyduct</h3>
-            <p style="margin-bottom: 1.5rem;">Low-Noise SWV Drainage System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_polyduct.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_polyduct.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>Low-Noise SWV Drainage System.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_polyduct.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_polyduct.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-        </div>
+        </article>
 
-        <!-- Section: Cable & Utility Ducting -->
-        <div class="section-header" style="margin-top: 2rem; max-width: 100%; border-bottom: 1px solid var(--line); padding-bottom: 1rem;">
-          <h2>Cable &amp; Utility Ducting</h2>
-        </div>
-        <div class="grid grid-3" style="margin-bottom: 3rem;">
-          <div class="card lit-card" data-name="pe cable duct fibre optics utility" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        <!-- CABLE & UTILITY DUCTING -->
+        <article class="card lit-card" data-category="ducting">
+          <div class="lit-card-media"><img src="assets/images/products/cable-duct.webp" alt="PE Cable Duct"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Cable &amp; Ducting</div>
             <h3>PE Cable Duct</h3>
-            <p style="margin-bottom: 1.5rem;">PE / UPVC Cable Ducting System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_pe-cable-duct.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_pe-cable-duct.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>PE / UPVC Cable Ducting System for utilities.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_pe-cable-duct.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_pe-cable-duct.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="electrical conduits upvc wiring" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="ducting">
+          <div class="lit-card-media"><img src="assets/images/products/electrical-conduits.webp" alt="Electrical Conduits"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Cable &amp; Ducting</div>
             <h3>Electrical Conduits</h3>
-            <p style="margin-bottom: 1.5rem;">UPVC Electrical Conduit System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_electrical-conduits.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_electrical-conduits.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>UPVC Electrical Conduit System.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_electrical-conduits.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_electrical-conduits.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="electroduct upvc electrical conduit en 50086" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="ducting">
+          <div class="lit-card-media"><img src="assets/images/products/electroduct.webp" alt="Electroduct"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Cable &amp; Ducting</div>
             <h3>Electroduct</h3>
-            <p style="margin-bottom: 1.5rem;">UPVC Electrical Conduit System to EN 50086</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_electroduct.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_electroduct.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>UPVC Electrical Conduit System to EN 50086.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_electroduct.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_electroduct.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-        </div>
+        </article>
 
-        <!-- Section: Specialised & Industrial -->
-        <div class="section-header" style="margin-top: 2rem; max-width: 100%; border-bottom: 1px solid var(--line); padding-bottom: 1rem;">
-          <h2>Specialised &amp; Industrial</h2>
-        </div>
-        <div class="grid grid-3" style="margin-bottom: 3rem;">
-          <div class="card lit-card" data-name="t-flex gas pe 80 pe 100" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        <!-- SPECIALISED & INDUSTRIAL -->
+        <article class="card lit-card" data-category="special">
+          <div class="lit-card-media"><img src="assets/images/products/tflex-gas.webp" alt="T-Flex Gas"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Specialised</div>
             <h3>T-Flex Gas</h3>
-            <p style="margin-bottom: 1.5rem;">PE 80 &amp; PE 100 Gas Piping System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_tflex-gas.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_tflex-gas.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>PE 80 &amp; PE 100 Gas Piping System.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_tflex-gas.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_tflex-gas.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="t-flex compressed air pe 100 industrial" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="special">
+          <div class="lit-card-media"><img src="assets/images/products/tflex-compressed-air.webp" alt="T-Flex Compressed Air"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Specialised</div>
             <h3>T-Flex Compressed Air</h3>
-            <p style="margin-bottom: 1.5rem;">PE 100 Compressed Air Piping System</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_tflex-compressed-air.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_tflex-compressed-air.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>PE 100 Compressed Air Piping System.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_tflex-compressed-air.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_tflex-compressed-air.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="upvc tubewell casing screen pipes water wells" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        </article>
+
+        <article class="card lit-card" data-category="special">
+          <div class="lit-card-media"><img src="assets/images/products/upvc-tubewell.webp" alt="UPVC Tubewell"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Specialised</div>
             <h3>UPVC Tubewell Pipes</h3>
-            <p style="margin-bottom: 1.5rem;">Casing &amp; Screen Pipes for Water Wells</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_upvc-tubewell.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_upvc-tubewell.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>Casing &amp; Screen Pipes for Water Wells.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_upvc-tubewell.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_upvc-tubewell.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-        </div>
+        </article>
 
-        <!-- Section: Roofing -->
-        <div class="section-header" style="margin-top: 2rem; max-width: 100%; border-bottom: 1px solid var(--line); padding-bottom: 1rem;">
-          <h2>Roofing</h2>
-        </div>
-        <div class="grid grid-3" style="margin-bottom: 3rem;">
-          <div class="card lit-card" data-name="corrugated sheets roofing wall cladding" data-types="brochure flyer">
-            <div class="kicker">Product Literature</div>
+        <!-- ROOFING -->
+        <article class="card lit-card" data-category="roofing">
+          <div class="lit-card-media"><img src="assets/images/products/corrugated-sheets.webp" alt="Corrugated Sheets"></div>
+          <div class="lit-card-body">
+            <div class="kicker">Roofing</div>
             <h3>Corrugated Sheets</h3>
-            <p style="margin-bottom: 1.5rem;">Roofing &amp; Wall Cladding Sheets</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" data-type="brochure" href="assets/brochures/brochure_corrugated-sheets.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Brochure</a>
-              <a class="btn btn--outline" data-type="flyer" href="assets/flyers/flyer_corrugated-sheets.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Flyer</a>
+            <p>Roofing &amp; Wall Cladding Sheets.</p>
+            <div class="lit-actions">
+              <a href="assets/brochures/brochure_corrugated-sheets.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-file-pdf"></i> Brochure</a>
+              <a href="assets/flyers/flyer_corrugated-sheets.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-file-pdf"></i> Flyer</a>
             </div>
           </div>
-        </div>
+        </article>
 
-        <!-- Section: Corporate -->
-        <div class="section-header" style="margin-top: 2rem; max-width: 100%; border-bottom: 1px solid var(--line); padding-bottom: 1rem;">
-          <h2>Corporate Publications</h2>
-        </div>
-        <div class="grid grid-3" style="margin-bottom: 3rem;">
-          <div class="card lit-card" data-name="product booklet dadex range" data-types="corporate">
-            <div class="kicker">Corporate Publication</div>
+        <!-- CORPORATE -->
+        <article class="card lit-card" data-category="corporate">
+          <div class="lit-card-media" style="background: #17191c; color: #fff;">
+             <i class="fas fa-book" style="font-size: 3rem; color: var(--brand-red);"></i>
+          </div>
+          <div class="lit-card-body">
+            <div class="kicker">Corporate</div>
             <h3>Product Booklet</h3>
-            <p style="margin-bottom: 1.5rem;">Complete overview of the Dadex product range</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" href="assets/corporate/product-booklet.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Download</a>
+            <p>Complete overview of the entire Dadex product range.</p>
+            <div class="lit-actions">
+              <a href="assets/corporate/product-booklet.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-download"></i> Download</a>
             </div>
           </div>
-          <div class="card lit-card" data-name="corporate profile company background" data-types="corporate">
-            <div class="kicker">Corporate Publication</div>
+        </article>
+
+        <article class="card lit-card" data-category="corporate">
+          <div class="lit-card-media" style="background: #17191c; color: #fff;">
+             <i class="fas fa-building" style="font-size: 3rem; color: var(--brand-red);"></i>
+          </div>
+          <div class="lit-card-body">
+            <div class="kicker">Corporate</div>
             <h3>Corporate Profile</h3>
-            <p style="margin-bottom: 1.5rem;">Company background, manufacturing capability and partnerships</p>
-            <div class="flex" style="margin-top: auto;">
-              <a class="btn btn--outline" href="assets/corporate/corporate-profile.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Download</a>
+            <p>Company background, manufacturing capability and partnerships.</p>
+            <div class="lit-actions">
+              <a href="assets/corporate/corporate-profile.pdf" target="_blank" class="btn btn--primary"><i class="fas fa-download"></i> Download</a>
             </div>
           </div>
-        </div>
+        </article>
 
       </div>
-      
+
       <!-- Empty State -->
-      <div id="resourceEmpty" hidden style="text-align: center; padding: 4rem 2rem;">
-        <i class="fas fa-file-circle-question" style="font-size: 3rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
-        <h3>No documents match your search</h3>
-        <p>Try a different keyword, or clear the filters.</p>
-        <button class="btn btn--outline" id="resourceEmptyReset">Clear filters</button>
+      <div class="lit-empty" id="litEmpty" hidden>
+        <i class="fas fa-folder-open" style="font-size: 3rem; color: var(--line); margin-bottom: 1rem;"></i>
+        <h3>No documents found</h3>
+        <p>Try selecting a different category.</p>
+        <button class="btn btn--outline" id="litReset">View All Documents</button>
       </div>
 
     </div>
@@ -286,5 +357,49 @@
 
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
+
+<!-- Filter Logic -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.lit-filter-btn');
+    const cards = document.querySelectorAll('.lit-card');
+    const emptyState = document.getElementById('litEmpty');
+    const resetBtn = document.getElementById('litReset');
+
+    function filterCards(category) {
+      let visibleCount = 0;
+      
+      // Update buttons
+      filterBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === category);
+      });
+
+      // Filter cards
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Show empty state if needed
+      if (visibleCount === 0) {
+        emptyState.hidden = false;
+      } else {
+        emptyState.hidden = true;
+      }
+    }
+
+    // Add click events to buttons
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => filterCards(btn.dataset.filter));
+    });
+
+    // Reset button
+    resetBtn.addEventListener('click', () => filterCards('all'));
+  });
+</script>
 </body>
 </html>
