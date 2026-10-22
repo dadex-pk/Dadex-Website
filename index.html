@@ -9,6 +9,24 @@
 <meta content="index, follow" name="robots"/>
 <link href="https://www.dadex.com/" rel="canonical"/>
 
+<!-- Open Graph -->
+<meta content="website" property="og:type"/>
+<meta content="Dadex Eternit Limited | Piping &amp; Roofing" property="og:title"/>
+<meta content="Dadex Eternit Limited develops piping, drainage, sewerage, electrical, gas and roofing systems, supported by technical services and product resources." property="og:description"/>
+<meta content="https://www.dadex.com/" property="og:url"/>
+<meta content="Dadex Eternit Limited" property="og:site_name"/>
+<meta content="en_PK" property="og:locale"/>
+<meta content="https://www.dadex.com/assets/images/dadex-hero.webp" property="og:image"/>
+<meta content="Dadex thermoplastic piping systems" property="og:image:alt"/>
+<meta content="1600" property="og:image:width"/>
+<meta content="900" property="og:image:height"/>
+
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Dadex Eternit Limited | Piping &amp; Roofing" name="twitter:title"/>
+<meta content="Dadex Eternit Limited develops piping, drainage, sewerage, electrical, gas and roofing systems, supported by technical services and product resources." name="twitter:description"/>
+<meta content="https://www.dadex.com/assets/images/dadex-hero.webp" name="twitter:image"/>
+
 <!-- Preconnect -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -69,38 +87,82 @@
 <main id="main-content">
 
 <!-- ==================================================
-     HERO SECTION
+     1. HERO SECTION
      ================================================== -->
 <section class="home-hero">
   <div class="container home-hero__inner">
+    
     <div class="home-hero__content">
       <div class="kicker">Dadex Eternit Limited</div>
       <h1>Building Trust with <em>Innovative</em> Piping Solutions.</h1>
       <p>From humble beginnings in 1959 to industry leadership, Dadex delivers quality thermoplastic and roofing systems across Pakistan and beyond.</p>
+      
       <div class="home-hero__actions">
         <a class="btn btn--primary" href="projects.html">Plan a Project <i class="fas fa-arrow-right"></i></a>
         <a class="btn btn--outline" href="services.html" style="border-color: rgba(255,255,255,0.3); color: #fff;">Our Services <i class="fas fa-arrow-right"></i></a>
       </div>
-      
-      <!-- Hero Stats -->
-      <div class="home-hero__meta">
-        <div><strong>1959</strong><span>Established</span></div>
-        <div><strong data-company-age>67+</strong><span>Years of excellence</span></div>
-        <div><strong>ISO</strong><span>Quality systems</span></div>
+
+      <!-- Trust Bar / Stats -->
+      <div class="home-hero__stats">
+        <div class="stat-item">
+          <strong>1959</strong>
+          <span>Established</span>
+        </div>
+        <div class="stat-item">
+          <strong data-company-age>67</strong>
+          <span>Years of Excellence</span>
+        </div>
+        <div class="stat-item">
+          <strong>ISO</strong>
+          <span>Quality Systems</span>
+        </div>
       </div>
     </div>
+
     <div class="home-hero__visual">
-      <img alt="Dadex thermoplastic piping systems" src="assets/images/dadex-hero.webp"/>
+      <div class="hero-collage">
+        <img alt="Pipes" src="assets/images/products/aquadex.webp">
+        <img alt="Fittings" src="assets/images/products/nikasi.webp">
+        <img alt="Ducting" src="assets/images/products/cable-duct.webp">
+        <img alt="Industrial" src="assets/images/products/tflex-gas.webp">
+      </div>
       <div class="home-hero__badge">
         <strong>1959</strong>
         <span>Established</span>
       </div>
     </div>
+
   </div>
 </section>
 
 <!-- ==================================================
-     PRODUCTS (Text-Only Grid)
+     2. TRUST INDICATORS (Floating Cards)
+     ================================================== -->
+<section class="section" style="padding-top: 0; margin-top: -3rem; position: relative; z-index: 10;">
+  <div class="container">
+    <div class="grid grid-3">
+      
+      <div class="card trust-card">
+        <i class="fas fa-star trust-icon" aria-hidden="true"></i>
+        <h3>Most Trusted</h3>
+      </div>
+
+      <div class="card trust-card">
+        <i class="fas fa-award trust-icon" aria-hidden="true"></i>
+        <h3>Superior Quality</h3>
+      </div>
+
+      <div class="card trust-card">
+        <i class="fas fa-thumbs-up trust-icon" aria-hidden="true"></i>
+        <h3>Customer Services</h3>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================
+     3. PRODUCTS (Text-Only Grid)
      ================================================== -->
 <section class="section section--light">
   <div class="container">
@@ -179,7 +241,7 @@
 </section>
 
 <!-- ==================================================
-     INTRO
+     4. INTRO
      ================================================== -->
 <section class="section bg-white">
   <div class="container grid grid-2" style="align-items: center; gap: 4rem;">
@@ -196,7 +258,7 @@
 </section>
 
 <!-- ==================================================
-     VALUES (All 5 Cards with Numbers)
+     5. VALUES
      ================================================== -->
 <section class="section section--dark">
   <div class="container">
@@ -242,7 +304,7 @@
 </section>
 
 <!-- ==================================================
-     SERVICES (All 5 Cards Restored)
+     6. SERVICES
      ================================================== -->
 <section class="section">
   <div class="container">
@@ -290,7 +352,7 @@
 </section>
 
 <!-- ==================================================
-     KNOWLEDGE / ACTION CARDS
+     7. KNOWLEDGE / ACTION CARDS
      ================================================== -->
 <section class="section section--light">
   <div class="container grid grid-2" style="align-items: center;">
@@ -324,7 +386,7 @@
 </section>
 
 <!-- ==================================================
-     QUALITY & COMPLIANCE
+     8. QUALITY & COMPLIANCE
      ================================================== -->
 <section class="section bg-white">
   <div class="container grid grid-2" style="align-items: center; gap: 4rem;">
@@ -360,7 +422,7 @@
 </section>
 
 <!-- ==================================================
-     FINAL CTA
+     9. FINAL CTA
      ================================================== -->
 <section class="section section--dark" style="border-top: 1px solid #333;">
   <div class="container flex-between" style="flex-wrap: wrap; gap: 3rem;">
