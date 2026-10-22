@@ -388,3 +388,83 @@ h2 span { color: var(--brand-red); }
     height: 160px;
   }
 }
+/* ============================================================
+   MOBILE RESPONSIVENESS FIXES (Tablet & Phone)
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  /* --- 1. Fix Hero Section Stacking --- */
+  .home-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .home-hero__content h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+  
+  .home-hero__actions {
+    justify-content: center;
+  }
+  
+  /* Move the image collage below the text */
+  .home-hero__visual {
+    order: 2;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .home-hero__badge {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -1rem;
+  }
+
+  /* --- 2. Fix Trust Dashboard Stats Bar --- */
+  .trust-stats {
+    flex-direction: column; /* Stack the numbers vertically */
+    gap: 1.5rem;
+    padding: 2rem 1rem;
+  }
+  
+  .stat-item {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .stat-divider {
+    display: none; /* Hide the vertical lines */
+  }
+
+  /* --- 3. Fix 5-Column Grids (Values & Services) --- */
+  .grid-5 {
+    grid-template-columns: repeat(2, 1fr); /* Force 2 columns instead of 1 */
+    gap: 1rem;
+  }
+  
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr); /* Force 2 columns for Products */
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  /* On very small phones, stack the 2-column grids into 1 column */
+  .grid-5, 
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  .home-hero__stats {
+    padding: 1.5rem;
+  }
+}
+
+/* ============================================================
+   FIX INVISIBLE PRODUCT NUMBERS
+   ============================================================ */
+.home-product-number {
+  color: var(--muted-light); /* Change from white/bg-mist to a visible grey */
+  opacity: 0.3; /* Make it subtle but visible */
+}
