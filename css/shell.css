@@ -125,7 +125,7 @@ body.nav-open { overflow: hidden; }
 .site-header .site-navigation > a,
 .site-header .site-navigation .dropdown-toggle {
   padding: 14px 12px; font-size: 13px; font-weight: 650;
-  background: transparent; display: flex; align-items: center; gap: 5px;
+  background: white; display: flex; align-items: center; gap: 5px;
   white-space: nowrap; position: relative; border-radius: var(--radius-sm);
   border: 0; color: var(--text); text-decoration: none; cursor: pointer;
   transition: color var(--transition), background var(--transition);
