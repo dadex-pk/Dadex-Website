@@ -119,3 +119,99 @@ h2 span { color: var(--brand-red); }
     padding: 0.75rem 1rem;
   }
 }
+/* ============================================================
+   TEXT-ONLY PRODUCT FEATURE CARDS (Homepage)
+   ============================================================ */
+.card--text-feature {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  text-decoration: none;
+  transition: all var(--transition);
+  overflow: hidden;
+}
+
+/* Hover Effect: Lift and turn bottom border red */
+.card--text-feature::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--brand-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+
+.card--text-feature:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(229, 0, 0, 0.2);
+}
+
+.card--text-feature:hover::after {
+  transform: scaleX(1);
+}
+
+/* Top row holding the Number and Icon */
+.card-feature-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.home-product-number {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--bg-mist); /* Very light grey number */
+  letter-spacing: -0.04em;
+  transition: color var(--transition);
+}
+
+.card--text-feature:hover .home-product-number {
+  color: var(--brand-red); /* Turns red on hover */
+}
+
+.home-product-icon {
+  font-size: 1.5rem;
+  color: var(--line); /* Subtle icon color */
+  transition: color var(--transition), transform var(--transition);
+}
+
+.card--text-feature:hover .home-product-icon {
+  color: var(--brand-red);
+  transform: scale(1.1);
+}
+
+/* Typography inside the card */
+.card--text-feature .kicker {
+  font-size: 0.6875rem;
+  margin-bottom: 0.5rem;
+  color: var(--brand-red);
+}
+
+.card--text-feature h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+  transition: color var(--transition);
+}
+
+.card--text-feature:hover h3 {
+  color: var(--brand-red);
+}
+
+.card--text-feature p {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 0;
+}
