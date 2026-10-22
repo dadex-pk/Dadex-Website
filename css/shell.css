@@ -47,7 +47,6 @@ body.nav-open { overflow: hidden; }
   isolation: isolate;
   contain: layout style;
 }
-
 .site-header.is-scrolled {
   box-shadow: var(--shadow-md);
   background: rgba(255, 255, 255, 0.88);
@@ -152,10 +151,12 @@ body.nav-open { overflow: hidden; }
 .site-header .site-navigation .dropdown-toggle:hover {
   color: var(--brand-red); background: rgba(229,0,0,0.04);
 }
+
+/* FIX: Arrow Sizing and Alignment */
 .site-header .site-navigation .dropdown-toggle .arrow {
-  width: 14px; height: 14px; color: var(--muted-light);
   display: inline-flex; align-items: center; justify-content: center;
-  transition: transform var(--transition), color var(--transition);
+  width: 1rem; height: 1rem; font-size: 0.75rem; line-height: 1;
+  color: var(--muted-light); transition: transform var(--transition), color var(--transition);
 }
 .site-header .dropdown:hover > .dropdown-toggle .arrow,
 .site-header .dropdown.open > .dropdown-toggle .arrow,
@@ -181,7 +182,11 @@ body.nav-open { overflow: hidden; }
 /* ============================================================
    HEADER — Products Tier & Dropdowns
    ============================================================ */
-.site-header .header-products-tier { display: block; background: #F6F6F4; border-bottom: 1px solid var(--line); }
+.site-header .header-products-tier { 
+  display: block; 
+  background: var(--bg-mist); /* FIX: Swapped from hardcoded hex */
+  border-bottom: 1px solid var(--line); 
+}
 .site-header .header-products-row { display: flex; min-height: 30px; align-items: center; justify-content: center; gap: 16px; }
 .site-header .header-products-row .dropdown-toggle,
 .site-header .header-products-row .tier2-link {
@@ -194,6 +199,12 @@ body.nav-open { overflow: hidden; }
 .site-header .header-products-row .dropdown-toggle:hover { color: var(--brand-red); }
 .site-header .header-products-row .tier2-services { font-size: 10px; color: var(--muted); }
 .site-header .header-products-row .tier2-services span { color: var(--brand-red); font-size: 13px; }
+
+/* FIX: Products Tier Arrow Sizing */
+.site-header .header-products-row .dropdown-toggle .arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 0.75rem; height: 0.75rem; font-size: 0.65rem; line-height: 1;
+}
 
 /* Dropdown Menus */
 .site-header .dropdown { position: relative; }
@@ -355,7 +366,7 @@ body.nav-open { overflow: hidden; }
 }
 .dexpert-dialog[open] { animation: dexpertIn var(--transition); }
 @keyframes dexpertIn { from { opacity: 0; transform: translateY(0.875rem) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
-.dexpert-dialog::backdrop { background: rgba(10,12,14,0.2); animation: dexpertBackdropIn var(--transition); }
+.dexpert-dialog::backdrop { background: rgba(10, 12, 14, 0.4); animation: dexpertBackdropIn var(--transition); }
 @keyframes dexpertBackdropIn { from { opacity: 0; } to { opacity: 1; } }
 
 .dexpert-head { display: flex; align-items: center; justify-content: space-between; padding: 1.125rem 1.25rem; background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-dark) 100%); color: var(--white); position: relative; overflow: hidden; }
@@ -373,7 +384,9 @@ body.nav-open { overflow: hidden; }
 .dexpert-body p { margin: 0.25rem 0 0.75rem; color: var(--muted); line-height: 1.55; font-size: 0.8125rem; }
 .dexpert-actions { display: grid; gap: 0.45rem; margin-top: 1rem; }
 .dexpert-actions a { display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--white); color: var(--text); text-decoration: none; font-size: 0.8125rem; font-weight: 650; transition: all var(--transition); }
+.dexpert-actions a i { transition: transform var(--transition); }
 .dexpert-actions a:hover { border-color: var(--brand-red); background: #fffafa; color: var(--brand-red); transform: translateX(3px); }
+.dexpert-actions a:hover i { transform: translateX(4px); }
 
 .dexpert-ask { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
 .dexpert-ask label { display: block; font-size: 0.59375rem; letter-spacing: 0.13em; font-weight: 800; color: var(--text); margin-bottom: 0.4rem; text-transform: uppercase; }
@@ -382,6 +395,11 @@ body.nav-open { overflow: hidden; }
 .dexpert-ask input { border: 0; background: transparent; padding: 0.75rem 0.875rem; font-size: 0.8125rem; color: var(--text); outline: none; }
 .dexpert-ask button { border: 0; background: var(--brand-red); color: var(--white); padding: 0 1rem; cursor: pointer; transition: background var(--transition); }
 .dexpert-ask button:hover { background: var(--brand-red-dark); }
+
+.dexpert-result-link { display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: var(--bg-mist); border-radius: var(--radius-sm); color: var(--brand-red); text-decoration: none; font-weight: 700; margin-top: 1rem; transition: background var(--transition); }
+.dexpert-result-link i { transition: transform var(--transition); }
+.dexpert-result-link:hover { background: #fff1f1; }
+.dexpert-result-link:hover i { transform: translateX(4px); }
 
 @media(max-width: 768px) {
   .dexpert-fab { right: 1rem; bottom: 1rem; height: 3rem; padding: 0 1rem 0 0.375rem; }
@@ -407,7 +425,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; p
 @media(max-width: 768px) { .back-to-top { right: 1rem; bottom: 5rem; width: 2.75rem; height: 2.75rem; } }
 
 /* ============================================================
-   FOOTER (Optimized for 6-Column Layout)
+   FOOTER
    ============================================================ */
 .site-footer {
   background: var(--bg-dark);
@@ -425,7 +443,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; p
 }
 .site-footer .container { position: relative; z-index: 1; }
 
-/* Grid Layout - Fixed for 6 Columns */
+/* Grid Layout - 6 Columns */
 .site-footer .footer-grid {
   display: grid;
   grid-template-columns: 2fr repeat(5, 1fr);
@@ -450,7 +468,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; p
 .site-footer .footer-brand .brand-logo:hover { opacity: 1; }
 .site-footer .footer-brand p { color: var(--muted-light); font-size: 0.875rem; line-height: 1.6; margin: 0; max-width: 30rem; }
 
-/* Headings (Targeting H2 as per footer.html) */
+/* Headings */
 .site-footer h2, 
 .site-footer h3 {
   color: var(--white); font-size: 0.8125rem; font-weight: 800;
@@ -477,13 +495,16 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; p
   display: grid; place-items: center; width: 2.5rem; height: 2.5rem;
   background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
   border-radius: 50%; color: var(--muted-light); margin: 0; transform: none;
+  transition: all var(--transition);
 }
+.site-footer .social-links a i { font-size: 1rem; transition: transform var(--transition); }
 .site-footer .social-links a:hover { 
   background: var(--brand-red); 
   border-color: var(--brand-red); 
   color: var(--white); 
   transform: translateY(-2px); 
 }
+.site-footer .social-links a:hover i { transform: scale(1.1); }
 
 /* Bottom Bar */
 .site-footer .footer-bottom {
