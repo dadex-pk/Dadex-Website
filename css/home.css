@@ -144,7 +144,52 @@ h2 span { color: var(--brand-red); }
 }
 
 /* ============================================================
-   2. TEXT-ONLY PRODUCT FEATURE CARDS
+   2. TRUST INDICATORS (Floating Cards)
+   ============================================================ */
+.trust-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+
+.trust-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(229, 0, 0, 0.2);
+}
+
+.trust-icon {
+  font-size: 3.5rem;
+  color: var(--brand-red);
+  margin-bottom: 1.5rem;
+  transition: transform var(--transition);
+}
+
+.trust-card:hover .trust-icon {
+  transform: scale(1.1) rotate(-3deg);
+}
+
+.trust-card h3 {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* ============================================================
+   3. TEXT-ONLY PRODUCT FEATURE CARDS
    ============================================================ */
 .card--text-feature {
   position: relative;
@@ -159,7 +204,6 @@ h2 span { color: var(--brand-red); }
   overflow: hidden;
 }
 
-/* Hover Effect: Lift and turn bottom border red */
 .card--text-feature::after {
   content: '';
   position: absolute;
@@ -183,7 +227,6 @@ h2 span { color: var(--brand-red); }
   transform: scaleX(1);
 }
 
-/* Top row holding the Icon and Number */
 .card-feature-top {
   display: flex;
   justify-content: space-between;
@@ -191,7 +234,6 @@ h2 span { color: var(--brand-red); }
   margin-bottom: 2rem;
 }
 
-/* Icon Styling (Top Left) */
 .home-product-icon {
   display: grid;
   place-items: center;
@@ -210,22 +252,20 @@ h2 span { color: var(--brand-red); }
   transform: scale(1.05);
 }
 
-/* Number Styling (Top Right) */
 .home-product-number {
   font-family: 'Manrope', 'Inter', sans-serif;
   font-size: 2.5rem;
   font-weight: 800;
   line-height: 1;
-  color: var(--bg-mist); /* Very light grey number */
+  color: var(--bg-mist);
   letter-spacing: -0.04em;
   transition: color var(--transition);
 }
 
 .card--text-feature:hover .home-product-number {
-  color: var(--brand-red); /* Turns red on hover */
+  color: var(--brand-red);
 }
 
-/* Typography inside the card */
 .card--text-feature .kicker {
   font-size: 0.6875rem;
   margin-bottom: 0.5rem;
@@ -243,7 +283,6 @@ h2 span { color: var(--brand-red); }
   color: var(--brand-red);
 }
 
-/* The Product Names List */
 .card--text-feature .product-list {
   font-size: 0.8125rem;
   color: var(--muted);
@@ -254,7 +293,7 @@ h2 span { color: var(--brand-red); }
 }
 
 /* ============================================================
-   3. RESPONSIVE DESIGN
+   4. RESPONSIVE DESIGN
    ============================================================ */
 @media (max-width: 1024px) {
   .home-hero__inner {
@@ -263,7 +302,7 @@ h2 span { color: var(--brand-red); }
   }
   
   .home-hero__visual {
-    order: -1; /* Puts image above text on mobile */
+    order: -1; 
     max-width: 600px;
     margin: 0 auto;
   }
