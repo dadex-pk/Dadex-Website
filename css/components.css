@@ -105,3 +105,76 @@
 .hero h1 { color: #fff; max-width: 20ch; margin-bottom: 1.5rem; }
 .hero p { color: #b3b3b8; font-size: 1.125rem; max-width: 60ch; }
 .hero .kicker { color: var(--brand-accent-dark); }
+
+/* ============================================================
+   PAGE HERO (Master Inner-Page Hero)
+   ============================================================ */
+.page-hero {
+  background: var(--bg-dark);
+  color: #fff;
+  padding: clamp(4rem, 8vw, 6rem) 0;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  text-align: center;
+}
+
+/* Decorative background rings */
+.page-hero::before {
+  content: "";
+  position: absolute;
+  width: 45rem;
+  height: 45rem;
+  border: 6rem solid rgba(229, 0, 0, 0.04);
+  border-radius: 50%;
+  right: -15rem;
+  top: -20rem;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Decorative grid pattern */
+.page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 3rem 3rem;
+  mask-image: linear-gradient(90deg, #000, transparent 80%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.page-hero .container {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.page-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  letter-spacing: -0.03em;
+}
+
+.page-hero h1 span {
+  color: var(--brand-accent-dark);
+}
+
+.page-hero p {
+  font-size: 1.125rem;
+  color: #b3b3b8;
+  line-height: 1.7;
+  margin: 0 auto;
+  max-width: 60ch;
+}
+
+/* Centered kicker inside the page hero */
+.page-hero .kicker {
+  justify-content: center;
+  color: var(--brand-accent-dark);
+}
