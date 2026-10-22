@@ -9,7 +9,9 @@
 h2 span { color: var(--brand-red); }
 .section--dark h2 span { color: var(--brand-accent-dark); }
 
-/* --- Split Hero Section --- */
+/* ============================================================
+   1. HERO SECTION
+   ============================================================ */
 .home-hero {
   background: var(--bg-dark);
   color: #fff;
@@ -30,7 +32,9 @@ h2 span { color: var(--brand-red); }
   line-height: 1.05;
   margin-bottom: 1.5rem;
   color: #fff;
+  letter-spacing: -0.03em;
 }
+
 .home-hero__content h1 em {
   font-style: normal;
   color: var(--brand-accent-dark);
@@ -41,41 +45,86 @@ h2 span { color: var(--brand-red); }
   color: #b3b3b8;
   max-width: 48ch;
   margin-bottom: 2.5rem;
+  line-height: 1.7;
 }
 
 .home-hero__actions {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  margin-bottom: 3.5rem;
 }
 
-/* --- Hero Visual (Right Side) --- */
+/* --- Trust Bar / Stats --- */
+.home-hero__stats {
+  display: flex;
+  gap: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 2rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-item strong {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.stat-item span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-accent-dark);
+  font-weight: 700;
+}
+
+/* --- Hero Visual (Collage) --- */
 .home-hero__visual {
   position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  width: 100%;
 }
 
-.home-hero__visual img {
+.hero-collage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.hero-collage img {
   width: 100%;
-  height: auto;
-  aspect-ratio: 4/3;
+  height: 240px;
   object-fit: cover;
+  display: block;
+  transition: transform var(--transition);
+}
+
+.hero-collage img:hover {
+  transform: scale(1.05);
 }
 
 .home-hero__badge {
   position: absolute;
   bottom: 2rem;
-  left: 2rem;
+  left: -1.5rem;
   background: rgba(23, 25, 28, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.75rem;
   border-radius: var(--radius-md);
   border: 1px solid rgba(255,255,255,0.1);
   display: flex;
   flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .home-hero__badge strong {
@@ -91,36 +140,11 @@ h2 span { color: var(--brand-red); }
   letter-spacing: 0.1em;
   color: var(--brand-accent-dark);
   margin-top: 0.25rem;
+  font-weight: 700;
 }
 
-/* --- Utility for 5-column Grid (Values Section) --- */
-@media (min-width: 1024px) {
-  .grid-5 {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
-  }
-}
-
-/* --- Mobile Responsiveness --- */
-@media (max-width: 900px) {
-  .home-hero__inner {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-  
-  .home-hero__visual {
-    order: -1; /* Puts image above text on mobile */
-  }
-  
-  .home-hero__badge {
-    bottom: 1rem;
-    left: 1rem;
-    padding: 0.75rem 1rem;
-  }
-}
 /* ============================================================
-   TEXT-ONLY PRODUCT FEATURE CARDS (Homepage)
+   2. TEXT-ONLY PRODUCT FEATURE CARDS
    ============================================================ */
 .card--text-feature {
   position: relative;
@@ -227,4 +251,36 @@ h2 span { color: var(--brand-red); }
   line-height: 1.6;
   text-transform: uppercase;
   letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   3. RESPONSIVE DESIGN
+   ============================================================ */
+@media (max-width: 1024px) {
+  .home-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .home-hero__visual {
+    order: -1; /* Puts image above text on mobile */
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .home-hero__badge {
+    left: 1rem;
+    bottom: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-hero__stats {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .hero-collage img {
+    height: 160px;
+  }
 }
