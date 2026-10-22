@@ -754,7 +754,6 @@ function initDEXPERT(){
     <img src="assets/images/Dexpert.png" alt="" aria-hidden="true">
     <span>
       <strong>Ask DEXPERT</strong>
-      <small>Your building solutions guide</small>
     </span>
   `;
   document.body.appendChild(fab);
