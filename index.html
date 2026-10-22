@@ -87,7 +87,7 @@
 <main id="main-content">
 
 <!-- ==================================================
-     1. HERO SECTION
+     HERO SECTION
      ================================================== -->
 <section class="home-hero">
   <div class="container home-hero__inner">
@@ -101,22 +101,6 @@
         <a class="btn btn--primary" href="projects.html">Plan a Project <i class="fas fa-arrow-right"></i></a>
         <a class="btn btn--outline" href="services.html" style="border-color: rgba(255,255,255,0.3); color: #fff;">Our Services <i class="fas fa-arrow-right"></i></a>
       </div>
-
-      <!-- Trust Bar / Stats -->
-      <div class="home-hero__stats">
-        <div class="stat-item">
-          <strong>1959</strong>
-          <span>Established</span>
-        </div>
-        <div class="stat-item">
-          <strong data-company-age>67</strong>
-          <span>Years of Excellence</span>
-        </div>
-        <div class="stat-item">
-          <strong>ISO</strong>
-          <span>Quality Systems</span>
-        </div>
-      </div>
     </div>
 
     <div class="home-hero__visual">
@@ -126,21 +110,35 @@
         <img alt="Ducting" src="assets/images/products/cable-duct.webp">
         <img alt="Industrial" src="assets/images/products/tflex-gas.webp">
       </div>
-      <div class="home-hero__badge">
-        <strong>1959</strong>
-        <span>Established</span>
-      </div>
     </div>
 
   </div>
 </section>
 
 <!-- ==================================================
-     2. TRUST INDICATORS (Floating Cards)
+     COMBINED TRUST SECTION (Stats + Cards)
      ================================================== -->
-<section class="section" style="padding-top: 0; margin-top: -3rem; position: relative; z-index: 10;">
+<section class="trust-section">
   <div class="container">
-    <div class="grid grid-3">
+    
+    <!-- The Stats (Pulled up to overlap the hero slightly) -->
+    <div class="home-hero__stats">
+      <div class="stat-item">
+        <strong>1959</strong>
+        <span>Established</span>
+      </div>
+      <div class="stat-item">
+        <strong data-company-age>67</strong>
+        <span>Years of Excellence</span>
+      </div>
+      <div class="stat-item">
+        <strong>ISO</strong>
+        <span>Quality Systems</span>
+      </div>
+    </div>
+
+    <!-- The Cards (Placed below the stats) -->
+    <div class="grid grid-3 trust-cards-grid">
       
       <div class="card trust-card">
         <i class="fas fa-star trust-icon" aria-hidden="true"></i>
@@ -161,8 +159,25 @@
   </div>
 </section>
 
+  <!-- ==================================================
+     3. INTRO
+     ================================================== -->
+<section class="section bg-white">
+  <div class="container grid grid-2" style="align-items: center; gap: 4rem;">
+    <div>
+      <div class="kicker">The Dadex Difference</div>
+      <h2 style="font-size: clamp(2rem, 4vw, 3.5rem);">A legacy<br> <span>built on trust.</span></h2>
+      <div style="width: 4rem; height: 3px; background: var(--brand-red); margin-top: 1.5rem;"></div>
+    </div>
+    <div>
+      <p style="font-size: 1.125rem; line-height: 1.8; color: var(--muted); margin-bottom: 2rem;">Dadex Eternit Limited is a leading manufacturer of thermoplastic piping systems and roofing systems. Established as a public limited company in 1959, Dadex has developed a broad range of systems serving water supply, soil waste and vent, sewerage and drainage, electrical and cable, gas and other applications.</p>
+      <a class="btn btn--outline" href="about.html">Discover Dadex <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+  
 <!-- ==================================================
-     3. PRODUCTS (Text-Only Grid)
+     4. PRODUCTS (Text-Only Grid)
      ================================================== -->
 <section class="section section--light">
   <div class="container">
@@ -236,23 +251,6 @@
         <p class="product-list">Corrugated Roofing &amp; Cladding</p>
       </a>
 
-    </div>
-  </div>
-</section>
-
-<!-- ==================================================
-     4. INTRO
-     ================================================== -->
-<section class="section bg-white">
-  <div class="container grid grid-2" style="align-items: center; gap: 4rem;">
-    <div>
-      <div class="kicker">The Dadex Difference</div>
-      <h2 style="font-size: clamp(2rem, 4vw, 3.5rem);">A legacy<br> <span>built on trust.</span></h2>
-      <div style="width: 4rem; height: 3px; background: var(--brand-red); margin-top: 1.5rem;"></div>
-    </div>
-    <div>
-      <p style="font-size: 1.125rem; line-height: 1.8; color: var(--muted); margin-bottom: 2rem;">Dadex Eternit Limited is a leading manufacturer of thermoplastic piping systems and roofing systems. Established as a public limited company in 1959, Dadex has developed a broad range of systems serving water supply, soil waste and vent, sewerage and drainage, electrical and cable, gas and other applications.</p>
-      <a class="btn btn--outline" href="about.html">Discover Dadex <i class="fas fa-arrow-right"></i></a>
     </div>
   </div>
 </section>
