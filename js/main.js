@@ -1,53 +1,26 @@
 /* ============================================================
-   DADEX ETERNIT LIMITED — SHARED UI  (v3)
+   DADEX ETERNIT LIMITED — SHARED UI  (v5)
    ------------------------------------------------------------
-   Modules
-     · Header and footer injection (from components/)
-     · Header scroll state (collapse on scroll)
-     · Navigation (mobile drawer, dropdowns, active state,
-       keyboard focus trap)
-     · Dynamic text (footer year, company age)
-     · Project filter (projects.html)
-     · Mailto contact form (contact.html)
-     · Literature filter (literature.html)
-     · Investor panel switcher (investors.html)
-     · Site search (search.html)
-     · DEXPERT floating assistant
-     · Back to top
-
-   Page-scoped modules (dealers) live in js/dealers.js.
-   MOBILE_NAV_MAX must match the breakpoint used in shell.css
-   for .site-header .menu-toggle / .site-navigation — 900px.
-
-   Folder assumptions (confirmed with you):
-     /components/header.html
-     /components/footer.html
-     /components/dexpert.html
-     /css/design-system.css
-     /js/main.js
-
-   v3 changes
-     · Component fetch path is components/ — CORRECT for this repo
-     · file:// protocol detected → visible banner explains why
-     · 404 / network error → visible banner + detailed console log
-     · Server-side 404 pages (full HTML, status 200) rejected so a
-       404 document never gets injected as the header
-     · setActiveNavigation() normalises /index.html -> /
-     · Mobile drawer focus trap (Tab cycles within drawer)
-     · Mobile drawer scroll-lock via body.nav-open (CSS side)
-     · Site search filters removed pages + truncates previews
-     · DEXPERT dialogPromise resets on load failure
+   v5 changes
+     · Bootstrap wrapped in try/catch — a failure in one init
+       never blocks the rest (DEXPERT, back-to-top, filters)
+     · initSiteSearch waits for window.DADEX_SEARCH_INDEX via
+       'dadex:search-index-ready' event with a window.load
+       fallback — no more "empty search" when the index script
+       loads after main.js
+     · inert assignment feature-guarded — silently skipped on
+       browsers without support (CSS visibility:hidden already
+       removes collapsed tiers from the tab order)
+     · All init functions have explicit guard clauses
    ============================================================ */
 
-const MOBILE_NAV_MAX = 900;
+const MOBILE_NAV_MAX = 1024;
 const COMPANY_FOUNDED_YEAR = 1959;
 const COMPANY_ANNIVERSARY_MONTH = 3;
 const COMPANY_ANNIVERSARY_DAY = 13;
 const SCROLL_TOP_THRESHOLD = 600;
 const HEADER_COLLAPSE_THRESHOLD = 70;
 
-/* URLs removed from the site that may still be in search-index.js.
-   Filtered defensively so search never links to a dead page. */
 const REMOVED_SEARCH_URLS = new Set([
   'careers.html',
   'faq.html',
@@ -55,6 +28,10 @@ const REMOVED_SEARCH_URLS = new Set([
   'technical-resources.html',
   'solutions.html'
 ]);
+
+/* True only when the browser implements the inert property. */
+const INERT_SUPPORTED = typeof HTMLElement !== 'undefined'
+  && 'inert' in HTMLElement.prototype;
 
 /* ------------------------------------------------------------
    Utilities
@@ -74,35 +51,42 @@ const scheduleIdle = (typeof requestIdleCallback === 'function')
 
 /* ------------------------------------------------------------
    Bootstrap
+   Each initializer runs independently. A throw in one does not
+   prevent the next from running.
    ------------------------------------------------------------ */
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await loadSharedComponents();
+  try {
+    await loadSharedComponents();
+  } catch (err) {
+    console.error('[Dadex] Component injection failed:', err);
+  }
 
   const header = document.getElementById('siteHeader')
               || document.querySelector('.site-header');
 
-  initDynamicSiteText();
-  initHeaderState(header);
-  initNavigation(header);
-  setActiveNavigation();
+  const run = (label, fn) => {
+    try { fn(); }
+    catch (err) { console.error(`[Dadex] init ${label} failed:`, err); }
+  };
 
-  initProjectFilter();
-  initMailtoForm();
-  initLiteratureFilter();
-  initInvestorPanels();
-  initSiteSearch();
+  run('dynamic-text', initDynamicSiteText);
+  run('header-state', () => initHeaderState(header));
+  run('navigation', () => initNavigation(header));
+  run('active-nav', setActiveNavigation);
 
-  initDEXPERT();
-  initBackToTop();
+  run('project-filter', initProjectFilter);
+  run('mailto-form', initMailtoForm);
+  run('literature-filter', initLiteratureFilter);
+  run('investor-panels', initInvestorPanels);
+  run('site-search', initSiteSearch);
+
+  run('dexpert', initDEXPERT);
+  run('back-to-top', initBackToTop);
 });
 
 /* ------------------------------------------------------------
    Shared header / footer injection
-   ------------------------------------------------------------
-   Files live in /components/. Loads run in parallel; one failure
-   does not block the other. Every failure produces a visible
-   banner so a blank header can never be silent.
    ------------------------------------------------------------ */
 
 async function loadSharedComponents(){
@@ -113,7 +97,6 @@ async function loadSharedComponents(){
     });
   if (!mounts.length) return;
 
-  // file:// — every modern browser blocks fetch() from disk
   if (location.protocol === 'file:') {
     mounts.forEach(mount => renderComponentError(mount, {
       name: mount.getAttribute('data-component'),
@@ -144,9 +127,6 @@ async function loadOneComponent(mount, base){
     }
     const html = await response.text();
 
-    // A component file is a fragment, never a full document.
-    // If the server returns a 404 or SPA-fallback page with status 200,
-    // we must NOT inject it — that would replace the header with a page.
     if (/^\s*<!DOCTYPE\s+html/i.test(html)) {
       throw new Error(
         'Server returned a full HTML document, not a component fragment. ' +
@@ -188,7 +168,7 @@ function renderComponentError(mount, { name, url, reason }){
 }
 
 /* ------------------------------------------------------------
-   Dynamic text — current year and company age
+   Dynamic text — current year, company age
    ------------------------------------------------------------ */
 
 function initDynamicSiteText(){
@@ -235,10 +215,15 @@ function initHeaderState(header){
     header.classList.toggle('is-scrolled', scrolled);
     document.body.classList.toggle('header-scrolled', scrolled);
 
-    const utilityBar = header.querySelector('.utility-bar');
-    const productsTier = header.querySelector('.header-products-tier');
-    if (utilityBar) utilityBar.inert = scrolled;
-    if (productsTier) productsTier.inert = scrolled;
+    /* Collapsed tiers are already hidden by CSS visibility:hidden;
+       inert is an optional enhancement that removes them from AT
+       and blocks pointer events. Skipped on browsers without it. */
+    if (INERT_SUPPORTED) {
+      const utilityBar = header.querySelector('.utility-bar');
+      const productsTier = header.querySelector('.header-products-tier');
+      if (utilityBar) utilityBar.inert = scrolled;
+      if (productsTier) productsTier.inert = scrolled;
+    }
 
     ticking = false;
   };
@@ -257,40 +242,44 @@ function initHeaderState(header){
    ------------------------------------------------------------ */
 
 function initNavigation(header){
+  if (!header) return;
+
   const nav = document.getElementById('site-navigation');
   const hamburger = document.querySelector('.menu-toggle');
-  if (!header || !nav) return;
+  if (!nav) return;
 
   const isMobile = () => window.innerWidth <= MOBILE_NAV_MAX;
 
-  const closeMenus = ({ restoreFocus = false } = {}) => {
-    document.querySelectorAll('.dropdown-menu.open')
-      .forEach(menu => menu.classList.remove('open'));
+  const closeAllDropdowns = () => {
     document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]')
       .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+  };
+
+  const closeDrawer = ({ restoreFocus = false } = {}) => {
+    closeAllDropdowns();
     nav.classList.remove('open');
+    document.body.classList.remove('nav-open');
     if (hamburger) {
       hamburger.setAttribute('aria-expanded', 'false');
       hamburger.setAttribute('aria-label', 'Open navigation');
     }
-    document.body.classList.remove('nav-open');
     if (restoreFocus && hamburger) hamburger.focus();
   };
 
   const anyMenuOpen = () =>
     nav.classList.contains('open') ||
-    !!document.querySelector('.dropdown-menu.open');
+    !!document.querySelector('.dropdown-toggle[aria-expanded="true"]');
 
   if (hamburger) {
     hamburger.addEventListener('click', () => {
       const open = !nav.classList.contains('open');
       if (open) {
         nav.classList.add('open');
+        document.body.classList.add('nav-open');
         hamburger.setAttribute('aria-expanded', 'true');
         hamburger.setAttribute('aria-label', 'Close navigation');
-        document.body.classList.add('nav-open');
       } else {
-        closeMenus();
+        closeDrawer();
       }
     });
   }
@@ -301,51 +290,44 @@ function initNavigation(header){
     if (!menu) return;
 
     toggle.addEventListener('click', event => {
-      if (isMobile()) {
-        event.preventDefault();
-        event.stopPropagation();
-        const open = menu.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(open));
-      }
-    });
-
-    toggle.addEventListener('focusin', () => {
-      if (!isMobile()) toggle.setAttribute('aria-expanded', 'true');
-    });
-    toggle.addEventListener('focusout', () => {
-      if (isMobile()) return;
-      setTimeout(() => {
-        if (!menu.contains(document.activeElement)) {
-          toggle.setAttribute('aria-expanded', 'false');
-        }
-      }, 0);
+      if (!isMobile()) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      closeAllDropdowns();
+      toggle.setAttribute('aria-expanded', String(!isOpen));
     });
 
     toggle.addEventListener('keydown', event => {
       if (event.key === 'Escape') {
-        menu.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
         toggle.focus();
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        toggle.setAttribute('aria-expanded', 'true');
+        const first = menu.querySelector('a, button');
+        if (first) first.focus();
       }
     });
   });
 
-  document.querySelectorAll('.site-navigation a').forEach(link => {
+  nav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       if (link.classList.contains('dropdown-toggle') && isMobile()) return;
-      closeMenus();
+      if (isMobile()) closeDrawer({ restoreFocus: false });
+      closeAllDropdowns();
     });
   });
 
   document.addEventListener('click', event => {
     if (header.contains(event.target)) return;
-    closeMenus();
+    closeDrawer();
   });
 
   document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;
     if (!anyMenuOpen()) return;
-    closeMenus({ restoreFocus: true });
+    closeDrawer({ restoreFocus: true });
   });
 
   window.addEventListener('resize', debounce(() => {
@@ -356,13 +338,9 @@ function initNavigation(header){
       hamburger.setAttribute('aria-expanded', 'false');
       hamburger.setAttribute('aria-label', 'Open navigation');
     }
-    document.querySelectorAll('.dropdown-menu.open')
-      .forEach(menu => menu.classList.remove('open'));
-    document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]')
-      .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+    closeAllDropdowns();
   }, 150), { passive: true });
 
-  /* Focus trap — Tab must stay inside the open mobile drawer */
   const FOCUSABLE_SELECTOR =
     'a[href]:not([disabled]), button:not([disabled]), ' +
     'input:not([disabled]), select:not([disabled]), ' +
@@ -370,7 +348,7 @@ function initNavigation(header){
 
   const getDrawerFocusables = () =>
     Array.from(nav.querySelectorAll(FOCUSABLE_SELECTOR))
-      .filter(el => el.offsetParent !== null && !el.hasAttribute('inert'));
+      .filter(el => !el.hasAttribute('inert'));
 
   nav.addEventListener('keydown', event => {
     if (event.key !== 'Tab') return;
@@ -390,9 +368,7 @@ function initNavigation(header){
 }
 
 /* ------------------------------------------------------------
-   Active navigation (path-based)
-   /index.html and /index.htm are normalised to / so the Home
-   link highlights correctly on directory-served URLs.
+   Active navigation
    ------------------------------------------------------------ */
 
 function setActiveNavigation(){
@@ -445,7 +421,7 @@ function setActiveNavigation(){
 }
 
 /* ------------------------------------------------------------
-   Project filter (projects.html)
+   Project filter
    ------------------------------------------------------------ */
 
 function initProjectFilter(){
@@ -470,7 +446,7 @@ function initProjectFilter(){
 }
 
 /* ------------------------------------------------------------
-   Mailto contact form (contact.html)
+   Mailto contact form
    ------------------------------------------------------------ */
 
 function initMailtoForm(){
@@ -492,7 +468,7 @@ function initMailtoForm(){
 }
 
 /* ------------------------------------------------------------
-   Literature filter (literature.html)
+   Literature filter
    ------------------------------------------------------------ */
 
 function initLiteratureFilter(){
@@ -573,7 +549,7 @@ function initLiteratureFilter(){
 }
 
 /* ------------------------------------------------------------
-   Investor panel switcher (investors.html)
+   Investor panel switcher
    ------------------------------------------------------------ */
 
 function initInvestorPanels(){
@@ -582,7 +558,7 @@ function initInvestorPanels(){
   if (!links.length || !panels.length) return;
 
   const groups = [...document.querySelectorAll('.ir-side-group')];
-  const isMobile = () => window.matchMedia('(max-width:900px)').matches;
+  const isMobile = () => window.matchMedia(`(max-width:${MOBILE_NAV_MAX}px)`).matches;
 
   const openGroupFor = id => {
     if (!isMobile()) return;
@@ -628,15 +604,18 @@ function initInvestorPanels(){
 }
 
 /* ------------------------------------------------------------
-   Site search (search.html)
-   Filters stale index URLs + truncates long previews.
+   Site search
+   Waits for window.DADEX_SEARCH_INDEX if the index script has
+   not yet executed. Listens for 'dadex:search-index-ready' and
+   falls back to window.load.
    ------------------------------------------------------------ */
 
 function initSiteSearch(){
   const input = document.getElementById('siteSearchInput');
   if (!input) return;
 
-  const button   = document.getElementById('siteSearchButton');
+  const button   = document.getElementById('searchButton')
+                || document.getElementById('siteSearchButton');
   const clear    = document.getElementById('searchClear');
   const grid     = document.getElementById('searchResults');
   const empty    = document.getElementById('searchEmpty');
@@ -645,66 +624,79 @@ function initSiteSearch(){
 
   if (!grid || !template) return;
 
-  const rawPages = Array.isArray(window.DADEX_SEARCH_INDEX)
-    ? window.DADEX_SEARCH_INDEX
-    : [];
+  let bound = false;
 
-  const pages = rawPages.filter(p => {
-    if (!p || !p[1]) return false;
-    const url = String(p[1]).replace(/^\/+/, '');
-    return !REMOVED_SEARCH_URLS.has(url);
-  });
+  const bind = () => {
+    if (bound) return;
+    if (!Array.isArray(window.DADEX_SEARCH_INDEX)) return;
+    bound = true;
 
-  const truncatePreview = (text, max = 160) => {
-    const clean = String(text || '').replace(/\s+/g, ' ').trim();
-    if (clean.length <= max) return clean;
-    const cut = clean.slice(0, max);
-    const lastSpace = cut.lastIndexOf(' ');
-    return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut) + '…';
+    const normaliseSearchUrl = raw =>
+      String(raw || '').replace(/^(?:https?:\/\/[^/]+)?\/+/, '');
+
+    const pages = window.DADEX_SEARCH_INDEX.filter(p => {
+      if (!p || !p[1]) return false;
+      return !REMOVED_SEARCH_URLS.has(normaliseSearchUrl(p[1]));
+    });
+
+    const truncatePreview = (text, max = 160) => {
+      const clean = String(text || '').replace(/\s+/g, ' ').trim();
+      if (clean.length <= max) return clean;
+      const cut = clean.slice(0, max);
+      const lastSpace = cut.lastIndexOf(' ');
+      return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut) + '…';
+    };
+
+    const render = () => {
+      const q = input.value.trim().toLowerCase();
+      if (!q) {
+        grid.replaceChildren();
+        empty.hidden = true;
+        count.textContent = 'Start searching';
+        return;
+      }
+      const terms = q.split(/\s+/).filter(Boolean);
+      const rows = pages
+        .filter(p => terms.every(t => p.join(' ').toLowerCase().includes(t)))
+        .slice(0, 60);
+
+      count.textContent = `${rows.length} result${rows.length === 1 ? '' : 's'} found`;
+
+      const frag = document.createDocumentFragment();
+      for (const p of rows) {
+        const card = template.content.firstElementChild.cloneNode(true);
+        card.querySelector('.result-type').textContent = p[2];
+        card.querySelector('h3').textContent = p[0];
+        card.querySelector('p').textContent = truncatePreview(p[3]);
+        card.querySelector('a').href = p[1];
+        frag.appendChild(card);
+      }
+      grid.replaceChildren(frag);
+      empty.hidden = rows.length !== 0;
+    };
+
+    if (button) button.addEventListener('click', render);
+    input.addEventListener('input', render);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
+    if (clear) clear.addEventListener('click', () => {
+      input.value = '';
+      render();
+      input.focus();
+      if (location.search) {
+        try { history.replaceState(null, '', location.pathname); } catch (_) {}
+      }
+    });
+
+    const q = new URLSearchParams(location.search).get('q');
+    if (q) { input.value = q; render(); }
   };
 
-  const render = () => {
-    const q = input.value.trim().toLowerCase();
-    if (!q) {
-      grid.replaceChildren();
-      empty.hidden = true;
-      count.textContent = 'Start searching';
-      return;
-    }
-    const terms = q.split(/\s+/).filter(Boolean);
-    const rows = pages
-      .filter(p => terms.every(t => p.join(' ').toLowerCase().includes(t)))
-      .slice(0, 60);
-
-    count.textContent = `${rows.length} result${rows.length === 1 ? '' : 's'} found`;
-
-    const frag = document.createDocumentFragment();
-    for (const p of rows) {
-      const card = template.content.firstElementChild.cloneNode(true);
-      card.querySelector('.result-type').textContent = p[2];
-      card.querySelector('h3').textContent = p[0];
-      card.querySelector('p').textContent = truncatePreview(p[3]);
-      card.querySelector('a').href = p[1];
-      frag.appendChild(card);
-    }
-    grid.replaceChildren(frag);
-    empty.hidden = rows.length !== 0;
-  };
-
-  if (button) button.addEventListener('click', render);
-  input.addEventListener('input', render);
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
-  if (clear) clear.addEventListener('click', () => {
-    input.value = '';
-    render();
-    input.focus();
-    if (location.search) {
-      try { history.replaceState(null, '', location.pathname); } catch (_) {}
-    }
-  });
-
-  const q = new URLSearchParams(location.search).get('q');
-  if (q) { input.value = q; render(); }
+  if (Array.isArray(window.DADEX_SEARCH_INDEX)) {
+    bind();
+  } else {
+    window.addEventListener('dadex:search-index-ready', bind, { once: true });
+    window.addEventListener('load', bind, { once: true });
+  }
 }
 
 /* ------------------------------------------------------------
@@ -804,13 +796,13 @@ function initDEXPERT(){
       return dialog;
     })();
 
-    // Reset cache on failure so the next click retries.
     dialogPromise.catch(() => { dialogPromise = null; });
 
     return dialogPromise;
   }
 
   function buildActions(container, actions){
+    if (!container) return;
     const frag = document.createDocumentFragment();
     for (const [href, label] of actions) {
       const a = document.createElement('a');
@@ -823,6 +815,7 @@ function initDEXPERT(){
 
   function renderHome(dialog, homeTpl){
     const body = dialog.querySelector('#dexpertBody');
+    if (!body) return;
     const node = homeTpl.content.firstElementChild.cloneNode(true);
 
     let actions;
@@ -863,6 +856,7 @@ function initDEXPERT(){
 
   function renderAnswer(dialog, homeTpl, resultTpl, query){
     const body = dialog.querySelector('#dexpertBody');
+    if (!body) return;
     const q = query.toLowerCase();
     let label, heading, message, href, cta;
 
