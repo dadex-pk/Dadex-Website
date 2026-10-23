@@ -496,3 +496,83 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
 @media print {
   .site-header, .site-footer, .dexpert-fab, .dexpert-dialog, .back-to-top { display: none !important; }
 }
+
+/* ============================================================
+   FOOTER LINK POLISH
+   ============================================================ */
+
+/* Target all standard links in the footer columns */
+.site-footer .footer-col > a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--muted-light);
+  font-size: 0.875rem;
+  text-decoration: none;
+  margin-bottom: 0.875rem;
+  transition: color var(--transition), padding-left var(--transition);
+}
+
+/* The subtle indicator before each link */
+.site-footer .footer-col > a::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(-10px);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--line); /* Subtle grey by default */
+  opacity: 0;
+  transition: all var(--transition);
+}
+
+/* Hover Effect: Text turns white, moves right, indicator appears */
+.site-footer .footer-col > a:hover {
+  color: #ffffff;
+  padding-left: 14px; /* Pushes text right */
+}
+
+.site-footer .footer-col > a:hover::before {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+  color: var(--brand-red); /* Turns brand red */
+}
+
+/* ============================================================
+   FIXING TEXT WRAPPING (From the screenshot)
+   ============================================================ */
+/* If the column is too narrow, "All Products & Systems" wraps. 
+   We can slightly reduce the font size or gap. */
+.site-footer .footer-grid {
+  /* ... keep existing ... */
+  grid-template-columns: 2fr 1.1fr 1.1fr 1.3fr 1.5fr; /* Slightly wider link columns */
+}
+
+/* Prevent wrapping on specific long links if necessary */
+.site-footer .footer-col a {
+  white-space: normal; /* Allow wrapping if necessary, but the grid change above helps */
+}
+
+/* ============================================================
+   POLISHING THE HEADING ICONS (Optional)
+   ============================================================ */
+/* Ensures all red icons are exactly the same size and alignment */
+.site-footer .footer-col h3 i {
+  width: 1.25rem; 
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+/* ============================================================
+   POLISHING SOCIAL ICONS
+   ============================================================ */
+.site-footer .social-links a {
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Slightly brighter border */
+  background-color: rgba(255, 255, 255, 0.03);
+}
+.site-footer .social-links a:hover {
+  background-color: var(--brand-red);
+  border-color: var(--brand-red);
+  transform: translateY(-2px);
+}
