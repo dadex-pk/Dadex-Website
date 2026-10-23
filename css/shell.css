@@ -643,7 +643,355 @@ body.nav-open { overflow: hidden; }
   .dexpert-fab img { width: 36px; height: 36px; }
   .back-to-top { width: 44px; height: 44px; }
 }
+/* ============================================================
+   DEXPERT — floating assistant dialog
+   Requires: root.css (tokens), shell.css (FAB base styles)
+   ============================================================ */
 
+/* ---------- Dialog shell ---------- */
+.dexpert-dialog {
+  width: min(520px, calc(100vw - 32px));
+  max-height: min(80vh, 720px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  font-family: inherit;
+
+  /* Entrance animation — progressive enhancement via @starting-style */
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    overlay 0.2s allow-discrete,
+    display 0.2s allow-discrete;
+}
+.dexpert-dialog[open] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  display: flex;
+  flex-direction: column;
+}
+.dexpert-dialog::backdrop {
+  background: rgba(15, 18, 21, 0.45);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.dexpert-dialog[open]::backdrop { opacity: 1; }
+
+/* ---------- Head ---------- */
+.dexpert-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.dexpert-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-dark) 100%);
+  overflow: hidden;
+}
+.dexpert-icon img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  background: #fff;
+}
+
+.dexpert-brand {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.dexpert-brand strong {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+.dexpert-brand span {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+.dexpert-close {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: var(--bg-mist);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color var(--transition), color var(--transition);
+}
+.dexpert-close:hover {
+  background: var(--brand-red);
+  border-color: var(--brand-red);
+  color: #fff;
+}
+
+/* ---------- Body ---------- */
+.dexpert-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#dexpertBody {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 20px;
+}
+
+/* ---------- Home panel ---------- */
+.dexpert-home {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dexpert-welcome {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 3px 8px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--brand-red);
+  background: rgba(229, 0, 0, 0.08);
+  border-radius: var(--radius-pill);
+}
+.dexpert-home h4 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--text);
+}
+.dexpert-intro {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+/* ---------- Home actions ---------- */
+.dexpert-actions { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.dexpert-actions a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--bg-mist);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+.dexpert-actions a i {
+  color: var(--muted-light);
+  transition: color var(--transition), transform var(--transition);
+}
+.dexpert-actions a:hover {
+  background: #fff;
+  border-color: var(--line);
+  color: var(--brand-red);
+  transform: translateX(2px);
+}
+.dexpert-actions a:hover i {
+  color: var(--brand-red);
+  transform: translateX(2px);
+}
+
+/* ---------- Result panel ---------- */
+.dexpert-result {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dexpert-back {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  padding: 6px 10px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.dexpert-back:hover {
+  border-color: var(--muted-light);
+  color: var(--text);
+}
+
+.dexpert-result-label {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--brand-red);
+  background: rgba(229, 0, 0, 0.08);
+  border-radius: var(--radius-pill);
+}
+
+.dexpert-result h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.dexpert-result p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.dexpert-result-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  align-self: flex-start;
+  margin-top: 4px;
+  min-height: 40px;
+  padding: 0 16px;
+  background: var(--brand-red);
+  border: 1px solid var(--brand-red);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color var(--transition);
+}
+.dexpert-result-link:hover { background: var(--brand-red-dark); border-color: var(--brand-red-dark); }
+
+/* ---------- Ask form ---------- */
+.dexpert-ask {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 20px 16px;
+  border-top: 1px solid var(--line-soft);
+  background: var(--bg-mist);
+}
+.dexpert-ask label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.dexpert-ask-row {
+  display: flex;
+  gap: 8px;
+}
+.dexpert-ask input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 42px;
+  padding: 0 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.dexpert-ask input::placeholder { color: var(--muted-light); }
+.dexpert-ask input:focus {
+  outline: 0;
+  border-color: var(--brand-red);
+  box-shadow: 0 0 0 3px rgba(229, 0, 0, 0.15);
+}
+.dexpert-ask button[type="submit"] {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  background: var(--brand-red);
+  border: 1px solid var(--brand-red);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color var(--transition);
+}
+.dexpert-ask button[type="submit"]:hover { background: var(--brand-red-dark); }
+.dexpert-ask small {
+  font-size: 11px;
+  color: var(--muted-light);
+  line-height: 1.45;
+}
+
+/* ---------- Mobile — full-screen sheet ---------- */
+@media (max-width: 560px) {
+  .dexpert-dialog {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+    border: 0;
+  }
+  .dexpert-dialog::backdrop { background: transparent; }
+  .dexpert-head {
+    padding: max(16px, env(safe-area-inset-top)) 16px 14px;
+  }
+  #dexpertBody { padding: 16px; }
+  .dexpert-ask {
+    padding: 12px 12px max(14px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .dexpert-dialog,
+  .dexpert-dialog::backdrop {
+    transition-duration: 0.01ms !important;
+  }
+}
 /* ============================================================
    FOOTER
    ============================================================ */
