@@ -338,7 +338,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
 .site-footer {
   background-color: #17191c;
   color: #ffffff;
-  padding: 3rem 0 1.5rem;
+  padding: 4rem 0 2rem;
   position: relative;
   overflow: hidden;
   border-top: 3px solid var(--brand-red);
@@ -350,7 +350,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
   display: grid;
   grid-template-columns: 2.2fr 1.1fr 1fr 1.3fr 1.4fr;
   gap: 3rem;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
   border-bottom: 1px solid rgba(255,255,255,0.08);
   align-items: start;
 }
@@ -360,7 +360,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
 .site-footer .footer-brand .brand-logo { filter: brightness(0) invert(1); opacity: 0.9; width: 8rem; margin-bottom: 0.5rem; }
 .site-footer .footer-est {
   display: block; font-size: 0.75rem; text-transform: uppercase;
-  letter-spacing: 0.1em; color: var(--brand-accent-dark);
+  letter-spacing: 0.1em; color: var(--brand-red);
   font-weight: 700; margin-bottom: 1.25rem;
 }
 .site-footer .footer-brand p { 
@@ -372,9 +372,9 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
 .site-footer .footer-col h3 {
   color: #ffffff; font-size: 0.8125rem; font-weight: 800;
   text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem;
-  display: flex; align-items: center; gap: 0.75rem;
+  display: flex; align-items: center; gap: 0.75rem; 
 }
-.site-footer .footer-col h3 i { color: var(--brand-accent-dark); font-size: 0.92rem; width: 1.25rem; text-align: center; }
+.site-footer .footer-col h3 i { color: var(--brand-red); font-size: 0.92rem; width: 1.25rem; text-align: center; }
 
 /* --- Standard Links (Chevron & Hover Animation) --- */
 .site-footer .footer-col > a {
@@ -382,12 +382,13 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
   display: flex;
   align-items: center;
   color: #B3B3B3;
-  font-size: 0.92rem;
+  font-size: 0.875rem;
   text-decoration: none;
   margin-bottom: 0.875rem;
   transition: color 0.25s ease, padding-left 0.25s ease;
 }
 
+/* Hidden Chevron */
 .site-footer .footer-col > a::before {
   content: "›";
   position: absolute;
@@ -396,17 +397,19 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
   transform: translateY(-50%) translateX(-8px);
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--brand-accent-dark);
+  color: var(--brand-red);
+  opacity: 0; /* FIX: Hidden by default */
   transition: all 0.25s ease;
 }
 
+/* Hover State */
 .site-footer .footer-col > a:hover {
   color: #ffffff;
-  padding-left: 12px;
+  padding-left: 12px; /* Slides text right */
 }
 
 .site-footer .footer-col > a:hover::before {
-  color: var(--brand-red);
+  opacity: 1; /* FIX: Appears on hover */
   transform: translateY(-50%) translateX(0);
 }
 
@@ -416,7 +419,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
   margin-bottom: 0.875rem; color: #B3B3B3; font-size: 0.875rem; line-height: 1.5;
 }
 .footer-contact-item i {
-  color: var(--brand-accent-dark); font-size: 0.92rem;
+  color: var(--brand-red); font-size: 0.92rem;
   margin-top: 0.25rem; width: 1.25rem; text-align: center;
 }
 .footer-contact-item a { color: #B3B3B3; text-decoration: none; transition: color 0.2s ease; }
@@ -455,7 +458,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
 .site-footer .social-links a {
   display: grid; place-items: center; width: 2.25rem; height: 2.25rem;
   background-color: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 50%; transition: all 0.25s ease; color: var(--brand-accent-dark);
+  border-radius: 50%; color: #B3B3B3; transition: all 0.25s ease;
 }
 .site-footer .social-links a:hover { 
   background-color: var(--brand-red); border-color: var(--brand-red); color: #ffffff; transform: translateY(-2px);
@@ -467,17 +470,48 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
   flex-wrap: wrap; gap: 1.5rem; padding-top: 2rem; font-size: 0.8125rem; color: #8f969d;
 }
 .site-footer .footer-legal { display: flex; gap: 1.5rem; }
+
+/* FIX: Legal Links Hover */
 .site-footer .footer-legal a { 
+  position: relative;
   margin: 0; 
-  font-size: 0.875rem; 
+  font-size: 0.8125rem; 
   color: #8f969d; 
   text-decoration: none; 
-  transition: color 0.2s ease; 
+  transition: color 0.2s ease, padding-left 0.2s ease; 
 }
+
+.site-footer .footer-legal a::before {
+  content: "›"; 
+  position: absolute; 
+  left: 0; 
+  top: 50%; 
+  transform: translateY(-50%) translateX(-8px); 
+  font-size: 1rem;
+  font-weight: 700; 
+  color: var(--brand-red); 
+  opacity: 0;
+  transition: all 0.2s ease; 
+}
+
 .site-footer .footer-legal a:hover { 
   color: #ffffff; 
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  padding-left: 10px; 
+}
+
+.site-footer .footer-legal a:hover::before {
+  opacity: 1; 
+  transform: translateY(-50%) translateX(0); 
+}
+
+/* ============================================================
+   FLOATING WIDGET CLEARANCE
+   ============================================================ */
+.dexpert-fab {
+  bottom: 2.5rem !important; 
+}
+.back-to-top {
+  bottom: 6.5rem !important; 
 }
 
 /* ============================================================
@@ -490,7 +524,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
 @media (max-width: 768px) {
   .site-footer .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem 1.5rem; }
   .site-footer .footer-brand { grid-column: 1 / -1; }
-  .footer-col-contact { grid-column: 1 / -1; } 
+  .footer-contact-col { grid-column: 1 / -1; } 
   .site-footer .footer-bottom { flex-direction: column; align-items: flex-start; gap: 1rem; }
   .site-footer .footer-legal { flex-direction: column; gap: 0.5rem; }
 }
