@@ -338,7 +338,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
 .site-footer {
   background-color: #17191c;
   color: #ffffff;
-  padding: 4rem 0 2rem;
+  padding: 3rem 0 1rem;
   position: relative;
   overflow: hidden;
   border-top: 3px solid var(--brand-red);
@@ -350,9 +350,9 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
   display: grid;
   grid-template-columns: 2.2fr 1.1fr 1fr 1.3fr 1.4fr;
   gap: 3rem;
-  padding-bottom: 3rem;
+  padding-bottom: 2rem;
   border-bottom: 1px solid rgba(255,255,255,0.08);
-  align-items: start; /* Ensures top alignment */
+  align-items: start;
 }
 
 /* --- Brand Column --- */
@@ -364,7 +364,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
   font-weight: 700; margin-bottom: 1.25rem;
 }
 .site-footer .footer-brand p { 
-  color: #B3B3B3; /* Improved contrast */
+  color: #B3B3B3;
   font-size: 0.875rem; line-height: 1.7; margin: 0 0 1.5rem 0; max-width: 32rem; 
 }
 
@@ -374,15 +374,15 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
   text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem;
   display: flex; align-items: center; gap: 0.75rem; /* Added breathing room */
 }
-.site-footer .footer-col h3 i { color: var(--brand-red); font-size: 0.875rem; width: 1.25rem; text-align: center; }
+.site-footer .footer-col h3 i { color: var(--brand-accent-dark); font-size: 0.92rem; width: 1.25rem; text-align: center; }
 
 /* --- Standard Links (Chevron & Hover Animation) --- */
 .site-footer .footer-col > a {
   position: relative;
   display: flex;
   align-items: center;
-  color: #B3B3B3; /* Improved contrast */
-  font-size: 0.875rem;
+  color: #B3B3B3;
+  font-size: 0.92rem;
   text-decoration: none;
   margin-bottom: 0.875rem;
   transition: color 0.25s ease, padding-left 0.25s ease;
@@ -396,14 +396,13 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
   transform: translateY(-50%) translateX(-8px);
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--brand-red);
-  opacity: 0;
+  color: var(--brand-accent-dark);
   transition: all 0.25s ease;
 }
 
 .site-footer .footer-col > a:hover {
   color: #ffffff;
-  padding-left: 12px; /* Slide text right */
+  padding-left: 12px;
 }
 
 .site-footer .footer-col > a:hover::before {
