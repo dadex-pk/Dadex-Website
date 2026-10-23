@@ -398,7 +398,6 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
   font-weight: 700;
   color: var(--brand-accent-dark);
   transition: all 0.25s ease;
-   margin-right: 12px;
 }
 
 .site-footer .footer-col > a:hover {
@@ -407,7 +406,6 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
 }
 
 .site-footer .footer-col > a:hover::before {
-  opacity: 1;
   color: var(--brand-red);
   transform: translateY(-50%) translateX(0);
   padding-left: 12px;
@@ -458,7 +456,7 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
 .site-footer .social-links a {
   display: grid; place-items: center; width: 2.25rem; height: 2.25rem;
   background-color: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 50%; color: #B3B3B3; transition: all 0.25s ease;
+  border-radius: 50%; color: #B3B3B3; transition: all 0.25s ease; color:var(--brand-accent-dark);
 }
 .site-footer .social-links a:hover { 
   background-color: var(--brand-red); border-color: var(--brand-red); color: #ffffff; transform: translateY(-2px);
@@ -470,8 +468,15 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
   flex-wrap: wrap; gap: 1.5rem; padding-top: 2rem; font-size: 0.8125rem; color: #8f969d;
 }
 .site-footer .footer-legal { display: flex; gap: 1.5rem; }
-.site-footer .footer-legal a { margin: 0; font-size: 0.8125rem; color: #8f969d; text-decoration: none; transition: color 0.2s ease; }
-.site-footer .footer-legal a:hover { color: #ffffff; }
+.site-footer .footer-legal a { margin: 0; font-size: 0.92rem; color: #8f969d; text-decoration: none; transition: color 0.2s ease; }
+.site-footer .footer-legal a:hover { color: #ffffff; padding-left: 12px; }
+
+.site-footer .footer-legal > a::before {
+   content: "›"; position: absolute; left: 0; top: 50%; transform: translateY(-50%) translateX(-8px); font-size: 1.1rem;
+  font-weight: 700; color: var(--brand-accent-dark); transition: all 0.25s ease; }
+
+.site-footer .footer-legal > a:hover::before {
+   color: var(--brand-red); transform: translateY(-50%) translateX(0); padding-left: 12px;}
 
 /* ============================================================
    FLOATING WIDGET CLEARANCE
