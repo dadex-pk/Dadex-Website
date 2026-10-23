@@ -222,6 +222,12 @@ body.nav-open { overflow: hidden; }
    ============================================================ */
 .site-header .menu-toggle { display: none; place-items: center; width: 36px; height: 36px; background-color: var(--bg-mist); border: 1px solid var(--line); border-radius: var(--radius-sm); margin-left: auto; font-size: 19px; color: var(--text); }
 
+.mobile-products-menu {display: none !important;}
+
+@media(max-width: 1024px) {
+    .mobile-products-menu { display: block !important; width: 100%; margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--line); }
+}
+
 @media(max-width: 1024px) {
     .site-header .site-navigation {
         position: fixed; top: 0; left: 0; right: 0; bottom: 0;
