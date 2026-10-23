@@ -757,12 +757,12 @@ body.nav-open .back-to-top {
   font-size: 0.875rem;
   font-weight: 800;
   letter-spacing: 1px;
-  color: var(--text);
+  color: #fff;
 }
 .dexpert-brand span {
   display: block;
   font-size: 0.75rem;
-  color: var(--muted);
+  color: #fff;
   margin-top: 1px;
 }
 
@@ -783,7 +783,7 @@ body.nav-open .back-to-top {
 .dexpert-close:hover {
   background: var(--brand-red);
   border-color: var(--brand-red);
-  color: #fff;
+var(--bg-surface);
 }
 
 .dexpert-body {
