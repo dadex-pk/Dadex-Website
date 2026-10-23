@@ -1,18 +1,43 @@
-<dialog id="dexpertDialog" class="dexpert-dialog" aria-labelledby="expert-title">
+<!-- components/dexpert.html -->
+<dialog
+  id="dexpertDialog"
+  class="dexpert-dialog"
+  aria-labelledby="expert-title"
+  aria-describedby="expert-subtitle">
+
   <div class="dexpert-head">
-    <div class="expert-icon"><img src="assets/images/Dexpert.png" alt="" aria-hidden="true"></div>
-    <div class="dexpert-brand"><strong id="expert-title">DEXPERT</strong><span>Your building solutions guide</span></div>
-    <button class="dexpert-close" aria-label="Close assistant" type="button">×</button>
+    <div class="dexpert-icon">
+      <img src="assets/images/Dexpert.png" alt="" aria-hidden="true">
+    </div>
+    <div class="dexpert-brand">
+      <strong id="expert-title">DEXPERT</strong>
+      <span id="expert-subtitle">Your building solutions guide</span>
+    </div>
+    <button class="dexpert-close" aria-label="Close assistant" type="button">
+      <i class="fas fa-xmark" aria-hidden="true"></i>
+    </button>
   </div>
+
   <div class="dexpert-body">
     <div id="dexpertBody"></div>
-    <form class="dexpert-ask">
+
+    <form class="dexpert-ask" autocomplete="off">
       <label for="expert-input">OR TELL US WHAT YOU’RE BUILDING</label>
-      <div><input id="expert-input" type="text" placeholder="e.g. Plumbing for a new home" required><button type="submit"><i class="fas fa-arrow-right"></i></button></div>
+      <div class="dexpert-ask-row">
+        <input
+          id="expert-input"
+          type="text"
+          placeholder="e.g. Plumbing for a new home"
+          required>
+        <button type="submit" aria-label="Ask DEXPERT">
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
       <small>Product guidance to help you take the next step.</small>
     </form>
   </div>
 </dialog>
+
 <template id="dexpertHomeTemplate">
   <div class="dexpert-home">
     <span class="dexpert-welcome">A STRONGER START TO YOUR PROJECT</span>
@@ -21,10 +46,19 @@
     <div class="dexpert-actions"></div>
   </div>
 </template>
+
 <template id="dexpertResultTemplate">
   <div class="dexpert-result">
-    <button class="dexpert-back" type="button">← Back to all options</button>
-    <span data-label></span><h4 data-heading></h4><p data-message></p>
-    <a href="#" class="dexpert-result-link"><span data-cta></span><i class="fas fa-arrow-right"></i></a>
+    <button class="dexpert-back" type="button">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      Back to all options
+    </button>
+    <span class="dexpert-result-label" data-label></span>
+    <h4 data-heading></h4>
+    <p data-message></p>
+    <a href="#" class="dexpert-result-link">
+      <span data-cta></span>
+      <i class="fas fa-arrow-right" aria-hidden="true"></i>
+    </a>
   </div>
 </template>
