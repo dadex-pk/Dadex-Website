@@ -376,41 +376,36 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
 }
 .site-footer .footer-col h3 i { color: var(--brand-red); font-size: 0.92rem; width: 1.25rem; text-align: center; }
 
-/* --- Standard Links (Chevron & Hover Animation) --- */
+/* --- Standard Links (Always Visible Chevron) --- */
 .site-footer .footer-col > a {
-  position: relative;
   display: flex;
   align-items: center;
+  gap: 0.5rem; /* Space between chevron and text */
   color: #B3B3B3;
   font-size: 0.875rem;
   text-decoration: none;
   margin-bottom: 0.875rem;
-  transition: color 0.25s ease, padding-left 0.25s ease;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
-/* Hidden Chevron */
+/* Always visible Chevron */
 .site-footer .footer-col > a::before {
   content: "›";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%) translateX(-8px);
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--brand-red);
-  opacity: 0; /* FIX: Hidden by default */
-  transition: all 0.25s ease;
+  color: var(--muted-light);
+  line-height: 1;
+  transition: color 0.25s ease;
 }
 
-/* Hover State */
+/* Hover State: Slide right, text white, chevron red */
 .site-footer .footer-col > a:hover {
   color: #ffffff;
-  padding-left: 12px; /* Slides text right */
+  transform: translateX(4px);
 }
 
 .site-footer .footer-col > a:hover::before {
-  opacity: 1; /* FIX: Appears on hover */
-  transform: translateY(-50%) translateX(0);
+  color: var(--brand-red);
 }
 
 /* --- Contact Details --- */
@@ -471,37 +466,34 @@ body:has(.dexpert-dialog[open]) .back-to-top { opacity: 0; visibility: hidden; }
 }
 .site-footer .footer-legal { display: flex; gap: 1.5rem; }
 
-/* FIX: Legal Links Hover */
+/* Legal Links (Always Visible Chevron) */
 .site-footer .footer-legal a { 
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   margin: 0; 
   font-size: 0.8125rem; 
   color: #8f969d; 
   text-decoration: none; 
-  transition: color 0.2s ease, padding-left 0.2s ease; 
+  transition: color 0.2s ease, transform 0.2s ease; 
 }
 
 .site-footer .footer-legal a::before {
   content: "›"; 
-  position: absolute; 
-  left: 0; 
-  top: 50%; 
-  transform: translateY(-50%) translateX(-8px); 
   font-size: 1rem;
   font-weight: 700; 
-  color: var(--brand-red); 
-  opacity: 0;
-  transition: all 0.2s ease; 
+  color: var(--muted-light); 
+  line-height: 1;
+  transition: color 0.2s ease; 
 }
 
 .site-footer .footer-legal a:hover { 
   color: #ffffff; 
-  padding-left: 10px; 
+  transform: translateX(4px);
 }
 
 .site-footer .footer-legal a:hover::before {
-  opacity: 1; 
-  transform: translateY(-50%) translateX(0); 
+  color: var(--brand-red);
 }
 
 /* ============================================================
