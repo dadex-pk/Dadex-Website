@@ -1,27 +1,29 @@
 /* ============================================================
    ROOT — Design Tokens
+   Single source of truth for colors, type, layout, motion.
+   Load this FIRST, before shell.css or any component styles.
    ============================================================ */
 
 :root {
   /* --- Brand Colors --- */
   --brand-red: #e50000;
   --brand-red-dark: #b50000;
-  --brand-accent-dark: #ff6a6a; /* Use on dark backgrounds */
+  --brand-accent-dark: #ff6a6a;
 
   /* --- Text & Ink --- */
   --ink: #17191c;
   --ink-light: #24272a;
   --muted: #687078;
   --muted-light: #8f969d;
-  --text: var(--ink); 
+  --text: var(--ink);
 
-  /* --- Surfaces (Backgrounds) --- */
+  /* --- Surfaces --- */
   --bg-body: #f6f7f8;
   --bg-surface: #ffffff;
   --bg-mist: #f4f5f6;
   --bg-dark: #17191c;
 
-  /* --- Lines & Borders --- */
+  /* --- Lines --- */
   --line: #e4e7ea;
   --line-soft: #eef0f2;
   --line-on-dark: rgba(255, 255, 255, 0.10);
@@ -31,9 +33,9 @@
   --shadow-md: 0 10px 30px rgba(15, 18, 21, 0.08);
   --shadow-lg: 0 24px 48px -12px rgba(15, 18, 21, 0.15);
 
-  /* --- Layout & Spacing --- */
+  /* --- Layout --- */
   --container: 1240px;
-  --section-pad: clamp(3.5rem, 6vw, 6rem); 
+  --section-pad: clamp(3.5rem, 6vw, 6rem);
 
   /* --- Radii --- */
   --radius-sm: 6px;
@@ -41,24 +43,20 @@
   --radius-lg: 16px;
   --radius-pill: 999px;
 
-  /* --- Transitions --- */
+  /* --- Motion --- */
   --ease: cubic-bezier(0.2, 0.65, 0.2, 1);
   --transition: 0.25s var(--ease);
 
-  /* --- Sticky Header Heights) --- */
+  /* --- Header heights --- */
   --header-h: 76px;
   --header-h-scrolled: 64px;
-
-  /* --- Sticky Header Offset  --- */
   --sticky-offset: calc(var(--header-h) + 1rem);
 }
 
-/* Scroll-state height (header.js toggles .header-scrolled on <body>) */
 body.header-scrolled {
   --header-h: var(--header-h-scrolled);
 }
 
-/* Responsive header heights */
 @media (max-width: 1024px) {
   :root {
     --header-h: 68px;
@@ -66,13 +64,12 @@ body.header-scrolled {
   }
 }
 
-/* Anchor scroll offset */
+/* Anchor scroll offset — in-page links clear the sticky header */
 [id],
 :target {
   scroll-margin-top: var(--sticky-offset);
 }
 
-/* Reduced motion — global fallback */
 @media (prefers-reduced-motion: reduce) {
   :root {
     --transition: 0.01ms linear;
