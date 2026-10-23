@@ -24,7 +24,7 @@
 body.nav-open { overflow: hidden; }
 
 /* ============================================================
-   HEADER — Wrapper & Scroll State (Bug 1 Fix)
+   HEADER — Wrapper & Scroll State
    ============================================================ */
 .site-header {
     position: sticky; top: 0; z-index: 1000;
@@ -45,7 +45,7 @@ body.nav-open { overflow: hidden; }
 .site-header .utility-bar, 
 .site-header .header-products-tier {
     overflow: hidden;
-    max-height: 500px; /* High enough to contain content without cutting off */
+    max-height: 500px; 
     opacity: 1;
     visibility: visible;
     transition: max-height 0.4s ease, opacity 0.3s ease, visibility 0.3s;
@@ -66,7 +66,7 @@ body.nav-open { overflow: hidden; }
 .site-header.is-scrolled .header-inner { min-height: 64px; }
 
 /* ============================================================
-   HEADER — Utility & Main Tier (Bug 4 Fix)
+   HEADER — Utility & Main Tier
    ============================================================ */
 .site-header .utility-bar {
     display: block; background-color: #17191c; color: #8f969d; font-size: 11px;
@@ -77,7 +77,7 @@ body.nav-open { overflow: hidden; }
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
-    overflow: hidden; /* Fix 4: Prevents ghost spacing */
+    overflow: hidden; 
 }
 .site-header .utility-left { display: flex; align-items: center; gap: 18px; }
 .site-header .utility-left strong { color: #ffffff; border-right: 1px solid rgba(255,255,255,0.2); padding-right: 18px; }
@@ -161,7 +161,7 @@ body.nav-open { overflow: hidden; }
 .site-header .header-products-row a:hover { color: var(--brand-red); }
 
 /* ============================================================
-   HEADER — Dropdowns & Mega Menu (Bug 3 Fix)
+   HEADER — Dropdowns & Mega Menu
    ============================================================ */
 .site-header .dropdown { position: relative; }
 .site-header .dropdown-wide { position: static; }
@@ -174,7 +174,7 @@ body.nav-open { overflow: hidden; }
     border-radius: 0 0 var(--radius-sm) var(--radius-sm); padding: 12px;
     opacity: 0; visibility: hidden; transform: translateY(10px);
     transition: all var(--transition); z-index: 10;
-    pointer-events: none; /* Fix 3 */
+    pointer-events: none;
 }
 
 .site-header .mega-menu {
@@ -183,7 +183,7 @@ body.nav-open { overflow: hidden; }
     border-top: 2px solid var(--brand-red); box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     opacity: 0; visibility: hidden; transform: translateY(10px);
     transition: all var(--transition); padding: 2.5rem 0; z-index: 10;
-    pointer-events: none; /* Fix 3 */
+    pointer-events: none;
 }
 
 /* Open States: Hover, Focus, and JavaScript Class */
@@ -218,7 +218,7 @@ body.nav-open { overflow: hidden; }
 .site-header .mega-columns a:hover { color: var(--brand-red); transform: translateX(3px); }
 
 /* ============================================================
-   HEADER — Mobile Nav (Bug 2 Fix)
+   HEADER — Mobile Nav
    ============================================================ */
 .site-header .menu-toggle { display: none; place-items: center; width: 36px; height: 36px; background-color: var(--bg-mist); border: 1px solid var(--line); border-radius: var(--radius-sm); margin-left: auto; font-size: 19px; color: var(--text); }
 
@@ -227,7 +227,7 @@ body.nav-open { overflow: hidden; }
         position: fixed; top: 0; left: 0; right: 0; bottom: 0;
         flex-direction: column; align-items: stretch;
         background-color: #ffffff; padding: 80px 28px 20px;
-        z-index: 1010; /* Fix 2: Above Back to Top */
+        z-index: 1010; 
         visibility: hidden; pointer-events: none; opacity: 0; transform: translateX(20px);
         transition: all 0.3s ease-in-out;
         overflow-y: auto;
@@ -242,6 +242,36 @@ body.nav-open { overflow: hidden; }
         margin: 0 12px 10px; padding: 3px 8px; pointer-events: all;
     }
     .site-header .dropdown-menu.open { display: block; }
+
+    /* FIX: Force the mobile menu to full width and proper block layout */
+    .site-header .mobile-products-menu { 
+        display: block; 
+        width: 100%; 
+        margin-top: 10px; 
+        padding-top: 12px; 
+        border-top: 1px solid var(--line); 
+    }
+    .site-header .mobile-products-menu > details { 
+        border: 1px solid var(--line); 
+        border-radius: var(--radius-sm); 
+        background-color: var(--bg-mist); 
+        overflow: hidden; 
+    }
+    .site-header .mobile-products-menu > details > summary { 
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        padding: 14px 16px; 
+        font-size: 13px; 
+        font-weight: 700; 
+        cursor: pointer; 
+        list-style: none; 
+    }
+    .site-header .mobile-products-menu > details > summary::-webkit-details-marker { display: none; }
+    .site-header .mobile-products-menu > details > summary::after { content: "⌄"; font-size: 14px; color: var(--muted); }
+    .site-header .mobile-products-menu > details[open] > summary::after { transform: rotate(180deg); }
+    .site-header .mobile-products-links { display: flex; flex-direction: column; gap: 2px; padding: 8px; }
+    .site-header .mobile-products-links > a { display: block; padding: 10px 12px; font-size: 13px; color: var(--text); text-decoration: none; border-radius: var(--radius-sm); }
 }
 
 /* ============================================================
@@ -268,7 +298,7 @@ body.nav-open { overflow: hidden; }
 .back-to-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
 
 /* ============================================================
-   FOOTER (Enterprise Polish)
+   FOOTER
    ============================================================ */
 .site-footer {
     background-color: #17191c;
