@@ -514,3 +514,287 @@ body.nav-open { overflow: hidden; }
         justify-content: center;
     }
 }
+
+
+/* ============================================================
+   D A D E X — SHELL REFINEMENTS
+   Append after the existing shell CSS.
+   ============================================================ */
+
+/* 1. Consistent header dimensions */
+:root {
+    --header-h: 76px;
+    --header-h-scrolled: 64px;
+}
+
+.site-header .header-inner {
+    box-sizing: border-box;
+    min-height: var(--header-h);
+}
+
+.site-header.is-scrolled .header-inner {
+    min-height: var(--header-h-scrolled);
+}
+
+/* Keep sizing predictable */
+.site-header *,
+.site-footer *,
+.dexpert-fab,
+.back-to-top {
+    box-sizing: border-box;
+}
+
+/* 2. Accessible keyboard focus */
+.site-header a:focus-visible,
+.site-header button:focus-visible,
+.site-footer a:focus-visible,
+.dexpert-fab:focus-visible,
+.back-to-top:focus-visible {
+    outline: 2px solid var(--brand-red);
+    outline-offset: 4px;
+}
+
+.skip-link:focus-visible {
+    transform: translateY(0);
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
+/* 3. Make dropdown transitions more predictable */
+.site-header .dropdown-menu,
+.site-header .mega-menu {
+    transition:
+        opacity 180ms ease,
+        transform 180ms ease,
+        visibility 180ms ease;
+}
+
+.site-header .dropdown-menu a,
+.site-header .mega-menu a {
+    overflow-wrap: anywhere;
+}
+
+/* 4. Prevent mega menus from exceeding the viewport */
+.site-header .mega-menu {
+    left: 0;
+    right: 0;
+    max-width: 100%;
+}
+
+.site-header .mega-menu-inner {
+    width: min(100% - 48px, var(--container, 1200px));
+    min-width: 0;
+}
+
+.site-header .mega-columns {
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.site-header .mega-columns section {
+    min-width: 0;
+}
+
+/* 5. Improve header navigation spacing */
+.site-header .site-navigation {
+    min-width: 0;
+}
+
+.site-header .site-navigation > a,
+.site-header .site-navigation .dropdown-toggle {
+    min-height: 44px;
+}
+
+/* 6. Mobile navigation refinements */
+@media (max-width: 1024px) {
+    .site-header .site-navigation {
+        overscroll-behavior: contain;
+        padding-top: max(80px, env(safe-area-inset-top));
+        padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
+
+    .site-header .site-navigation > a,
+    .site-header .site-navigation .dropdown-toggle {
+        width: 100%;
+        justify-content: space-between;
+        white-space: normal;
+        text-align: left;
+    }
+
+    .site-header .dropdown-wide {
+        position: relative;
+    }
+
+    .site-header .mega-menu {
+        display: none;
+    }
+
+    .site-header .dropdown.open > .mega-menu {
+        display: block;
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        pointer-events: auto;
+        box-shadow: none;
+        border: 0;
+        border-left: 2px solid var(--brand-red);
+        padding: 12px;
+    }
+
+    .site-header .mega-menu-inner {
+        display: block;
+        width: 100%;
+    }
+
+    .site-header .mega-feature {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 0 0 16px;
+        margin-bottom: 16px;
+    }
+
+    .site-header .mega-columns {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .site-header .mega-columns a {
+        opacity: 1;
+        transform: none;
+    }
+
+    .site-header .nav-search {
+        justify-content: center;
+        margin: 12px 0;
+    }
+
+    .site-header .mobile-products-menu > details > summary {
+        min-height: 48px;
+    }
+}
+
+/* 7. Responsive footer layout */
+.site-footer .footer-grid {
+    grid-template-columns:
+        minmax(0, 2fr)
+        repeat(3, minmax(0, 1fr))
+        minmax(0, 1.25fr);
+}
+
+.site-footer .footer-brand,
+.site-footer .footer-col {
+    min-width: 0;
+}
+
+.site-footer .footer-contact-item {
+    overflow-wrap: anywhere;
+}
+
+.site-footer .footer-bottom {
+    flex-wrap: wrap;
+    gap: 16px 24px;
+}
+
+.site-footer .footer-legal {
+    flex-wrap: wrap;
+    row-gap: 8px;
+}
+
+@media (max-width: 1200px) {
+    .site-footer .footer-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 32px;
+    }
+
+    .site-footer .footer-brand {
+        grid-column: span 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 48px 0 24px;
+    }
+
+    .site-footer .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 20px;
+        padding-bottom: 28px;
+    }
+
+    .site-footer .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .site-footer .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 24px;
+    }
+
+    .site-footer .footer-legal {
+        gap: 8px 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-footer .footer-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .site-footer .footer-brand {
+        grid-column: auto;
+    }
+
+    .site-footer .footer-legal {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* 8. Floating widgets: mobile spacing and safe areas */
+.dexpert-fab {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(24px, env(safe-area-inset-bottom));
+    max-width: calc(100vw - 32px);
+}
+
+.back-to-top {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(100px, calc(env(safe-area-inset-bottom) + 88px));
+}
+
+@media (max-width: 480px) {
+    .dexpert-fab {
+        height: 48px;
+        padding-right: 14px;
+        font-size: 12px;
+    }
+
+    .dexpert-fab img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .back-to-top {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* 9. Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .site-header *,
+    .site-footer *,
+    .dexpert-fab,
+    .back-to-top,
+    .skip-link {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
