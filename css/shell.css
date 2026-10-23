@@ -725,10 +725,11 @@ body.nav-open .back-to-top {
 .dexpert-head {
   display: flex;
   align-items: center;
-   background: var(--brand-red);
+  background: var(--brand-red);
   gap: 12px;
   padding: 16px 20px;
   border-bottom: 1px solid var(--line-soft);
+   color: #fff;
 }
 
 .dexpert-icon {
