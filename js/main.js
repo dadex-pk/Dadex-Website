@@ -1,17 +1,9 @@
 /* ============================================================
-   DADEX ETERNIT LIMITED — SHARED UI  (v5)
+   DADEX ETERNIT LIMITED — SHARED UI  (v5.1)
    ------------------------------------------------------------
-   v5 changes
-     · Bootstrap wrapped in try/catch — a failure in one init
-       never blocks the rest (DEXPERT, back-to-top, filters)
-     · initSiteSearch waits for window.DADEX_SEARCH_INDEX via
-       'dadex:search-index-ready' event with a window.load
-       fallback — no more "empty search" when the index script
-       loads after main.js
-     · inert assignment feature-guarded — silently skipped on
-       browsers without support (CSS visibility:hidden already
-       removes collapsed tiers from the tab order)
-     · All init functions have explicit guard clauses
+   v5.1 changes
+     · Closes the mobile drawer before opening DEXPERT
+       (avoids stacked overlays / leftover focus trap)
    ============================================================ */
 
 const MOBILE_NAV_MAX = 1024;
@@ -29,13 +21,8 @@ const REMOVED_SEARCH_URLS = new Set([
   'solutions.html'
 ]);
 
-/* True only when the browser implements the inert property. */
 const INERT_SUPPORTED = typeof HTMLElement !== 'undefined'
   && 'inert' in HTMLElement.prototype;
-
-/* ------------------------------------------------------------
-   Utilities
-   ------------------------------------------------------------ */
 
 function debounce(fn, wait){
   let timer = null;
@@ -48,12 +35,6 @@ function debounce(fn, wait){
 const scheduleIdle = (typeof requestIdleCallback === 'function')
   ? cb => requestIdleCallback(cb, { timeout: 2000 })
   : cb => setTimeout(cb, 200);
-
-/* ------------------------------------------------------------
-   Bootstrap
-   Each initializer runs independently. A throw in one does not
-   prevent the next from running.
-   ------------------------------------------------------------ */
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
@@ -168,7 +149,7 @@ function renderComponentError(mount, { name, url, reason }){
 }
 
 /* ------------------------------------------------------------
-   Dynamic text — current year, company age
+   Dynamic text
    ------------------------------------------------------------ */
 
 function initDynamicSiteText(){
@@ -196,7 +177,7 @@ function initDynamicSiteText(){
 }
 
 /* ------------------------------------------------------------
-   Header state — home/internal flag + scroll-driven collapse
+   Header state
    ------------------------------------------------------------ */
 
 function initHeaderState(header){
@@ -215,9 +196,6 @@ function initHeaderState(header){
     header.classList.toggle('is-scrolled', scrolled);
     document.body.classList.toggle('header-scrolled', scrolled);
 
-    /* Collapsed tiers are already hidden by CSS visibility:hidden;
-       inert is an optional enhancement that removes them from AT
-       and blocks pointer events. Skipped on browsers without it. */
     if (INERT_SUPPORTED) {
       const utilityBar = header.querySelector('.utility-bar');
       const productsTier = header.querySelector('.header-products-tier');
@@ -446,7 +424,7 @@ function initProjectFilter(){
 }
 
 /* ------------------------------------------------------------
-   Mailto contact form
+   Mailto form
    ------------------------------------------------------------ */
 
 function initMailtoForm(){
@@ -549,7 +527,7 @@ function initLiteratureFilter(){
 }
 
 /* ------------------------------------------------------------
-   Investor panel switcher
+   Investor panels
    ------------------------------------------------------------ */
 
 function initInvestorPanels(){
@@ -605,9 +583,6 @@ function initInvestorPanels(){
 
 /* ------------------------------------------------------------
    Site search
-   Waits for window.DADEX_SEARCH_INDEX if the index script has
-   not yet executed. Listens for 'dadex:search-index-ready' and
-   falls back to window.load.
    ------------------------------------------------------------ */
 
 function initSiteSearch(){
@@ -700,7 +675,7 @@ function initSiteSearch(){
 }
 
 /* ------------------------------------------------------------
-   DEXPERT — floating assistant
+   DEXPERT
    ------------------------------------------------------------ */
 
 const DEXPERT_PRODUCTS = [
@@ -807,7 +782,7 @@ function initDEXPERT(){
     for (const [href, label] of actions) {
       const a = document.createElement('a');
       a.href = href;
-      a.innerHTML = `<span>${label}</span><i class="fas fa-arrow-right"></i>`;
+      a.innerHTML = `<span>${label}</span><i class="fas fa-arrow-right" aria-hidden="true"></i>`;
       frag.appendChild(a);
     }
     container.replaceChildren(frag);
@@ -941,6 +916,18 @@ function initDEXPERT(){
 
   const open = async () => {
     try {
+      /* Close the mobile drawer so DEXPERT doesn't layer on top of it */
+      const nav = document.getElementById('site-navigation');
+      if (nav && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        document.body.classList.remove('nav-open');
+        const mt = document.querySelector('.menu-toggle');
+        if (mt) {
+          mt.setAttribute('aria-expanded', 'false');
+          mt.setAttribute('aria-label', 'Open navigation');
+        }
+      }
+
       const dialog = await loadDialog();
       if (dialog.open) return;
       dialog.showModal();
@@ -970,7 +957,7 @@ function initDEXPERT(){
 }
 
 /* ------------------------------------------------------------
-   Back to top — floating button, injected site-wide
+   Back to top
    ------------------------------------------------------------ */
 
 function initBackToTop(){
