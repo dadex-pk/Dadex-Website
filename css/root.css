@@ -7,12 +7,13 @@
   --brand-red: #e50000;
   --brand-red-dark: #b50000;
   --brand-accent-dark: #ff6a6a; /* Use on dark backgrounds */
-  
+
   /* --- Text & Ink --- */
   --ink: #17191c;
   --ink-light: #24272a;
   --muted: #687078;
   --muted-light: #8f969d;
+  --text: var(--ink); 
 
   /* --- Surfaces (Backgrounds) --- */
   --bg-body: #f6f7f8;
@@ -23,16 +24,17 @@
   /* --- Lines & Borders --- */
   --line: #e4e7ea;
   --line-soft: #eef0f2;
+  --line-on-dark: rgba(255, 255, 255, 0.10);
 
   /* --- Shadows --- */
-  --shadow-sm: 0 1px 3px rgba(15,18,21,.05);
-  --shadow-md: 0 10px 30px rgba(15,18,21,.08);
-  --shadow-lg: 0 24px 48px -12px rgba(15,18,21,.15);
+  --shadow-sm: 0 1px 3px rgba(15, 18, 21, 0.05);
+  --shadow-md: 0 10px 30px rgba(15, 18, 21, 0.08);
+  --shadow-lg: 0 24px 48px -12px rgba(15, 18, 21, 0.15);
 
   /* --- Layout & Spacing --- */
   --container: 1240px;
-  --section-pad: clamp(3.5rem, 6vw, 6rem); /* Fluid padding */
-  
+  --section-pad: clamp(3.5rem, 6vw, 6rem); 
+
   /* --- Radii --- */
   --radius-sm: 6px;
   --radius-md: 12px;
@@ -42,16 +44,37 @@
   /* --- Transitions --- */
   --ease: cubic-bezier(0.2, 0.65, 0.2, 1);
   --transition: 0.25s var(--ease);
-  
-  /* --- Sticky Header Offset (Calculated automatically) --- */
-  --header-h: 10rem;
+
+  /* --- Sticky Header Heights) --- */
+  --header-h: 76px;
+  --header-h-scrolled: 64px;
+
+  /* --- Sticky Header Offset  --- */
   --sticky-offset: calc(var(--header-h) + 1rem);
 }
 
+/* Scroll-state height (header.js toggles .header-scrolled on <body>) */
 body.header-scrolled {
-  --header-h: 4rem;
+  --header-h: var(--header-h-scrolled);
 }
+
+/* Responsive header heights */
 @media (max-width: 1024px) {
-  :root { --header-h: 6rem; }
-  body.header-scrolled { --header-h: 4rem; }
+  :root {
+    --header-h: 68px;
+    --header-h-scrolled: 60px;
+  }
+}
+
+/* Anchor scroll offset */
+[id],
+:target {
+  scroll-margin-top: var(--sticky-offset);
+}
+
+/* Reduced motion — global fallback */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition: 0.01ms linear;
+  }
 }
