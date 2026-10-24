@@ -34,7 +34,7 @@
   --shadow-lg: 0 24px 48px -12px rgba(15, 18, 21, 0.15);
 
   /* --- Layout --- */
-  --container: 1400px;
+  --container: 1320px;
   --section-pad: clamp(3.5rem, 6vw, 6rem);
 
   /* --- Radii --- */
