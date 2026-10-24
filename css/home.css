@@ -529,3 +529,56 @@ h2 span { color: var(--brand-red); }
     background-attachment: fixed;
   }
 }
+
+/* ============================================================
+   VALUES SECTION — background image
+   ============================================================ */
+.values-section {
+  position: relative;
+  isolation: isolate;      
+  overflow: hidden;     
+  background-color: var(--bg-mist);
+  background-image: url('../assets/images/corporate/building-blocks.webp');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.values-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--bg-body);
+}
+
+.values-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: url('../assets/images/corporate/building-blocks.webp');
+  background-repeat: no-repeat;
+  background-position: center right;
+  background-size: cover;
+  opacity: 0.06;              /* 4–10% is the sweet spot */
+  pointer-events: none;       /* never steals clicks */
+}
+
+/* Optional: fade to white on the left where text lives */
+.values-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to right,
+    var(--bg-body) 0%,
+    rgba(246, 247, 248, 0.85) 40%,
+    transparent 75%
+  );
+  pointer-events: none;
+}
+
+.values-section > * {
+  position: relative;         /* keep content above the watermark */
+}
