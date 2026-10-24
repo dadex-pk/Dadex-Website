@@ -267,23 +267,41 @@
   border-bottom: 1px solid var(--line);
 }
 
+
+/* --- Specification Table Header Styling --- */
+
 .spec-table th {
   width: 30%;
+  padding: 1rem 1.25rem;
+  text-align: left;
+  vertical-align: top;
+
   color: var(--brand-red);
+  background: #FCEEEE;
+
   font-weight: 700;
+  line-height: 1.6;
   overflow-wrap: break-word;
+
+  border-bottom: 1px solid var(--line);
 }
 
 .spec-table td {
+  background: #fff;
   color: var(--muted);
-  overflow-wrap: anywhere;
 }
 
+/* Subtle hover for easier row tracking */
+.spec-table tbody tr:hover th,
+.spec-table tbody tr:hover td {
+  background-color: #FFF8F8;
+}
+
+/* Preserve the tinted header on the final row */
 .spec-table tr:last-child th,
 .spec-table tr:last-child td {
   border-bottom: none;
 }
-
 
 /* ============================================================
    6. TECHNICAL NOTES
