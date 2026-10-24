@@ -273,7 +273,7 @@
   text-align: left;
   vertical-align: top;
   color: var(--brand-red);
-  background: rgba(255, 0, 0, 0.1);
+  background: rgba(255, 0, 0, 0.05);
   font-weight: 700;
   line-height: 1.6;
   overflow-wrap: break-word;
