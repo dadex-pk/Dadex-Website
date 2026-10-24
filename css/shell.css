@@ -1156,7 +1156,7 @@ var(--bg-surface);
 .site-footer .footer-ctas {
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: 0.25rem;
   margin-top: 1.25rem;
 }
 .site-footer .footer-cta-btn {
@@ -1172,8 +1172,8 @@ var(--bg-surface);
   transition: all var(--transition);
 }
 .site-footer .footer-cta-btn:hover {
-  color: var(--brand-accent-dark);
-   padding-left: 1.5rem;
+  color: #fff;
+  padding-left: 1.5rem;
 }
 
 .site-footer .footer-bottom {
