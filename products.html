@@ -13,7 +13,7 @@
 <!-- Open Graph -->
 <meta content="website" property="og:type"/>
 <meta content="Products &amp; Systems | Dadex Eternit Limited" property="og:title"/>
-<meta content="Explore Dadex piping, drainage, ducting, specialised and roofing systems — 19 products across 5 application categories, with technical information and product support." property="og:description"/>
+<meta content="Explore Dadex piping, drainage, ducting, specialised and roofing systems." property="og:description"/>
 <meta content="https://www.dadex.com/products.html" property="og:url"/>
 <meta content="Dadex Eternit Limited" property="og:site_name"/>
 <meta content="en_PK" property="og:locale"/>
@@ -25,7 +25,7 @@
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Products &amp; Systems | Dadex Eternit Limited" name="twitter:title"/>
-<meta content="Explore Dadex piping, drainage, ducting, specialised and roofing systems — 19 products across 5 application categories." name="twitter:description"/>
+<meta content="Explore Dadex piping, drainage, ducting, specialised and roofing systems." name="twitter:description"/>
 <meta content="https://www.dadex.com/assets/images/products/aquadex.webp" name="twitter:image"/>
 
 <!-- Preconnect -->
@@ -46,38 +46,49 @@
 <link href="css/components.css" rel="stylesheet"/>
 <link href="css/shell.css" rel="stylesheet"/>
 <link href="css/core.css" rel="stylesheet"/>
+<link href="css/pages.css" rel="stylesheet"/>
 </head>
 <body class="core-page">
 <a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
 
 <main id="main-content">
+  
+  <!-- HERO -->
   <section class="page-hero">
     <div class="container">
       <div class="kicker">Product &amp; System Portfolio</div>
       <h1>Products &amp; <span>Systems</span></h1>
       <p>Explore the current Dadex range by application and project context, then move to the relevant system and technical information.</p>
-      <div class="flex" style="margin-top: 2rem; gap: 2rem; color: #fff; flex-wrap: wrap;">
-        <div class="flex" style="align-items: center; gap: 0.5rem;"><i class="fas fa-boxes-stacked" style="color: var(--brand-accent-dark);"></i> <strong>19</strong> Products</div>
-        <div class="flex" style="align-items: center; gap: 0.5rem;"><i class="fas fa-layer-group" style="color: var(--brand-accent-dark);"></i> <strong>5</strong> Categories</div>
-        <div class="flex" style="align-items: center; gap: 0.5rem;"><i class="fas fa-flask" style="color: var(--brand-accent-dark);"></i> <strong>4</strong> Material families</div>
+      
+      <div class="products-hero-stats">
+        <div class="stat-badge">
+          <i class="fas fa-boxes-stacked"></i> <strong>19</strong> Products
+        </div>
+        <div class="stat-badge">
+          <i class="fas fa-layer-group"></i> <strong>5</strong> Categories
+        </div>
+        <div class="stat-badge">
+          <i class="fas fa-flask"></i> <strong>4</strong> Material families
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <!-- Water Supply Category -->
-      <div class="section-header" style="border-bottom: 2px solid var(--line); padding-bottom: 1rem; margin-bottom: 2rem; max-width: 100%;">
-        <h2>Water Supply</h2>
-        <p style="margin-bottom: 0;">Infrastructure and Buildings &amp; Housing.</p>
-      </div>
       
-      <div class="grid grid-3" style="margin-bottom: 4rem;">
+      <!-- Water Supply Category -->
+      <div class="products-page-header">
+        <h2>Water Supply</h2>
+        <p>Infrastructure and Buildings &amp; Housing.</p>
+      </div>
+
+      <div class="grid grid-3 products-grid">
         <a class="card card--product" href="product-aquadex.html">
           <img src="assets/images/products/aquadex.webp" alt="Aquadex">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Infrastructure</span>
+            <span class="category-badge">Infrastructure</span>
             <h3>Aquadex</h3>
             <p>UPVC pressure pipe system for potable water supply.</p>
           </div>
@@ -85,7 +96,7 @@
         <a class="card card--product" href="product-tflex.html">
           <img src="assets/images/products/tflex.webp" alt="T-Flex">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Infrastructure</span>
+            <span class="category-badge">Infrastructure</span>
             <h3>T-Flex</h3>
             <p>PE 100 flexible piping system for water supply.</p>
           </div>
@@ -93,7 +104,7 @@
         <a class="card card--product" href="product-polydex-premium.html">
           <img src="assets/images/products/polydex-premium.webp" alt="Polydex Premium">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Buildings &amp; Housing</span>
+            <span class="category-badge">Buildings &amp; Housing</span>
             <h3>Polydex Premium</h3>
             <p>PP-RCT hot and cold water system.</p>
           </div>
@@ -101,7 +112,7 @@
         <a class="card card--product" href="product-polydex.html">
           <img src="assets/images/products/polydex.webp" alt="Polydex">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Buildings &amp; Housing</span>
+            <span class="category-badge">Buildings &amp; Housing</span>
             <h3>Polydex</h3>
             <p>PP-R water supply system.</p>
           </div>
@@ -109,7 +120,7 @@
         <a class="card card--product" href="product-thermoline.html">
           <img src="assets/images/products/thermoline.webp" alt="Thermoline">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Buildings &amp; Housing</span>
+            <span class="category-badge">Buildings &amp; Housing</span>
             <h3>Thermoline</h3>
             <p>PP-R hot and cold water system.</p>
           </div>
@@ -117,16 +128,16 @@
       </div>
 
       <!-- Sewerage & Drainage Category -->
-      <div class="section-header" style="border-bottom: 2px solid var(--line); padding-bottom: 1rem; margin-bottom: 2rem; max-width: 100%;">
+      <div class="products-page-header">
         <h2>Sewerage &amp; Drainage</h2>
-        <p style="margin-bottom: 0;">Infrastructure and Buildings &amp; Housing.</p>
+        <p>Infrastructure and Buildings &amp; Housing.</p>
       </div>
 
-      <div class="grid grid-3" style="margin-bottom: 4rem;">
+      <div class="grid grid-3 products-grid">
         <a class="card card--product" href="product-flow-line.html">
           <img src="assets/images/products/flowline.webp" alt="Flow Line">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Infrastructure</span>
+            <span class="category-badge">Infrastructure</span>
             <h3>Flow Line</h3>
             <p>UPVC underground sewerage system.</p>
           </div>
@@ -134,7 +145,7 @@
         <a class="card card--product" href="product-inspection-chambers.html">
           <img src="assets/images/products/inspection-chambers.webp" alt="Inspection Chambers">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Infrastructure</span>
+            <span class="category-badge">Infrastructure</span>
             <h3>Inspection Chambers</h3>
             <p>Modular underground chamber system.</p>
           </div>
@@ -142,7 +153,7 @@
         <a class="card card--product" href="product-manholes.html">
           <img src="assets/images/products/manholes.webp" alt="Manholes">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Infrastructure</span>
+            <span class="category-badge">Infrastructure</span>
             <h3>Manholes</h3>
             <p>Complete underground sewer access system.</p>
           </div>
@@ -150,7 +161,7 @@
         <a class="card card--product" href="product-catchpits.html">
           <img src="assets/images/products/catchpit.webp" alt="Catchpits">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Infrastructure</span>
+            <span class="category-badge">Infrastructure</span>
             <h3>Catchpits</h3>
             <p>Lightweight PP drainage pits.</p>
           </div>
@@ -158,7 +169,7 @@
         <a class="card card--product" href="product-non-return-valves.html">
           <img src="assets/images/products/non-return-valves.webp" alt="Non-Return Valves">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Infrastructure</span>
+            <span class="category-badge">Infrastructure</span>
             <h3>Non-Return Valves</h3>
             <p>Backflow protection.</p>
           </div>
@@ -166,7 +177,7 @@
         <a class="card card--product" href="product-nikasi.html">
           <img src="assets/images/products/nikasi.webp" alt="Nikasi">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Buildings</span>
+            <span class="category-badge">Buildings</span>
             <h3>Nikasi</h3>
             <p>UPVC soil, waste and ventilation system.</p>
           </div>
@@ -174,7 +185,7 @@
         <a class="card card--product" href="product-polyduct.html">
           <img src="assets/images/products/polyduct.webp" alt="Polyduct">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Buildings</span>
+            <span class="category-badge">Buildings</span>
             <h3>Polyduct</h3>
             <p>Low-noise SWV drainage system.</p>
           </div>
@@ -182,16 +193,16 @@
       </div>
 
       <!-- Cable & Utility Ducting Category -->
-      <div class="section-header" style="border-bottom: 2px solid var(--line); padding-bottom: 1rem; margin-bottom: 2rem; max-width: 100%;">
+      <div class="products-page-header">
         <h2>Cable &amp; Utility Ducting</h2>
-        <p style="margin-bottom: 0;">Infrastructure, Buildings &amp; Housing and specialised systems.</p>
+        <p>Infrastructure, Buildings &amp; Housing and specialised systems.</p>
       </div>
 
-      <div class="grid grid-3" style="margin-bottom: 4rem;">
+      <div class="grid grid-3 products-grid">
         <a class="card card--product" href="product-pe-cable-duct.html">
           <img src="assets/images/products/cable-duct.webp" alt="PE Cable Duct">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Infrastructure</span>
+            <span class="category-badge">Infrastructure</span>
             <h3>PE Cable Duct</h3>
             <p>PE and UPVC cable ducting system for utility networks.</p>
           </div>
@@ -199,7 +210,7 @@
         <a class="card card--product" href="product-electrical-conduits.html">
           <img src="assets/images/products/electrical-conduits.webp" alt="Electrical Conduits">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Buildings</span>
+            <span class="category-badge">Buildings</span>
             <h3>Electrical Conduits</h3>
             <p>UPVC electrical conduit system.</p>
           </div>
@@ -207,7 +218,7 @@
         <a class="card card--product" href="product-electroduct.html">
           <img src="assets/images/products/electroduct.webp" alt="Electroduct">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Specialised</span>
+            <span class="category-badge">Specialised</span>
             <h3>Electroduct</h3>
             <p>UPVC electrical conduit system to EN 50086.</p>
           </div>
@@ -215,16 +226,16 @@
       </div>
 
       <!-- Specialised & Industrial Category -->
-      <div class="section-header" style="border-bottom: 2px solid var(--line); padding-bottom: 1rem; margin-bottom: 2rem; max-width: 100%;">
+      <div class="products-page-header">
         <h2>Specialised &amp; Industrial</h2>
-        <p style="margin-bottom: 0;">Gas, compressed air and tubewell systems.</p>
+        <p>Gas, compressed air and tubewell systems.</p>
       </div>
 
-      <div class="grid grid-3" style="margin-bottom: 4rem;">
+      <div class="grid grid-3 products-grid">
         <a class="card card--product" href="product-tflex-gas.html">
           <img src="assets/images/products/tflex-gas.webp" alt="T-Flex Gas">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Gas</span>
+            <span class="category-badge">Gas</span>
             <h3>T-Flex Gas</h3>
             <p>PE 80 and PE 100 flexible gas piping system.</p>
           </div>
@@ -232,7 +243,7 @@
         <a class="card card--product" href="product-tflex-compressed-air.html">
           <img src="assets/images/products/tflex-compressed-air.webp" alt="T-Flex Compressed Air">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Compressed Air</span>
+            <span class="category-badge">Compressed Air</span>
             <h3>T-Flex Compressed Air</h3>
             <p>PE 100 compressed-air piping system.</p>
           </div>
@@ -240,7 +251,7 @@
         <a class="card card--product" href="product-upvc-tubewell.html">
           <img src="assets/images/products/upvc-tubewell.webp" alt="UPVC Tubewell">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Tubewell System</span>
+            <span class="category-badge">Tubewell System</span>
             <h3>UPVC Tubewell Pipes</h3>
             <p>UPVC casing and screen pipes for water wells.</p>
           </div>
@@ -248,16 +259,16 @@
       </div>
 
       <!-- Roofing Category -->
-      <div class="section-header" style="border-bottom: 2px solid var(--line); padding-bottom: 1rem; margin-bottom: 2rem; max-width: 100%;">
+      <div class="products-page-header">
         <h2>Roofing</h2>
-        <p style="margin-bottom: 0;">Current roofing range.</p>
+        <p>Current roofing range.</p>
       </div>
 
       <div class="grid grid-3">
         <a class="card card--product" href="product-corrugated-sheets.html">
           <img src="assets/images/products/corrugated-sheets.webp" alt="Corrugated Sheets">
           <div class="card__body">
-            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700;">Roofing</span>
+            <span class="category-badge">Roofing</span>
             <h3>Corrugated Sheets</h3>
             <p>Corrugated sheets for roofing and wall cladding.</p>
           </div>
@@ -266,13 +277,13 @@
     </div>
   </section>
 
-  <section class="section section--dark" style="border-top: 1px solid #333;">
-    <div class="container flex-between" style="flex-wrap: wrap; gap: 3rem;">
+  <section class="section section--dark products-cta">
+    <div class="container flex-between">
       <div>
-        <h2 style="margin-bottom: 0;">Know <span>what you need?</span></h2>
+        <h2>Know <span>what you need?</span></h2>
       </div>
-      <div style="max-width: 500px;">
-        <p style="margin-bottom: 1.5rem;">Tell us the application, project or system requirement and move from the product range to the right Dadex support route.</p>
+      <div class="products-cta-content">
+        <p>Tell us the application, project or system requirement and move from the product range to the right Dadex support route.</p>
         <a class="btn btn--primary" href="contact.html#product-enquiry">Discuss Your Requirement <i class="fas fa-arrow-right"></i></a>
       </div>
     </div>
