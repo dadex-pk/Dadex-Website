@@ -1163,9 +1163,8 @@ var(--bg-surface);
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 72%;
   padding: 0.65rem 1rem;
-  border-radius: var(--radius-sm);
   color: var(--brand-accent-dark);
   font-size: 0.8125rem;
   font-weight: 600;
@@ -1173,8 +1172,8 @@ var(--bg-surface);
   transition: all var(--transition);
 }
 .site-footer .footer-cta-btn:hover {
-   color: var(--brand-accent-dark);
-  transform: translateY(-2px);
+  color: var(--brand-accent-dark);
+   padding-left: 1.5rem;
 }
 
 .site-footer .footer-bottom {
