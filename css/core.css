@@ -6,7 +6,7 @@
 .page-hero {
   background: var(--bg-dark);
   color: #fff;
-  padding: clamp(3rem, 6vw, 5rem) 0;
+  padding: clamp(3rem, 6vw, 5rem) 3rem;
   position: relative;
   overflow: hidden;
 }
