@@ -1027,21 +1027,55 @@ var(--bg-surface);
 /* ============================================================
    FOOTER
    ============================================================ */
+
+
 .site-footer {
   background: var(--bg-dark);
   color: #fff;
   padding: 4rem 0 2rem;
   border-top: 3px solid var(--brand-red);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
 }
+
+/* Joined decorative circles */
+.site-footer::before,
+.site-footer::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Large Dadex-red circle */
+.site-footer::before {
+  width: 30rem;
+  height: 30rem;
+  border: 5rem solid rgb(201 0 0 / 8%);
+  right: -7rem;
+  bottom: 5rem;
+}
+
+
+.site-footer::after {
+  width: 40rem;
+  height: 40rem;
+  border: 6rem solid rgb(255 255 255 / 5%);
+  left: -10rem;
+  bottom: 0;
+}
+
 
 .site-footer .footer-grid {
   display: grid;
   grid-template-columns:
     minmax(0, 2.2fr)
-    minmax(0, 1.1fr)
-    minmax(0, 1fr)
     minmax(0, 1.3fr)
-    minmax(0, 1.4fr);
+    minmax(0, 1.1fr)
+    minmax(0, 1.3fr)
+    minmax(0, 1.1fr);
   gap: 3rem;
   padding-bottom: 3rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -1051,8 +1085,9 @@ var(--bg-surface);
 
 .site-footer .footer-brand .brand-logo {
   display: block;
-  width: 163px; height: auto;
+  width: 150px; height: auto;
   margin-bottom: 0.5rem;
+  color: #fff;
 }
 .site-footer .footer-est {
   display: block;
@@ -1119,7 +1154,7 @@ var(--bg-surface);
   font-size: 1.1rem;
   font-weight: 700;
   line-height: 1;
-  color:  color: var(--brand-accent-dark);
+  color: var(--brand-accent-dark);
   transition: color var(--transition);
 }
 .site-footer .footer-col > a:hover,
@@ -1157,14 +1192,14 @@ var(--bg-surface);
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  margin-top: 1.25rem;
+  margin-top: 0.5rem;
 }
 .site-footer .footer-cta-btn {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
   width: 72%;
-  padding: 0.65rem 1rem;
+  padding: 0.4rem 0rem;
   color: var(--brand-accent-dark);
   font-size: 0.8125rem;
   font-weight: 600;
@@ -1173,7 +1208,7 @@ var(--bg-surface);
 }
 .site-footer .footer-cta-btn:hover {
   color: #fff;
-  padding-left: 1.5rem;
+  padding-left: 1rem;
 }
 
 .site-footer .footer-bottom {

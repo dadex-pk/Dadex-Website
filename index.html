@@ -103,14 +103,64 @@
       </div>
     </div>
 
-    <div class="home-hero__visual">
-      <div class="hero-collage">
-        <img alt="Pipes" src="assets/images/products/aquadex.webp">
-        <img alt="Fittings" src="assets/images/products/nikasi.webp">
-        <img alt="Ducting" src="assets/images/products/cable-duct.webp">
-        <img alt="Industrial" src="assets/images/products/tflex-gas.webp">
+   
+<div class="home-hero__visual">
+
+  <div class="hero-slider" aria-label="Dadex piping solutions">
+
+    <article class="hero-slide is-active">
+      <img
+        src="assets/images/products/aquadex.webp"
+        alt="Dadex Aquadex water supply piping"
+      >
+      <div class="hero-slide__caption">
+        <span>01 / WATER SUPPLY</span>
+        <h2>Reliable Water Supply Systems</h2>
+        <p>Solutions for infrastructure and buildings.</p>
       </div>
+    </article>
+
+    <article class="hero-slide">
+      <img
+        src="assets/images/products/nikasi.webp"
+        alt="Dadex Nikasi drainage piping system"
+        loading="lazy"
+      >
+      <div class="hero-slide__caption">
+        <span>02 / SEWERAGE &amp; DRAINAGE</span>
+        <h2>Efficient Drainage Solutions</h2>
+        <p>Designed for effective wastewater management.</p>
+      </div>
+    </article>
+
+    <article class="hero-slide">
+      <img
+        src="assets/images/products/tflex-gas.webp"
+        alt="Dadex T-Flex gas piping system"
+        loading="lazy"
+      >
+      <div class="hero-slide__caption">
+        <span>03 / SPECIALISED SYSTEMS</span>
+        <h2>Solutions for Specialised Applications</h2>
+        <p>Engineered piping solutions for diverse needs.</p>
+      </div>
+    </article>
+
+    <div class="hero-slider__controls"
+         aria-label="Choose featured image">
+      <button class="hero-slider__dot is-active"
+              type="button" aria-label="Show water supply"
+              aria-pressed="true"></button>
+      <button class="hero-slider__dot"
+              type="button" aria-label="Show drainage"
+              aria-pressed="false"></button>
+      <button class="hero-slider__dot"
+              type="button" aria-label="Show specialised systems"
+              aria-pressed="false"></button>
     </div>
+
+  </div>
+</div>
 
   </div>
 </section>
@@ -305,31 +355,31 @@
         <div class="kicker" style="margin-bottom: 1rem;">01</div>
         <i class="fas fa-users" style="font-size: 2rem; color: var(--brand-accent-dark); margin-bottom: 1.5rem;"></i>
         <h3>Customer Focus</h3>
-        <p>Superior Customer Support — Magnified Focus</p>
+        <p>Superior Customer Support—<br>Magnified Focus</p>
       </div>
       <div class="card card--dark">
         <div class="kicker" style="margin-bottom: 1rem;">02</div>
         <i class="fas fa-lightbulb" style="font-size: 2rem; color: var(--brand-accent-dark); margin-bottom: 1.5rem;"></i>
         <h3>Innovation</h3>
-        <p>Boundless Thinking. Timeless Innovation.</p>
+        <p>Boundless Thinking.<br>Timeless Innovation.</p>
       </div>
       <div class="card card--dark">
         <div class="kicker" style="margin-bottom: 1rem;">03</div>
         <i class="fas fa-check-double" style="font-size: 2rem; color: var(--brand-accent-dark); margin-bottom: 1.5rem;"></i>
         <h3>Quality</h3>
-        <p>Quality Assured is Quality Delivered.</p>
+        <p>Quality Assured is<br>Quality Delivered.</p>
       </div>
       <div class="card card--dark">
         <div class="kicker" style="margin-bottom: 1rem;">04</div>
         <i class="fas fa-handshake" style="font-size: 2rem; color: var(--brand-accent-dark); margin-bottom: 1.5rem;"></i>
         <h3>Reliability</h3>
-        <p>Reliability and Trust — A Secure Balance.</p>
+        <p>Reliability and Trust—<br>A Secure Balance.</p>
       </div>
       <div class="card card--dark">
         <div class="kicker" style="margin-bottom: 1rem;">05</div>
         <i class="fas fa-scale-balanced" style="font-size: 2rem; color: var(--brand-accent-dark); margin-bottom: 1.5rem;"></i>
         <h3>Ethical Practices</h3>
-        <p>Solid Links to Strong Principles.</p>
+        <p>Solid Links to<br>Strong Principles.</p>
       </div>
     </div>
   </div>
@@ -390,9 +440,9 @@
   <div class="container grid grid-2" style="align-items: center;">
     <div>
       <div class="kicker">Knowledge, at your fingertips</div>
-      <h2>The right information.<br>For a better build.</h2>
+      <h2>The right information.<br><span>For a better build.</span></h2>
     </div>
-    <div class="grid grid-1">
+    <div class="container grid grid-2" style="align-items: center;">   
       <a href="literature.html" class="card flex-between" style="padding: 2rem;">
         <div class="flex">
           <i class="fas fa-file-lines" style="font-size: 2rem; color: var(--brand-red);"></i>
@@ -413,7 +463,7 @@
         </div>
         <i class="fas fa-arrow-right" style="color: var(--brand-red);"></i>
       </a>
-    </div>
+  </div>
   </div>
 </section>
 
@@ -473,5 +523,82 @@
 
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
+
+<script>
+document.querySelectorAll(".hero-slider").forEach((slider) => {
+  const slides = [...slider.querySelectorAll(".hero-slide")];
+  const dots = [...slider.querySelectorAll(".hero-slider__dot")];
+
+  if (slides.length !== 3 || dots.length !== 3) return;
+
+  let current = 0;
+  let timer;
+  let paused = false;
+
+  function showSlide(index) {
+    current = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+      const active = i === current;
+      slide.classList.toggle("is-active", active);
+      slide.setAttribute("aria-hidden", String(!active));
+    });
+
+    dots.forEach((dot, i) => {
+      const active = i === current;
+      dot.classList.toggle("is-active", active);
+      dot.setAttribute("aria-pressed", String(active));
+    });
+  }
+
+  function stopTimer() {
+    clearInterval(timer);
+  }
+
+  function startTimer() {
+    stopTimer();
+
+    if (paused ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    timer = setInterval(() => showSlide(current + 1), 5000);
+  }
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+      showSlide(i);
+      startTimer();
+    });
+  });
+
+  slider.addEventListener("mouseenter", () => {
+    paused = true;
+    stopTimer();
+  });
+
+  slider.addEventListener("mouseleave", () => {
+    paused = false;
+    startTimer();
+  });
+
+  slider.addEventListener("focusin", () => {
+    paused = true;
+    stopTimer();
+  });
+
+  slider.addEventListener("focusout", (event) => {
+    if (!slider.contains(event.relatedTarget)) {
+      paused = false;
+      startTimer();
+    }
+  });
+
+  showSlide(0);
+  startTimer();
+});
+</script>
+
 </body>
 </html>

@@ -54,32 +54,174 @@ h2 span { color: var(--brand-red); }
   flex-wrap: wrap;
 }
 
-/* --- Hero Visual (Collage) --- */
+
+/* =========================================
+   DADEX HERO — THREE-IMAGE SLIDER
+   ========================================= */
+
 .home-hero__visual {
+  min-width: 0;
+  width: 100%;
+}
+
+.hero-slider {
   position: relative;
   width: 100%;
-}
-
-.hero-collage {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  border-radius: var(--radius-lg);
+  aspect-ratio: 5 / 4;
   overflow: hidden;
+  border-radius: 16px;
+  background: #242424;
+  isolation: isolate;
 }
 
-.hero-collage img {
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 700ms ease,
+              visibility 700ms ease;
+}
+
+.hero-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+.hero-slide > img {
+  display: block;
   width: 100%;
-  height: 240px;
+  height: 100%;
   object-fit: cover;
   object-position: center;
-  display: block;
-  transition: transform var(--transition);
 }
 
-.hero-collage img:hover {
-  transform: scale(1.05);
+.hero-slide::after {
+  content: "";
+  position: absolute;
+  inset: 30% 0 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgb(0 0 0 / 78%) 100%
+  );
+  pointer-events: none;
 }
+
+.hero-slide__caption {
+  position: absolute;
+  z-index: 2;
+  left: 28px;
+  right: 28px;
+  bottom: 42px;
+  color: #fff;
+}
+
+.hero-slide__caption span {
+  display: block;
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+.hero-slide__caption h2 {
+  margin: 0 0 8px;
+  color: #fff;
+  font-size: clamp(20px, 2.2vw, 30px);
+  line-height: 1.2;
+}
+
+.hero-slide__caption p {
+  margin: 0;
+  max-width: 420px;
+  color: rgb(255 255 255 / 85%);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.hero-slider__controls {
+  position: absolute;
+  z-index: 3;
+  right: 28px;
+  bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.hero-slider__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 99px;
+  background: rgb(255 255 255 / 55%);
+  cursor: pointer;
+  transition: width 250ms ease,
+              background 250ms ease;
+}
+
+.hero-slider__dot.is-active {
+  width: 24px;
+  background: #c90000;
+}
+
+.hero-slider__dot:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .hero-slider {
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero-slide__caption {
+    left: 22px;
+    right: 22px;
+    bottom: 40px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .hero-slider {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+  }
+
+  .hero-slide__caption {
+    left: 18px;
+    right: 18px;
+    bottom: 38px;
+  }
+
+  .hero-slide__caption h2 {
+    font-size: 20px;
+  }
+
+  .hero-slide__caption p {
+    font-size: 12px;
+  }
+
+  .hero-slider__controls {
+    right: 18px;
+    bottom: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide,
+  .hero-slider__dot {
+    transition: none;
+  }
+}
+
 
 /* =========================================================
    DADEX TRUST BAR
@@ -94,11 +236,11 @@ h2 span { color: var(--brand-red); }
 
     background: var(--trust-bg);
     border-block: 1px solid var(--trust-border);
-    padding: 28px 0;
+    padding: 30px 0;
 }
 
 .trust-bar__inner {
-    width: min(1320px, calc(100% - 40px));
+    width: min(1400px, calc(100% - 40px));
     margin-inline: auto;
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -106,7 +248,7 @@ h2 span { color: var(--brand-red); }
 
 .trust-item {
     min-width: 0;
-    padding: 8px 18px;
+    padding: 10px 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -290,7 +432,7 @@ h2 span { color: var(--brand-red); }
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background: var(--bg-mist);
+  background: rgba(247, 201, 201, 0.486);
   color: var(--muted);
   font-size: 1.125rem;
   transition: all var(--transition);
@@ -345,7 +487,7 @@ h2 span { color: var(--brand-red); }
   bottom: 1.5rem;
   right: 1.5rem;
   font-size: 0.875rem;
-  color: var(--line);
+  color: var(--brand-red);
   transition: all var(--transition);
 }
 
@@ -473,7 +615,6 @@ h2 span { color: var(--brand-red); }
   overflow: hidden;
 }
 
-/* Image layer — sits behind section--dark's own background */
 .values-section::before {
   content: "";
   position: absolute;
@@ -487,7 +628,6 @@ h2 span { color: var(--brand-red); }
   pointer-events: none;
 }
 
-/* soft red glow toward the right for brand accent */
 .values-section::after {
   content: "";
   position: absolute;
@@ -501,7 +641,6 @@ h2 span { color: var(--brand-red); }
   pointer-events: none;
 }
 
-/* Content above the decorative layers */
 .values-section > .container {
   position: relative;
 }
