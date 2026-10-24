@@ -160,13 +160,13 @@
   padding: 1rem 1.5rem;
   text-align: left;
   border-bottom: 1px solid var(--line);
-  font-size: 0.9375rem;
+  font-size: 1rem;
 }
 .spec-table th {
-  width: 30%;
+  width: 25%;
   background: var(--bg-mist);
   font-weight: 700;
-  color: var(--ink);
+  color: var(--brand-red);
 }
 .spec-table td { color: var(--muted); }
 .spec-table tr:last-child th, .spec-table tr:last-child td { border-bottom: none; }
