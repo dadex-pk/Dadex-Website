@@ -1051,7 +1051,7 @@ var(--bg-surface);
 
 .site-footer .footer-brand .brand-logo {
   display: block;
-  width: 176px; height: auto;
+  width: 163px; height: auto;
   margin-bottom: 0.5rem;
 }
 .site-footer .footer-est {
@@ -1081,7 +1081,7 @@ var(--bg-surface);
   width: 36px; height: 36px;
   background: rgba(255, 255, 255, 0.06);
   border-radius: 50%;
-  var(--brand-accent-dark);
+  color: var(--brand-accent-dark);
   font-size: 0.875rem;
   text-decoration: none;
   transition: background-color var(--transition), transform var(--transition);
