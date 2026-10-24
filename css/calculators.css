@@ -51,7 +51,7 @@
 @media (hover: hover) and (pointer: fine){.calc-toolbar .mat-btn:hover{border-color:var(--dadex-red);color:var(--dadex-red);background:var(--calc-red-light)}}
 .calc-toolbar .mat-btn:focus-visible{outline:2px solid var(--dadex-red);outline-offset:3px}
 .calc-toolbar .mat-btn.active{background:var(--dadex-red);color:#fff;border-color:var(--dadex-red);font-weight:800;box-shadow:0 0 0 3px rgba(229,0,0,.12),0 4px 12px rgba(229,0,0,.28)}
-.calc-toolbar .mat-btn.active:hover{background:var(--dadex-red-dark);border-color:var(--dadex-red);color:#fff;box-shadow:0 0 0 3px rgba(229,0,0,.18),0 6px 16px rgba(229,0,0,.38)}
+.calc-toolbar .mat-btn.active:hover{background:var(--brand-red);border-color:var(--brand-red);color:#fff;box-shadow:0 0 0 3px rgba(229,0,0,.18),0 6px 16px rgba(229,0,0,.38)}
 .calc-toolbar .mat-btn.active:active{transform:translateY(0);box-shadow:0 0 0 2px rgba(229,0,0,.24),0 2px 8px rgba(229,0,0,.24)}
 .calc-toolbar #current-mat-display{display:none}
 
