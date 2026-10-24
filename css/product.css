@@ -1,243 +1,605 @@
+
 /* ============================================================
-   PRODUCT PAGES (All 19 Products)
+   DADEX — INDIVIDUAL PRODUCT PAGES
+   Optimised shared stylesheet for all 19 products
    ============================================================ */
 
-/* --- Product Hero --- */
+/* ============================================================
+   1. PRODUCT HERO
+   ============================================================ */
+
 .product-hero {
   background: var(--bg-surface);
-  padding: clamp(3rem, 6vw, 5rem) 2rem;
+  padding: clamp(2.5rem, 5vw, 4.5rem)
+           clamp(1rem, 3vw, 2rem);
   border-bottom: 1px solid var(--line);
 }
+
 .product-hero__inner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 4rem);
   align-items: center;
 }
-@media (max-width: 900px) {
-  .product-hero__inner { grid-template-columns: 1fr; gap: 2rem; }
+
+.product-hero__content {
+  min-width: 0;
 }
-.product-hero__content h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.03em; }
+
+.product-hero__content h1 {
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  margin: 0 0 0.75rem;
+}
+
 .product-hero__subtitle {
-  font-size: 1.5rem;
-  font-weight: 800;
   color: var(--brand-red);
-  margin-bottom: 1.7rem;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 800;
+  line-height: 1.35;
+  margin: 0 0 1.25rem;
 }
-.product-hero__desc { font-size: 1.2rem; color: var(--muted); margin-bottom: 2rem; max-width: 50ch; }
+
+.product-hero__desc {
+  max-width: 55ch;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  line-height: 1.75;
+  margin: 0 0 1.75rem;
+}
+
 .product-hero__image {
-  background: #fff;
-  padding: 0 2rem 0 1rem;
-  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1/1;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+  padding: clamp(1rem, 2.5vw, 2rem);
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
 }
-.product-hero__image img { width: 100%; height: 100%; object-fit: contain; }
 
-/* --- Product Features (Checkmarks) --- */
+.product-hero__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+
+/* ============================================================
+   2. PRODUCT FEATURES
+   ============================================================ */
+
 .product-features {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  align-items: flex-start;
+  gap: 0.75rem 1.25rem;
+  margin: 0 0 2rem;
 }
+
 .product-features span {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
+  min-width: 0;
+  color: var(--ink);
   font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--ink);
+  line-height: 1.5;
 }
+
 .product-features span::before {
   content: "✓";
+  flex: 0 0 auto;
   color: var(--brand-red);
   font-weight: 900;
 }
 
-/* --- Product Strip (4 boxes) --- */
-.product-strip {
+
+/* ============================================================
+   3. SHARED FOUR-COLUMN SUMMARY COMPONENTS
+   Product strip + technical summary
+   ============================================================ */
+
+.product-strip,
+.p2-tech-summary {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
+  overflow: hidden;
   background: var(--line);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  overflow: hidden;
-  margin: 3rem 0;
+  margin: 2.5rem 0;
 }
-.product-strip-item {
-  background: #fff;
-  padding: 1.25rem;
+
+.product-strip-item,
+.p2-tech-summary-item {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-.product-strip-label {
-  font-size: 0.6875rem;
-  text-transform: uppercase;
-  font-weight: 800;
-  color: var(--muted);
-  margin-bottom: 0.25rem;
-  letter-spacing: 0.08em;
-}
-.product-strip-item strong { color: var(--brand-red); font-size: 1.125rem; }
-@media (max-width: 768px) {
-  .product-strip { grid-template-columns: 1fr 1fr; }
+  min-width: 0;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  background: #fff;
+  overflow-wrap: anywhere;
 }
 
-/* --- Product Tabs --- */
-.product-tabs {
-  display: flex;
-  gap: 2rem;
-  border-bottom: 1px solid var(--line);
-  position: sticky;
-  top: calc(var(--header-h) + 1rem);
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(10px);
-  z-index: 90;
-  padding: 1rem 0;
-  margin-bottom: 2rem;
+.p2-tech-summary-item {
+  align-items: center;
+  text-align: center;
 }
-.product-tabs a {
-  font-weight: 700;
+
+.product-strip-label,
+.p2-tech-summary-item span {
+  display: block;
   color: var(--muted);
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid transparent;
-  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.4rem;
 }
-.product-tabs a:hover, .product-tabs a.active {
+
+.product-strip-label {
+  font-size: 0.6875rem;
+}
+
+.product-strip-item strong,
+.p2-tech-summary-item strong {
+  color: var(--brand-red);
+  font-size: clamp(0.9375rem, 1.4vw, 1.125rem);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   4. STICKY PRODUCT NAVIGATION
+   ============================================================ */
+
+.product-tabs {
+  position: sticky;
+  top: calc(var(--header-h-scrolled, var(--header-h, 76px)) + 0.5rem);
+  z-index: 90;
+
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+
+  max-width: 100%;
+  padding: 0.875rem 0;
+  margin: 0 0 2rem;
+
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+
+.product-tabs a {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0.5rem 0 0.625rem;
+
+  color: var(--muted);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.product-tabs a:hover,
+.product-tabs a.active {
   color: var(--brand-red);
   border-bottom-color: var(--brand-red);
 }
 
-/* --- Technical Summary --- */
-.p2-tech-summary {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  margin: 2rem 0;
-}
-.p2-tech-summary-item {
-  background: #fff;
-  padding: 1.5rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.p2-tech-summary-item span {
-  display: block;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-}
-.p2-tech-summary-item strong { color: var(--brand-red); font-size: 1.125rem; }
-@media (max-width: 768px) {
-  .p2-tech-summary { grid-template-columns: 1fr 1fr; }
+.product-tabs a:focus-visible {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 3px;
 }
 
-/* --- Spec Table --- */
+
+/* ============================================================
+   5. TECHNICAL SPECIFICATIONS TABLE
+   ============================================================ */
+
+/* Optional wrapper for horizontal scrolling on small screens */
+.spec-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  margin: 2rem 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+/* Retain support for existing tables without a wrapper */
 .spec-table {
   width: 100%;
   border-collapse: collapse;
   margin: 2rem 0;
+
   background: #fff;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
   border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 }
-.spec-table th, .spec-table td {
-  padding: 1rem 1.5rem;
+
+/* Remove duplicate spacing when wrapped */
+.spec-table-wrap .spec-table {
+  min-width: 520px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.spec-table th,
+.spec-table td {
+  padding: 1rem 1.25rem;
   text-align: left;
+  vertical-align: top;
+  font-size: 0.9375rem;
+  line-height: 1.6;
   border-bottom: 1px solid var(--line);
-  font-size: 1rem;
 }
+
 .spec-table th {
   width: 30%;
-  font-weight: 700;
   color: var(--brand-red);
+  font-weight: 700;
+  overflow-wrap: break-word;
 }
-.spec-table td { color: var(--muted); }
-.spec-table tr:last-child th, .spec-table tr:last-child td { border-bottom: none; }
 
-/* --- Tech Notes --- */
+.spec-table td {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.spec-table tr:last-child th,
+.spec-table tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ============================================================
+   6. TECHNICAL NOTES
+   ============================================================ */
+
 .p2-tech-notes {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-top: 3rem;
-}
-.p2-tech-note {
-  display: flex;
-  gap: 1rem;
-  background: var(--bg-mist);
-  padding: 1.5rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line);
-}
-.p2-tech-note i { font-size: 1.5rem; color: var(--brand-red); }
-.p2-tech-note h4 { margin-bottom: 0.25rem; font-size: 1rem; }
-.p2-tech-note p { font-size: 0.875rem; color: var(--muted); margin: 0; line-height: 1.5; }
-@media (max-width: 900px) {
-  .p2-tech-notes { grid-template-columns: 1fr; }
-}
-
-/* --- Banners (Downloads & Support) --- */
-.p2-banner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-  padding: 2rem;
-  border-radius: var(--radius-lg);
-  background: var(--bg-mist);
-  border: 1px solid var(--line);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
   margin: 3rem 0;
 }
-.p2-banner.dark { background: var(--bg-dark); color: #fff; border: none; }
-.p2-banner.dark h3 { color: #fff; margin-bottom: 0.5rem; }
-.p2-banner.dark p { color: #b3b3b8; margin: 0; }
-@media (max-width: 768px) {
-  .p2-banner { flex-direction: column; align-items: flex-start; }
+
+.p2-tech-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+
+  min-width: 0;
+  padding: 1.5rem;
+
+  background: var(--bg-mist);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
 }
 
-/* --- Related Products --- */
+.p2-tech-note i {
+  flex: 0 0 auto;
+  color: var(--brand-red);
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+.p2-tech-note h4 {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 0 0 0.375rem;
+}
+
+.p2-tech-note p {
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+
+/* ============================================================
+   7. DOWNLOAD & SUPPORT BANNERS
+   ============================================================ */
+
+.p2-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+
+  min-width: 0;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  margin: 3rem 0;
+
+  background: var(--bg-mist);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.p2-banner > * {
+  min-width: 0;
+}
+
+.p2-banner h3 {
+  line-height: 1.3;
+  margin: 0 0 0.5rem;
+}
+
+.p2-banner p {
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Dark variant */
+.p2-banner.dark {
+  color: #fff;
+  background: var(--bg-dark);
+  border-color: transparent;
+}
+
+.p2-banner.dark h3 {
+  color: #fff;
+}
+
+.p2-banner.dark p {
+  color: #d1d1d6;
+}
+
+
+/* ============================================================
+   8. RELATED PRODUCTS
+   ============================================================ */
+
 .p2-related {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
-  margin-bottom: 3rem;
+  margin: 0 0 3rem;
 }
+
 .p2-related a {
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
+  min-width: 0;
+  padding: 1.25rem;
+
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+
+  background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  text-decoration: none;
-  transition: all 0.2s ease;
-  background: #fff;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
+
 .p2-related a:hover {
   border-color: var(--brand-red);
   transform: translateY(-3px);
   box-shadow: var(--shadow-sm);
 }
-.p2-related h4 { font-size: 1rem; margin-bottom: 0.25rem; color: var(--ink); }
-.p2-related span { font-size: 0.8125rem; color: var(--muted); }
-@media (max-width: 900px) {
-  .p2-related { grid-template-columns: 1fr 1fr; }
+
+.p2-related a:focus-visible {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 3px;
 }
+
+.p2-related h4 {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 0 0 0.375rem;
+}
+
+.p2-related span {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   9. ANCHOR POSITIONING
+   Helps prevent headings hiding behind the sticky header
+   ============================================================ */
+
+.product-hero,
+.product-strip,
+.p2-tech-summary,
+.spec-table-wrap,
+.p2-tech-notes,
+.p2-banner,
+.p2-related {
+  scroll-margin-top: calc(var(--header-h, 76px) + 5rem);
+}
+
+
+/* ============================================================
+   10. TABLET & SMALL DESKTOP
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .product-hero__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .product-hero__image {
+    width: 100%;
+    max-width: 560px;
+    justify-self: center;
+    aspect-ratio: 4 / 3;
+  }
+
+  .p2-tech-notes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .p2-related {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* ============================================================
+   11. MOBILE
+   ============================================================ */
+
 @media (max-width: 600px) {
-  .p2-related { grid-template-columns: 1fr; }
+  .product-hero {
+    padding: 2.25rem 1rem;
+  }
+
+  .product-hero__content h1 {
+    font-size: clamp(2rem, 8vw, 2.75rem);
+  }
+
+  .product-hero__subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .product-hero__desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .product-hero__image {
+    aspect-ratio: 1 / 1;
+    padding: 1rem;
+  }
+
+  .product-features {
+    gap: 0.75rem 1rem;
+  }
+
+  .product-strip,
+  .p2-tech-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 2rem 0;
+  }
+
+  .product-strip-item,
+  .p2-tech-summary-item {
+    padding: 1rem;
+  }
+
+  .product-strip-item strong,
+  .p2-tech-summary-item strong {
+    font-size: 1rem;
+  }
+
+  .product-tabs {
+    gap: 1.25rem;
+    padding: 0.625rem 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .product-tabs a {
+    font-size: 0.875rem;
+  }
+
+  .spec-table th,
+  .spec-table td {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .p2-tech-notes {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .p2-tech-note {
+    padding: 1.125rem;
+  }
+
+  .p2-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .p2-related {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .p2-related a {
+    padding: 1rem;
+  }
+}
+
+
+/* ============================================================
+   12. VERY SMALL SCREENS
+   ============================================================ */
+
+@media (max-width: 360px) {
+  .p2-related {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .product-strip-item,
+  .p2-tech-summary-item {
+    padding: 0.75rem;
+  }
+}
+
+
+/* ============================================================
+   13. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .product-tabs a,
+  .p2-related a {
+    transition: none;
+  }
+
+  .p2-related a:hover {
+    transform: none;
+  }
 }
