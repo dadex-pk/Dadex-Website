@@ -483,11 +483,11 @@ h2 span { color: var(--brand-red); }
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  opacity: 0.3;
+  opacity: 0.4;
   pointer-events: none;
 }
 
-/* Optional: soft red glow toward the right for brand accent */
+/* soft red glow toward the right for brand accent */
 .values-section::after {
   content: "";
   position: absolute;
