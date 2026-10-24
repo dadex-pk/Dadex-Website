@@ -163,8 +163,7 @@
   font-size: 1rem;
 }
 .spec-table th {
-  width: 25%;
-  background: rgba(255.0.0.0.5);
+  width: 30%;
   font-weight: 700;
   color: var(--brand-red);
 }
