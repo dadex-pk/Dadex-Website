@@ -465,9 +465,7 @@ h2 span { color: var(--brand-red); }
   }
 }
 /* ============================================================
-   VALUES SECTION — subtle background image
-   Keeps .section--dark's dark surface for card contrast,
-   adds a low-opacity image layer behind the content.
+   VALUES SECTION
    ============================================================ */
 .values-section {
   position: relative;
@@ -485,7 +483,7 @@ h2 span { color: var(--brand-red); }
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  opacity: 0.19;
+  opacity: 0.3;
   pointer-events: none;
 }
 
