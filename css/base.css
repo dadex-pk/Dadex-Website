@@ -15,7 +15,7 @@ body {
   background-color: var(--bg-body);
   color: var(--ink-light);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  line-height: 1.65;
+  line-height: 1.5;
   overflow-x: clip;
 }
 

@@ -535,36 +535,6 @@ h2 span { color: var(--brand-red); }
     margin: 0 auto;
   }
 
-  .trust-stats {
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 2rem 1rem;
-  }
-  
-  .stat-item {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    text-align: center;
-  }
-  
-  .stat-divider {
-    display: none;
-  }
-  
-  .trust-cards-row {
-    grid-template-columns: 1fr;
-  }
-  
-  .trust-card-mini {
-    border-right: none;
-    border-bottom: 1px solid var(--line);
-  }
-  
-  .trust-card-mini:last-child {
-    border-bottom: none;
-  }
-
   .grid-5, .grid-3 {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
@@ -576,10 +546,6 @@ h2 span { color: var(--brand-red); }
   .grid-5, .grid-3, .grid-2 {
     display: grid !important;
     grid-template-columns: 1fr !important;
-  }
-  
-  .hero-collage img {
-    height: 160px;
   }
   
   .card--text-feature {

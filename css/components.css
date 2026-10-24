@@ -11,13 +11,13 @@
   font-weight: 800;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--brand-red);
+  color: var(--muted-light);
   margin-bottom: 1rem;
 }
 .kicker::before {
   content: "";
   width: 0.5rem; height: 0.5rem;
-  background: currentColor;
+  background: var(--brand-red);
   border-radius: 1px;
 }
 .section--dark .kicker { color: var(--brand-accent-dark); }
@@ -119,16 +119,6 @@
   text-align: center;
 }
 
-.page-hero::before{
-  content:"";position:absolute;width:var(--ring-a-size);height:var(--ring-a-size);
-  border:var(--ring-a-thickness) solid var(--ring-a-color);border-radius:50%;
-  right:var(--ring-a-right);top:var(--ring-a-top);pointer-events:none;
-}
-.page-hero::after{
-  content:"";position:absolute;inset:0;opacity:var(--deco-grid-opacity);pointer-events:none;
-  background-image:linear-gradient(var(--deco-grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--deco-grid-color) 1px,transparent 1px);
-  background-size:var(--deco-grid-size) var(--deco-grid-size);mask-image:linear-gradient(90deg,#000,transparent 78%);
-}
 /* Decorative background rings */
 .page-hero::before {
   content: "";
