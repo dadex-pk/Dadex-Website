@@ -1081,7 +1081,7 @@ var(--bg-surface);
   width: 36px; height: 36px;
   background: rgba(255, 255, 255, 0.06);
   border-radius: 50%;
-  color: #fff;
+  var(--brand-accent-dark);
   font-size: 0.875rem;
   text-decoration: none;
   transition: background-color var(--transition), transform var(--transition);
@@ -1100,7 +1100,7 @@ var(--bg-surface);
   font-weight: 700;
   color: #fff;
 }
-.site-footer .footer-col h3 i { color: var(--brand-red); }
+.site-footer .footer-col h3 i { color: var(--brand-accent-dark); }
 
 .site-footer .footer-col > a,
 .site-footer .footer-legal a {
@@ -1141,7 +1141,7 @@ var(--bg-surface);
 }
 .site-footer .footer-contact-item i {
   margin-top: 0.2rem;
-  color: var(--brand-red);
+  color: var(--brand-accent-dark);
 }
 .site-footer .footer-contact-item a {
   color: #b3b3b3;
@@ -1165,18 +1165,15 @@ var(--bg-surface);
   justify-content: space-between;
   width: 100%;
   padding: 0.65rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-sm);
-  color: #fff;
+  color: var(--brand-accent-dark);
   font-size: 0.8125rem;
   font-weight: 600;
   text-decoration: none;
   transition: all var(--transition);
 }
 .site-footer .footer-cta-btn:hover {
-  background: var(--brand-red);
-  border-color: var(--brand-red);
+   color: var(--brand-accent-dark);
   transform: translateY(-2px);
 }
 
