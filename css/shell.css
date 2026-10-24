@@ -1119,7 +1119,7 @@ var(--bg-surface);
   font-size: 1.1rem;
   font-weight: 700;
   line-height: 1;
-  color: var(--muted);
+  color:  color: var(--brand-accent-dark);
   transition: color var(--transition);
 }
 .site-footer .footer-col > a:hover,
