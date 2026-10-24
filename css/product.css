@@ -164,7 +164,7 @@
 }
 .spec-table th {
   width: 25%;
-  background: var(--bg-mist);
+  background: rbga(255.0.0.0.1);
   font-weight: 700;
   color: var(--brand-red);
 }
