@@ -5,12 +5,12 @@
 /* --- Product Hero --- */
 .product-hero {
   background: var(--bg-surface);
-  padding: clamp(3rem, 6vw, 5rem) 0;
+  padding: clamp(3rem, 6vw, 5rem) 2rem;
   border-bottom: 1px solid var(--line);
 }
 .product-hero__inner {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
 }
@@ -20,14 +20,14 @@
 .product-hero__content h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.03em; }
 .product-hero__subtitle {
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--brand-red);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.7rem;
 }
-.product-hero__desc { font-size: 1.125rem; color: var(--muted); margin-bottom: 2rem; max-width: 50ch; }
+.product-hero__desc { font-size: 1.2rem; color: var(--muted); margin-bottom: 2rem; max-width: 50ch; }
 .product-hero__image {
   background: #fff;
-  padding: 0rem;
+  padding: 0 2rem 0 1rem;
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
