@@ -1,6 +1,6 @@
 /* ============================================================
    PAGE-SPECIFIC WIDGETS & LAYOUTS
-   (Projects, Videos, Dealers, Search, Literature, Legal)
+   (Projects, Videos, Dealers, Search, Literature, Legal, Products)
    ============================================================ */
 
 /* ============================================================
@@ -339,7 +339,96 @@
   color: var(--brand-red-dark);
 }
 
-/* --- Mobile Adjustments --- */
+/* ============================================================
+   9. PRODUCTS PAGE (Extracted from inline)
+   ============================================================ */
+
+/* Hero Stats */
+.products-hero-stats {
+  display: flex;
+  margin-top: 2rem;
+  gap: 2rem;
+  color: #fff;
+  flex-wrap: wrap;
+}
+
+.products-hero-stats .stat-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.products-hero-stats .stat-badge i {
+  color: var(--brand-accent-dark);
+}
+
+/* Category Headers */
+.products-page-header {
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  max-width: 100%;
+}
+
+.products-page-header h2 {
+  color: var(--brand-red);
+  margin-bottom: 0.5rem;
+}
+
+.products-page-header p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+/* Product Grids */
+.products-grid {
+  margin-bottom: 4rem;
+}
+
+/* Product Cards */
+.category-badge {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.card--product h3 {
+  color: var(--brand-red);
+  transition: color var(--transition);
+}
+
+.card--product:hover h3 {
+  color: var(--brand-red-dark);
+}
+
+/* Dark CTA Section */
+.products-cta {
+  border-top: 1px solid #333;
+}
+
+.products-cta .container {
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.products-cta h2 {
+  margin-bottom: 0;
+}
+
+.products-cta-content {
+  max-width: 500px;
+}
+
+.products-cta-content p {
+  margin-bottom: 1.5rem;
+}
+
+/* ============================================================
+   MOBILE ADJUSTMENTS
+   ============================================================ */
 @media (max-width: 768px) {
   .legal-content {
     padding: 2rem 1.5rem;
