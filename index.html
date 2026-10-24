@@ -104,14 +104,15 @@
     </div>
 
    
+<!-- HERO VISUAL: THREE-SLIDE IMAGE SLIDER -->
 <div class="home-hero__visual">
+  <div class="hero-slider" aria-label="Featured Dadex piping solutions">
 
-  <div class="hero-slider" aria-label="Dadex piping solutions">
-
-    <article class="hero-slide is-active">
+    <article class="hero-slide is-active" aria-hidden="false">
       <img
         src="assets/images/products/aquadex.webp"
         alt="Dadex Aquadex water supply piping"
+        fetchpriority="high"
       >
       <div class="hero-slide__caption">
         <span>01 / WATER SUPPLY</span>
@@ -120,7 +121,7 @@
       </div>
     </article>
 
-    <article class="hero-slide">
+    <article class="hero-slide" aria-hidden="true">
       <img
         src="assets/images/products/nikasi.webp"
         alt="Dadex Nikasi drainage piping system"
@@ -133,7 +134,7 @@
       </div>
     </article>
 
-    <article class="hero-slide">
+    <article class="hero-slide" aria-hidden="true">
       <img
         src="assets/images/products/tflex-gas.webp"
         alt="Dadex T-Flex gas piping system"
@@ -146,21 +147,17 @@
       </div>
     </article>
 
-    <div class="hero-slider__controls"
-         aria-label="Choose featured image">
+    <div class="hero-slider__controls" aria-label="Choose featured image">
       <button class="hero-slider__dot is-active"
-              type="button" aria-label="Show water supply"
-              aria-pressed="true"></button>
+        type="button" aria-label="Show water supply"
+        aria-pressed="true"></button>
       <button class="hero-slider__dot"
-              type="button" aria-label="Show drainage"
-              aria-pressed="false"></button>
+        type="button" aria-label="Show drainage"
+        aria-pressed="false"></button>
       <button class="hero-slider__dot"
-              type="button" aria-label="Show specialised systems"
-              aria-pressed="false"></button>
+        type="button" aria-label="Show specialised systems"
+        aria-pressed="false"></button>
     </div>
-
-  </div>
-</div>
 
   </div>
 </section>
@@ -171,55 +168,38 @@
 <section class="trust-bar" aria-label="Why choose Dadex">
   <div class="trust-bar__inner">
 
-    <!-- 1. Heritage -->
     <div class="trust-item">
-      <i class="fa-regular fa-calendar-days"
-         aria-hidden="true"></i>
+      <i class="fa-regular fa-calendar-days" aria-hidden="true"></i>
       <h3>Established in 1959</h3>
       <p>A legacy of engineering and manufacturing.</p>
     </div>
 
-    <!-- 2. Pioneer -->
     <div class="trust-item">
-      <i class="fa-solid fa-lightbulb"
-         aria-hidden="true"></i>
+      <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
       <h3>Pioneer of Thermoplastic Piping</h3>
       <p>Pioneering thermoplastic piping in Pakistan since 1992.</p>
     </div>
 
-    <!-- 3. Quality -->
     <div class="trust-item">
-      <i class="fa-solid fa-shield-halved"
-         aria-hidden="true"></i>
+      <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
       <h3>Quality You Can Trust</h3>
       <p>A commitment to product quality and reliability.</p>
     </div>
 
-    <!-- 4. Testing -->
     <div class="trust-item">
-      <i class="fa-solid fa-flask"
-         aria-hidden="true"></i>
+      <i class="fa-solid fa-flask" aria-hidden="true"></i>
       <h3>In-House Testing Laboratory</h3>
       <p>Dedicated facilities for product testing.</p>
     </div>
 
-    <!-- 5. Nationwide Network -->
     <div class="trust-item">
-      <span class="trust-item__map" aria-hidden="true">
-        <img src="/assets/images/pakistan-map.svg"
-             alt=""
-             width="38"
-             height="38"
-             loading="lazy">
-      </span>
+      <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
       <h3>Nationwide Network</h3>
       <p>Serving customers across Pakistan.</p>
     </div>
 
-    <!-- 6. Innovation -->
     <div class="trust-item">
-      <i class="fa-solid fa-gears"
-         aria-hidden="true"></i>
+      <i class="fa-solid fa-gears" aria-hidden="true"></i>
       <h3>Innovative Solutions</h3>
       <p>Piping solutions for evolving needs.</p>
     </div>
@@ -525,79 +505,122 @@
 <script src="js/main.js"></script>
 
 <script>
-document.querySelectorAll(".hero-slider").forEach((slider) => {
-  const slides = [...slider.querySelectorAll(".hero-slide")];
-  const dots = [...slider.querySelectorAll(".hero-slider__dot")];
 
-  if (slides.length !== 3 || dots.length !== 3) return;
+/* =========================================================
+   HOMEPAGE HERO SLIDER
+   ========================================================= */
 
-  let current = 0;
-  let timer;
-  let paused = false;
+(() => {
+  const sliders = document.querySelectorAll(".hero-slider");
 
-  function showSlide(index) {
-    current = (index + slides.length) % slides.length;
+  sliders.forEach((slider) => {
+    // Prevent duplicate initialisation.
+    if (slider.dataset.sliderReady === "true") return;
+    slider.dataset.sliderReady = "true";
 
-    slides.forEach((slide, i) => {
-      const active = i === current;
-      slide.classList.toggle("is-active", active);
-      slide.setAttribute("aria-hidden", String(!active));
-    });
+    const slides = Array.from(
+      slider.querySelectorAll(".hero-slide")
+    );
 
-    dots.forEach((dot, i) => {
-      const active = i === current;
-      dot.classList.toggle("is-active", active);
-      dot.setAttribute("aria-pressed", String(active));
-    });
-  }
+    const dots = Array.from(
+      slider.querySelectorAll(".hero-slider__dot")
+    );
 
-  function stopTimer() {
-    clearInterval(timer);
-  }
+    if (slides.length < 2 || slides.length !== dots.length) return;
 
-  function startTimer() {
-    stopTimer();
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
 
-    if (paused ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
+    let currentIndex = Math.max(
+      0,
+      slides.findIndex((slide) =>
+        slide.classList.contains("is-active")
+      )
+    );
+
+    let timer = null;
+    let paused = false;
+
+    function showSlide(index) {
+      currentIndex = (index + slides.length) % slides.length;
+
+      slides.forEach((slide, i) => {
+        const isActive = i === currentIndex;
+
+        slide.classList.toggle("is-active", isActive);
+        slide.setAttribute("aria-hidden", String(!isActive));
+      });
+
+      dots.forEach((dot, i) => {
+        const isActive = i === currentIndex;
+
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-pressed", String(isActive));
+      });
     }
 
-    timer = setInterval(() => showSlide(current + 1), 5000);
-  }
+    function stopTimer() {
+      if (timer !== null) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+    }
 
-  dots.forEach((dot, i) => {
-    dot.addEventListener("click", () => {
-      showSlide(i);
-      startTimer();
+    function startTimer() {
+      stopTimer();
+
+      if (paused || reducedMotion.matches) return;
+
+      timer = window.setInterval(() => {
+        showSlide(currentIndex + 1);
+      }, 5000);
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        showSlide(index);
+        startTimer();
+      });
     });
-  });
 
-  slider.addEventListener("mouseenter", () => {
-    paused = true;
-    stopTimer();
-  });
+    slider.addEventListener("mouseenter", () => {
+      paused = true;
+      stopTimer();
+    });
 
-  slider.addEventListener("mouseleave", () => {
-    paused = false;
-    startTimer();
-  });
-
-  slider.addEventListener("focusin", () => {
-    paused = true;
-    stopTimer();
-  });
-
-  slider.addEventListener("focusout", (event) => {
-    if (!slider.contains(event.relatedTarget)) {
+    slider.addEventListener("mouseleave", () => {
       paused = false;
       startTimer();
-    }
-  });
+    });
 
-  showSlide(0);
-  startTimer();
-});
+    slider.addEventListener("focusin", () => {
+      paused = true;
+      stopTimer();
+    });
+
+    slider.addEventListener("focusout", (event) => {
+      if (!slider.contains(event.relatedTarget)) {
+        paused = false;
+        startTimer();
+      }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        stopTimer();
+      } else {
+        startTimer();
+      }
+    });
+
+    reducedMotion.addEventListener?.("change", startTimer);
+
+    showSlide(currentIndex);
+    startTimer();
+  });
+})();
+
 </script>
 
 </body>
