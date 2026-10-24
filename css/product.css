@@ -82,7 +82,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-background: rgba(255, 0, 0, 0.2);
+
   gap: 0.75rem 1.25rem;
   margin: 0 0 2rem;
 }
@@ -172,20 +172,16 @@ background: rgba(255, 0, 0, 0.2);
   position: sticky;
   top: calc(var(--header-h-scrolled, var(--header-h, 76px)) + 0.5rem);
   z-index: 90;
-
   display: flex;
   align-items: center;
   gap: clamp(1.25rem, 2.5vw, 2rem);
-
   max-width: 100%;
   padding: 0.875rem 0;
   margin: 0 0 2rem;
-
   overflow-x: auto;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-
   background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(10px);
@@ -277,11 +273,10 @@ background: rgba(255, 0, 0, 0.2);
   text-align: left;
   vertical-align: top;
   color: var(--brand-red);
-  background: #FCEEEE;
+  background: rgba(255, 0, 0, 0.1);
   font-weight: 700;
   line-height: 1.6;
   overflow-wrap: break-word;
-
   border-bottom: 1px solid var(--line);
 }
 
@@ -296,7 +291,6 @@ background: rgba(255, 0, 0, 0.2);
   background-color: #FFF8F8;
 }
 
-/* Preserve the tinted header on the final row */
 .spec-table tr:last-child th,
 .spec-table tr:last-child td {
   border-bottom: none;
@@ -317,10 +311,8 @@ background: rgba(255, 0, 0, 0.2);
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-
   min-width: 0;
   padding: 1.5rem;
-
   background: var(--bg-mist);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
