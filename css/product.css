@@ -27,9 +27,8 @@
 .product-hero__desc { font-size: 1.125rem; color: var(--muted); margin-bottom: 2rem; max-width: 50ch; }
 .product-hero__image {
   background: #fff;
-  padding: 2rem;
+  padding: 0rem;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
   display: flex;
   align-items: center;
   justify-content: center;
