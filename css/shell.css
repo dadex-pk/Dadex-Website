@@ -109,8 +109,8 @@ body.nav-open { overflow: hidden; }
 .site-header .utility-bar {
   background: var(--bg-dark);
   color: var(--muted-light);
-  font-size: 11px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+  border-bottom:2px solid rgba(255, 255, 255, 0.1);
 }
 .site-header .utility-inner {
   display: flex;
@@ -144,13 +144,13 @@ body.nav-open { overflow: hidden; }
   width: 8rem; height: auto;
   transition: width var(--transition);
 }
-.site-header.is-scrolled .brand-logo { width: 6.5rem; }
+.site-header.is-scrolled .brand-logo { width: 6.3rem; }
 
 /* ---------- Primary nav ---------- */
 .site-header .site-navigation {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0.63rem;
   margin-left: auto;
   min-width: 0;
 }
@@ -159,9 +159,9 @@ body.nav-open { overflow: hidden; }
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  min-height: 44px;
-  padding: 10px 12px;
-  font-size: 13px;
+  min-height: 50px;
+  padding: 5px 15px;
+  font-size: 0.92rem;
   font-weight: 650;
   color: var(--text);
   text-decoration: none;
@@ -188,6 +188,7 @@ body.nav-open { overflow: hidden; }
   left: 10px; right: 10px; bottom: 4px;
   height: 2px;
   background: var(--brand-red);
+    color: var(--brand-red);
   border-radius: 2px;
   transform: scaleX(0);
   transform-origin: right center;
@@ -201,12 +202,14 @@ body.nav-open { overflow: hidden; }
   transform-origin: left center;
 }
 
+
 .site-header .dropdown-toggle .arrow {
   display: inline-flex;
   align-items: center; justify-content: center;
-  width: 14px; height: 14px;
-  font-size: 9px;
-  color: var(--muted-light);
+  width: 15px; height: 15px;
+  font-size: 0.63rem;
+  font-weight: 900;
+  color: var(--text);
   transition: transform var(--transition), color var(--transition);
 }
 .site-header .dropdown-toggle:hover .arrow,
@@ -218,10 +221,10 @@ body.nav-open { overflow: hidden; }
 .site-header .nav-search {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   margin-left: 8px;
   padding: 10px 16px;
-  background: var(--bg-mist);
+  background: var(--brand-red-light);
   border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 600;
@@ -243,20 +246,20 @@ body.nav-open { overflow: hidden; }
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 4px 12px;
-  min-height: 34px;
+  gap: 1.5rem;
+  min-height: 50px;
 }
 .site-header .header-products-row .dropdown-toggle,
 .site-header .header-products-row .tier2-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.5rem;
   padding: 9px 8px;
-  font-size: 11px;
-  letter-spacing: 1px;
+  font-size: 0.81rem;
+  letter-spacing: 0.72px;
   text-transform: uppercase;
-  font-weight: 750;
-  color: var(--text);
+  font-weight: 700;
+  color: var(--brand-red);
   text-decoration: none;
   background: transparent;
   border: 0;
@@ -266,8 +269,9 @@ body.nav-open { overflow: hidden; }
 .site-header .header-products-row .dropdown-toggle:hover,
 .site-header .header-products-row .dropdown-toggle[aria-expanded="true"],
 .site-header .header-products-row .tier2-link:hover {
-  color: var(--brand-red);
+  color: var(--text);
 }
+
 .site-header .header-products-row .dropdown-toggle .arrow {
   transition: transform var(--transition), color var(--transition);
 }
@@ -775,15 +779,14 @@ body.nav-open .back-to-top {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-  color: var(--brand-red));
+  color: var(--brand-red);
   font-size: 14px;
   cursor: pointer;
   transition: background-color var(--transition), color var(--transition);
 }
 .dexpert-close:hover {
-  background: var(--brand-red);
-  border-color: var(--brand-red);
-var(--bg-surface);
+  background: var(--brand-muted-light);
+  color: #fff;
 }
 
 .dexpert-body {

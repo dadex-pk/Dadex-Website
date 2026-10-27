@@ -1,5 +1,5 @@
 /* ============================================================
-   INVESTOR RELATIONS PAGE
+   INVESTOR RELATIONS PAGE (OPTIMIZED)
    ============================================================ */
 
 :root {
@@ -17,13 +17,11 @@ body.investors-page {
   top: var(--header-h);
   z-index: 50;
   background: #fff;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 2rem;
-  /* Soft shadow only when sticky-adherent */
+  border-bottom: 2px solid var(--line);
+  margin-bottom: 3rem;
   box-shadow: 0 1px 0 rgba(15, 18, 21, 0.02);
 }
 
-/* Gradient fade on the right edge signals horizontal scroll when tabs overflow */
 .ir-tabs::after {
   content: "";
   position: absolute;
@@ -41,9 +39,8 @@ body.investors-page {
   -ms-overflow-style: none;
   scroll-snap-type: x proximity;
   scroll-behavior: smooth;
-  /* Center the tabs when they fit on screen */
   justify-content: center;
-  /* Remove the right-padding so centering calculates perfectly */
+  align-items: center;
   padding-right: 0;
 }
 .ir-tabs-inner::-webkit-scrollbar { display: none; }
@@ -54,7 +51,7 @@ body.investors-page {
   align-items: center;
   gap: 0.5rem;
   min-height: var(--ir-tabs-h);
-  padding: 0 1.1rem;
+  padding: 0 1.5rem;
   border: 0;
   background: transparent;
   font-family: inherit;
@@ -71,11 +68,10 @@ body.investors-page {
   transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
-/* Dot before the label — only visible when active */
 .ir-tab::before {
   content: "";
-  width: 0.4rem;
-  height: 0.4rem;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: 50%;
   background: var(--brand-red);
   opacity: 0;
@@ -107,7 +103,7 @@ body.investors-page {
 .ir-layout {
   display: grid;
   grid-template-columns: 280px 1fr;
-  gap: 3rem;
+  gap: 2rem;
   align-items: start;
 }
 
@@ -117,7 +113,7 @@ body.investors-page {
   top: calc(var(--header-h) + var(--ir-tabs-h) + 1.5rem);
   background: #fff;
   border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
@@ -128,24 +124,23 @@ body.investors-page {
 .ir-side-link {
   position: relative;
   display: block;
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem 2.5rem 0.75rem 1.25rem; 
   color: var(--ink-light);
   font-size: 0.9375rem;
   border-left: 3px solid transparent;
+  border-bottom: 1px solid var(--line-soft);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-/* Hover */
 .ir-side-link:hover {
   background: var(--bg-mist);
   color: var(--ink);
   border-left-color: var(--line-soft);
 }
 
-/* Active link gets the red rail + tint + arrow */
 .ir-side-link.active {
-  background: #fdf5f5;
+  background: #fff2f2;
   color: var(--brand-red);
   border-left-color: var(--brand-red);
   font-weight: 700;
@@ -156,52 +151,91 @@ body.investors-page {
   right: 1.25rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1rem;
+  font-size: 1.25rem;
   line-height: 1;
   color: var(--brand-red);
   font-weight: 700;
 }
 
-/* ---------- Content panels ---------- */
+/* ---------- Content panels (The White Card) ---------- */
 .ir-panel { display: none; }
-.ir-panel.active { display: block; animation: fadeIn 0.3s ease; }
+.ir-panel.active { 
+  display: block; 
+  animation: fadeIn 0.3s ease; 
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 3rem;
+  box-shadow: var(--shadow-sm);
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(5px); }
   to   { opacity: 1; transform: none; }
 }
 
-/* A small red kicker rule above each h2 anchors panels visually */
 .ir-panel > h2 {
   position: relative;
-  padding-top: 0.85rem;
+  padding-top: 0.92rem;
   margin-bottom: 1.5rem;
-  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
 }
 .ir-panel > h2::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  width: 2rem;
-  height: 3px;
+  width: 3rem;
+  height: 4px;
   background: var(--brand-red);
   border-radius: 3px;
 }
 .ir-panel > h2 span { color: var(--brand-red); }
 
-/* Intro paragraphs get slightly more rhythm */
-.ir-panel > p {
-  color: var(--muted);
-  line-height: 1.75;
+/* Make H3 sub-headings inside panels look distinct */
+.ir-panel > h3 {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 0.5rem;
 }
 
-/* ---------- Data tables ---------- */
+/* Intro paragraphs */
+.ir-panel > p {
+  color: var(--muted);
+  line-height: 1.6;
+  min-width: 92%;
+}
+
+/* Consistent spacing for panels */
+.ir-panel > p + .grid,
+.ir-panel > p + .share-table {
+  margin-top: 1.5rem;
+}
+
+/* Premium text links */
+.ir-panel p a {
+  color: var(--brand-red);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  font-weight: 600;
+}
+.ir-panel p a:hover {
+  color: var(--brand-red-dark);
+  text-decoration-thickness: 2px;
+}
+
+/* ---------- Data tables (Consolidated) ---------- */
 .share-table {
   overflow-x: auto;
   margin-bottom: 2rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--line);
   background: #fff;
+  box-shadow: 0 4px 12px rgba(15, 18, 21, 0.02);
 }
 .share-table table {
   width: 100%;
@@ -217,6 +251,9 @@ body.investors-page {
 }
 .share-table th {
   background: var(--bg-mist);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--line);
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -229,15 +266,20 @@ body.investors-page {
 .share-table tbody tr:hover td {
   background: #fdf5f5;
 }
-.share-table tr:last-child td { border-bottom: none; }
 
-/* Footer row of totals gets emphasis */
+/* Bold Totals Row */
+.share-table tr:last-child td,
 .share-table tbody tr:last-child th,
 .share-table tfoot th {
-  background: var(--bg-mist);
-  color: var(--ink);
+  background: #fff;
+  border-top: 2px solid var(--brand-red);
+  border-bottom: none;
   font-weight: 800;
-  border-top: 2px solid var(--line);
+  color: var(--ink);
+}
+.share-table tbody tr:last-child th,
+.share-table tfoot th {
+  font-size: 0.875rem;
 }
 
 /* ---------- Stat blocks ---------- */
@@ -271,9 +313,10 @@ body.investors-page {
 }
 .ir-stat span {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.7rem; /* Refined smaller */
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--ink-light);
+  letter-spacing: 0.02em;
   font-weight: 800;
   margin-bottom: 0.5rem;
 }
@@ -291,34 +334,65 @@ body.investors-page {
   color: var(--muted-light);
 }
 
-/* ---------- Director cards (details/summary) ---------- */
-.director-card {
-  border-color: var(--line);
+/* ---------- Premium Data Grids (NTN, Offices, Management) ---------- */
+.ir-panel .grid > .card {
+  position: relative; /* Fixes anchoring for the ::before element */
+  padding: 1.5rem;
   background: #fff;
-}
-.director-card > summary {
-  transition: background-color 0.2s ease;
-}
-.director-card > summary:hover {
-  background: var(--bg-mist);
-}
-.director-card[open] {
-  border-color: rgba(229, 0, 0, 0.25);
-  box-shadow: 0 8px 24px rgba(15, 18, 21, 0.05);
-}
-.director-card[open] > summary {
-  background: #fffafa;
-  border-bottom: 1px solid var(--line-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-/* Remove default disclosure triangle in all engines */
-.director-card > summary::-webkit-details-marker { display: none; }
-.director-card > summary::marker { content: ""; }
-
-/* ---------- Resource cards (Annual Reports / etc.) ---------- */
-.ir-panel .card {
-  position: relative;
+.ir-panel .grid > .card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 1.5rem; right: 1.5rem;
+  height: 2px;
+  background: var(--brand-red);
+  opacity: 0.2;
+  border-radius: 0 0 2px 2px;
+  transition: opacity 0.2s ease;
 }
+
+.ir-panel .grid > .card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: rgba(229, 0, 0, 0.15);
+}
+.ir-panel .grid > .card:hover::before {
+  opacity: 0.6;
+}
+
+.ir-panel .grid > .card > span {
+  display: block;
+  font-size: 0.7rem; /* Refined smaller */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ink-light);
+  margin-bottom: 0.5rem;
+}
+
+.ir-panel .grid > .card > h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 0;
+  letter-spacing: -0.01em;
+}
+
+.ir-panel .grid > .card a {
+  color: var(--brand-red);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.ir-panel .grid > .card a:hover {
+  color: var(--brand-red-dark);
+  text-decoration: underline;
+}
+
+/* ---------- Resource Cards (Annual Reports, etc.) ---------- */
 .ir-panel .card .kicker {
   margin-bottom: 0.5rem;
 }
@@ -326,11 +400,135 @@ body.investors-page {
   color: var(--ink);
   letter-spacing: -0.01em;
 }
+
 .ir-panel .card .btn--outline {
-  align-self: flex-start;
+  position: relative;
+  width: 100%;
+  margin-top: auto;
+  background: var(--bg-mist);
+  border-color: transparent;
   font-size: 0.8125rem;
   padding: 0.5rem 0.9rem;
   min-height: 2.25rem;
+}
+
+.ir-panel .card .btn--outline:hover {
+  background: var(--brand-red);
+  color: #fff;
+  border-color: var(--brand-red);
+}
+
+.ir-panel .card .btn--outline::before {
+  content: "";
+  position: absolute;
+  top: -1.5rem; left: 0; right: 0;
+  height: 1px;
+  background: var(--line-soft);
+}
+
+/* ============================================================
+   PREMIUM DIRECTOR SPLIT LAYOUT
+   ============================================================ */
+
+.director-split-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+  align-items: start;
+}
+
+.director-list {
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid var(--line);
+}
+
+.director-name-btn {
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: -2px;
+}
+
+.director-name-btn strong {
+  display: block;
+  font-size: 1.0625rem;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.director-name-btn span {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.director-name-btn:hover {
+  background: var(--bg-mist);
+}
+.director-name-btn:hover strong {
+  color: var(--brand-red);
+}
+
+.director-name-btn.active {
+  background: #fdf5f5;
+  border-left-color: var(--brand-red);
+}
+.director-name-btn.active strong {
+  color: var(--brand-red);
+  font-weight: 800;
+}
+
+.director-bio-container {
+  position: relative;
+  padding-top: 0.5rem;
+  min-height: 400px; 
+}
+
+.director-bio {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.director-bio.active {
+  display: block;
+}
+
+.director-bio h3 {
+  font-size: 1.75rem;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
+}
+
+.director-bio .director-title {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--brand-red);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.director-bio p {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+.director-bio p:last-child {
+  margin-bottom: 0;
 }
 
 /* ============================================================
@@ -338,16 +536,13 @@ body.investors-page {
    ============================================================ */
 @media (max-width: 1024px) {
   body.investors-page {
-    /* Tabs are not sticky below this width — reset offset */
     --sticky-offset: calc(var(--header-h) + 1rem);
   }
   .ir-tabs { position: static; }
   .ir-tabs::after { display: none; }
-  .ir-sidebar { position: static; top: auto; }
-  .ir-layout { grid-template-columns: 1fr; gap: 2rem; }
-
-  /* Sidebar becomes a horizontal scroller on mobile */
-  .ir-sidebar {
+  .ir-sidebar { 
+    position: static; 
+    top: auto;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
@@ -355,6 +550,8 @@ body.investors-page {
     -ms-overflow-style: none;
   }
   .ir-sidebar::-webkit-scrollbar { display: none; }
+  .ir-layout { grid-template-columns: 1fr; gap: 2rem; }
+
   .ir-side-group.is-open {
     display: inline-flex;
     gap: 0;
@@ -373,6 +570,10 @@ body.investors-page {
   }
   .ir-side-link.active::after { display: none; }
 
+  .ir-panel.active {
+    padding: 1.5rem;
+  }
+
   .ir-panel > h2 {
     padding-top: 0.65rem;
   }
@@ -387,7 +588,33 @@ body.investors-page {
   }
 }
 
+@media (max-width: 900px) {
+  .director-split-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .director-list {
+    flex-direction: row;
+    overflow-x: auto;
+    border-left: none;
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+  }
+  .director-list::-webkit-scrollbar { display: none; }
+  
+  .director-name-btn {
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    padding: 1rem;
+    white-space: nowrap;
+    margin-left: 0;
+  }
+  .director-name-btn.active {
+    border-bottom-color: var(--brand-red);
+  }
+}
+
 @media (max-width: 480px) {
   .ir-stat strong { font-size: 1.75rem; }
 }
-
