@@ -137,7 +137,7 @@ body.nav-open { overflow: hidden; }
 .site-header .header-main-tier {
   background: var(--bg-surface);
   border-bottom: 1px solid var(--line);
-}
+  }
 .site-header .brand { display: inline-flex; align-items: center; text-decoration: none; }
 .site-header .brand-logo {
   display: block;
@@ -154,6 +154,7 @@ body.nav-open { overflow: hidden; }
   margin-left: auto;
   min-width: 0;
 }
+
 .site-header .site-navigation > a,
 .site-header .site-navigation .dropdown-toggle {
   display: inline-flex;
@@ -173,58 +174,76 @@ body.nav-open { overflow: hidden; }
   position: relative;
   transition: color var(--transition), background-color var(--transition);
 }
+
+/* Hover & Expanded States */
 .site-header .site-navigation > a:hover,
 .site-header .site-navigation .dropdown-toggle:hover,
 .site-header .site-navigation .dropdown-toggle[aria-expanded="true"] {
   color: var(--brand-red);
   background: rgba(229, 0, 0, 0.05);
 }
-.site-header .site-navigation .nav-active { color: var(--brand-red); }
 
+/* Active Item Text Color */
+.site-header .site-navigation .nav-active { 
+  color: var(--brand-red); 
+}
+
+/* 
+   RED LINE UNDER ACTIVE ITEM
+   Using a pseudo-element anchored to the bottom.
+*/
 .site-header .site-navigation > a:not(.nav-search)::after,
 .site-header .site-navigation .dropdown-toggle::after {
   content: "";
   position: absolute;
-  left: 10px; right: 10px; bottom: 4px;
-  height: 2px;
+  left: 15px; 
+  right: 15px; 
+  bottom: 0; 
+  height: 3px; 
   background: var(--brand-red);
-    color: var(--brand-red);
-  border-radius: 2px;
-  transform: scaleX(0);
-  transform-origin: right center;
-  transition: transform var(--transition);
+  border-radius: 3px 3px 0 0;
+  opacity: 0;
+  transition: opacity var(--transition);
 }
+
+/* Reveal the red line on active and hover states */
 .site-header .site-navigation .nav-active::after,
 .site-header .site-navigation > a:not(.nav-search):hover::after,
 .site-header .site-navigation .dropdown-toggle:hover::after,
 .site-header .site-navigation .dropdown-toggle[aria-expanded="true"]::after {
-  transform: scaleX(1);
-  transform-origin: left center;
+  opacity: 1;
 }
 
-
+/* Dropdown Arrow */
 .site-header .dropdown-toggle .arrow {
   display: inline-flex;
-  align-items: center; justify-content: center;
-  width: 15px; height: 15px;
+  align-items: center; 
+  justify-content: center;
+  width: 15px; 
+  height: 15px;
   font-size: 0.63rem;
   font-weight: 900;
   color: var(--text);
   transition: transform var(--transition), color var(--transition);
 }
+
 .site-header .dropdown-toggle:hover .arrow,
 .site-header .dropdown-toggle[aria-expanded="true"] .arrow {
   color: var(--brand-red);
   transform: rotate(180deg);
 }
 
+/* 
+   SEARCH BUTTON
+   Using a visible light-red background (approx 8% opacity).
+*/
 .site-header .nav-search {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   margin-left: 8px;
   padding: 10px 16px;
-  background: var(--brand-red-light);
+  background: rgba(229, 0, 0, 0.08); 
   border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 600;
@@ -232,9 +251,20 @@ body.nav-open { overflow: hidden; }
   text-decoration: none;
   transition: background-color var(--transition), color var(--transition);
 }
-.site-header .nav-search i { color: var(--brand-red); transition: color var(--transition); }
-.site-header .nav-search:hover { background: var(--brand-red); color: #fff; }
-.site-header .nav-search:hover i { color: #fff; }
+
+.site-header .nav-search i { 
+  color: var(--brand-red); 
+  transition: color var(--transition); 
+}
+
+.site-header .nav-search:hover { 
+  background: var(--brand-red); 
+  color: #fff; 
+}
+
+.site-header .nav-search:hover i { 
+  color: #fff; 
+}
 
 /* ---------- Products tier ---------- */
 .site-header .header-products-tier {
