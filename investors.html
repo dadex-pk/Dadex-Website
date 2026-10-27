@@ -59,7 +59,7 @@
 }
 </script>
 </head>
-<body class="core-page">
+<body class="core-page investors-page">
 <a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
 
@@ -73,609 +73,618 @@
   </section>
 
   <section class="section">
-    <div class="container ir-layout">
+    <div class="container">
 
-      <!-- Sidebar -->
-      <aside class="ir-sidebar" aria-label="Investor Relations sections">
-        <div class="ir-side-group is-open">
-          <div class="ir-side-title">Overview</div>
-          <a class="ir-side-link active" data-ir="overview" href="#overview">Investor Relations</a>
-          <a class="ir-side-link" data-ir="company-profile" href="#company-profile">Profile of Company</a>
-          <a class="ir-side-link" data-ir="management" href="#management">Management Team</a>
-          <a class="ir-side-link" data-ir="business" href="#business">Permissible Business</a>
+      <!-- Horizontal group tabs -->
+      <nav class="ir-tabs" aria-label="Investor Relations categories">
+        <div class="ir-tabs-inner">
+          <a class="ir-tab active" data-ir-group="overview" href="#overview" aria-current="true">Overview</a>
+          <a class="ir-tab" data-ir-group="company" href="#corporate">Company</a>
+          <a class="ir-tab" data-ir-group="governance" href="#governance">Governance</a>
+          <a class="ir-tab" data-ir-group="investors" href="#shareholding">Investors</a>
+          <a class="ir-tab" data-ir-group="reports" href="#annual">Reports</a>
+          <a class="ir-tab" data-ir-group="meetings" href="#agm">Meetings</a>
+          <a class="ir-tab" data-ir-group="compliance" href="#compliance">Compliance</a>
+          <a class="ir-tab" data-ir-group="contact" href="#contact">Contact</a>
         </div>
-        <div class="ir-side-group">
-          <div class="ir-side-title">Corporate Information</div>
-          <a class="ir-side-link" data-ir="corporate" href="#corporate">NTN &amp; Registration</a>
-          <a class="ir-side-link" data-ir="offices" href="#offices">Head Office &amp; Sales Offices</a>
-          <a class="ir-side-link" data-ir="associated" href="#associated">Associated Companies</a>
-        </div>
-        <div class="ir-side-group">
-          <div class="ir-side-title">Corporate Governance</div>
-          <a class="ir-side-link" data-ir="governance" href="#governance">Governance / Code of Conduct</a>
-          <a class="ir-side-link" data-ir="directors" href="#directors">Profile of Directors</a>
-          <a class="ir-side-link" data-ir="auditors" href="#auditors">Auditors</a>
-          <a class="ir-side-link" data-ir="legal" href="#legal">Legal Advisors</a>
-        </div>
-        <div class="ir-side-group">
-          <div class="ir-side-title">Investor Information</div>
-          <a class="ir-side-link" data-ir="shareholding" href="#shareholding">Pattern of Share Holding</a>
-          <a class="ir-side-link" data-ir="highlights" href="#highlights">Financial Highlights</a>
-          <a class="ir-side-link" data-ir="eps" href="#eps">Earnings Per Share</a>
-          <a class="ir-side-link" data-ir="registrar" href="#registrar">Share Registrar</a>
-          <a class="ir-side-link" data-ir="free-float" href="#free-float">Free Float Shares</a>
-        </div>
-        <div class="ir-side-group">
-          <div class="ir-side-title">Financial Reports</div>
-          <a class="ir-side-link" data-ir="annual" href="#annual">Annual Reports</a>
-          <a class="ir-side-link" data-ir="interim" href="#interim">Interim Accounts</a>
-        </div>
-        <div class="ir-side-group">
-          <div class="ir-side-title">Meetings &amp; Elections</div>
-          <a class="ir-side-link" data-ir="agm" href="#agm">AGM Notices</a>
-          <a class="ir-side-link" data-ir="shareholders" href="#shareholders">Notice to Shareholders</a>
-          <a class="ir-side-link" data-ir="proxy" href="#proxy">Proxy Form</a>
-          <a class="ir-side-link" data-ir="election" href="#election">Election of Directors</a>
-          <a class="ir-side-link" data-ir="candidates" href="#candidates">Profile of Candidates</a>
-        </div>
-        <div class="ir-side-group">
-          <div class="ir-side-title">Compliance &amp; Disclosures</div>
-          <a class="ir-side-link" data-ir="compliance" href="#compliance">Compliance &amp; Disclosures</a>
-          <a class="ir-side-link" data-ir="directors-report" href="#directors-report">Directors Report (Urdu)</a>
-          <a class="ir-side-link" data-ir="compliance-certificate" href="#compliance-certificate">Compliance Certificate</a>
-          <a class="ir-side-link" data-ir="policies" href="#policies">Company Policies</a>
-        </div>
-        <div class="ir-side-group">
-          <div class="ir-side-title">Investor Contact</div>
-          <a class="ir-side-link" data-ir="contact" href="#contact">Investor Contact</a>
-        </div>
-      </aside>
+      </nav>
 
-      <!-- Content Panels -->
-      <div class="ir-content">
+      <div class="ir-layout">
 
-        <!-- OVERVIEW -->
-        <section class="ir-panel active" data-ir-panel="overview" id="overview">
-          <h2>Investor <span>Relations</span></h2>
-          <p>Dadex Eternit Limited (DADX) is a public limited company listed on the Pakistan Stock Exchange. This Investor Relations centre brings together company information, governance, shareholder information, financial reporting and statutory disclosures.</p>
-          <div class="ir-stat-grid" style="margin-top: 2rem;">
-            <div class="ir-stat"><span>Established</span><strong>1959</strong></div>
-            <div class="ir-stat"><span>PSX Symbol</span><strong>DADX</strong></div>
-            <div class="ir-stat"><span>Fiscal Year End</span><strong>June</strong></div>
-            <div class="ir-stat"><span>Free Float</span><strong>5.00%</strong></div>
+        <!-- Sidebar (contextual: shows only the active group's links) -->
+        <aside class="ir-sidebar" aria-label="Investor Relations sections">
+          <div class="ir-side-group is-open" data-ir-group="overview">
+            <a class="ir-side-link active" data-ir="overview" href="#overview">Investor Relations</a>
+            <a class="ir-side-link" data-ir="company-profile" href="#company-profile">Profile of Company</a>
+            <a class="ir-side-link" data-ir="management" href="#management">Management Team</a>
+            <a class="ir-side-link" data-ir="business" href="#business">Permissible Business</a>
           </div>
-          <p style="margin-top: 1.5rem;">The latest audited financial information shown here is for the year ended <strong>30 June 2026</strong>.</p>
-        </section>
-
-        <!-- PROFILE OF COMPANY -->
-        <section class="ir-panel" data-ir-panel="company-profile" id="company-profile">
-          <h2>Profile of <span>Company</span></h2>
-          <p>Dadex was established as a public limited company in 1959. The company began with fibre-cement roofing systems in Hyderabad under the leadership of Founder Chairman Kassim Dada. Under the leadership of Sikander Dada, the business diversified into plastic piping systems.</p>
-          <p>Today Dadex manufactures thermoplastic systems including UPVC, PP-R, PP-RCT, PP and PE. Headquartered in Karachi, the company operates manufacturing facilities in Hyderabad and Sundar Industrial Estate near Lahore.</p>
-          <p>Dadex operations are supported by ISO 9001, ISO 14001 and ISO 45001 certifications together with PSQCA certification. Its focus is customer service, quality, innovation and reliable technical support.</p>
-        </section>
-
-        <!-- MANAGEMENT TEAM -->
-        <section class="ir-panel" data-ir-panel="management" id="management">
-          <h2>Management <span>Team</span></h2>
-          <div class="grid grid-2" style="margin-top: 1.5rem;">
-            <div class="card"><h3>Mr. Sikander Dada</h3><p style="color: var(--brand-red); font-weight: 700;">Chief Executive Officer</p></div>
-            <div class="card"><h3>Mr. Asim M. Khan</h3><p style="color: var(--brand-red); font-weight: 700;">Chief Operating Officer</p></div>
-            <div class="card"><h3>Mr. Muhammad Yousuf</h3><p style="color: var(--brand-red); font-weight: 700;">Chief Financial Officer &amp; Company Secretary</p></div>
-            <div class="card"><h3>Lt. Cdr. (Retd.) Saeed Ahmed Khan</h3><p style="color: var(--brand-red); font-weight: 700;">General Manager, Admin &amp; HR</p></div>
-            <div class="card"><h3>Mr. Muhammad Irfan</h3><p style="color: var(--brand-red); font-weight: 700;">Senior Manager Corporate &amp; Head of Internal Audit</p></div>
+          <div class="ir-side-group" data-ir-group="company">
+            <a class="ir-side-link" data-ir="corporate" href="#corporate">NTN &amp; Registration</a>
+            <a class="ir-side-link" data-ir="offices" href="#offices">Head Office &amp; Sales Offices</a>
+            <a class="ir-side-link" data-ir="associated" href="#associated">Associated Companies</a>
           </div>
-        </section>
-
-        <!-- PERMISSIBLE BUSINESS -->
-        <section class="ir-panel" data-ir-panel="business" id="business">
-          <h2>Permissible <span>Business</span></h2>
-          <p>The principal business of the Company is the manufacture and sale of construction material, mainly including piping systems and allied products manufactured from chrysotile fibre cement, rubber and plastics, together with merchandising of imported fittings, accessories and other building products.</p>
-        </section>
-
-        <!-- NTN & REGISTRATION -->
-        <section class="ir-panel" data-ir-panel="corporate" id="corporate">
-          <h2>NTN &amp; <span>Registration</span></h2>
-          <div class="grid grid-2" style="margin-top: 1.5rem;">
-            <div class="card"><span>Legal Name</span><h3>DADEX ETERNIT LIMITED</h3></div>
-            <div class="card"><span>NTN</span><h3>0800583-4</h3></div>
-            <div class="card"><span>Registration No.</span><h3>0000998</h3></div>
-            <div class="card"><span>Old Registration No.</span><h3>695/19590407</h3></div>
-            <div class="card"><span>Registration Date</span><h3>13 April 1959</h3></div>
-            <div class="card"><span>CRO</span><h3>Karachi</h3></div>
-            <div class="card"><span>PSX Symbol</span><h3>DADX</h3></div>
-            <div class="card"><span>Fiscal Year End</span><h3>June</h3></div>
+          <div class="ir-side-group" data-ir-group="governance">
+            <a class="ir-side-link" data-ir="governance" href="#governance">Governance / Code of Conduct</a>
+            <a class="ir-side-link" data-ir="directors" href="#directors">Profile of Directors</a>
+            <a class="ir-side-link" data-ir="auditors" href="#auditors">Auditors</a>
+            <a class="ir-side-link" data-ir="legal" href="#legal">Legal Advisors</a>
           </div>
-        </section>
+          <div class="ir-side-group" data-ir-group="investors">
+            <a class="ir-side-link" data-ir="shareholding" href="#shareholding">Pattern of Share Holding</a>
+            <a class="ir-side-link" data-ir="highlights" href="#highlights">Financial Highlights</a>
+            <a class="ir-side-link" data-ir="eps" href="#eps">Earnings Per Share</a>
+            <a class="ir-side-link" data-ir="registrar" href="#registrar">Share Registrar</a>
+            <a class="ir-side-link" data-ir="free-float" href="#free-float">Free Float Shares</a>
+          </div>
+          <div class="ir-side-group" data-ir-group="reports">
+            <a class="ir-side-link" data-ir="annual" href="#annual">Annual Reports</a>
+            <a class="ir-side-link" data-ir="interim" href="#interim">Interim Accounts</a>
+          </div>
+          <div class="ir-side-group" data-ir-group="meetings">
+            <a class="ir-side-link" data-ir="agm" href="#agm">AGM Notices</a>
+            <a class="ir-side-link" data-ir="shareholders" href="#shareholders">Notice to Shareholders</a>
+            <a class="ir-side-link" data-ir="proxy" href="#proxy">Proxy Form</a>
+            <a class="ir-side-link" data-ir="election" href="#election">Election of Directors</a>
+            <a class="ir-side-link" data-ir="candidates" href="#candidates">Profile of Candidates</a>
+          </div>
+          <div class="ir-side-group" data-ir-group="compliance">
+            <a class="ir-side-link" data-ir="compliance" href="#compliance">Compliance &amp; Disclosures</a>
+            <a class="ir-side-link" data-ir="directors-report" href="#directors-report">Directors Report (Urdu)</a>
+            <a class="ir-side-link" data-ir="compliance-certificate" href="#compliance-certificate">Compliance Certificate</a>
+            <a class="ir-side-link" data-ir="policies" href="#policies">Company Policies</a>
+          </div>
+          <div class="ir-side-group" data-ir-group="contact">
+            <a class="ir-side-link" data-ir="contact" href="#contact">Investor Contact</a>
+          </div>
+        </aside>
 
-        <!-- HEAD OFFICE & SALES OFFICES -->
-        <section class="ir-panel" data-ir-panel="offices" id="offices">
-          <h2>Head Office &amp; <span>Sales Offices</span></h2>
-          <div class="grid grid-2" style="margin-top: 1.5rem;">
-            <div class="card">
-              <h3>Head Office</h3>
-              <p>Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal, Karachi-75400.</p>
-              <p><strong>UAN:</strong> +92 21 111-000-789</p>
-              <p><strong>Email:</strong> info@dadex.com.pk</p>
+        <!-- Content Panels -->
+        <div class="ir-content">
+
+          <!-- OVERVIEW -->
+          <section class="ir-panel active" data-ir-panel="overview" id="overview">
+            <h2>Investor <span>Relations</span></h2>
+            <p>Dadex Eternit Limited (DADX) is a public limited company listed on the Pakistan Stock Exchange. This Investor Relations centre brings together company information, governance, shareholder information, financial reporting and statutory disclosures.</p>
+            <div class="ir-stat-grid" style="margin-top: 2rem;">
+              <div class="ir-stat"><span>Established</span><strong>1959</strong></div>
+              <div class="ir-stat"><span>PSX Symbol</span><strong>DADX</strong></div>
+              <div class="ir-stat"><span>Fiscal Year End</span><strong>June</strong></div>
+              <div class="ir-stat"><span>Free Float</span><strong>5.00%</strong></div>
             </div>
-            <div class="card">
-              <h3>Hyderabad Factory</h3>
-              <p>P.O. Box No. 10, Badin Road, Hyderabad.</p>
-              <p><strong>Tel:</strong> +92 22 3886534, 3886536</p>
+            <p style="margin-top: 1.5rem;">The latest audited financial information shown here is for the year ended <strong>30 June 2026</strong>.</p>
+          </section>
+
+          <!-- PROFILE OF COMPANY -->
+          <section class="ir-panel" data-ir-panel="company-profile" id="company-profile">
+            <h2>Profile of <span>Company</span></h2>
+            <p>Dadex was established as a public limited company in 1959. The company began with fibre-cement roofing systems in Hyderabad under the leadership of Founder Chairman Kassim Dada. Under the leadership of Sikander Dada, the business diversified into plastic piping systems.</p>
+            <p>Today Dadex manufactures thermoplastic systems including UPVC, PP-R, PP-RCT, PP and PE. Headquartered in Karachi, the company operates manufacturing facilities in Hyderabad and Sundar Industrial Estate near Lahore.</p>
+            <p>Dadex operations are supported by ISO 9001, ISO 14001 and ISO 45001 certifications together with PSQCA certification. Its focus is customer service, quality, innovation and reliable technical support.</p>
+          </section>
+
+          <!-- MANAGEMENT TEAM -->
+          <section class="ir-panel" data-ir-panel="management" id="management">
+            <h2>Management <span>Team</span></h2>
+            <div class="grid grid-2" style="margin-top: 1.5rem;">
+              <div class="card"><h3>Mr. Sikander Dada</h3><p style="color: var(--brand-red); font-weight: 700;">Chief Executive Officer</p></div>
+              <div class="card"><h3>Mr. Asim M. Khan</h3><p style="color: var(--brand-red); font-weight: 700;">Chief Operating Officer</p></div>
+              <div class="card"><h3>Mr. Muhammad Yousuf</h3><p style="color: var(--brand-red); font-weight: 700;">Chief Financial Officer &amp; Company Secretary</p></div>
+              <div class="card"><h3>Lt. Cdr. (Retd.) Saeed Ahmed Khan</h3><p style="color: var(--brand-red); font-weight: 700;">General Manager, Admin &amp; HR</p></div>
+              <div class="card"><h3>Mr. Muhammad Irfan</h3><p style="color: var(--brand-red); font-weight: 700;">Senior Manager Corporate &amp; Head of Internal Audit</p></div>
             </div>
-            <div class="card">
-              <h3>Sundar Factory</h3>
-              <p>Plot 561–561A, Sundar Industrial Estate, 43 KM Sundar Raiwind Road, Lahore.</p>
-              <p><strong>Tel:</strong> +92 42 35297530–33</p>
+          </section>
+
+          <!-- PERMISSIBLE BUSINESS -->
+          <section class="ir-panel" data-ir-panel="business" id="business">
+            <h2>Permissible <span>Business</span></h2>
+            <p>The principal business of the Company is the manufacture and sale of construction material, mainly including piping systems and allied products manufactured from chrysotile fibre cement, rubber and plastics, together with merchandising of imported fittings, accessories and other building products.</p>
+          </section>
+
+          <!-- NTN & REGISTRATION -->
+          <section class="ir-panel" data-ir-panel="corporate" id="corporate">
+            <h2>NTN &amp; <span>Registration</span></h2>
+            <div class="grid grid-2" style="margin-top: 1.5rem;">
+              <div class="card"><span>Legal Name</span><h3>DADEX ETERNIT LIMITED</h3></div>
+              <div class="card"><span>NTN</span><h3>0800583-4</h3></div>
+              <div class="card"><span>Registration No.</span><h3>0000998</h3></div>
+              <div class="card"><span>Old Registration No.</span><h3>695/19590407</h3></div>
+              <div class="card"><span>Registration Date</span><h3>13 April 1959</h3></div>
+              <div class="card"><span>CRO</span><h3>Karachi</h3></div>
+              <div class="card"><span>PSX Symbol</span><h3>DADX</h3></div>
+              <div class="card"><span>Fiscal Year End</span><h3>June</h3></div>
             </div>
-          </div>
-          <p style="margin-top: 1.5rem;">Sales offices and authorised distribution coverage extend across major Pakistani markets. Use the <a href="dealers.html">Dealer Finder</a> for the current dealer and distributor list.</p>
-        </section>
+          </section>
 
-        <!-- ASSOCIATED COMPANIES -->
-        <section class="ir-panel" data-ir-panel="associated" id="associated">
-          <h2>Associated <span>Companies</span></h2>
-          <p>Associated companies as reported in the FY2025-26 related-party disclosure.</p>
-          <div class="grid grid-2" style="margin-top: 1.5rem;">
-            <div class="card"><h3>Sikander (Private) Limited</h3><p>Holding company — 63.18% shareholding.</p></div>
-            <div class="card"><h3>Berger Paints Pakistan Limited</h3><p>Common directorship: Mr. Shahzad M. Husain.</p></div>
-            <div class="card"><h3>THK Solutions (Private) Limited</h3><p>Common directorship: Mr. Shahzad M. Husain.</p></div>
-            <div class="card"><h3>Muznash (Private) Limited</h3><p>Common directorship: Mr. Shahzad M. Husain.</p></div>
-          </div>
-        </section>
-
-        <!-- GOVERNANCE -->
-        <section class="ir-panel" data-ir-panel="governance" id="governance">
-          <h2><span>Governance</span> / Code of Conduct</h2>
-          <p>Dadex's governance principles emphasise honesty, integrity, legal and regulatory compliance, fair competition, responsible business conduct, product safety, environmental responsibility, reliable financial reporting, merit-based employment, confidentiality and avoidance or disclosure of conflicts of interest.</p>
-          <ol style="margin-top: 1rem; padding-left: 1.5rem; line-height: 1.8; color: var(--muted);">
-            <li>Conduct business honestly and ethically, respecting stakeholders.</li>
-            <li>Comply with Pakistani laws and regulations.</li>
-            <li>Support fair competition and comply with competition laws.</li>
-            <li>Do not support political parties or political-party interests.</li>
-            <li>Promote legitimate interests through trade associations.</li>
-            <li>Provide safe products offering value in price and quality.</li>
-            <li>Operate in an environmentally responsible manner and contribute to society.</li>
-            <li>Maintain reliable financial reporting and transparency.</li>
-            <li>Recruit and promote on merit and maintain safe working conditions.</li>
-            <li>Protect company information and assets and disclose conflicts of interest.</li>
-            <li>Board committees monitor compliance with these principles.</li>
-            <li>Management is responsible for enforcement of laws and regulations.</li>
-            <li>Do not facilitate arrangements involving proceeds of crime.</li>
-            <li>Treat work information as confidential unless publicly available.</li>
-          </ol>
-        </section>
-
-        <!-- PROFILE OF DIRECTORS -->
-        <section class="ir-panel" data-ir-panel="directors" id="directors">
-          <h2>Profile of <span>Directors</span></h2>
-          <p>The current Board composition is set out below. Click a Director to read their full profile.</p>
-
-          <div style="display: flex; justify-content: flex-end; margin: 1.5rem 0 1rem;">
-            <button id="directorToggleAll" type="button" aria-label="Toggle director profiles" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.9375rem; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font-family: inherit; font-weight: 700; font-size: 0.75rem; line-height: 1; letter-spacing: 0.02em; cursor: pointer;">
-              <i class="fas fa-chevron-down" aria-hidden="true"></i>
-              <span>Expand all</span>
-            </button>
-          </div>
-
-          <div class="grid grid-2" style="align-items: start;">
-
-            <details class="card director-card" style="padding: 0; overflow: hidden;">
-              <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
-                <div>
-                  <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Shahzad M. Husain</strong>
-                  <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Chairman / Non-Executive Director</span>
-                </div>
-                <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
-              </summary>
-              <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
-                <p style="margin-top: 1rem;">Mr. Shahzad M. Husain is a luminary in the realm of academia, holding the distinction of a Master's degree in Law and International Relations. His illustrious career is underscored by a rich tapestry of experiences and accomplishments. With two decades of dedicated service at Citibank, he exercised astute stewardship over Corporate and Wholesale Banking, exemplifying his acumen in the world of finance.</p>
-                <p>His footprint of influence extends beyond banking, as he has served as a pivotal figure on the boards of notable entities such as the Central Depository Company of Pakistan Limited, PICIC, and the esteemed Pakistan International Airlines.</p>
-                <p>Moreover, Mr. Shahzad M. Husain currently assumes the mantle of Chief Executive Officer at Muznash (Private) Limited, a consultancy firm that bears his imprimatur, established in 1998. This consultancy is renowned for its specialized prowess in the arena of financial advisory services, further underscoring his commitment to financial excellence.</p>
-                <p>In addition to his extensive portfolio of responsibilities, he lends his expertise as a Director on the distinguished board of Berger Paints Pakistan Limited, further enhancing the strategic landscape of this eminent organization.</p>
+          <!-- HEAD OFFICE & SALES OFFICES -->
+          <section class="ir-panel" data-ir-panel="offices" id="offices">
+            <h2>Head Office &amp; <span>Sales Offices</span></h2>
+            <div class="grid grid-2" style="margin-top: 1.5rem;">
+              <div class="card">
+                <h3>Head Office</h3>
+                <p>Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal, Karachi-75400.</p>
+                <p><strong>UAN:</strong> +92 21 111-000-789</p>
+                <p><strong>Email:</strong> info@dadex.com.pk</p>
               </div>
-            </details>
-
-            <details class="card director-card" style="padding: 0; overflow: hidden;">
-              <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
-                <div>
-                  <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Sikander Dada</strong>
-                  <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Chief Executive Officer / Executive Director</span>
-                </div>
-                <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
-              </summary>
-              <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
-                <p style="margin-top: 1rem;">Mr. Sikander Dada occupies a prominent position within the corporate sphere, with a multifaceted journey that warrants attention. In the past year, he assumed the role of the Company's Chief Executive Officer, marking a significant milestone in his illustrious career. His tenure began in 1989 and extended until May 2014, at which point he held the esteemed position of Chairman on the Board of Directors of the Company. Furthermore, from 2022 onwards, he resumed the role of CEO, embarking on a new phase in his remarkable journey, all the while preserving and advancing the visionary legacy of the late Founder Chairman, Mr. Kassim Dada.</p>
-                <p>Mr. Dada's narrative of leadership spans an impressive 24-year span. During this time, the Company flourished under his guidance, experiencing consistent growth in sales volume, diversification of the product portfolio, incorporation of cutting-edge production technologies, and the strategic repositioning of Dadex as a beacon of innovation, unwavering dedication to customers, and an unwavering symbol of reliability in the industry.</p>
-                <p>Educationally, Mr. Sikander Dada is the holder of a distinguished B.Sc (Hons.) in Economics from the esteemed London School of Economics at the University of London. Prior to his association with the Company, he sought knowledge and expertise through a series of technical and management training programs conducted in Belgium, Holland, and the United Kingdom, thereby enriching his reservoir of skills and insights.</p>
-                <p>His commitment to international engagement is underscored by his foundational involvement in esteemed entities such as the Pak-Belgium Business Forum (PBBF), the Pak-France Business Alliance, and the Pakistan India Business Forum. Additionally, his standing as a Member of the International Chamber of Commerce (ICC) and the SAARC Chamber of Commerce further exemplifies his global outlook. Furthermore, his role as one of the founding Trustees of the Duke of Edinburgh's Award Foundation in Pakistan reflects his deep-seated dedication to fostering personal development and achievement among the youth.</p>
-                <p>Mr. Sikander Dada's influence within the corporate landscape extends to his pivotal role in igniting a revolution in plastic piping within Pakistan, a testament to his unwavering commitment to technological progress. Furthermore, his collaborative efforts with the government in formulating policies for high-efficiency irrigation systems stand as a testament to his dedication to promoting sustainable development.</p>
-                <p>In addition to these diverse responsibilities, Mr. Dada concurrently serves as the Managing Director of Sikander (Private) Limited. His expertise and influence further extend to his role as a Director on the Board of Berger DPI (Private) Limited and Berdex Construction Chemicals (Private) Limited. Notably, his legacy of leadership includes a prior chairmanship of the Board at Berger Paints Pakistan Limited, solidifying his profound impact on the corporate landscape.</p>
+              <div class="card">
+                <h3>Hyderabad Factory</h3>
+                <p>P.O. Box No. 10, Badin Road, Hyderabad.</p>
+                <p><strong>Tel:</strong> +92 22 3886534, 3886536</p>
               </div>
-            </details>
-
-            <details class="card director-card" style="padding: 0; overflow: hidden;">
-              <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
-                <div>
-                  <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Abu Talib H.K. Dada</strong>
-                  <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Non-Executive Director</span>
-                </div>
-                <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
-              </summary>
-              <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
-                <p style="margin-top: 1rem;">Mr. Abu Talib H.K. Dada served as member in Board Human Resource &amp; Remuneration Committee.</p>
-                <p>Mr. Dada, a distinguished individual within the Company, received his early education in Bantva, India, until the year 1947, after which he continued his academic journey in Karachi, where he remained until 1953. His pursuit of higher education led him to England. As one of the Company's most significant shareholders and a Director since its inception, he plays an indispensable and influential role within the organization. Mr. Abu Talib H.K. Dada is one of the five brothers who sponsored the Company's establishment, and he continues to actively contribute as a valued member of the Board of Directors. It's noteworthy that he previously held the prestigious position of Chairman of the Board.</p>
-                <p>In addition to his corporate commitments, Mr. Abu Talib H.K. Dada is a dedicated philanthropist, demonstrating unwavering dedication to humanitarian causes. Since 1959, he has overseen the compassionate operations of Hooseni Yateem Khana, which serves as a charitable hospital. Furthermore, his civic engagement extends to his role as a Director of the Karachi Co-operative Housing Societies Union Limited. In the year 2000, he took on the responsibilities of a Director at the Sindh Provincial Co-operative Union, and for over a decade, since 2007, he has held the esteemed position of Vice President at the Sindh Provincial Co-operative Union.</p>
+              <div class="card">
+                <h3>Sundar Factory</h3>
+                <p>Plot 561–561A, Sundar Industrial Estate, 43 KM Sundar Raiwind Road, Lahore.</p>
+                <p><strong>Tel:</strong> +92 42 35297530–33</p>
               </div>
-            </details>
+            </div>
+            <p style="margin-top: 1.5rem;">Sales offices and authorised distribution coverage extend across major Pakistani markets. Use the <a href="dealers.html">Dealer Finder</a> for the current dealer and distributor list.</p>
+          </section>
 
-            <details class="card director-card" style="padding: 0; overflow: hidden;">
-              <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
-                <div>
-                  <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Khawaja Samiullah Askari</strong>
-                  <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Non-Executive Director</span>
+          <!-- ASSOCIATED COMPANIES -->
+          <section class="ir-panel" data-ir-panel="associated" id="associated">
+            <h2>Associated <span>Companies</span></h2>
+            <p>Associated companies as reported in the FY2025-26 related-party disclosure.</p>
+            <div class="grid grid-2" style="margin-top: 1.5rem;">
+              <div class="card"><h3>Sikander (Private) Limited</h3><p>Holding company — 63.18% shareholding.</p></div>
+              <div class="card"><h3>Berger Paints Pakistan Limited</h3><p>Common directorship: Mr. Shahzad M. Husain.</p></div>
+              <div class="card"><h3>THK Solutions (Private) Limited</h3><p>Common directorship: Mr. Shahzad M. Husain.</p></div>
+              <div class="card"><h3>Muznash (Private) Limited</h3><p>Common directorship: Mr. Shahzad M. Husain.</p></div>
+            </div>
+          </section>
+
+          <!-- GOVERNANCE -->
+          <section class="ir-panel" data-ir-panel="governance" id="governance">
+            <h2><span>Governance</span> / Code of Conduct</h2>
+            <p>Dadex's governance principles emphasise honesty, integrity, legal and regulatory compliance, fair competition, responsible business conduct, product safety, environmental responsibility, reliable financial reporting, merit-based employment, confidentiality and avoidance or disclosure of conflicts of interest.</p>
+            <ol style="margin-top: 1rem; padding-left: 1.5rem; line-height: 1.8; color: var(--muted);">
+              <li>Conduct business honestly and ethically, respecting stakeholders.</li>
+              <li>Comply with Pakistani laws and regulations.</li>
+              <li>Support fair competition and comply with competition laws.</li>
+              <li>Do not support political parties or political-party interests.</li>
+              <li>Promote legitimate interests through trade associations.</li>
+              <li>Provide safe products offering value in price and quality.</li>
+              <li>Operate in an environmentally responsible manner and contribute to society.</li>
+              <li>Maintain reliable financial reporting and transparency.</li>
+              <li>Recruit and promote on merit and maintain safe working conditions.</li>
+              <li>Protect company information and assets and disclose conflicts of interest.</li>
+              <li>Board committees monitor compliance with these principles.</li>
+              <li>Management is responsible for enforcement of laws and regulations.</li>
+              <li>Do not facilitate arrangements involving proceeds of crime.</li>
+              <li>Treat work information as confidential unless publicly available.</li>
+            </ol>
+          </section>
+
+          <!-- PROFILE OF DIRECTORS -->
+          <section class="ir-panel" data-ir-panel="directors" id="directors">
+            <h2>Profile of <span>Directors</span></h2>
+            <p>The current Board composition is set out below. Click a Director to read their full profile.</p>
+
+            <div style="display: flex; justify-content: flex-end; margin: 1.5rem 0 1rem;">
+              <button id="directorToggleAll" type="button" aria-label="Toggle director profiles" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.9375rem; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font-family: inherit; font-weight: 700; font-size: 0.75rem; line-height: 1; letter-spacing: 0.02em; cursor: pointer;">
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                <span>Expand all</span>
+              </button>
+            </div>
+
+            <div class="grid grid-2" style="align-items: start;">
+
+              <details class="card director-card" style="padding: 0; overflow: hidden;">
+                <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                  <div>
+                    <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Shahzad M. Husain</strong>
+                    <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Chairman / Non-Executive Director</span>
+                  </div>
+                  <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
+                </summary>
+                <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
+                  <p style="margin-top: 1rem;">Mr. Shahzad M. Husain is a luminary in the realm of academia, holding the distinction of a Master's degree in Law and International Relations. His illustrious career is underscored by a rich tapestry of experiences and accomplishments. With two decades of dedicated service at Citibank, he exercised astute stewardship over Corporate and Wholesale Banking, exemplifying his acumen in the world of finance.</p>
+                  <p>His footprint of influence extends beyond banking, as he has served as a pivotal figure on the boards of notable entities such as the Central Depository Company of Pakistan Limited, PICIC, and the esteemed Pakistan International Airlines.</p>
+                  <p>Moreover, Mr. Shahzad M. Husain currently assumes the mantle of Chief Executive Officer at Muznash (Private) Limited, a consultancy firm that bears his imprimatur, established in 1998. This consultancy is renowned for its specialized prowess in the arena of financial advisory services, further underscoring his commitment to financial excellence.</p>
+                  <p>In addition to his extensive portfolio of responsibilities, he lends his expertise as a Director on the distinguished board of Berger Paints Pakistan Limited, further enhancing the strategic landscape of this eminent organization.</p>
                 </div>
-                <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
-              </summary>
-              <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
-                <p style="margin-top: 1rem;">A biography for this Director has not yet been provided.</p>
-              </div>
-            </details>
+              </details>
 
-            <details class="card director-card" style="padding: 0; overflow: hidden;">
-              <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
-                <div>
-                  <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Syed Shahid Ali Bukhari</strong>
-                  <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Independent Director</span>
+              <details class="card director-card" style="padding: 0; overflow: hidden;">
+                <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                  <div>
+                    <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Sikander Dada</strong>
+                    <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Chief Executive Officer / Executive Director</span>
+                  </div>
+                  <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
+                </summary>
+                <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
+                  <p style="margin-top: 1rem;">Mr. Sikander Dada occupies a prominent position within the corporate sphere, with a multifaceted journey that warrants attention. In the past year, he assumed the role of the Company's Chief Executive Officer, marking a significant milestone in his illustrious career. His tenure began in 1989 and extended until May 2014, at which point he held the esteemed position of Chairman on the Board of Directors of the Company. Furthermore, from 2022 onwards, he resumed the role of CEO, embarking on a new phase in his remarkable journey, all the while preserving and advancing the visionary legacy of the late Founder Chairman, Mr. Kassim Dada.</p>
+                  <p>Mr. Dada's narrative of leadership spans an impressive 24-year span. During this time, the Company flourished under his guidance, experiencing consistent growth in sales volume, diversification of the product portfolio, incorporation of cutting-edge production technologies, and the strategic repositioning of Dadex as a beacon of innovation, unwavering dedication to customers, and an unwavering symbol of reliability in the industry.</p>
+                  <p>Educationally, Mr. Sikander Dada is the holder of a distinguished B.Sc (Hons.) in Economics from the esteemed London School of Economics at the University of London. Prior to his association with the Company, he sought knowledge and expertise through a series of technical and management training programs conducted in Belgium, Holland, and the United Kingdom, thereby enriching his reservoir of skills and insights.</p>
+                  <p>His commitment to international engagement is underscored by his foundational involvement in esteemed entities such as the Pak-Belgium Business Forum (PBBF), the Pak-France Business Alliance, and the Pakistan India Business Forum. Additionally, his standing as a Member of the International Chamber of Commerce (ICC) and the SAARC Chamber of Commerce further exemplifies his global outlook. Furthermore, his role as one of the founding Trustees of the Duke of Edinburgh's Award Foundation in Pakistan reflects his deep-seated dedication to fostering personal development and achievement among the youth.</p>
+                  <p>Mr. Sikander Dada's influence within the corporate landscape extends to his pivotal role in igniting a revolution in plastic piping within Pakistan, a testament to his unwavering commitment to technological progress. Furthermore, his collaborative efforts with the government in formulating policies for high-efficiency irrigation systems stand as a testament to his dedication to promoting sustainable development.</p>
+                  <p>In addition to these diverse responsibilities, Mr. Dada concurrently serves as the Managing Director of Sikander (Private) Limited. His expertise and influence further extend to his role as a Director on the Board of Berger DPI (Private) Limited and Berdex Construction Chemicals (Private) Limited. Notably, his legacy of leadership includes a prior chairmanship of the Board at Berger Paints Pakistan Limited, solidifying his profound impact on the corporate landscape.</p>
                 </div>
-                <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
-              </summary>
-              <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
-                <p style="margin-top: 1rem;">Syed Shahid Ali Bukhari served as an Independent Director on the Company's Board. In this capacity, he assumed the pivotal role of leading the Board Audit Committee. His professional journey encompasses diverse experiences in various sectors of trade and commerce.</p>
-                <p>Mr. Bukhari initiated his career by working with several firms engaged in General trading in Karachi, focusing on the importation of chemicals and tea. Impressively, he ventured into establishing a General trading company in Dubai, with a primary focus on the trade of organic fertilizers and media. Beyond these trading ventures, he also made significant contributions to the fields of commercial construction and poultry farming.</p>
-                <p>Educationally, Mr. Bukhari completed his A-Levels at Karachi Grammar Schools before embarking on a transformative journey. He commenced his professional path as an articled clerk at the C.A. firm Somers Baker in London, following the successful completion of his foundation course at the Middlesex Institute.</p>
-                <p>Mr. Bukhari's commitment to excellence is exemplified by his attainment of Certified Director status. His unwavering dedication to ongoing learning is further underscored by his participation in the Directors' Training Program, which he completed at The Executive Development Center (EDC) of The University of Lahore. Notably, The University of Lahore is recognized as one of the approved institutions by the SECP for providing Directors' Training Programs in Pakistan. This attests to his commitment to upholding the highest standards of corporate governance and directorship.</p>
-                <p>Mr. Bukhari has completed three consecutive terms as an Independent Director of the Company. He remains eligible to contest the forthcoming election of Directors as a Non-Executive Director at the 67th Annual General Meeting scheduled for 27 October 2026.</p>
-              </div>
-            </details>
+              </details>
 
-            <details class="card director-card" style="padding: 0; overflow: hidden;">
-              <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
-                <div>
-                  <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Ayesha Tariq Allawala</strong>
-                  <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Independent Director</span>
+              <details class="card director-card" style="padding: 0; overflow: hidden;">
+                <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                  <div>
+                    <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Abu Talib H.K. Dada</strong>
+                    <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Non-Executive Director</span>
+                  </div>
+                  <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
+                </summary>
+                <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
+                  <p style="margin-top: 1rem;">Mr. Abu Talib H.K. Dada served as member in Board Human Resource &amp; Remuneration Committee.</p>
+                  <p>Mr. Dada, a distinguished individual within the Company, received his early education in Bantva, India, until the year 1947, after which he continued his academic journey in Karachi, where he remained until 1953. His pursuit of higher education led him to England. As one of the Company's most significant shareholders and a Director since its inception, he plays an indispensable and influential role within the organization. Mr. Abu Talib H.K. Dada is one of the five brothers who sponsored the Company's establishment, and he continues to actively contribute as a valued member of the Board of Directors. It's noteworthy that he previously held the prestigious position of Chairman of the Board.</p>
+                  <p>In addition to his corporate commitments, Mr. Abu Talib H.K. Dada is a dedicated philanthropist, demonstrating unwavering dedication to humanitarian causes. Since 1959, he has overseen the compassionate operations of Hooseni Yateem Khana, which serves as a charitable hospital. Furthermore, his civic engagement extends to his role as a Director of the Karachi Co-operative Housing Societies Union Limited. In the year 2000, he took on the responsibilities of a Director at the Sindh Provincial Co-operative Union, and for over a decade, since 2007, he has held the esteemed position of Vice President at the Sindh Provincial Co-operative Union.</p>
                 </div>
-                <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
-              </summary>
-              <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
-                <p style="margin-top: 1rem;">During her tenure, Mrs. Ayesha Tariq Allawala served as the Chairperson of the Board Human Resource &amp; Remuneration Sub-Committee, a role she undertook as an Independent Director, in compliance with legal requirements. Her leadership of the committee was nothing short of remarkable.</p>
-                <p>Ayesha's educational journey was highlighted by her attainment of both a Bachelor's degree and a Master's degree in Business Administration, a milestone she achieved in the year 2014. This noteworthy accomplishment was earned at the prestigious Institute of Business Administration (IBA) in Karachi.</p>
-                <p>For a significant period spanning five years, she dedicated her time and expertise to The Citizens Foundation. During her service with the organization, Ayesha held multifaceted roles, which encompassed the management of volunteer programs, administration of scholarships for alumni, and the facilitation of invaluable career counseling sessions. Her unwavering commitment is further reflected in her current role as a volunteer, where she actively engages in fundraising efforts to ensure the organization's continued success in pursuing its noble mission.</p>
-                <p>Furthermore, for an impressive duration of eight years, Ayesha actively participated in Rotaract, a dynamic program tailored for individuals aged between 18 and 30, under the auspices of Rotary International. Throughout her engagement with Rotaract, she took on a multitude of leadership positions, both at the club level and within the district. Her journey within the organization culminated in her attaining the highest possible role, that of the District Rotaract Representative.</p>
-              </div>
-            </details>
+              </details>
 
-            <details class="card director-card" style="padding: 0; overflow: hidden;">
-              <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
-                <div>
-                  <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Amber Ahmed Motiwala</strong>
-                  <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Female Director</span>
+              <details class="card director-card" style="padding: 0; overflow: hidden;">
+                <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                  <div>
+                    <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Khawaja Samiullah Askari</strong>
+                    <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Non-Executive Director</span>
+                  </div>
+                  <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
+                </summary>
+                <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
+                  <p style="margin-top: 1rem;">A biography for this Director has not yet been provided.</p>
                 </div>
-                <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
-              </summary>
-              <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
-                <p style="margin-top: 1rem;">Amber Ahmed Motiwala, a distinguished member of the organization, held the pivotal position of serving on the Board Audit Committee. Her contributions in this role were nothing short of instrumental, as she actively shaped the committee's deliberations and decisions.</p>
-                <p>Mrs. Motiwala's educational journey began at Karachi Grammar School, where she embarked on her scholastic voyage from nursery all the way to A-levels. Following her academic pursuits, she ventured into the world of business, having completed her Bachelor of Commerce degree. Subsequently, she ventured into the entrepreneurial realm, launching an infant clothing business that she skillfully managed for a successful five-year span.</p>
-                <p>Beyond her professional endeavors, she passionately immersed herself in the domain of swimming events. Over the years, her dedication and expertise proved invaluable in orchestrating swimming events at prestigious institutions such as Karachi Gymkhana and Sindh Swimming Association, spanning provincial and national levels. Her unwavering commitment is further exemplified by her more than decade-long service on the swimming sub-committee of Karachi Gymkhana.</p>
-                <p>Currently, Mrs. Motiwala occupies the esteemed position of Vice President within the Sindh Swimming Association, playing a central role in guiding the organization's aquatic pursuits. In addition to her aquatic commitments, she serves as the Honorary Secretary of the ladies' physical fitness gym at Karachi Gymkhana, demonstrating her dedication to promoting physical well-being and fitness within the community.</p>
-              </div>
-            </details>
+              </details>
 
-          </div>
-        </section>
+              <details class="card director-card" style="padding: 0; overflow: hidden;">
+                <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                  <div>
+                    <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Syed Shahid Ali Bukhari</strong>
+                    <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Independent Director</span>
+                  </div>
+                  <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
+                </summary>
+                <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
+                  <p style="margin-top: 1rem;">Syed Shahid Ali Bukhari served as an Independent Director on the Company's Board. In this capacity, he assumed the pivotal role of leading the Board Audit Committee. His professional journey encompasses diverse experiences in various sectors of trade and commerce.</p>
+                  <p>Mr. Bukhari initiated his career by working with several firms engaged in General trading in Karachi, focusing on the importation of chemicals and tea. Impressively, he ventured into establishing a General trading company in Dubai, with a primary focus on the trade of organic fertilizers and media. Beyond these trading ventures, he also made significant contributions to the fields of commercial construction and poultry farming.</p>
+                  <p>Educationally, Mr. Bukhari completed his A-Levels at Karachi Grammar Schools before embarking on a transformative journey. He commenced his professional path as an articled clerk at the C.A. firm Somers Baker in London, following the successful completion of his foundation course at the Middlesex Institute.</p>
+                  <p>Mr. Bukhari's commitment to excellence is exemplified by his attainment of Certified Director status. His unwavering dedication to ongoing learning is further underscored by his participation in the Directors' Training Program, which he completed at The Executive Development Center (EDC) of The University of Lahore. Notably, The University of Lahore is recognized as one of the approved institutions by the SECP for providing Directors' Training Programs in Pakistan. This attests to his commitment to upholding the highest standards of corporate governance and directorship.</p>
+                  <p>Mr. Bukhari has completed three consecutive terms as an Independent Director of the Company. He remains eligible to contest the forthcoming election of Directors as a Non-Executive Director at the 67th Annual General Meeting scheduled for 27 October 2026.</p>
+                </div>
+              </details>
 
-        <!-- AUDITORS -->
-        <section class="ir-panel" data-ir-panel="auditors" id="auditors">
-          <h2><span>Auditors</span></h2>
-          <h3>BDO Ebrahim &amp; Co., Chartered Accountants</h3>
-          <p>Statutory auditor of Dadex Eternit Limited. Reappointment for the year ending 30 June 2027 was recommended by the Board Audit Committee and proposed at the 67th AGM.</p>
-          <div class="card">
-            <h3>Registered Address</h3>
-            <p>2nd Floor, Block-C, Lakson Square Building No. 1, Sarwar Shaheed Road, Karachi-74200, Pakistan.</p>
-            <p>Office: +92 21 3568 3030</p>
-          </div>
-        </section>
+              <details class="card director-card" style="padding: 0; overflow: hidden;">
+                <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                  <div>
+                    <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Ayesha Tariq Allawala</strong>
+                    <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Independent Director</span>
+                  </div>
+                  <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
+                </summary>
+                <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
+                  <p style="margin-top: 1rem;">During her tenure, Mrs. Ayesha Tariq Allawala served as the Chairperson of the Board Human Resource &amp; Remuneration Sub-Committee, a role she undertook as an Independent Director, in compliance with legal requirements. Her leadership of the committee was nothing short of remarkable.</p>
+                  <p>Ayesha's educational journey was highlighted by her attainment of both a Bachelor's degree and a Master's degree in Business Administration, a milestone she achieved in the year 2014. This noteworthy accomplishment was earned at the prestigious Institute of Business Administration (IBA) in Karachi.</p>
+                  <p>For a significant period spanning five years, she dedicated her time and expertise to The Citizens Foundation. During her service with the organization, Ayesha held multifaceted roles, which encompassed the management of volunteer programs, administration of scholarships for alumni, and the facilitation of invaluable career counseling sessions. Her unwavering commitment is further reflected in her current role as a volunteer, where she actively engages in fundraising efforts to ensure the organization's continued success in pursuing its noble mission.</p>
+                  <p>Furthermore, for an impressive duration of eight years, Ayesha actively participated in Rotaract, a dynamic program tailored for individuals aged between 18 and 30, under the auspices of Rotary International. Throughout her engagement with Rotaract, she took on a multitude of leadership positions, both at the club level and within the district. Her journey within the organization culminated in her attaining the highest possible role, that of the District Rotaract Representative.</p>
+                </div>
+              </details>
 
-        <!-- LEGAL ADVISORS -->
-        <section class="ir-panel" data-ir-panel="legal" id="legal">
-          <h2>Legal <span>Advisors</span></h2>
-          <h3>Abrar Hasan &amp; Co.</h3>
-          <p>9 Mezzanine Floor, Beaumont Plaza, near PIDC House, Karachi.</p>
-        </section>
+              <details class="card director-card" style="padding: 0; overflow: hidden;">
+                <summary style="padding: 1.5rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                  <div>
+                    <strong style="display: block; font-size: 1.125rem; color: var(--ink);">Amber Ahmed Motiwala</strong>
+                    <span style="display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brand-red); margin-top: 0.25rem;">Female Director</span>
+                  </div>
+                  <i class="fas fa-chevron-down" aria-hidden="true" style="color: var(--muted); flex-shrink: 0;"></i>
+                </summary>
+                <div style="padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--line); font-size: 0.9375rem; color: var(--muted); line-height: 1.75;">
+                  <p style="margin-top: 1rem;">Amber Ahmed Motiwala, a distinguished member of the organization, held the pivotal position of serving on the Board Audit Committee. Her contributions in this role were nothing short of instrumental, as she actively shaped the committee's deliberations and decisions.</p>
+                  <p>Mrs. Motiwala's educational journey began at Karachi Grammar School, where she embarked on her scholastic voyage from nursery all the way to A-levels. Following her academic pursuits, she ventured into the world of business, having completed her Bachelor of Commerce degree. Subsequently, she ventured into the entrepreneurial realm, launching an infant clothing business that she skillfully managed for a successful five-year span.</p>
+                  <p>Beyond her professional endeavors, she passionately immersed herself in the domain of swimming events. Over the years, her dedication and expertise proved invaluable in orchestrating swimming events at prestigious institutions such as Karachi Gymkhana and Sindh Swimming Association, spanning provincial and national levels. Her unwavering commitment is further exemplified by her more than decade-long service on the swimming sub-committee of Karachi Gymkhana.</p>
+                  <p>Currently, Mrs. Motiwala occupies the esteemed position of Vice President within the Sindh Swimming Association, playing a central role in guiding the organization's aquatic pursuits. In addition to her aquatic commitments, she serves as the Honorary Secretary of the ladies' physical fitness gym at Karachi Gymkhana, demonstrating her dedication to promoting physical well-being and fitness within the community.</p>
+                </div>
+              </details>
 
-        <!-- PATTERN OF SHARE HOLDING -->
-        <section class="ir-panel" data-ir-panel="shareholding" id="shareholding">
-          <h2>Pattern of <span>Share Holding</span></h2>
-          <p><strong>As at 30 June 2026</strong></p>
-          <div class="share-table">
-            <table>
-              <thead><tr><th>Category</th><th>Shares</th><th>%</th></tr></thead>
-              <tbody>
-                <tr><td>Associated Companies, Undertakings &amp; Related Parties</td><td>6,800,648</td><td>63.18%</td></tr>
-                <tr><td>Directors, CEO &amp; their Spouses</td><td>1,705,426</td><td>15.84%</td></tr>
-                <tr><td>Executives</td><td>81</td><td>0.00%</td></tr>
-                <tr><td>Banks, Insurance Company &amp; Others</td><td>56,065</td><td>0.52%</td></tr>
-                <tr><td>General Public</td><td>2,201,739</td><td>20.45%</td></tr>
-                <tr><th>Total</th><th>10,763,959</th><th>100.00%</th></tr>
-              </tbody>
-            </table>
-          </div>
-          <h3>Shareholders holding 5% or more voting interest</h3>
-          <div class="share-table">
-            <table>
-              <thead><tr><th>Shareholder</th><th>Shares</th><th>%</th></tr></thead>
-              <tbody>
-                <tr><td>Sikander (Private) Limited</td><td>6,800,648</td><td>63.18%</td></tr>
-                <tr><td>Mr. Sikander Dada</td><td>1,298,335</td><td>12.06%</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p>No transactions in the shares of the Company were carried out by Directors, their spouses or minors during the year.</p>
-        </section>
+            </div>
+          </section>
 
-        <!-- FINANCIAL HIGHLIGHTS -->
-        <section class="ir-panel" data-ir-panel="highlights" id="highlights">
-          <h2>Financial <span>Highlights</span></h2>
-          <p>All figures are in PKR thousands except EPS.</p>
-          <div class="ir-stat-grid">
-            <div class="ir-stat"><span>FY2026 Net Sales</span><strong>959,910</strong><small>PKR thousands</small></div>
-            <div class="ir-stat"><span>FY2026 Net Profit</span><strong>479,682</strong><small>PKR thousands</small></div>
-            <div class="ir-stat"><span>FY2026 EPS</span><strong>44.56</strong><small>Rupees</small></div>
-            <div class="ir-stat"><span>Break-up Value per Share</span><strong>84.96</strong><small>Rupees (2025: 40.39)</small></div>
-          </div>
-          <h3>FY2026 comparison</h3>
-          <div class="share-table">
-            <table>
-              <thead><tr><th>Metric</th><th>2026</th><th>2025</th></tr></thead>
-              <tbody>
-                <tr><td>Net Sales</td><td>959,910</td><td>780,943</td></tr>
-                <tr><td>Gross Profit / (Loss)</td><td>(4,052)</td><td>(45,674)</td></tr>
-                <tr><td>Operating Profit / (Loss)</td><td>592,679</td><td>(259,677)</td></tr>
-                <tr><td>Profit / (Loss) Before Tax</td><td>516,723</td><td>(390,287)</td></tr>
-                <tr><td>Net Profit / (Loss)</td><td>479,682</td><td>(407,047)</td></tr>
-                <tr><td>EPS (Rupees)</td><td>44.56</td><td>(37.82)</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <h3>Six-year financial summary (Rupees in millions)</h3>
-          <div class="share-table">
-            <table>
-              <thead><tr><th>Year</th><th>2026</th><th>2025</th><th>2024</th><th>2023</th><th>2022</th><th>2021</th></tr></thead>
-              <tbody>
-                <tr><td>Net Sales</td><td>959.9</td><td>780.9</td><td>1,119.3</td><td>1,401.2</td><td>1,696.8</td><td>2,444.5</td></tr>
-                <tr><td>Profit / (Loss) After Tax</td><td>479.7</td><td>(407.0)</td><td>(350.4)</td><td>(420.0)</td><td>(142.9)</td><td>(39.0)</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p>FY2026 net profit is primarily attributable to the gain realised on disposal of assets held for sale. The Company declared a final cash dividend of Rs. Nil per share for the year (2025: Rs. Nil).</p>
-        </section>
-
-        <!-- EARNINGS PER SHARE -->
-        <section class="ir-panel" data-ir-panel="eps" id="eps">
-          <h2>Earnings Per <span>Share</span></h2>
-          <div class="ir-stat-grid" style="margin-top: 1.5rem;">
-            <div class="ir-stat"><span>FY2026 EPS</span><strong>44.56</strong><small>Rupees</small></div>
-            <div class="ir-stat"><span>FY2025 EPS</span><strong>(37.82)</strong><small>Rupees</small></div>
-            <div class="ir-stat"><span>FY2024 EPS</span><strong>(32.55)</strong><small>Rupees</small></div>
-          </div>
-          <p style="margin-top: 1.5rem;">There is no dilutive effect on the basic earnings per share of the Company. Weighted average number of ordinary shares outstanding: 10,764 thousand.</p>
-        </section>
-
-        <!-- SHARE REGISTRAR -->
-        <section class="ir-panel" data-ir-panel="registrar" id="registrar">
-          <h2>Share <span>Registrar</span></h2>
-          <h3>JWAFFS Registrar Services (Private) Limited</h3>
-          <p>Office # 20, 5th Floor, Arkay Square Extension, New Chali, Shahrah-e-Liaquat, Karachi.</p>
-          <p><strong>Phone:</strong> +92 21 32440974-75</p>
-          <p><strong>Email:</strong> jwaffsregistrar@gmail.com</p>
-        </section>
-
-        <!-- FREE FLOAT SHARES -->
-        <section class="ir-panel" data-ir-panel="free-float" id="free-float">
-          <h2>Free Float <span>Shares</span></h2>
-          <div class="ir-stat-grid" style="margin-top: 1.5rem;">
-            <div class="ir-stat"><span>Free Float Shares</span><strong>538,200</strong><small>Shares</small></div>
-            <div class="ir-stat"><span>Free Float</span><strong>5.00%</strong><small>of issued shares</small></div>
-            <div class="ir-stat"><span>Issued Shares</span><strong>10,764,000</strong><small>PSX record</small></div>
-          </div>
-          <p style="margin-top: 1.5rem;">Free float is as reported in the latest PSX company record for DADX.</p>
-        </section>
-
-        <!-- ANNUAL REPORTS -->
-        <section class="ir-panel" data-ir-panel="annual" id="annual">
-          <h2>Annual <span>Reports</span></h2>
-          <div class="grid grid-2" style="margin-top: 1.5rem;">
+          <!-- AUDITORS -->
+          <section class="ir-panel" data-ir-panel="auditors" id="auditors">
+            <h2><span>Auditors</span></h2>
+            <h3>BDO Ebrahim &amp; Co., Chartered Accountants</h3>
+            <p>Statutory auditor of Dadex Eternit Limited. Reappointment for the year ending 30 June 2027 was recommended by the Board Audit Committee and proposed at the 67th AGM.</p>
             <div class="card">
-              <div class="kicker">67th Annual Report</div>
-              <h3>2025–26</h3>
-              <p>Audited financial statements for the year ended 30 June 2026, Chairman's Review, Board Report, Statement of Compliance, Pattern of Shareholding and AGM material.</p>
+              <h3>Registered Address</h3>
+              <p>2nd Floor, Block-C, Lakson Square Building No. 1, Sarwar Shaheed Road, Karachi-74200, Pakistan.</p>
+              <p>Office: +92 21 3568 3030</p>
+            </div>
+          </section>
+
+          <!-- LEGAL ADVISORS -->
+          <section class="ir-panel" data-ir-panel="legal" id="legal">
+            <h2>Legal <span>Advisors</span></h2>
+            <h3>Abrar Hasan &amp; Co.</h3>
+            <p>9 Mezzanine Floor, Beaumont Plaza, near PIDC House, Karachi.</p>
+          </section>
+
+          <!-- PATTERN OF SHARE HOLDING -->
+          <section class="ir-panel" data-ir-panel="shareholding" id="shareholding">
+            <h2>Pattern of <span>Share Holding</span></h2>
+            <p><strong>As at 30 June 2026</strong></p>
+            <div class="share-table">
+              <table>
+                <thead><tr><th>Category</th><th>Shares</th><th>%</th></tr></thead>
+                <tbody>
+                  <tr><td>Associated Companies, Undertakings &amp; Related Parties</td><td>6,800,648</td><td>63.18%</td></tr>
+                  <tr><td>Directors, CEO &amp; their Spouses</td><td>1,705,426</td><td>15.84%</td></tr>
+                  <tr><td>Executives</td><td>81</td><td>0.00%</td></tr>
+                  <tr><td>Banks, Insurance Company &amp; Others</td><td>56,065</td><td>0.52%</td></tr>
+                  <tr><td>General Public</td><td>2,201,739</td><td>20.45%</td></tr>
+                  <tr><th>Total</th><th>10,763,959</th><th>100.00%</th></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Shareholders holding 5% or more voting interest</h3>
+            <div class="share-table">
+              <table>
+                <thead><tr><th>Shareholder</th><th>Shares</th><th>%</th></tr></thead>
+                <tbody>
+                  <tr><td>Sikander (Private) Limited</td><td>6,800,648</td><td>63.18%</td></tr>
+                  <tr><td>Mr. Sikander Dada</td><td>1,298,335</td><td>12.06%</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>No transactions in the shares of the Company were carried out by Directors, their spouses or minors during the year.</p>
+          </section>
+
+          <!-- FINANCIAL HIGHLIGHTS -->
+          <section class="ir-panel" data-ir-panel="highlights" id="highlights">
+            <h2>Financial <span>Highlights</span></h2>
+            <p>All figures are in PKR thousands except EPS.</p>
+            <div class="ir-stat-grid">
+              <div class="ir-stat"><span>FY2026 Net Sales</span><strong>959,910</strong><small>PKR thousands</small></div>
+              <div class="ir-stat"><span>FY2026 Net Profit</span><strong>479,682</strong><small>PKR thousands</small></div>
+              <div class="ir-stat"><span>FY2026 EPS</span><strong>44.56</strong><small>Rupees</small></div>
+              <div class="ir-stat"><span>Break-up Value per Share</span><strong>84.96</strong><small>Rupees (2025: 40.39)</small></div>
+            </div>
+            <h3>FY2026 comparison</h3>
+            <div class="share-table">
+              <table>
+                <thead><tr><th>Metric</th><th>2026</th><th>2025</th></tr></thead>
+                <tbody>
+                  <tr><td>Net Sales</td><td>959,910</td><td>780,943</td></tr>
+                  <tr><td>Gross Profit / (Loss)</td><td>(4,052)</td><td>(45,674)</td></tr>
+                  <tr><td>Operating Profit / (Loss)</td><td>592,679</td><td>(259,677)</td></tr>
+                  <tr><td>Profit / (Loss) Before Tax</td><td>516,723</td><td>(390,287)</td></tr>
+                  <tr><td>Net Profit / (Loss)</td><td>479,682</td><td>(407,047)</td></tr>
+                  <tr><td>EPS (Rupees)</td><td>44.56</td><td>(37.82)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Six-year financial summary (Rupees in millions)</h3>
+            <div class="share-table">
+              <table>
+                <thead><tr><th>Year</th><th>2026</th><th>2025</th><th>2024</th><th>2023</th><th>2022</th><th>2021</th></tr></thead>
+                <tbody>
+                  <tr><td>Net Sales</td><td>959.9</td><td>780.9</td><td>1,119.3</td><td>1,401.2</td><td>1,696.8</td><td>2,444.5</td></tr>
+                  <tr><td>Profit / (Loss) After Tax</td><td>479.7</td><td>(407.0)</td><td>(350.4)</td><td>(420.0)</td><td>(142.9)</td><td>(39.0)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>FY2026 net profit is primarily attributable to the gain realised on disposal of assets held for sale. The Company declared a final cash dividend of Rs. Nil per share for the year (2025: Rs. Nil).</p>
+          </section>
+
+          <!-- EARNINGS PER SHARE -->
+          <section class="ir-panel" data-ir-panel="eps" id="eps">
+            <h2>Earnings Per <span>Share</span></h2>
+            <div class="ir-stat-grid" style="margin-top: 1.5rem;">
+              <div class="ir-stat"><span>FY2026 EPS</span><strong>44.56</strong><small>Rupees</small></div>
+              <div class="ir-stat"><span>FY2025 EPS</span><strong>(37.82)</strong><small>Rupees</small></div>
+              <div class="ir-stat"><span>FY2024 EPS</span><strong>(32.55)</strong><small>Rupees</small></div>
+            </div>
+            <p style="margin-top: 1.5rem;">There is no dilutive effect on the basic earnings per share of the Company. Weighted average number of ordinary shares outstanding: 10,764 thousand.</p>
+          </section>
+
+          <!-- SHARE REGISTRAR -->
+          <section class="ir-panel" data-ir-panel="registrar" id="registrar">
+            <h2>Share <span>Registrar</span></h2>
+            <h3>JWAFFS Registrar Services (Private) Limited</h3>
+            <p>Office # 20, 5th Floor, Arkay Square Extension, New Chali, Shahrah-e-Liaquat, Karachi.</p>
+            <p><strong>Phone:</strong> +92 21 32440974-75</p>
+            <p><strong>Email:</strong> jwaffsregistrar@gmail.com</p>
+          </section>
+
+          <!-- FREE FLOAT SHARES -->
+          <section class="ir-panel" data-ir-panel="free-float" id="free-float">
+            <h2>Free Float <span>Shares</span></h2>
+            <div class="ir-stat-grid" style="margin-top: 1.5rem;">
+              <div class="ir-stat"><span>Free Float Shares</span><strong>538,200</strong><small>Shares</small></div>
+              <div class="ir-stat"><span>Free Float</span><strong>5.00%</strong><small>of issued shares</small></div>
+              <div class="ir-stat"><span>Issued Shares</span><strong>10,764,000</strong><small>PSX record</small></div>
+            </div>
+            <p style="margin-top: 1.5rem;">Free float is as reported in the latest PSX company record for DADX.</p>
+          </section>
+
+          <!-- ANNUAL REPORTS -->
+          <section class="ir-panel" data-ir-panel="annual" id="annual">
+            <h2>Annual <span>Reports</span></h2>
+            <div class="grid grid-2" style="margin-top: 1.5rem;">
+              <div class="card">
+                <div class="kicker">67th Annual Report</div>
+                <h3>2025–26</h3>
+                <p>Audited financial statements for the year ended 30 June 2026, Chairman's Review, Board Report, Statement of Compliance, Pattern of Shareholding and AGM material.</p>
+                <a href="http://www.dadex.com/aboutdadex/pdfs/2025-26/Annual_Report_2026.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Annual Report <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+              </div>
+              <div class="card">
+                <div class="kicker">Annual Report</div>
+                <h3>2024–25</h3>
+                <p>Audited financial statements for the year ended 30 June 2025 and governance information.</p>
+                <a href="https://dps.psx.com.pk/download/document/261866.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Annual Report <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+              </div>
+              <div class="card">
+                <div class="kicker">Annual Report</div>
+                <h3>2023–24</h3>
+                <p>Previous annual reporting cycle and governance information.</p>
+                <a href="https://www.dadex.com/aboutdadex/pdfs/2023-24/Annual_Report_2024.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Annual Report <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </section>
+
+          <!-- INTERIM ACCOUNTS -->
+          <section class="ir-panel" data-ir-panel="interim" id="interim">
+            <h2>Interim <span>Accounts</span></h2>
+            <div class="grid grid-2" style="margin-top: 1.5rem;">
+              <div class="card">
+                <div class="kicker">Unaudited</div>
+                <h3>Nine Months Ended 31 March 2026</h3>
+                <p>Q3 FY2025–26 interim financial information.</p>
+                <a href="https://dps.psx.com.pk/download/document/275951.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Q3 FY2025–26 Report <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+              </div>
+              <div class="card">
+                <div class="kicker">Quarterly</div>
+                <h3>FY2025–26</h3>
+                <p>Q1, Q2 and Q3 filings are available through PSX.</p>
+                <a href="https://dps.psx.com.pk/company/DADX" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View PSX Financial Filings <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </section>
+
+          <!-- AGM NOTICES -->
+          <section class="ir-panel" data-ir-panel="agm" id="agm">
+            <h2>AGM <span>Notices</span></h2>
+            <div class="grid grid-2" style="margin-top: 1.5rem;">
+              <div class="card">
+                <div class="kicker">67th AGM</div>
+                <h3>27 October 2026 · 3:30 PM</h3>
+                <p>To be held at Dadex House, 34-A/1, Block-6, P.E.C.H.S., Shahrah-e-Faisal, Karachi.</p>
+                <p>The Register of Members and Share Transfer Books will remain closed from 20 to 27 October 2026 (both days inclusive). Entitlement to attend and vote is based on the Register as at 19 October 2026.</p>
+              </div>
+            </div>
+            <p style="margin-top: 1.5rem;">The 67th AGM will receive and adopt the FY2025-26 audited financial statements and the Directors' Report, appoint auditors for FY2026-27, and elect seven Directors for a three-year term. Retiring Directors eligible for re-election: Mr. Sikander Dada, Mr. Abu Talib H.K. Dada, Mr. Shahzad M. Husain, Syed Shahid Ali Bukhari, Mrs. Amber Ahmed Motiwala, Mrs. Ayesha Tariq Allawala, Mr. Khawaja Samiullah Askari.</p>
+          </section>
+
+          <!-- NOTICE TO SHAREHOLDERS -->
+          <section class="ir-panel" data-ir-panel="shareholders" id="shareholders">
+            <h2>Notice to <span>Shareholders</span></h2>
+            <p>Shareholders may request annual reporting material through the Company Secretary or the Share Registrar. In accordance with SECP directives, shareholders are encouraged to convert physical securities into book-entry form and to submit valid CNIC, NTN and Electronic Credit Mandate details to receive dividend payments electronically.</p>
+            <div class="card" style="margin-top: 1.5rem;">
+              <h3>Company Secretary</h3>
+              <p><strong>Muhammad Yousuf</strong></p>
+              <p>Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal, Karachi-75400.</p>
+            </div>
+          </section>
+
+          <!-- PROXY FORM -->
+          <section class="ir-panel" data-ir-panel="proxy" id="proxy">
+            <h2><span>Proxy</span> Form</h2>
+            <p>The proxy form is issued with each AGM notice. Completed and signed proxy forms must be deposited at the Registered Office not less than 48 hours before the meeting.</p>
+            <div class="card" style="margin-top: 1.5rem;">
+              <div class="kicker">67th AGM — Proxy Form</div>
+              <h3>Proxy Documentation</h3>
+              <p>The English and Urdu proxy forms are included in the 67th Annual Report.</p>
+              <a href="http://www.dadex.com/aboutdadex/pdfs/2025-26/Annual_Report_2026.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">Open AGM Documentation <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+            </div>
+          </section>
+
+          <!-- ELECTION OF DIRECTORS -->
+          <section class="ir-panel" data-ir-panel="election" id="election">
+            <h2>Election of <span>Directors</span></h2>
+            <p>Seven Directors are to be elected at the 67th AGM for a three-year term commencing from the date of the Annual General Meeting, in accordance with Section 159 of the Companies Act, 2017. The retiring Directors are eligible for re-election.</p>
+            <p>Any person seeking to contest the election must file the prescribed documents with the Company at its registered office no later than fourteen days before the date of the meeting, as set out in the AGM notice.</p>
+          </section>
+
+          <!-- PROFILE OF CANDIDATES -->
+          <section class="ir-panel" data-ir-panel="candidates" id="candidates">
+            <h2>Profile of <span>Candidates</span></h2>
+            <p>Candidate profiles are published in accordance with SECP's SRO 1196(I)/2019 dated October 3, 2019, as part of the Directors' Election documentation.</p>
+            <div class="card" style="margin-top: 1.5rem;">
+              <div class="kicker">Directors' Election</div>
+              <h3>Election Notice &amp; Candidate Documentation</h3>
+              <a href="https://www.dadex.com/aboutdadex/pdfs/2023-24/Election-Notiice-BOD-18-10-23.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Election Documentation <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+            </div>
+          </section>
+
+          <!-- COMPLIANCE & DISCLOSURES -->
+          <section class="ir-panel" data-ir-panel="compliance" id="compliance">
+            <h2><span>Compliance</span> &amp; Disclosures</h2>
+            <div class="grid grid-2" style="margin-top: 1.5rem;">
+              <div class="card">
+                <h3>Corporate Governance</h3>
+                <p>FY2025-26 governance and compliance information is included in the 67th Annual Report.</p>
+                <a href="http://www.dadex.com/aboutdadex/pdfs/2025-26/Annual_Report_2026.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">Annual Report <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+              </div>
+              <div class="card">
+                <h3>PSX Disclosures</h3>
+                <p>Financial results, Board meetings, material information and corporate briefing disclosures are available through the PSX company record.</p>
+                <a href="https://dps.psx.com.pk/company/DADX" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View DADX on PSX <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+              </div>
+              <div class="card">
+                <h3>SECP</h3>
+                <p>Regulatory information and complaint mechanisms are available through the Securities &amp; Exchange Commission of Pakistan.</p>
+                <a href="https://www.secp.gov.pk/" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">Visit SECP <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </section>
+
+          <!-- DIRECTORS REPORT (URDU) -->
+          <section class="ir-panel" data-ir-panel="directors-report" id="directors-report">
+            <h2>Directors Report <span>(Urdu)</span></h2>
+            <div class="card" style="margin-top: 1.5rem;">
+              <div class="kicker">Directors Report</div>
+              <h3>Directors Report (Urdu) — FY2025–26</h3>
+              <p>Included in the 67th Annual Report.</p>
               <a href="http://www.dadex.com/aboutdadex/pdfs/2025-26/Annual_Report_2026.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Annual Report <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
             </div>
-            <div class="card">
-              <div class="kicker">Annual Report</div>
-              <h3>2024–25</h3>
-              <p>Audited financial statements for the year ended 30 June 2025 and governance information.</p>
-              <a href="https://dps.psx.com.pk/download/document/261866.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Annual Report <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-            </div>
-            <div class="card">
-              <div class="kicker">Annual Report</div>
-              <h3>2023–24</h3>
-              <p>Previous annual reporting cycle and governance information.</p>
-              <a href="https://www.dadex.com/aboutdadex/pdfs/2023-24/Annual_Report_2024.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Annual Report <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-            </div>
-          </div>
-        </section>
+          </section>
 
-        <!-- INTERIM ACCOUNTS -->
-        <section class="ir-panel" data-ir-panel="interim" id="interim">
-          <h2>Interim <span>Accounts</span></h2>
-          <div class="grid grid-2" style="margin-top: 1.5rem;">
-            <div class="card">
-              <div class="kicker">Unaudited</div>
-              <h3>Nine Months Ended 31 March 2026</h3>
-              <p>Q3 FY2025–26 interim financial information.</p>
-              <a href="https://dps.psx.com.pk/download/document/275951.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Q3 FY2025–26 Report <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+          <!-- COMPLIANCE CERTIFICATE -->
+          <section class="ir-panel" data-ir-panel="compliance-certificate" id="compliance-certificate">
+            <h2>Compliance <span>Certificate</span></h2>
+            <div class="card" style="margin-top: 1.5rem;">
+              <div class="kicker">Corporate Compliance</div>
+              <h3>Compliance Certificate</h3>
+              <p>The Compliance Certificate forms part of the FY2025-26 Annual Report and has been reviewed by the statutory auditors.</p>
+              <a href="https://dps.psx.com.pk/company/DADX" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Current PSX Disclosures <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
             </div>
-            <div class="card">
-              <div class="kicker">Quarterly</div>
-              <h3>FY2025–26</h3>
-              <p>Q1, Q2 and Q3 filings are available through PSX.</p>
-              <a href="https://dps.psx.com.pk/company/DADX" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View PSX Financial Filings <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+          </section>
+
+          <!-- COMPANY POLICIES -->
+          <section class="ir-panel" data-ir-panel="policies" id="policies">
+            <h2>Company <span>Policies</span></h2>
+            <div class="grid grid-2" style="margin-top: 1.5rem;">
+              <div class="card">
+                <div class="kicker">Company Policies</div>
+                <h3>Dadex Company Policies</h3>
+                <a href="https://www.dadex.com/aboutdadex/policies.shtml" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Company Policies <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+              </div>
+              <div class="card" id="whistleblowing-ir-card">
+                <div class="kicker">Ethics &amp; Compliance</div>
+                <h3>Whistleblowing Policy</h3>
+                <p>Dadex's approved Whistleblowing Policy for raising concerns through the Company's defined process.</p>
+                <a href="assets/documents/policies/dadex-whistleblowing-policy.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Whistleblowing Policy (PDF) <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <!-- AGM NOTICES -->
-        <section class="ir-panel" data-ir-panel="agm" id="agm">
-          <h2>AGM <span>Notices</span></h2>
-          <div class="grid grid-2" style="margin-top: 1.5rem;">
-            <div class="card">
-              <div class="kicker">67th AGM</div>
-              <h3>27 October 2026 · 3:30 PM</h3>
-              <p>To be held at Dadex House, 34-A/1, Block-6, P.E.C.H.S., Shahrah-e-Faisal, Karachi.</p>
-              <p>The Register of Members and Share Transfer Books will remain closed from 20 to 27 October 2026 (both days inclusive). Entitlement to attend and vote is based on the Register as at 19 October 2026.</p>
+          <!-- INVESTOR CONTACT -->
+          <section class="ir-panel" data-ir-panel="contact" id="contact">
+            <h2>Investor <span>Contact</span></h2>
+            <div class="grid grid-2" style="margin-top: 1.5rem;">
+              <div class="card">
+                <h3>Investor Relations</h3>
+                <p><strong>Email:</strong> investor.relation@dadex.com.pk</p>
+                <p><strong>UAN:</strong> +92 21 111-000-789</p>
+              </div>
+              <div class="card">
+                <h3>Company Secretary</h3>
+                <p>Muhammad Yousuf</p>
+                <p>Dadex Eternit Limited<br/>Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal, Karachi-75400.</p>
+              </div>
+              <div class="card">
+                <h3>Complaints</h3>
+                <p>Complaints should first be addressed directly to the Company. Where a matter falls within SECP's regulatory domain and has not been properly redressed by the Company, shareholders may use the SECP complaint mechanism.</p>
+                <a href="https://sdms.secp.gov.pk/" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">SECP Complaint Portal <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+              </div>
             </div>
-          </div>
-          <p style="margin-top: 1.5rem;">The 67th AGM will receive and adopt the FY2025-26 audited financial statements and the Directors' Report, appoint auditors for FY2026-27, and elect seven Directors for a three-year term. Retiring Directors eligible for re-election: Mr. Sikander Dada, Mr. Abu Talib H.K. Dada, Mr. Shahzad M. Husain, Syed Shahid Ali Bukhari, Mrs. Amber Ahmed Motiwala, Mrs. Ayesha Tariq Allawala, Mr. Khawaja Samiullah Askari.</p>
-        </section>
+          </section>
 
-        <!-- NOTICE TO SHAREHOLDERS -->
-        <section class="ir-panel" data-ir-panel="shareholders" id="shareholders">
-          <h2>Notice to <span>Shareholders</span></h2>
-          <p>Shareholders may request annual reporting material through the Company Secretary or the Share Registrar. In accordance with SECP directives, shareholders are encouraged to convert physical securities into book-entry form and to submit valid CNIC, NTN and Electronic Credit Mandate details to receive dividend payments electronically.</p>
-          <div class="card" style="margin-top: 1.5rem;">
-            <h3>Company Secretary</h3>
-            <p><strong>Muhammad Yousuf</strong></p>
-            <p>Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal, Karachi-75400.</p>
-          </div>
-        </section>
-
-        <!-- PROXY FORM -->
-        <section class="ir-panel" data-ir-panel="proxy" id="proxy">
-          <h2><span>Proxy</span> Form</h2>
-          <p>The proxy form is issued with each AGM notice. Completed and signed proxy forms must be deposited at the Registered Office not less than 48 hours before the meeting.</p>
-          <div class="card" style="margin-top: 1.5rem;">
-            <div class="kicker">67th AGM — Proxy Form</div>
-            <h3>Proxy Documentation</h3>
-            <p>The English and Urdu proxy forms are included in the 67th Annual Report.</p>
-            <a href="http://www.dadex.com/aboutdadex/pdfs/2025-26/Annual_Report_2026.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">Open AGM Documentation <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-          </div>
-        </section>
-
-        <!-- ELECTION OF DIRECTORS -->
-        <section class="ir-panel" data-ir-panel="election" id="election">
-          <h2>Election of <span>Directors</span></h2>
-          <p>Seven Directors are to be elected at the 67th AGM for a three-year term commencing from the date of the Annual General Meeting, in accordance with Section 159 of the Companies Act, 2017. The retiring Directors are eligible for re-election.</p>
-          <p>Any person seeking to contest the election must file the prescribed documents with the Company at its registered office no later than fourteen days before the date of the meeting, as set out in the AGM notice.</p>
-        </section>
-
-        <!-- PROFILE OF CANDIDATES -->
-        <section class="ir-panel" data-ir-panel="candidates" id="candidates">
-          <h2>Profile of <span>Candidates</span></h2>
-          <p>Candidate profiles are published in accordance with SECP's SRO 1196(I)/2019 dated October 3, 2019, as part of the Directors' Election documentation.</p>
-          <div class="card" style="margin-top: 1.5rem;">
-            <div class="kicker">Directors' Election</div>
-            <h3>Election Notice &amp; Candidate Documentation</h3>
-            <a href="https://www.dadex.com/aboutdadex/pdfs/2023-24/Election-Notiice-BOD-18-10-23.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Election Documentation <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-          </div>
-        </section>
-
-        <!-- COMPLIANCE & DISCLOSURES -->
-        <section class="ir-panel" data-ir-panel="compliance" id="compliance">
-          <h2><span>Compliance</span> &amp; Disclosures</h2>
-          <div class="grid grid-2" style="margin-top: 1.5rem;">
-            <div class="card">
-              <h3>Corporate Governance</h3>
-              <p>FY2025-26 governance and compliance information is included in the 67th Annual Report.</p>
-              <a href="http://www.dadex.com/aboutdadex/pdfs/2025-26/Annual_Report_2026.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">Annual Report <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-            </div>
-            <div class="card">
-              <h3>PSX Disclosures</h3>
-              <p>Financial results, Board meetings, material information and corporate briefing disclosures are available through the PSX company record.</p>
-              <a href="https://dps.psx.com.pk/company/DADX" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View DADX on PSX <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-            </div>
-            <div class="card">
-              <h3>SECP</h3>
-              <p>Regulatory information and complaint mechanisms are available through the Securities &amp; Exchange Commission of Pakistan.</p>
-              <a href="https://www.secp.gov.pk/" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">Visit SECP <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-            </div>
-          </div>
-        </section>
-
-        <!-- DIRECTORS REPORT (URDU) -->
-        <section class="ir-panel" data-ir-panel="directors-report" id="directors-report">
-          <h2>Directors Report <span>(Urdu)</span></h2>
-          <div class="card" style="margin-top: 1.5rem;">
-            <div class="kicker">Directors Report</div>
-            <h3>Directors Report (Urdu) — FY2025–26</h3>
-            <p>Included in the 67th Annual Report.</p>
-            <a href="http://www.dadex.com/aboutdadex/pdfs/2025-26/Annual_Report_2026.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Annual Report <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-          </div>
-        </section>
-
-        <!-- COMPLIANCE CERTIFICATE -->
-        <section class="ir-panel" data-ir-panel="compliance-certificate" id="compliance-certificate">
-          <h2>Compliance <span>Certificate</span></h2>
-          <div class="card" style="margin-top: 1.5rem;">
-            <div class="kicker">Corporate Compliance</div>
-            <h3>Compliance Certificate</h3>
-            <p>The Compliance Certificate forms part of the FY2025-26 Annual Report and has been reviewed by the statutory auditors.</p>
-            <a href="https://dps.psx.com.pk/company/DADX" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Current PSX Disclosures <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-          </div>
-        </section>
-
-        <!-- COMPANY POLICIES -->
-        <section class="ir-panel" data-ir-panel="policies" id="policies">
-          <h2>Company <span>Policies</span></h2>
-          <div class="grid grid-2" style="margin-top: 1.5rem;">
-            <div class="card">
-              <div class="kicker">Company Policies</div>
-              <h3>Dadex Company Policies</h3>
-              <a href="https://www.dadex.com/aboutdadex/policies.shtml" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Company Policies <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-            </div>
-            <div class="card" id="whistleblowing-ir-card">
-              <div class="kicker">Ethics &amp; Compliance</div>
-              <h3>Whistleblowing Policy</h3>
-              <p>Dadex's approved Whistleblowing Policy for raising concerns through the Company's defined process.</p>
-              <a href="assets/documents/policies/dadex-whistleblowing-policy.pdf" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">View Whistleblowing Policy (PDF) <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-            </div>
-          </div>
-        </section>
-
-        <!-- INVESTOR CONTACT -->
-        <section class="ir-panel" data-ir-panel="contact" id="contact">
-          <h2>Investor <span>Contact</span></h2>
-          <div class="grid grid-2" style="margin-top: 1.5rem;">
-            <div class="card">
-              <h3>Investor Relations</h3>
-              <p><strong>Email:</strong> investor.relation@dadex.com.pk</p>
-              <p><strong>UAN:</strong> +92 21 111-000-789</p>
-            </div>
-            <div class="card">
-              <h3>Company Secretary</h3>
-              <p>Muhammad Yousuf</p>
-              <p>Dadex Eternit Limited<br/>Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal, Karachi-75400.</p>
-            </div>
-            <div class="card">
-              <h3>Complaints</h3>
-              <p>Complaints should first be addressed directly to the Company. Where a matter falls within SECP's regulatory domain and has not been properly redressed by the Company, shareholders may use the SECP complaint mechanism.</p>
-              <a href="https://sdms.secp.gov.pk/" target="_blank" rel="noopener" class="btn btn--outline" style="margin-top: 1rem;">SECP Complaint Portal <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
-            </div>
-          </div>
-        </section>
-
-      </div>
-    </div>
+        </div><!-- /.ir-content -->
+      </div><!-- /.ir-layout -->
+    </div><!-- /.container -->
   </section>
 </main>
 

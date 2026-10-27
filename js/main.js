@@ -1,6 +1,10 @@
 /* ============================================================
-   DADEX ETERNIT LIMITED — SHARED UI  (v5.1)
+   DADEX ETERNIT LIMITED — SHARED UI  (v5.2)
    ------------------------------------------------------------
+   v5.2 changes
+     · Investor Relations panel switching now supports a
+       horizontal group-tab bar (.ir-tab) that filters the
+       sidebar to one group at a time (desktop + mobile).
    v5.1 changes
      · Closes the mobile drawer before opening DEXPERT
        (avoids stacked overlays / leftover focus trap)
@@ -527,55 +531,59 @@ function initLiteratureFilter(){
 }
 
 /* ------------------------------------------------------------
-   Investor panels
+   Investor panels  (v5.2 — with horizontal group tabs)
    ------------------------------------------------------------ */
 
 function initInvestorPanels(){
   const links  = [...document.querySelectorAll('[data-ir]')];
   const panels = [...document.querySelectorAll('[data-ir-panel]')];
+  const tabs   = [...document.querySelectorAll('.ir-tab')];
+  const groups = [...document.querySelectorAll('.ir-side-group')];
   if (!links.length || !panels.length) return;
 
-  const groups = [...document.querySelectorAll('.ir-side-group')];
-  const isMobile = () => window.matchMedia(`(max-width:${MOBILE_NAV_MAX}px)`).matches;
-
-  const openGroupFor = id => {
-    if (!isMobile()) return;
-    groups.forEach(g => {
-      const hasLink = [...g.querySelectorAll('[data-ir]')]
-        .some(a => a.dataset.ir === id);
-      g.classList.toggle('is-open', hasLink);
-    });
+  const groupOfPanel = id => {
+    const link = links.find(a => a.dataset.ir === id);
+    return link ? (link.closest('.ir-side-group')?.dataset.irGroup || null) : null;
   };
 
   const activate = id => {
     const target = id || 'overview';
     links.forEach(a => a.classList.toggle('active', a.dataset.ir === target));
     panels.forEach(p => p.classList.toggle('active', p.dataset.irPanel === target));
-    openGroupFor(target);
+
+    const groupId = groupOfPanel(target);
+    groups.forEach(g => {
+      g.classList.toggle('is-open', g.dataset.irGroup === groupId);
+    });
+    tabs.forEach(t => {
+      const isActive = t.dataset.irGroup === groupId;
+      t.classList.toggle('active', isActive);
+      if (isActive) t.setAttribute('aria-current', 'true');
+      else t.removeAttribute('aria-current');
+    });
   };
 
   const sync = () => activate((location.hash || '#overview').slice(1));
 
-  groups.forEach(group => {
-    const title = group.querySelector('.ir-side-title');
-    if (!title) return;
-    title.setAttribute('role', 'button');
-    title.setAttribute('tabindex', '0');
-    title.setAttribute('aria-expanded', 'false');
-    const toggle = () => {
-      if (!isMobile()) return;
-      const open = !group.classList.contains('is-open');
-      groups.forEach(g => g.classList.remove('is-open'));
-      group.classList.toggle('is-open', open);
-      title.setAttribute('aria-expanded', String(open));
-    };
-    title.addEventListener('click', toggle);
-    title.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+  links.forEach(a => a.addEventListener('click', () => setTimeout(sync, 0)));
+
+  tabs.forEach(t => {
+    t.addEventListener('click', event => {
+      event.preventDefault();
+      const groupId = t.dataset.irGroup;
+      const group = groups.find(g => g.dataset.irGroup === groupId);
+      const firstLink = group?.querySelector('[data-ir]');
+      if (!firstLink) return;
+      const id = firstLink.dataset.ir;
+      if (history.pushState) {
+        history.pushState(null, '', `#${id}`);
+      } else {
+        location.hash = id;
+      }
+      activate(id);
     });
   });
 
-  links.forEach(a => a.addEventListener('click', () => setTimeout(sync, 0)));
   window.addEventListener('hashchange', sync);
   window.addEventListener('resize', debounce(sync, 150));
   sync();

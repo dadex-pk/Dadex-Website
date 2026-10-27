@@ -2,20 +2,78 @@
    INVESTOR RELATIONS PAGE
    ============================================================ */
 
+:root {
+  --ir-tabs-h: 3.25rem;
+}
+
+body.investors-page {
+  /* Account for tab bar in anchor-jump offset */
+  --sticky-offset: calc(var(--header-h) + var(--ir-tabs-h) + 1rem);
+}
+
+/* ---------- Horizontal group tabs ---------- */
+.ir-tabs {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 50;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2rem;
+}
+
+.ir-tabs-inner {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+}
+.ir-tabs-inner::-webkit-scrollbar { display: none; }
+
+.ir-tab {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ir-tabs-h);
+  padding: 0 1.1rem;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  scroll-snap-align: start;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.ir-tab:hover { color: var(--ink); }
+.ir-tab.active {
+  color: var(--brand-red);
+  border-bottom-color: var(--brand-red);
+}
+.ir-tab:focus-visible {
+  outline: 2px solid var(--brand-red);
+  outline-offset: -2px;
+}
+
+/* ---------- Two-column layout ---------- */
 .ir-layout {
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 3rem;
   align-items: start;
 }
-@media (max-width: 900px) {
-  .ir-layout { grid-template-columns: 1fr; gap: 2rem; }
-}
 
-/* Sidebar Navigation */
+/* ---------- Sidebar (contextual: one group visible) ---------- */
 .ir-sidebar {
   position: sticky;
-  top: calc(var(--header-h) + 2rem);
+  top: calc(var(--header-h) + var(--ir-tabs-h) + 1.5rem);
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
@@ -23,18 +81,8 @@
   box-shadow: var(--shadow-sm);
 }
 
-.ir-side-group { border-bottom: 1px solid var(--line); }
-.ir-side-group:last-child { border-bottom: none; }
-
-.ir-side-title {
-  padding: 1rem 1.25rem;
-  font-weight: 800;
-  font-size: 0.8125rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: var(--bg-mist);
-}
+.ir-side-group { display: none; }
+.ir-side-group.is-open { display: block; }
 
 .ir-side-link {
   display: block;
@@ -51,7 +99,7 @@
   border-left-color: var(--brand-red);
 }
 
-/* Content Panels */
+/* ---------- Content panels ---------- */
 .ir-panel { display: none; }
 .ir-panel.active { display: block; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
@@ -59,24 +107,26 @@
 .ir-panel h2 { margin-bottom: 1.5rem; }
 .ir-panel h2 span { color: var(--brand-red); }
 
-/* Data Tables */
+/* ---------- Data tables ---------- */
 .share-table { overflow-x: auto; margin-bottom: 2rem; border-radius: var(--radius-sm); border: 1px solid var(--line); }
 .share-table table { width: 100%; border-collapse: collapse; text-align: left; background: #fff; }
 .share-table th, .share-table td { padding: 0.875rem 1.25rem; border-bottom: 1px solid var(--line); }
 .share-table th { background: var(--bg-mist); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 800; }
 .share-table tr:last-child td { border-bottom: none; }
 
-/* Stat Blocks */
+/* ---------- Stat blocks ---------- */
 .ir-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
 .ir-stat { background: #fff; border: 1px solid var(--line); padding: 1.5rem; border-radius: var(--radius-md); }
 .ir-stat span { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 800; margin-bottom: 0.5rem; }
 .ir-stat strong { display: block; font-size: 2rem; color: var(--ink); line-height: 1; }
 
-/* Mobile Accordion Sidebar */
-@media (max-width: 900px) {
-  .ir-sidebar { position: static; }
-  .ir-side-title { cursor: pointer; position: relative; }
-  .ir-side-title::after { content: "+"; position: absolute; right: 1.25rem; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--brand-red); }
-  .ir-side-group.is-open .ir-side-title::after { content: "−"; }
-  .ir-side-group:not(.is-open) .ir-side-link { display: none; }
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  body.investors-page {
+    /* Tabs are not sticky below this width — reset offset */
+    --sticky-offset: calc(var(--header-h) + 1rem);
+  }
+  .ir-tabs { position: static; }
+  .ir-sidebar { position: static; top: auto; }
+  .ir-layout { grid-template-columns: 1fr; gap: 2rem; }
 }
