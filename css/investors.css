@@ -3,11 +3,10 @@
    ============================================================ */
 
 :root {
-  --ir-tabs-h: 3.25rem;
+  --ir-tabs-h: 3.3rem;
 }
 
 body.investors-page {
-  /* Account for tab bar in anchor-jump offset */
   --sticky-offset: calc(var(--header-h) + var(--ir-tabs-h) + 1rem);
 }
 
@@ -20,6 +19,7 @@ body.investors-page {
   border-bottom: 2px solid var(--line);
   margin-bottom: 3rem;
   box-shadow: 0 1px 0 rgba(15, 18, 21, 0.02);
+  border-radius: 100px;
 }
 
 .ir-tabs::after {
@@ -27,7 +27,6 @@ body.investors-page {
   position: absolute;
   top: 0; right: 0; bottom: 0;
   width: 2.5rem;
-  background: linear-gradient(to right, rgba(255,255,255,0) 0%, #fff 60%);
   pointer-events: none;
 }
 
@@ -70,12 +69,13 @@ body.investors-page {
 
 .ir-tab::before {
   content: "";
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.63rem;
+  height: 0.63rem;
+  border:var(--muted-light) solid 2px;
   border-radius: 50%;
-  background: var(--brand-red);
-  opacity: 0;
-  transform: scale(0.4);
+  background: var(--ink-light);
+  opacity: 1;
+  transform: scale(0.72);
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
@@ -90,8 +90,10 @@ body.investors-page {
   background: rgba(229, 0, 0, 0.035);
 }
 .ir-tab.active::before {
-  opacity: 1;
-  transform: scale(1);
+  transform: scale(1.1);
+  border:#f79595 solid 2px;
+  border-radius: 50%;
+  background: var(--brand-red);
 }
 
 .ir-tab:focus-visible {
@@ -176,8 +178,8 @@ body.investors-page {
 
 .ir-panel > h2 {
   position: relative;
-  padding-top: 0.92rem;
-  margin-bottom: 1.5rem;
+  padding-left: 1.25rem;
+  margin-bottom: 1.9rem;
   font-size: clamp(1.5rem, 2.4vw, 2.25rem);
 }
 .ir-panel > h2::before {
@@ -185,11 +187,12 @@ body.investors-page {
   position: absolute;
   top: 0;
   left: 0;
-  width: 3rem;
-  height: 4px;
+  width: 5px;
+  height: 40px;
   background: var(--brand-red);
   border-radius: 3px;
 }
+
 .ir-panel > h2 span { color: var(--brand-red); }
 
 /* Make H3 sub-headings inside panels look distinct */
@@ -347,10 +350,10 @@ body.investors-page {
 .ir-panel .grid > .card::before {
   content: "";
   position: absolute;
-  top: 0; left: 1.5rem; right: 1.5rem;
-  height: 2px;
+  top: -1.5px; left: 1.5rem; right: 1.5rem;
+  height: 3px;
   background: var(--brand-red);
-  opacity: 0.2;
+  opacity: 0.5;
   border-radius: 0 0 2px 2px;
   transition: opacity 0.2s ease;
 }
@@ -358,15 +361,15 @@ body.investors-page {
 .ir-panel .grid > .card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-sm);
-  border-color: rgba(229, 0, 0, 0.15);
+  border-color: rgba(229, 0, 0, 0.25);
 }
 .ir-panel .grid > .card:hover::before {
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .ir-panel .grid > .card > span {
   display: block;
-  font-size: 0.7rem; /* Refined smaller */
+  font-size: 0.7rem; 
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -378,7 +381,7 @@ body.investors-page {
   font-size: 1.25rem;
   font-weight: 800;
   color: var(--ink);
-  margin-bottom: 0;
+  margin-bottom: 0.5rem;
   letter-spacing: -0.01em;
 }
 
@@ -399,6 +402,7 @@ body.investors-page {
 .ir-panel .card h3 {
   color: var(--ink);
   letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
 }
 
 .ir-panel .card .btn--outline {
@@ -414,17 +418,10 @@ body.investors-page {
 
 .ir-panel .card .btn--outline:hover {
   background: var(--brand-red);
-  color: #fff;
+  color: #fff !important;
   border-color: var(--brand-red);
 }
 
-.ir-panel .card .btn--outline::before {
-  content: "";
-  position: absolute;
-  top: -1.5rem; left: 0; right: 0;
-  height: 1px;
-  background: var(--line-soft);
-}
 
 /* ============================================================
    PREMIUM DIRECTOR SPLIT LAYOUT
