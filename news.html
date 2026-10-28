@@ -2,20 +2,210 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>News &amp; Media – Dadex Eternit Limited</title>
-  <!-- Icons -->
+<meta content="Verified corporate highlights, product milestones and the INSET newsletter archive." name="description"/>
+<meta content="#c90000" name="theme-color"/>
+<meta content="index, follow" name="robots"/>
+<link href="https://www.dadex.com/news.html" rel="canonical"/>
+
+<!-- Preconnect -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://cdnjs.cloudflare.com" rel="preconnect"/>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+
+<!-- Icons -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
-  
+
+<!-- Styles -->
 <link href="css/root.css" rel="stylesheet"/>
 <link href="css/base.css" rel="stylesheet"/>
 <link href="css/layout.css" rel="stylesheet"/>
 <link href="css/components.css" rel="stylesheet"/>
 <link href="css/shell.css" rel="stylesheet"/>
 <link href="css/core.css" rel="stylesheet"/>
+
+<style>
+  /* --- Sticky Tab System --- */
+  .news-tabs-wrapper {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 90;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    transition: top 0.3s ease;
+  }
+
+  .news-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  
+  .news-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--line);
+    background: #ffffff;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 800;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .news-tab-btn:hover {
+    border-color: var(--brand-red);
+    color: var(--brand-red);
+    background: #fffafa;
+  }
+  
+  .news-tab-btn.active {
+    background: var(--brand-red);
+    border-color: var(--brand-red);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(229, 0, 0, 0.25);
+  }
+
+  /* --- Tab Content Visibility --- */
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- Unified Newsletter Card Styles --- */
+  .newsletter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .newsletter-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .newsletter-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(229,0,0,0.2);
+  }
+  
+  /* Header Strip */
+  .newsletter-cover {
+    background: var(--bg-mist);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .newsletter-cover .inset-logo {
+    display: block;
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    color: var(--brand-red);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .newsletter-cover .inset-date {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .newsletter-cover .pdf-icon {
+    font-size: 1.75rem;
+    color: var(--brand-accent-dark);
+    transition: color 0.2s ease;
+  }
+
+  .newsletter-card:hover .pdf-icon {
+    color: var(--brand-red);
+  }
+
+  /* Card Body */
+  .newsletter-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  /* Separated Heading */
+  .newsletter-heading-wrap {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .newsletter-heading-wrap h3 {
+    font-size: 1.25rem;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .newsletter-body ul {
+    padding-left: 1.25rem;
+    margin: 0 0 1.5rem 0;
+    flex: 1;
+  }
+  
+  .newsletter-body li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+  
+  .newsletter-body .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .newsletter-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .newsletter-grid { grid-template-columns: 1fr; }
+    .news-tabs { flex-direction: column; gap: 0.5rem; }
+    .news-tab-btn { width: 100%; }
+  }
+</style>
 </head>
-<body>
+<body class="core-page">
+<a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
-<main>
+
+<main id="main-content">
+  
   <section class="page-hero">
     <div class="container">
       <div class="kicker">News &amp; Media</div>
@@ -23,32 +213,226 @@
       <p>Verified corporate highlights, product milestones and Dadex developments.</p>
     </div>
   </section>
-  <section class="section">
+
+  <!-- Sticky Tab Navigation -->
+  <div class="news-tabs-wrapper">
     <div class="container">
-      <div class="grid grid-3">
-        <div class="card">
-          <div class="kicker">2024</div>
-          <h3>Pakistan's first antimicrobial pipes</h3>
-          <p>Dadex corporate material records the launch of antimicrobial piping as a recent product milestone.</p>
-          <a href="products.html" class="btn btn--outline" style="margin-top: 1.5rem; width: max-content;">Explore Products</a>
-        </div>
-        <div class="card">
-          <div class="kicker">2023</div>
-          <h3>Large-diameter HDPE systems</h3>
-          <p>Dadex records the launch of large-diameter HDPE pipes up to 630 mm for infrastructure requirements.</p>
-          <a href="product-tflex.html" class="btn btn--outline" style="margin-top: 1.5rem; width: max-content;">Explore T-Flex</a>
-        </div>
-        <div class="card">
-          <div class="kicker">API</div>
-          <h3>PE gas pipe certification milestone</h3>
-          <p>Dadex corporate material records its API Monogram achievement for manufactured PE gas pipes.</p>
-          <a href="product-tflex-gas.html" class="btn btn--outline" style="margin-top: 1.5rem; width: max-content;">Explore T-Flex Gas</a>
-        </div>
+      <div class="news-tabs" role="tablist">
+        <button class="news-tab-btn active" data-target="tab-latest" role="tab" aria-selected="true">
+          <i class="fas fa-bullhorn" style="margin-right: 0.5rem;"></i> Latest Updates
+        </button>
+        <button class="news-tab-btn" data-target="tab-archive" role="tab" aria-selected="false">
+          <i class="fas fa-book-open" style="margin-right: 0.5rem;"></i> INSET Newsletter Archive
+        </button>
       </div>
     </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      
+      <!-- TAB 1: LATEST NEWS -->
+      <div class="tab-pane active" id="tab-latest" role="tabpanel">
+        <div class="grid grid-3">
+          <div class="card">
+            <div class="kicker">2024</div>
+            <h3>Pakistan's first antimicrobial pipes</h3>
+            <p>Dadex corporate material records the launch of antimicrobial piping as a recent product milestone.</p>
+            <a href="products.html" class="btn btn--outline" style="margin-top: 1.5rem; width: max-content;">Explore Products</a>
+          </div>
+          <div class="card">
+            <div class="kicker">2023</div>
+            <h3>Large-diameter HDPE systems</h3>
+            <p>Dadex records the launch of large-diameter HDPE pipes up to 630 mm for infrastructure requirements.</p>
+            <a href="product-tflex.html" class="btn btn--outline" style="margin-top: 1.5rem; width: max-content;">Explore T-Flex</a>
+          </div>
+          <div class="card">
+            <div class="kicker">API</div>
+            <h3>PE gas pipe certification milestone</h3>
+            <p>Dadex corporate material records its API Monogram achievement for manufactured PE gas pipes.</p>
+            <a href="product-tflex-gas.html" class="btn btn--outline" style="margin-top: 1.5rem; width: max-content;">Explore T-Flex Gas</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: NEWSLETTER ARCHIVE -->
+      <div class="tab-pane" id="tab-archive" role="tabpanel">
+        
+        <div style="text-align: left; margin-bottom: 3rem;">
+          <p style="max-width: 720px; margin: 0 auto; color: var(--muted);">
+              To find out what we have been doing, take a look at <strong>INSET</strong>, our quarterly company Newsletter.</p>
+          <p style="max-width: 720px; margin: 2rem auto; color: var(--muted);">
+              <strong>INSET</strong> is a way in which our employees can exchange news and views, and provides highlights of the previous quarter.
+          </p>
+        </div>
+
+        <div class="newsletter-grid">
+          
+          <!-- 2017 -->
+          <article class="newsletter-card">
+            <div class="newsletter-cover">
+              <div>
+                <span class="inset-logo">INSET</span>
+                <span class="inset-date">July 2016 – June 2017</span>
+              </div>
+              <i class="fas fa-file-pdf pdf-icon"></i>
+            </div>
+            <div class="newsletter-body">
+              <div class="newsletter-heading-wrap">
+                <h3>The Year in Review</h3>
+              </div>
+              <ul>
+                <li>Launch of Pakistan's first Antimicrobial Pipes</li>
+                <li>ABAD International Expo 2016</li>
+                <li>Plumber Training in Multan</li>
+              </ul>
+              <a href="assets/newsletters/inset_Jul16-Jun17.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+          </article>
+
+          <!-- 2009 -->
+          <article class="newsletter-card">
+            <div class="newsletter-cover">
+              <div>
+                <span class="inset-logo">INSET</span>
+                <span class="inset-date">January – March 2009</span>
+              </div>
+              <i class="fas fa-file-pdf pdf-icon"></i>
+            </div>
+            <div class="newsletter-body">
+              <div class="newsletter-heading-wrap">
+                <h3>"4 in 2" Synergy Development</h3>
+              </div>
+              <ul>
+                <li>Setting the 4 Billion target by 2010</li>
+                <li>Sales Conference in Thailand</li>
+                <li>Laboratory Expansion & Fire Drills</li>
+              </ul>
+              <a href="assets/newsletters/inset_jan_mar_2009.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+          </article>
+
+          <!-- 2007 -->
+          <article class="newsletter-card">
+            <div class="newsletter-cover">
+              <div>
+                <span class="inset-logo">INSET</span>
+                <span class="inset-date">January – March 2007</span>
+              </div>
+              <i class="fas fa-file-pdf pdf-icon"></i>
+            </div>
+            <div class="newsletter-body">
+              <div class="newsletter-heading-wrap">
+                <h3>Long Service Awards 2007</h3>
+              </div>
+              <ul>
+                <li>Long Service & Best Worker Awards</li>
+                <li>IAPEX 2007 Exhibition</li>
+                <li>Water Asia 2007 Participation</li>
+              </ul>
+              <a href="assets/newsletters/inset_jan_mar_2007.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+          </article>
+
+          <!-- 2006 (Jul-Dec) -->
+          <article class="newsletter-card">
+            <div class="newsletter-cover">
+              <div>
+                <span class="inset-logo">INSET</span>
+                <span class="inset-date">July – December 2006</span>
+              </div>
+              <i class="fas fa-file-pdf pdf-icon"></i>
+            </div>
+            <div class="newsletter-body">
+              <div class="newsletter-heading-wrap">
+                <h3>Launch of Flowline</h3>
+              </div>
+              <ul>
+                <li>Launch of Flowline uPVC Sewer System</li>
+                <li>SAP Implementation Agreement</li>
+                <li>BuildAsia & AgroAsia 2006</li>
+              </ul>
+              <a href="assets/newsletters/inset_jul_dec_2006.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+          </article>
+
+          <!-- 2006 (Apr-Jun) -->
+          <article class="newsletter-card">
+            <div class="newsletter-cover">
+              <div>
+                <span class="inset-logo">INSET</span>
+                <span class="inset-date">April – June 2006</span>
+              </div>
+              <i class="fas fa-file-pdf pdf-icon"></i>
+            </div>
+            <div class="newsletter-body">
+              <div class="newsletter-heading-wrap">
+                <h3>WaterWise Art Contest</h3>
+              </div>
+              <ul>
+                <li>Dadex WaterWise Art Contest in Lahore</li>
+                <li>Launch of Zarkaasht Agriculture Division</li>
+                <li>New Plumber Incentive Scheme</li>
+              </ul>
+              <a href="assets/newsletters/inset_apr_jun_2006.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+          </article>
+
+          <!-- 2006 (Jan-Mar) -->
+          <article class="newsletter-card">
+            <div class="newsletter-cover">
+              <div>
+                <span class="inset-logo">INSET</span>
+                <span class="inset-date">January – March 2006</span>
+              </div>
+              <i class="fas fa-file-pdf pdf-icon"></i>
+            </div>
+            <div class="newsletter-body">
+              <div class="newsletter-heading-wrap">
+                <h3>Vision in Action</h3>
+              </div>
+              <ul>
+                <li>Launch of 3 New Business Divisions</li>
+                <li>ACCW, OFCL, and Zarkaasht</li>
+                <li>Introducing New Divisions to Architects</li>
+              </ul>
+              <a href="assets/newsletters/Inset_Jan_Mar_2006.pdf" target="_blank" class="btn btn--outline"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+    </div>
   </section>
+
 </main>
+
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
+
+<!-- Tab Switching Logic -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.news-tab-btn');
+    const panes = document.querySelectorAll('.tab-pane');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        panes.forEach(p => p.classList.remove('active'));
+
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        
+        const targetId = tab.getAttribute('data-target');
+        document.getElementById(targetId).classList.add('active');
+      });
+    });
+  });
+</script>
 </body>
 </html>
