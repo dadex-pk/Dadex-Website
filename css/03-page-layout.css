@@ -1,0 +1,65 @@
+/* ============================================================
+   PAGE LAYOUT — Containers, sections, grids, flex, utilities
+   Loaded THIRD on every page. Structural only.
+   ============================================================ */
+
+/* Container */
+.container {
+  width: min(100% - 2rem, var(--container));
+  margin-inline: auto;
+}
+@media (min-width: 768px) {
+  .container { width: min(100% - 4rem, var(--container)); }
+}
+
+/* Sections */
+.section { padding-block: var(--section-pad); }
+.section--light { background-color: var(--bg-mist); }
+.section--dark {
+  background-color: var(--bg-dark);
+  color: #fff;
+}
+.section--dark h2,
+.section--dark h3,
+.section--dark p { color: #fff; }
+
+/* Section headers */
+.section-header { max-width: 48rem; margin-bottom: 3rem; }
+.section-header.center { margin-inline: auto; text-align: center; }
+.section-header p {
+  font-size: 1.125rem;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+/* Grids — 1 col mobile → 2 col tablet → N cols desktop */
+.grid,
+.grid-2, .grid-3, .grid-4, .grid-5, .grid-6 {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .grid-2, .grid-3, .grid-4, .grid-5, .grid-6 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .grid-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .grid-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+/* Flex utilities */
+.flex { display: flex; gap: 1rem; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+
+/* Universal utilities */
+.bg-white { background-color: var(--bg-surface); }
+.bg-mist { background-color: var(--bg-mist); }
+.text-center { text-align: center; }

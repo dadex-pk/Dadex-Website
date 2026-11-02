@@ -1,43 +1,33 @@
 /* ============================================================
-   ABOUT PAGE SPECIFIC STYLES
+   ABOUT PAGE — Splits, glance cards, partners, certifications
+   Loaded by: about.html only
    ============================================================ */
 
-/* --- Global Page Overrides --- */
-.about-page .section {
-  padding-block: clamp(4rem, 8vw, 6rem);
-}
+.about-page .section { padding-block: clamp(4rem, 8vw, 6rem); }
 
-/* --- Vision & Mission Split Layouts --- */
+/* --- Split layouts (image + text) --- */
 .about-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  align-items:flex-start;
+  align-items: start;
   justify-items: center;
 }
-
-.about-split.is-flipped .about-split-text {
-  order: 2;
-}
-
-.about-split.is-flipped .about-split-image {
-  order: 1;
-}
+.about-split.is-flipped .about-split-text { order: 2; }
+.about-split.is-flipped .about-split-image { order: 1; }
 
 .about-split-image img {
-  width: Auto;
+  width: auto;
   height: 100%;
   max-height: 500px;
   object-fit: cover;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
 }
-
 .about-split-text h2 {
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 1.5rem;
 }
-
 .about-split-text blockquote {
   font-size: 1.25rem;
   font-style: italic;
@@ -49,7 +39,7 @@
   max-width: 30ch;
 }
 
-/* --- Mission List --- */
+/* --- Mission list --- */
 .mission-list {
   list-style: none;
   padding: 0;
@@ -57,14 +47,12 @@
   flex-direction: column;
   gap: 1rem;
 }
-
 .mission-list li {
   position: relative;
   padding-left: 2rem;
   color: var(--muted);
   line-height: 1.6;
 }
-
 .mission-list li::before {
   content: "✓";
   position: absolute;
@@ -74,7 +62,7 @@
   font-weight: 900;
 }
 
-/* --- At a Glance (Stats) --- */
+/* --- Glance / stat cards --- */
 .glance-card {
   background: #fff;
   padding: 2rem;
@@ -88,7 +76,7 @@
   border-color: rgba(229, 0, 0, 0.2);
 }
 .glance-card .num {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-heading);
   font-size: 2.5rem;
   font-weight: 800;
   color: var(--brand-red);
@@ -107,45 +95,29 @@
   line-height: 1.5;
 }
 
-/* --- Values Grid --- */
+/* --- Values section --- */
 .section-values .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   padding: 5rem;
-  align-items: top;
+  align-items: start;
 }
-
 .about-split-image-values {
   display: block;
   width: 72%;
   height: auto;
-  object-fit: contain;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
 }
-
-.value-card {
-  background: #fff;
-  padding: 1.5rem;
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--brand-red);
-  border-radius: var(--radius-sm);
-  text-align: center;
-}
-.value-card h4 {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: var(--ink);
-}
-.value-card p {
-  font-size: 0.8125rem;
-  color: var(--muted);
-  margin: 0;
-  line-height: 1.5;
+.about-split-image-values img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: inherit;
 }
 
-/* --- What We Make (Links) --- */
+/* --- What we make (link cards) --- */
 .make-card {
   display: block;
   background: #fff;
@@ -170,7 +142,7 @@
   margin: 0;
 }
 
-/* --- Partners & Certifications --- */
+/* --- Partner items --- */
 .partner-item {
   padding: 1.5rem;
   background: #fff;
@@ -178,7 +150,6 @@
   margin-bottom: 2.5rem;
   transition: border-color var(--transition);
 }
-
 .partner-item span {
   display: block;
   font-size: 0.6875rem;
@@ -198,6 +169,7 @@
   margin: 0;
 }
 
+/* --- Cert items --- */
 .cert-item {
   background: #fff;
   border: 1px solid var(--line);
@@ -216,44 +188,15 @@
   margin: 0;
 }
 
-/* --- Grid Fixes (Local to About Page) --- */
-@media (min-width: 1024px) {
-  .about-page .grid-5 {
-    display: grid !important;
-    grid-template-columns: repeat(5, 1fr) !important;
-    gap: 1rem !important;
-  }
-}
-.about-page .grid-3 {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 1.5rem !important;
-}
-.about-page .grid-2 {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 2rem !important;
-}
-
-/* --- Responsive --- */
+/* --- About page responsive --- */
 @media (max-width: 1024px) {
-  .about-split {
+  .about-split { grid-template-columns: 1fr; gap: 2rem; }
+  .about-split.is-flipped .about-split-text,
+  .about-split.is-flipped .about-split-image { order: initial; }
+  .section-values .container {
     grid-template-columns: 1fr;
+    padding: 3rem 1.5rem;
     gap: 2rem;
   }
-  .about-split.is-flipped .about-split-text,
-  .about-split.is-flipped .about-split-image {
-    order: initial;
-  }
-  .about-page .grid-5, 
-  .about-page .grid-3 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-@media (max-width: 768px) {
-  .about-page .grid-5, 
-  .about-page .grid-3,
-  .about-page .grid-2 {
-    grid-template-columns: 1fr !important;
-  }
+  .about-split-image-values { width: 100%; }
 }

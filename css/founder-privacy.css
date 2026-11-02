@@ -1,0 +1,75 @@
+/* ============================================================
+   FOUNDER + PRIVACY — Company information and legal pages
+   Loaded by: founder-chairman.html, privacy-policy.html
+   ============================================================ */
+
+/* ============================================================
+   FOUNDER CHAIRMAN PAGE
+   ============================================================ */
+
+.position-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.position-list li {
+  position: relative;
+  padding: 0.75rem 0 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+.position-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.25rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-red);
+}
+
+/* ============================================================
+   PRIVACY POLICY PAGE
+   ============================================================ */
+
+.legal-content {
+  background: #fff;
+  padding: 4rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  max-width: 900px;
+  margin: 0 auto;
+}
+.legal-content h2 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 0.5rem;
+}
+.legal-content h2:first-of-type { margin-top: 2rem; }
+.legal-content p,
+.legal-content li {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.legal-content ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.legal-content a {
+  color: var(--brand-red);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-content a:hover {
+  color: var(--brand-red-dark);
+}
+
+@media (max-width: 768px) {
+  .legal-content { padding: 2rem 1.5rem; }
+}

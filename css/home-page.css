@@ -1,16 +1,10 @@
 /* ============================================================
-   HOME PAGE SPECIFIC STYLES
+   HOME PAGE — Hero slider, trust bar, values, product feature cards
+   Loaded by: index.html only
    ============================================================ */
 
-/* --- Base Page Backgrounds --- */
-.bg-white { background-color: var(--bg-surface); }
-
-/* --- Typography Helpers --- */
-h2 span { color: var(--brand-red); }
-.section--dark h2 span { color: var(--brand-accent-dark); }
-
 /* ============================================================
-   1. HERO SECTION
+   HERO
    ============================================================ */
 .home-hero {
   background: var(--bg-dark);
@@ -19,14 +13,12 @@ h2 span { color: var(--brand-red); }
   position: relative;
   overflow: hidden;
 }
-
 .home-hero__inner {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 4rem;
   align-items: center;
 }
-
 .home-hero__content h1 {
   font-size: clamp(2.5rem, 5vw, 4.5rem);
   line-height: 1.05;
@@ -34,12 +26,10 @@ h2 span { color: var(--brand-red); }
   color: #fff;
   letter-spacing: -0.03em;
 }
-
 .home-hero__content h1 em {
   font-style: normal;
   color: var(--brand-accent-dark);
 }
-
 .home-hero__content p {
   font-size: 1.125rem;
   color: #b3b3b8;
@@ -47,24 +37,14 @@ h2 span { color: var(--brand-red); }
   margin-bottom: 2.5rem;
   line-height: 1.7;
 }
-
 .home-hero__actions {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
 }
 
-
-
-/* =========================================================
-   HOMEPAGE HERO — IMAGE SLIDER
-   ========================================================= */
-
-.home-hero__visual {
-  min-width: 0;
-  width: 100%;
-}
-
+/* --- Hero slider --- */
+.home-hero__visual { min-width: 0; width: 100%; }
 .hero-slider {
   position: relative;
   width: 100%;
@@ -76,7 +56,6 @@ h2 span { color: var(--brand-red); }
   background: #252525;
   box-shadow: 0 18px 45px rgb(0 0 0 / 18%);
 }
-
 .hero-slide {
   position: absolute;
   inset: 0;
@@ -85,18 +64,14 @@ h2 span { color: var(--brand-red); }
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition:
-    opacity 700ms ease,
-    visibility 700ms ease;
+  transition: opacity 700ms ease, visibility 700ms ease;
 }
-
 .hero-slide.is-active {
   z-index: 1;
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
-
 .hero-slide > img {
   display: block;
   width: 100%;
@@ -106,11 +81,7 @@ h2 span { color: var(--brand-red); }
   transform: scale(1.02);
   transition: transform 5.5s ease;
 }
-
-.hero-slide.is-active > img {
-  transform: scale(1.07);
-}
-
+.hero-slide.is-active > img { transform: scale(1.07); }
 .hero-slide::after {
   content: "";
   position: absolute;
@@ -124,7 +95,6 @@ h2 span { color: var(--brand-red); }
   );
   pointer-events: none;
 }
-
 .hero-slide__caption {
   position: absolute;
   z-index: 1;
@@ -133,7 +103,6 @@ h2 span { color: var(--brand-red); }
   left: 28px;
   color: #fff;
 }
-
 .hero-slide__caption > span {
   display: inline-block;
   margin-bottom: 12px;
@@ -143,7 +112,6 @@ h2 span { color: var(--brand-red); }
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
-
 .hero-slide__caption h2 {
   max-width: 520px;
   margin: 0 0 10px;
@@ -153,7 +121,6 @@ h2 span { color: var(--brand-red); }
   line-height: 1.15;
   text-wrap: balance;
 }
-
 .hero-slide__caption p {
   max-width: 440px;
   margin: 0;
@@ -161,9 +128,6 @@ h2 span { color: var(--brand-red); }
   font-size: 0.95rem;
   line-height: 1.6;
 }
-
-/* Slider navigation dots */
-
 .hero-slider__controls {
   position: absolute;
   right: 28px;
@@ -173,7 +137,6 @@ h2 span { color: var(--brand-red); }
   align-items: center;
   gap: 9px;
 }
-
 .hero-slider__dot {
   display: block;
   width: 9px;
@@ -183,25 +146,20 @@ h2 span { color: var(--brand-red); }
   border-radius: 999px;
   background: rgb(255 255 255 / 60%);
   cursor: pointer;
-  transition:
-    width 250ms ease,
-    background-color 250ms ease;
+  transition: width 250ms ease, background-color 250ms ease;
 }
-
 .hero-slider__dot.is-active {
   width: 27px;
   background: var(--brand-red, #c90000);
 }
-
 .hero-slider__dot:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 4px;
 }
 
-/* =========================================================
-   HOMEPAGE TRUST BAR — SIX PILLARS
-   ========================================================= */
-
+/* ============================================================
+   TRUST BAR — six pillars
+   ============================================================ */
 .trust-bar {
   position: relative;
   z-index: 2;
@@ -209,24 +167,18 @@ h2 span { color: var(--brand-red); }
   background: #fff;
   border-bottom: 1px solid #e9e9e9;
 }
-
 .trust-bar__inner {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   width: min(100% - 48px, 1400px);
   margin-inline: auto;
 }
-
 .trust-item {
   min-width: 0;
   padding: 8px 18px;
   text-align: center;
 }
-
-.trust-item + .trust-item {
-  border-left: 1px solid #e7e7e7;
-}
-
+.trust-item + .trust-item { border-left: 1px solid #e7e7e7; }
 .trust-item > i {
   display: inline-flex;
   align-items: center;
@@ -236,7 +188,6 @@ h2 span { color: var(--brand-red); }
   color: var(--brand-red, #c90000);
   font-size: 1.65rem;
 }
-
 .trust-item h3 {
   margin: 0 0 9px;
   color: #222;
@@ -245,7 +196,6 @@ h2 span { color: var(--brand-red); }
   line-height: 1.4;
   text-wrap: balance;
 }
-
 .trust-item p {
   margin: 0;
   color: #666;
@@ -253,114 +203,8 @@ h2 span { color: var(--brand-red); }
   line-height: 1.6;
 }
 
-/* =========================================================
-   RESPONSIVE LAYOUT
-   ========================================================= */
-
-@media (max-width: 1100px) {
-  .trust-bar__inner {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    row-gap: 28px;
-  }
-
-  .trust-item:nth-child(4) {
-    border-left: 0;
-  }
-}
-
-@media (max-width: 767px) {
-  .hero-slider {
-    aspect-ratio: 4 / 3;
-    min-height: 300px;
-    border-radius: 12px;
-  }
-
-  .hero-slide__caption {
-    right: 20px;
-    bottom: 48px;
-    left: 20px;
-  }
-
-  .hero-slide__caption h2 {
-    font-size: clamp(1.3rem, 5vw, 1.8rem);
-  }
-
-  .hero-slide__caption p {
-    font-size: 0.86rem;
-  }
-
-  .hero-slider__controls {
-    right: 20px;
-    bottom: 18px;
-  }
-
-  .trust-bar {
-    padding: 28px 0;
-  }
-
-  .trust-bar__inner {
-    width: min(100% - 28px, 600px);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 24px;
-  }
-
-  .trust-item {
-    padding: 8px 12px;
-  }
-
-  .trust-item:nth-child(odd) {
-    border-left: 0;
-  }
-
-  .trust-item:nth-child(even) {
-    border-left: 1px solid #e7e7e7;
-  }
-
-  .trust-item h3 {
-    font-size: 0.9rem;
-  }
-
-  .trust-item p {
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .hero-slider {
-    min-height: 270px;
-  }
-
-  .hero-slide__caption {
-    right: 15px;
-    left: 15px;
-  }
-
-  .trust-bar__inner {
-    width: calc(100% - 20px);
-  }
-
-  .trust-item {
-    padding-inline: 8px;
-  }
-}
-
-/* Respect users who prefer reduced motion */
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-slide,
-  .hero-slide > img,
-  .hero-slider__dot {
-    transition: none;
-  }
-
-  .hero-slide.is-active > img {
-    transform: none;
-  }
-}
-
-
 /* ============================================================
-   3. PRODUCT CARDS
+   PRODUCT FEATURE CARDS — used only on home page
    ============================================================ */
 .card--text-feature {
   position: relative;
@@ -375,7 +219,6 @@ h2 span { color: var(--brand-red); }
   overflow: hidden;
   height: 100%;
 }
-
 .card--text-feature::after {
   content: '';
   position: absolute;
@@ -388,16 +231,12 @@ h2 span { color: var(--brand-red); }
   transform-origin: left;
   transition: transform var(--transition);
 }
-
 .card--text-feature:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
   border-color: rgba(229, 0, 0, 0.2);
 }
-
-.card--text-feature:hover::after {
-  transform: scaleX(1);
-}
+.card--text-feature:hover::after { transform: scaleX(1); }
 
 .card-feature-top {
   display: flex;
@@ -405,7 +244,6 @@ h2 span { color: var(--brand-red); }
   align-items: center;
   margin-bottom: 1.5rem;
 }
-
 .home-product-icon {
   display: grid;
   place-items: center;
@@ -417,15 +255,13 @@ h2 span { color: var(--brand-red); }
   font-size: 1.125rem;
   transition: all var(--transition);
 }
-
 .card--text-feature:hover .home-product-icon {
   background: var(--brand-red);
   color: #ffffff;
   transform: scale(1.05);
 }
-
 .home-product-number {
-  font-family: 'Manrope', 'Inter', sans-serif;
+  font-family: var(--font-heading);
   font-size: 2.25rem;
   font-weight: 800;
   line-height: 1;
@@ -433,35 +269,25 @@ h2 span { color: var(--brand-red); }
   letter-spacing: -0.04em;
   transition: color var(--transition);
 }
-
-.card--text-feature:hover .home-product-number {
-  color: var(--brand-red);
-}
-
+.card--text-feature:hover .home-product-number { color: var(--brand-red); }
 .card--text-feature .kicker {
   font-size: 0.6875rem;
   margin-bottom: 0.5rem;
   color: var(--brand-red);
 }
-
 .card--text-feature h3 {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
   color: var(--ink);
   transition: color var(--transition);
 }
-
-.card--text-feature:hover h3 {
-  color: var(--brand-red);
-}
-
+.card--text-feature:hover h3 { color: var(--brand-red); }
 .card--text-feature .product-list {
   font-size: 0.875rem;
   color: var(--muted);
   margin: 0;
   line-height: 1.6;
 }
-
 .card-arrow {
   position: absolute;
   bottom: 1.5rem;
@@ -470,97 +296,33 @@ h2 span { color: var(--brand-red); }
   color: var(--brand-red);
   transition: all var(--transition);
 }
-
 .card--text-feature:hover .card-arrow {
   color: var(--brand-red);
   transform: translateX(3px);
 }
 
-/* --- 6th Card: Discovery Variation --- */
+/* Discovery variant (6th card) */
 .card--discovery {
   background: #fffafa;
   border-color: rgba(229, 0, 0, 0.1);
 }
-
 .card--discovery .home-product-icon {
   background: #fce8e8;
   color: var(--brand-red);
 }
-
 .card--discovery:hover .home-product-icon {
   background: var(--brand-red);
   color: #ffffff;
 }
 
 /* ============================================================
-   4. GRID FIXES
-   ============================================================ */
-@media (min-width: 1024px) {
-  .grid-5 {
-    display: grid !important;
-    grid-template-columns: repeat(5, 1fr) !important;
-    gap: 1.5rem !important;
-  }
-}
-
-.grid-3 {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 1.5rem !important;
-}
-
-.grid-2 {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 1.5rem !important;
-}
-
-/* ============================================================
-   5. RESPONSIVE DESIGN
-   ============================================================ */
-@media (max-width: 1024px) {
-  .home-hero__inner {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    text-align: center;
-  }
-  
-  .home-hero__actions {
-    justify-content: center;
-  }
-  
-  .home-hero__visual {
-    order: -1; 
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .grid-5, .grid-3 {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 1rem !important;
-  }
-}
-
-@media (max-width: 600px) {
-  .grid-5, .grid-3, .grid-2 {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-  }
-  
-  .card--text-feature {
-    padding: 1.5rem;
-  }
-}
-/* ============================================================
-   VALUES SECTION
+   VALUES SECTION (dark section with background image)
    ============================================================ */
 .values-section {
   position: relative;
   isolation: isolate;
   overflow: hidden;
 }
-
 .values-section::before {
   content: "";
   position: absolute;
@@ -573,7 +335,6 @@ h2 span { color: var(--brand-red); }
   opacity: 0.4;
   pointer-events: none;
 }
-
 .values-section::after {
   content: "";
   position: absolute;
@@ -586,7 +347,65 @@ h2 span { color: var(--brand-red); }
   );
   pointer-events: none;
 }
+.values-section > .container { position: relative; }
 
-.values-section > .container {
-  position: relative;
+/* ============================================================
+   HOME PAGE RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+  .trust-bar__inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 28px;
+  }
+  .trust-item:nth-child(4) { border-left: 0; }
+}
+
+@media (max-width: 1024px) {
+  .home-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+  .home-hero__actions { justify-content: center; }
+  .home-hero__visual { order: -1; max-width: 600px; margin: 0 auto; }
+}
+
+@media (max-width: 767px) {
+  .hero-slider {
+    aspect-ratio: 4 / 3;
+    min-height: 300px;
+    border-radius: 12px;
+  }
+  .hero-slide__caption { right: 20px; bottom: 48px; left: 20px; }
+  .hero-slide__caption h2 { font-size: clamp(1.3rem, 5vw, 1.8rem); }
+  .hero-slide__caption p { font-size: 0.86rem; }
+  .hero-slider__controls { right: 20px; bottom: 18px; }
+
+  .trust-bar { padding: 28px 0; }
+  .trust-bar__inner {
+    width: min(100% - 28px, 600px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 24px;
+  }
+  .trust-item { padding: 8px 12px; }
+  .trust-item:nth-child(odd) { border-left: 0; }
+  .trust-item:nth-child(even) { border-left: 1px solid #e7e7e7; }
+  .trust-item h3 { font-size: 0.9rem; }
+  .trust-item p { font-size: 0.8rem; }
+
+  .card--text-feature { padding: 1.5rem; }
+}
+
+@media (max-width: 380px) {
+  .hero-slider { min-height: 270px; }
+  .hero-slide__caption { right: 15px; left: 15px; }
+  .trust-bar__inner { width: calc(100% - 20px); }
+  .trust-item { padding-inline: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide,
+  .hero-slide > img,
+  .hero-slider__dot { transition: none; }
+  .hero-slide.is-active > img { transform: none; }
 }

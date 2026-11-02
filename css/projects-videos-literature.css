@@ -1,0 +1,202 @@
+/* ============================================================
+   PROJECTS + VIDEOS + LITERATURE — Content showcase pages
+   Loaded by: projects.html, videos.html, literature.html
+   ============================================================ */
+
+/* ============================================================
+   PROJECTS PAGE
+   ============================================================ */
+
+.project-card {
+  padding: 0;
+  overflow: hidden;
+}
+.project-card [style*="height: 200px"] {
+  background: #f7f7f5;
+}
+
+/* ============================================================
+   VIDEOS PAGE
+   ============================================================ */
+
+.video-card {
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+.video-card[hidden] { display: none !important; }
+
+.video-thumbnail {
+  position: relative;
+  aspect-ratio: 16/9;
+  background: #eceeef;
+  overflow: hidden;
+}
+.video-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.video-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: rgba(229, 0, 0, 0.9);
+  color: #fff;
+  border-radius: 50%;
+  border: none;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  z-index: 2;
+}
+.video-card:hover .video-play { transform: scale(1.1); }
+
+.video-body { padding: 1.5rem; }
+.video-category {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: var(--brand-red);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Video lightbox */
+.video-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.video-lightbox.open { display: flex; }
+.video-lightbox-inner {
+  position: relative;
+  width: min(100%, 64rem);
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+.video-lightbox-close {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* ============================================================
+   LITERATURE PAGE
+   ============================================================ */
+
+/* Filter bar base comes from shared-parts.css (.lit-filter-btn).
+   This adds the centered variant on the literature page. */
+.lit-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+  justify-content: center;
+}
+
+.lit-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+.lit-card-media {
+  height: 180px;
+  background: var(--bg-mist);
+  display: grid;
+  place-items: center;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  padding: 1.5rem;
+}
+.lit-card-media img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+.lit-card:hover .lit-card-media img { transform: scale(1.05); }
+.lit-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.lit-card-body .kicker {
+  font-size: 0.6875rem;
+  color: var(--brand-red);
+  margin-bottom: 0.5rem;
+}
+.lit-card-body h3 {
+  font-size: 1.125rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.lit-card-body p {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  flex: 1;
+  line-height: 1.5;
+}
+.lit-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+.lit-actions .btn {
+  font-size: 0.75rem;
+  padding: 0.5rem 0.5rem;
+  width: 100%;
+  white-space: nowrap;
+}
+.lit-actions .btn-full {
+  grid-column: 1 / -1;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+.lit-actions .btn-full:hover {
+  border-color: var(--brand-red);
+  color: var(--brand-red);
+  background: #fffafa;
+}
+.lit-actions .btn i {
+  font-size: 0.8125rem;
+  color: currentColor;
+  margin-right: 0.25rem;
+}
+
+.lit-empty {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background: #fff;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+}
+.lit-empty[hidden] { display: none !important; }
+
+@media (max-width: 600px) {
+  .lit-actions { grid-template-columns: 1fr; }
+}
