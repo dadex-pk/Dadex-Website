@@ -1,0 +1,186 @@
+/* ============================================================
+   1-TOKENS.CSS — Design Tokens, Resets & Base Configuration
+   Modern, fully optimized, and organized according to ITCSS principles.
+   ============================================================ */
+
+:root {
+  /* --- 1. Brand Palette --- */
+  --brand-red: #e50000;
+  --brand-red-dark: #b50000;
+  --brand-accent-dark: #ff6a6a;
+  --brand-red-light: #fff2f2;
+
+  /* --- 2. Typography & Ink --- */
+  --ink: #17191c;
+  --ink-light: #24272a;
+  --muted: #687078;
+  --muted-light: #8f969d;
+  --text: var(--ink);
+
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Manrope', 'Inter', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* --- 3. Surfaces & Backgrounds --- */
+  --bg-body: #f3f3f385;
+  --bg-surface: #ffffff;
+  --bg-mist: #f4f5f6;
+  --bg-dark: #17191c;
+
+  /* --- 4. Borders & Lines --- */
+  --line: #e4e7ea;
+  --line-soft: #eef0f2;
+  --line-on-dark: rgba(255, 255, 255, 0.10);
+
+  /* --- 5. Shadows --- */
+  --shadow-sm: 0 1px 3px rgba(15, 18, 21, 0.05);
+  --shadow-md: 0 10px 30px rgba(15, 18, 21, 0.08);
+  --shadow-lg: 0 24px 48px -12px rgba(15, 18, 21, 0.15);
+
+  /* --- 6. Layout & Geometry --- */
+  --container: 1320px;
+  --section-pad: clamp(3.5rem, 6vw, 5rem);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* --- 7. Motion & Transitions --- */
+  --ease: cubic-bezier(0.2, 0.65, 0.2, 1);
+  --transition: 0.25s var(--ease);
+
+  /* --- 8. Stacking Context (Z-Index Scale) --- */
+  --z-dropdown: 100;
+  --z-sticky: 500;
+  --z-header: 1000;
+  --z-drawer: 1100;
+  --z-fab: 1200;
+  --z-modal: 9999;
+
+  /* --- 9. Header Heights & Offsets --- */
+  --header-h: 76px;
+  --header-h-scrolled: 64px;
+  --sticky-offset: calc(var(--header-h) + 1rem);
+}
+
+/* Dynamic header state modifier */
+body.header-scrolled {
+  --header-h: var(--header-h-scrolled);
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --header-h: 68px;
+    --header-h-scrolled: 60px;
+  }
+}
+
+/* ============================================================
+   GLOBAL RESETS & BOX SIZING
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-body);
+  color: var(--ink-light);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  overflow-x: clip;
+}
+
+/* ============================================================
+   TYPOGRAPHY BASICS
+   ============================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.04em; }
+h2 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.03em; }
+h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+h4 { font-size: 1.125rem; }
+
+p {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  max-width: 72ch;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul, ol {
+  padding-inline-start: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* ============================================================
+   ACCESSIBILITY & SCROLL MARGINS
+   ============================================================ */
+
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--brand-red);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+[id], :target {
+  scroll-margin-top: var(--sticky-offset);
+}
+
+/* ============================================================
+   REDUCED MOTION PREFERENCES
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition: 0.01ms linear;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
