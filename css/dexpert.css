@@ -1,0 +1,291 @@
+/* ============================================================
+   DEXPERT.CSS — Floating FAB & Guided Modal Assistant
+   ============================================================ */
+
+.dexpert-fab {
+  position: fixed;
+  bottom: 2rem;
+  inset-inline-end: 2rem;
+  z-index: 990;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 1.25rem 0.625rem 0.75rem;
+  background: var(--brand-red);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 8px 24px rgba(229, 0, 0, 0.35);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+
+  &:hover {
+    background: var(--brand-red-dark);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(229, 0, 0, 0.45);
+  }
+
+  img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #ffffff;
+  }
+
+  strong {
+    font-size: 0.875rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+}
+
+.dexpert-dialog {
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 0;
+  width: min(100% - 2rem, 520px);
+  background: #ffffff;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  margin: auto;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+
+  &[open] {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  &::backdrop {
+    background: rgba(15, 18, 21, 0.65);
+    backdrop-filter: blur(4px);
+  }
+}
+
+.dexpert-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-dark);
+  color: #ffffff;
+  border-bottom: 2px solid var(--brand-red);
+
+  .dexpert-icon img {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: #ffffff;
+    padding: 2px;
+  }
+
+  .dexpert-brand {
+    display: flex;
+    flex-direction: column;
+
+    strong {
+      font-size: 1.125rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    span {
+      font-size: 0.75rem;
+      color: var(--brand-accent-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  .dexpert-close {
+    margin-inline-start: auto;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: color 0.2s ease, background 0.2s ease;
+
+    &:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+.dexpert-body {
+  padding: 1.75rem;
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+.dexpert-home {
+  h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .dexpert-intro {
+    font-size: 0.9375rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+}
+
+.dexpert-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin-bottom: 1.75rem;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.875rem 1.25rem;
+    background: var(--bg-mist);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+
+    i {
+      color: var(--brand-red);
+      transition: transform 0.2s ease;
+    }
+
+    &:hover {
+      background: #ffffff;
+      border-color: var(--brand-red);
+      transform: translateX(3px);
+
+      i {
+        transform: translateX(3px);
+      }
+    }
+  }
+}
+
+.dexpert-ask {
+  border-top: 1px solid var(--line-soft);
+  padding-top: 1.25rem;
+
+  label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 0.625rem;
+  }
+
+  .dexpert-ask-row {
+    display: flex;
+    gap: 0.5rem;
+
+    input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-size: 0.9375rem;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: var(--brand-red);
+      }
+    }
+
+    button {
+      padding: 0.75rem 1.25rem;
+      background: var(--brand-red);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: var(--brand-red-dark);
+      }
+    }
+  }
+
+  small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--muted-light);
+  }
+}
+
+.dexpert-result {
+  .dexpert-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: none;
+    color: var(--brand-red);
+    font-weight: 700;
+    font-size: 0.875rem;
+    cursor: pointer;
+    margin-bottom: 1.25rem;
+    padding: 0;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .dexpert-result-label {
+    display: inline-block;
+    padding: 0.25rem 0.625rem;
+    background: #fce8e8;
+    color: var(--brand-red);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    border-radius: var(--radius-pill);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .dexpert-result-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--brand-red);
+    color: #ffffff;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--brand-red-dark);
+    }
+  }
+}

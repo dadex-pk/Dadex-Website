@@ -1,0 +1,435 @@
+/* ============================================================
+   INVESTORS.CSS — Investor Relations Tabs, Tables & Board Bios
+   ============================================================ */
+
+body.investors-page {
+  --ir-tabs-h: 3.3rem;
+  --sticky-offset: calc(var(--header-h) + var(--ir-tabs-h) + 1rem);
+}
+
+.ir-tabs {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 50;
+  background: #ffffff;
+  border-bottom: 2px solid var(--line);
+  margin-bottom: 3rem;
+  box-shadow: 0 1px 0 rgba(15, 18, 21, 0.02);
+  border-radius: 100px;
+
+  .ir-tabs-inner {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    scroll-behavior: smooth;
+    justify-content: center;
+    align-items: center;
+
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  .ir-tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: var(--ir-tabs-h);
+    padding: 0 1.5rem;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+    scroll-snap-align: start;
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+
+    &::before {
+      content: "";
+      width: 0.63rem;
+      height: 0.63rem;
+      border: var(--muted-light) solid 2px;
+      border-radius: 50%;
+      background: var(--ink-light);
+      transform: scale(0.72);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    &:hover {
+      color: var(--ink);
+      background: var(--bg-mist);
+    }
+
+    &.active {
+      color: var(--brand-red);
+      border-bottom-color: var(--brand-red);
+      background: rgba(229, 0, 0, 0.035);
+
+      &::before {
+        transform: scale(1.1);
+        border: #f79595 solid 2px;
+        background: var(--brand-red);
+      }
+    }
+  }
+}
+
+.ir-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.ir-sidebar {
+  position: sticky;
+  top: calc(var(--header-h) + var(--ir-tabs-h) + 1.5rem);
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+
+  .ir-side-group {
+    display: none;
+    &.is-open { display: block; }
+  }
+
+  .ir-side-link {
+    position: relative;
+    display: block;
+    padding: 0.75rem 2.5rem 0.75rem 1.25rem;
+    color: var(--ink-light);
+    font-size: 0.9375rem;
+    border-inline-start: 3px solid transparent;
+    border-bottom: 1px solid var(--line-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--bg-mist);
+      color: var(--ink);
+      border-inline-start-color: var(--line-soft);
+    }
+
+    &.active {
+      background: #fff2f2;
+      color: var(--brand-red);
+      border-inline-start-color: var(--brand-red);
+      font-weight: 700;
+
+      &::after {
+        content: "›";
+        position: absolute;
+        inset-inline-end: 1.25rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.25rem;
+        line-height: 1;
+        color: var(--brand-red);
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+.ir-panel {
+  display: none;
+
+  &.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 3rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  > h2 {
+    position: relative;
+    padding-inline-start: 1.25rem;
+    margin-bottom: 1.9rem;
+    font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      inset-inline-start: 0;
+      width: 5px;
+      height: 40px;
+      background: var(--brand-red);
+      border-radius: 3px;
+    }
+
+    span { color: var(--brand-red); }
+  }
+
+  > h3 {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    border-bottom: 1px solid var(--line-soft);
+    padding-bottom: 0.5rem;
+  }
+
+  > p {
+    color: var(--muted);
+    line-height: 1.6;
+    min-width: 92%;
+
+    a {
+      color: var(--brand-red);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 600;
+
+      &:hover {
+        color: var(--brand-red-dark);
+      }
+    }
+  }
+}
+
+/* --- Investor Data Tables & Stats --- */
+.share-table {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: #ffffff;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  th, td {
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 0.9375rem;
+  }
+
+  th {
+    background: var(--bg-mist);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--line);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: 800;
+  }
+
+  tbody tr:nth-child(even) td { background: #fbfcfc; }
+  tbody tr:hover td { background: #fdf5f5; }
+
+  tr:last-child td,
+  tbody tr:last-child th,
+  tfoot th {
+    background: #ffffff;
+    border-top: 2px solid var(--brand-red);
+    border-bottom: none;
+    font-weight: 800;
+    color: var(--ink);
+  }
+}
+
+.ir-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.ir-stat {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  padding: 1.5rem 1.5rem 1.375rem;
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    inset-inline: 1.5rem;
+    height: 2px;
+    background: var(--brand-red);
+    opacity: 0.55;
+    border-radius: 0 0 2px 2px;
+  }
+
+  &:hover {
+    border-color: rgba(229, 0, 0, 0.22);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+  }
+
+  span {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    letter-spacing: 0.02em;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  strong {
+    display: block;
+    font-size: 2rem;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--muted-light);
+  }
+}
+
+.director-split-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+  align-items: start;
+}
+
+.director-list {
+  display: flex;
+  flex-direction: column;
+  border-inline-start: 2px solid var(--line);
+}
+
+.director-name-btn {
+  background: transparent;
+  border: none;
+  border-inline-start: 3px solid transparent;
+  padding: 1.25rem 1.5rem;
+  text-align: start;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-inline-start: -2px;
+
+  strong {
+    display: block;
+    font-size: 1.0625rem;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+
+  span {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  &:hover { background: var(--bg-mist); }
+  &.active {
+    background: #fdf5f5;
+    border-inline-start-color: var(--brand-red);
+
+    strong { color: var(--brand-red); font-weight: 800; }
+  }
+}
+
+.director-bio {
+  display: none;
+  animation: fadeIn 0.3s ease;
+
+  &.active { display: block; }
+
+  h3 {
+    font-size: 1.75rem;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+
+  .director-title {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--brand-red);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  body.investors-page { --sticky-offset: calc(var(--header-h) + 1rem); }
+  .ir-tabs { position: static; }
+  .ir-layout { grid-template-columns: 1fr; gap: 2rem; }
+
+  .ir-sidebar {
+    position: static;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    .ir-side-group.is-open {
+      display: inline-flex;
+      gap: 0;
+    }
+
+    .ir-side-link {
+      border-inline-start: 0;
+      border-bottom: 3px solid transparent;
+      padding: 0.65rem 1rem;
+
+      &.active {
+        border-bottom-color: var(--brand-red);
+        background: transparent;
+      }
+    }
+  }
+
+  .director-split-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .director-list {
+    flex-direction: row;
+    overflow-x: auto;
+    border-inline-start: none;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .director-name-btn {
+    border-inline-start: none;
+    border-bottom: 3px solid transparent;
+    padding: 0.75rem 1rem;
+    white-space: nowrap;
+
+    &.active {
+      border-bottom-color: var(--brand-red);
+    }
+  }
+}

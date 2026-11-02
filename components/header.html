@@ -1,5 +1,6 @@
 <header class="site-header" data-header-state="internal" id="siteHeader">
 
+  <!-- Utility Bar (Top Tier) -->
   <nav aria-label="Utility" class="utility-bar">
     <div class="container utility-inner">
       <div class="utility-left">
@@ -19,6 +20,7 @@
     </div>
   </nav>
 
+  <!-- Main Tier (Logo, Nav Toggles, Primary Navigation & Quick CTA) -->
   <div class="header-main-tier">
     <div class="container header-inner">
 
@@ -26,7 +28,7 @@
         <img
           class="brand-logo"
           src="assets/images/dadex-logo.png"
-          alt=""
+          alt="Dadex Eternit Limited"
           width="176" height="46"
           decoding="async"
           fetchpriority="high">
@@ -58,7 +60,6 @@
           </button>
           <div class="dropdown-menu" id="about-menu">
             <a href="about.html">About Dadex</a>
-       <!--     <a href="https://dadex-pk.github.io/Dadex-Story/" target="_blank" rel="noopener">Our Story</a> -->
             <a href="history.html">Our History</a>
             <a href="founder-chairman.html">Founder Chairman</a>
             <a href="quality.html">Quality &amp; Compliance</a>
@@ -101,11 +102,18 @@
           </div>
         </div>
 
-        <a class="nav-search" href="search.html" aria-label="Search Dadex">
-          <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
-          <span class="nav-search-label">Search</span>
-        </a>
+        <!-- Quick Action Search & Dealer Locator CTA -->
+        <div class="header-actions">
+          <a class="nav-search" href="search.html" aria-label="Search Dadex">
+            <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+            <span class="nav-search-label">Search</span>
+          </a>
+          <a href="dealers.html" class="btn btn--primary header-cta-btn">
+            Find a Dealer
+          </a>
+        </div>
 
+        <!-- Mobile Drawer Products Accordion -->
         <div class="mobile-products-menu" aria-label="Products and services">
           <details>
             <summary>Products &amp; Systems</summary>
@@ -125,6 +133,7 @@
     </div>
   </div>
 
+  <!-- Product Categories Tier (Desktop Mega-Menu) -->
   <nav aria-label="Product categories" class="header-products-tier">
     <div class="container header-products-row">
 
