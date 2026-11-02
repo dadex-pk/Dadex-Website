@@ -1,0 +1,548 @@
+/* ============================================================
+   HISTORY PAGE STYLES
+   Fully optimized: Static layout, Animations, Responsive
+   ============================================================ */
+
+/* ============================================================
+   1. STATIC LAYOUT (Visible by default / No-JS fallback)
+   ============================================================ */
+
+/* --- Hero & Intro --- */
+.history-hero {
+  padding-bottom: 4.5rem;
+  background: #17191c;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.history-hero .container {
+  position: relative;
+  z-index: 1;
+  padding-top: clamp(3rem, 5vw, 4.625rem);
+  padding-bottom: clamp(3.25rem, 5.5vw, 4.875rem);
+}
+.history-hero h1 {
+  font-size: clamp(2.5rem, 5.4vw, 4.125rem);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  margin: 0 0 0.875rem;
+  color: #fff;
+}
+.history-hero h1 span { color: #ff6a6a; }
+.history-hero p {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: #b7bdc2;
+  max-width: 51.25rem;
+  margin: 0;
+}
+
+.history-intro {
+  padding: 4.375rem 0 3.625rem;
+  background: #fff;
+}
+.history-intro-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.125rem;
+  max-width: 51.25rem;
+  margin-inline: auto;
+}
+.history-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: var(--dadex-red, #e50000);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 0.875rem;
+}
+.history-intro h2 {
+  font-size: clamp(1.875rem, 3.2vw, 2.875rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  margin: 0;
+  max-width: 35rem;
+  color: #17191c;
+}
+.history-intro h2 span { color: var(--dadex-red, #e50000); }
+.history-intro p {
+  color: #5e666e;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  margin: 0;
+  max-width: 47.5rem;
+}
+
+/* --- Timeline Section --- */
+.history-timeline-section {
+  padding: 1.625rem 0 5.625rem;
+  background: #f7f7f5;
+  overflow: visible;
+}
+.history-timeline {
+  position: relative;
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 2.125rem 0 1.25rem;
+}
+.history-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #d8dadd;
+  transform: translateX(-50%);
+}
+
+/* --- Timeline Events --- */
+.history-event {
+  position: relative;
+  width: 50%;
+  display: flex;
+  margin: 0 0 1.625rem;
+  box-sizing: border-box;
+}
+.history-event-left {
+  padding-right: 3.375rem;
+  justify-content: flex-end;
+}
+.history-event-right {
+  margin-left: 50%;
+  padding-left: 3.375rem;
+  justify-content: flex-start;
+}
+.history-marker {
+  position: absolute;
+  top: 1.875rem;
+  width: 1.375rem;
+  height: 1.375rem;
+  border: 0.25rem solid #f7f7f5;
+  background: var(--dadex-red, #e50000);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(229, 0, 0, 0.35);
+  z-index: 2;
+}
+.history-event-left .history-marker { right: -0.6875rem; }
+.history-event-right .history-marker { left: -0.6875rem; }
+
+.history-card {
+  width: min(100%, 29.375rem);
+  background: #fff;
+  border: 1px solid #e4e7ea;
+  padding: 1.6875rem 1.875rem 1.75rem;
+  position: relative;
+  box-shadow: 0 0.5rem 1.5rem rgba(23, 25, 28, 0.045);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.history-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1rem 2.125rem rgba(23, 25, 28, 0.09);
+  border-color: rgba(229, 0, 0, 0.38);
+}
+.history-card::after {
+  content: "";
+  position: absolute;
+  top: 2.375rem;
+  width: 3.375rem;
+  height: 1px;
+  background: #d8dadd;
+}
+.history-event-left .history-card::after { right: -3.375rem; }
+.history-event-right .history-card::after { left: -3.375rem; }
+
+.history-year {
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--dadex-red, #e50000);
+  margin-bottom: 0.625rem;
+}
+.history-card h4 {
+  font-size: 1.5rem;
+  line-height: 1.18;
+  margin: 0 0 0.625rem;
+  letter-spacing: -0.02em;
+  color: #17191c;
+  font-weight: 700;
+}
+.history-card p {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: #616970;
+  margin: 0;
+}
+
+/* --- Era Headers --- */
+.history-era {
+  margin-bottom: 6rem;
+  scroll-margin-top: calc(var(--sticky-offset, 10rem) + 2rem);
+}
+.history-era:last-child { margin-bottom: 0; }
+.history-era-header {
+  max-width: 42.5rem;
+  margin: 0 auto 3.75rem;
+  text-align: center;
+}
+.history-era-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+  color: var(--dadex-red, #e50000);
+  text-transform: uppercase;
+  padding: 0.4375rem 1rem;
+  background: #fce8e8;
+  border-radius: 999px;
+  margin-bottom: 1.125rem;
+}
+.history-era-kicker::before, .history-era-kicker::after {
+  content: "";
+  width: 1rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+.history-era-header h3 {
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: clamp(1.875rem, 3.8vw, 2.875rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin: 0 0 0.875rem;
+  color: #17191c;
+  font-weight: 800;
+}
+.history-era-header h3 span { color: var(--dadex-red, #e50000); }
+.history-era-header p {
+  font-size: 0.96875rem;
+  color: #687078;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-style: italic;
+  max-width: 32.5rem;
+}
+
+/* --- Event Lists inside Cards --- */
+.history-events {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.history-events li {
+  padding: 1.125rem 0 0;
+  margin: 0;
+}
+.history-events li + li {
+  margin-top: 1rem;
+  border-top: 1px solid #eef0f2;
+  padding-top: 1.25rem;
+}
+.history-events li:first-child { padding-top: 0; }
+.history-events h4 {
+  font-size: 1.1875rem;
+  line-height: 1.25;
+  margin: 0 0 0.375rem;
+  letter-spacing: -0.015em;
+}
+.history-events p { margin: 0; }
+
+/* --- Sticky Decade Chips --- */
+.history-decades {
+  position: sticky;
+  top: var(--sticky-offset, 10rem);
+  z-index: 100;
+  padding: 0.875rem 0;
+  background: rgba(247, 247, 245, 0.94);
+  backdrop-filter: blur(0.625rem) saturate(160%);
+  -webkit-backdrop-filter: blur(0.625rem) saturate(160%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.055);
+  transition: top var(--duration-base, 0.26s) ease;
+}
+.history-decades-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.history-decade-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5625rem 1rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #e4e7ea;
+  color: #383d42;
+  font: 700 0.75rem/1 "Inter", system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.history-decade-chip:hover {
+  border-color: var(--dadex-red, #e50000);
+  background: #fff6f6;
+  transform: translateY(-1px);
+  box-shadow: 0 0.5rem 1.25rem -0.5rem rgba(229, 0, 0, 0.22);
+}
+.history-decade-chip.is-active {
+  background: var(--dadex-red, #e50000);
+  border-color: var(--dadex-red, #e50000);
+}
+.history-decade-year {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  color: #8a9098;
+  padding-right: 0.625rem;
+  margin-right: 0.625rem;
+  border-right: 1px solid #dfe2e6;
+  transition: color 0.18s ease, border-color 0.18s ease;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.history-decade-name {
+  display: inline-block;
+  font-weight: 800;
+  color: #383d42;
+  transition: color 0.18s ease;
+  white-space: nowrap;
+}
+.history-decade-chip.is-active .history-decade-year {
+  color: rgba(255, 255, 255, 0.72);
+  border-right-color: rgba(255, 255, 255, 0.28);
+}
+.history-decade-chip.is-active .history-decade-name { color: #fff; }
+
+/* --- Legacy Bottom --- */
+.history-legacy {
+  padding: 4.625rem 0 5.125rem;
+  background: #17191c;
+  color: #fff;
+}
+.history-legacy-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 4.375rem;
+  align-items: start;
+}
+.history-legacy h2 {
+  color: #fff;
+  font-size: clamp(1.875rem, 3.2vw, 2.875rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  margin: 0;
+  max-width: 35rem;
+}
+.history-legacy h2 span { color: #ff6a6a; }
+.history-legacy .history-kicker { color: #ff6a6a; }
+.history-legacy p {
+  color: #c4c8cd;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  margin: 0 0 0.9375rem;
+  max-width: 45rem;
+}
+
+/* ============================================================
+   2. RESPONSIVE LAYOUT
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .history-legacy-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  
+  .history-timeline { padding-left: 1.5rem; }
+  .history-timeline::before { left: 0.875rem; transform: none; }
+  
+  .history-event, .history-event-right, .history-event-left {
+    width: 100%;
+    margin-left: 0;
+    padding: 0 0 0 3.25rem;
+    justify-content: flex-start;
+  }
+  .history-event-left .history-marker, .history-event-right .history-marker {
+    left: 0.1875rem;
+    right: auto;
+  }
+  
+  .history-card { width: 100%; max-width: none; }
+  .history-card::after { left: -3.25rem !important; right: auto !important; width: 3.25rem; }
+  
+  .history-decades-inner {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.375rem;
+    scrollbar-width: thin;
+  }
+  .history-decade-chip { flex: 0 0 auto; }
+}
+
+@media (max-width: 768px) {
+  .history-intro { padding: 3.25rem 0 2.625rem; }
+  .history-timeline-section { padding-bottom: 3.625rem; }
+  .history-card { padding: 1.4375rem 1.375rem 1.5rem; }
+  .history-card h4 { font-size: 1.3125rem; }
+  .history-events h4 { font-size: 1.0625rem; }
+  .history-legacy { padding: 3.4375rem 0 3.875rem; }
+  .history-era { margin-bottom: 4rem; }
+  .history-era-header h3 { font-size: 1.625rem; }
+}
+
+/* ============================================================
+   3. ANIMATIONS (Triggered by JS adding .is-revealed)
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  
+  /* --- Intro Animation --- */
+  .history-intro .history-kicker,
+  .history-intro h2,
+  .history-intro p {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .history-intro h2 { transition-delay: 0.08s; }
+  .history-intro p { transition-delay: 0.16s; }
+  
+  .history-intro.is-revealed .history-kicker,
+  .history-intro.is-revealed h2,
+  .history-intro.is-revealed p {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* --- Era Headers Animation --- */
+  .history-era-header .history-era-kicker,
+  .history-era-header h3,
+  .history-era-header p {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .history-era-header h3 { transition-delay: 0.06s; }
+  .history-era-header p { transition-delay: 0.14s; }
+  
+  .history-era.is-revealed .history-era-kicker,
+  .history-era.is-revealed h3,
+  .history-era.is-revealed p {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* --- Timeline Events Animation (FIXED) --- */
+  /* Targets children of .history-era which holds the .is-revealed class */
+  .history-event {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    /* Uses variable set by JS for staggered entrance */
+    transition-delay: calc(var(--event-index, 0) * 60ms + 200ms);
+  }
+  .history-event-left { transform: translateX(-22px); }
+  .history-event-right { transform: translateX(22px); }
+  
+  .history-era.is-revealed .history-event {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* --- Timeline Markers Animation (FIXED) --- */
+  .history-marker {
+    transform: scale(0);
+    transition: transform 0.45s cubic-bezier(0.34, 1.4, 0.5, 1);
+    transition-delay: var(--marker-delay, 400ms);
+  }
+  .history-era.is-revealed .history-marker {
+    transform: scale(1);
+  }
+
+  /* --- Timeline Line Draw Animation --- */
+  .history-era .history-timeline::before {
+    background-image: linear-gradient(180deg, transparent 0%, var(--dadex-red, #e50000) 5%, var(--dadex-red, #e50000) 95%, transparent 100%), linear-gradient(to bottom, transparent 0, #d8dadd 5%, #d8dadd 95%, transparent 100%);
+    background-size: 100% 0%, 100% 100%;
+    background-position: top center, top center;
+    background-repeat: no-repeat, no-repeat;
+    transition: background-size 1.4s ease;
+  }
+  .history-era.is-revealed .history-timeline::before {
+    background-size: 100% 100%, 100% 100%;
+  }
+
+  /* --- Legacy Animation --- */
+  .history-legacy .history-kicker,
+  .history-legacy h2,
+  .history-legacy p,
+  .history-legacy .btn {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .history-legacy-grid > div:nth-child(1) .history-kicker { transition-delay: 0ms; }
+  .history-legacy-grid > div:nth-child(1) h2 { transition-delay: 80ms; }
+  .history-legacy-grid > div:nth-child(2) p { transition-delay: 180ms; }
+  .history-legacy-grid > div:nth-child(2) .btn { transition-delay: 260ms; }
+  
+  .history-legacy.is-revealed .history-kicker,
+  .history-legacy.is-revealed h2,
+  .history-legacy.is-revealed p,
+  .history-legacy.is-revealed .btn {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* --- Chip Pulse Animation --- */
+  .history-decade-chip.is-active {
+    animation: historyChipPulse 0.5s cubic-bezier(0.34, 1.4, 0.5, 1);
+  }
+  @keyframes historyChipPulse {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+
+  /* --- Hero Parallax --- */
+  .history-hero::before {
+    transform: translateY(calc(var(--hero-scroll, 0) * 1px));
+    will-change: transform;
+  }
+}
+
+/* --- Mobile Specific Animations --- */
+@media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .history-event, .history-event-left, .history-event-right { 
+    transform: translateX(-18px); 
+  }
+  .history-era.is-revealed .history-event { 
+    transform: none; 
+  }
+}
+
+/* ============================================================
+   4. PRINT
+   ============================================================ */
+@media print {
+  .history-intro .history-kicker, .history-intro h2, .history-intro p,
+  .history-era-header .history-era-kicker, .history-era-header h3, .history-era-header p,
+  .history-event, .history-marker,
+  .history-legacy .history-kicker, .history-legacy h2, .history-legacy p, .history-legacy .btn {
+    opacity: 1 !important; 
+    transform: none !important; 
+    transition: none !important; 
+    animation: none !important;
+  }
+  .history-era .history-timeline::before {
+    background-image: none !important; 
+    background: #d8dadd !important; 
+    transition: none !important;
+  }
+  .history-hero::before { transform: none !important; will-change: auto; }
+}

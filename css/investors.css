@@ -1,87 +1,107 @@
 /* ============================================================
-   INVESTORS.CSS — Investor Relations Tabs, Tables & Board Bios
+   INVESTOR RELATIONS PAGE (OPTIMIZED)
    ============================================================ */
 
-body.investors-page {
+:root {
   --ir-tabs-h: 3.3rem;
+}
+
+body.investors-page {
   --sticky-offset: calc(var(--header-h) + var(--ir-tabs-h) + 1rem);
 }
 
+/* ---------- Horizontal group tabs ---------- */
 .ir-tabs {
   position: sticky;
   top: var(--header-h);
   z-index: 50;
-  background: #ffffff;
+  background: #fff;
   border-bottom: 2px solid var(--line);
   margin-bottom: 3rem;
   box-shadow: 0 1px 0 rgba(15, 18, 21, 0.02);
   border-radius: 100px;
-
-  .ir-tabs-inner {
-    display: flex;
-    gap: 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-    scroll-snap-type: x proximity;
-    scroll-behavior: smooth;
-    justify-content: center;
-    align-items: center;
-
-    &::-webkit-scrollbar { display: none; }
-  }
-
-  .ir-tab {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    min-height: var(--ir-tabs-h);
-    padding: 0 1.5rem;
-    border: 0;
-    background: transparent;
-    font-family: inherit;
-    font-weight: 700;
-    font-size: 0.8125rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    white-space: nowrap;
-    text-decoration: none;
-    scroll-snap-align: start;
-    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-
-    &::before {
-      content: "";
-      width: 0.63rem;
-      height: 0.63rem;
-      border: var(--muted-light) solid 2px;
-      border-radius: 50%;
-      background: var(--ink-light);
-      transform: scale(0.72);
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-
-    &:hover {
-      color: var(--ink);
-      background: var(--bg-mist);
-    }
-
-    &.active {
-      color: var(--brand-red);
-      border-bottom-color: var(--brand-red);
-      background: rgba(229, 0, 0, 0.035);
-
-      &::before {
-        transform: scale(1.1);
-        border: #f79595 solid 2px;
-        background: var(--brand-red);
-      }
-    }
-  }
 }
 
+.ir-tabs::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 2.5rem;
+  pointer-events: none;
+}
+
+.ir-tabs-inner {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  justify-content: center;
+  align-items: center;
+  padding-right: 0;
+}
+.ir-tabs-inner::-webkit-scrollbar { display: none; }
+
+.ir-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--ir-tabs-h);
+  padding: 0 1.5rem;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  scroll-snap-align: start;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.ir-tab::before {
+  content: "";
+  width: 0.63rem;
+  height: 0.63rem;
+  border:var(--muted-light) solid 2px;
+  border-radius: 50%;
+  background: var(--ink-light);
+  opacity: 1;
+  transform: scale(0.72);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.ir-tab:hover {
+  color: var(--ink);
+  background: var(--bg-mist);
+}
+
+.ir-tab.active {
+  color: var(--brand-red);
+  border-bottom-color: var(--brand-red);
+  background: rgba(229, 0, 0, 0.035);
+}
+.ir-tab.active::before {
+  transform: scale(1.1);
+  border:#f79595 solid 2px;
+  border-radius: 50%;
+  background: var(--brand-red);
+}
+
+.ir-tab:focus-visible {
+  outline: 2px solid var(--brand-red);
+  outline-offset: -2px;
+}
+
+/* ---------- Two-column layout ---------- */
 .ir-layout {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -89,220 +109,323 @@ body.investors-page {
   align-items: start;
 }
 
+/* ---------- Sidebar (contextual: one group visible) ---------- */
 .ir-sidebar {
   position: sticky;
   top: calc(var(--header-h) + var(--ir-tabs-h) + 1.5rem);
-  background: #ffffff;
+  background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-
-  .ir-side-group {
-    display: none;
-    &.is-open { display: block; }
-  }
-
-  .ir-side-link {
-    position: relative;
-    display: block;
-    padding: 0.75rem 2.5rem 0.75rem 1.25rem;
-    color: var(--ink-light);
-    font-size: 0.9375rem;
-    border-inline-start: 3px solid transparent;
-    border-bottom: 1px solid var(--line-soft);
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background: var(--bg-mist);
-      color: var(--ink);
-      border-inline-start-color: var(--line-soft);
-    }
-
-    &.active {
-      background: #fff2f2;
-      color: var(--brand-red);
-      border-inline-start-color: var(--brand-red);
-      font-weight: 700;
-
-      &::after {
-        content: "›";
-        position: absolute;
-        inset-inline-end: 1.25rem;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 1.25rem;
-        line-height: 1;
-        color: var(--brand-red);
-        font-weight: 700;
-      }
-    }
-  }
 }
 
-.ir-panel {
-  display: none;
+.ir-side-group { display: none; }
+.ir-side-group.is-open { display: block; }
 
-  &.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-    background: #ffffff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
-    padding: 3rem;
-    box-shadow: var(--shadow-sm);
-  }
-
-  > h2 {
-    position: relative;
-    padding-inline-start: 1.25rem;
-    margin-bottom: 1.9rem;
-    font-size: clamp(1.5rem, 2.4vw, 2.25rem);
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      inset-inline-start: 0;
-      width: 5px;
-      height: 40px;
-      background: var(--brand-red);
-      border-radius: 3px;
-    }
-
-    span { color: var(--brand-red); }
-  }
-
-  > h3 {
-    font-size: 1.125rem;
-    font-weight: 800;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-    border-bottom: 1px solid var(--line-soft);
-    padding-bottom: 0.5rem;
-  }
-
-  > p {
-    color: var(--muted);
-    line-height: 1.6;
-    min-width: 92%;
-
-    a {
-      color: var(--brand-red);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      font-weight: 600;
-
-      &:hover {
-        color: var(--brand-red-dark);
-      }
-    }
-  }
+.ir-side-link {
+  position: relative;
+  display: block;
+  padding: 0.75rem 2.5rem 0.75rem 1.25rem; 
+  color: var(--ink-light);
+  font-size: 0.9375rem;
+  border-left: 3px solid transparent;
+  border-bottom: 1px solid var(--line-soft);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-/* --- Investor Data Tables & Stats --- */
+.ir-side-link:hover {
+  background: var(--bg-mist);
+  color: var(--ink);
+  border-left-color: var(--line-soft);
+}
+
+.ir-side-link.active {
+  background: #fff2f2;
+  color: var(--brand-red);
+  border-left-color: var(--brand-red);
+  font-weight: 700;
+}
+.ir-side-link.active::after {
+  content: "›";
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--brand-red);
+  font-weight: 700;
+}
+
+/* ---------- Content panels (The White Card) ---------- */
+.ir-panel { display: none; }
+.ir-panel.active { 
+  display: block; 
+  animation: fadeIn 0.3s ease; 
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 3rem;
+  box-shadow: var(--shadow-sm);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.ir-panel > h2 {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 1.9rem;
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+}
+.ir-panel > h2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 40px;
+  background: var(--brand-red);
+  border-radius: 3px;
+}
+
+.ir-panel > h2 span { color: var(--brand-red); }
+
+/* Make H3 sub-headings inside panels look distinct */
+.ir-panel > h3 {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 0.5rem;
+}
+
+/* Intro paragraphs */
+.ir-panel > p {
+  color: var(--muted);
+  line-height: 1.6;
+  min-width: 92%;
+}
+
+/* Consistent spacing for panels */
+.ir-panel > p + .grid,
+.ir-panel > p + .share-table {
+  margin-top: 1.5rem;
+}
+
+/* Premium text links */
+.ir-panel p a {
+  color: var(--brand-red);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  font-weight: 600;
+}
+.ir-panel p a:hover {
+  color: var(--brand-red-dark);
+  text-decoration-thickness: 2px;
+}
+
+/* ---------- Data tables (Consolidated) ---------- */
 .share-table {
   overflow-x: auto;
   margin-bottom: 2rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--line);
-  background: #ffffff;
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-  }
-
-  th, td {
-    padding: 0.9rem 1.25rem;
-    border-bottom: 1px solid var(--line-soft);
-    font-size: 0.9375rem;
-  }
-
-  th {
-    background: var(--bg-mist);
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--line);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-    font-weight: 800;
-  }
-
-  tbody tr:nth-child(even) td { background: #fbfcfc; }
-  tbody tr:hover td { background: #fdf5f5; }
-
-  tr:last-child td,
-  tbody tr:last-child th,
-  tfoot th {
-    background: #ffffff;
-    border-top: 2px solid var(--brand-red);
-    border-bottom: none;
-    font-weight: 800;
-    color: var(--ink);
-  }
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(15, 18, 21, 0.02);
+}
+.share-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  background: #fff;
+}
+.share-table th,
+.share-table td {
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 0.9375rem;
+}
+.share-table th {
+  background: var(--bg-mist);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--line);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  font-weight: 800;
+}
+.share-table tbody tr:nth-child(even) td {
+  background: #fbfcfc;
+}
+.share-table tbody tr:hover td {
+  background: #fdf5f5;
 }
 
+/* Bold Totals Row */
+.share-table tr:last-child td,
+.share-table tbody tr:last-child th,
+.share-table tfoot th {
+  background: #fff;
+  border-top: 2px solid var(--brand-red);
+  border-bottom: none;
+  font-weight: 800;
+  color: var(--ink);
+}
+.share-table tbody tr:last-child th,
+.share-table tfoot th {
+  font-size: 0.875rem;
+}
+
+/* ---------- Stat blocks ---------- */
 .ir-stat-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
 }
-
 .ir-stat {
   position: relative;
-  background: #ffffff;
+  background: #fff;
   border: 1px solid var(--line);
   padding: 1.5rem 1.5rem 1.375rem;
   border-radius: var(--radius-md);
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    inset-inline: 1.5rem;
-    height: 2px;
-    background: var(--brand-red);
-    opacity: 0.55;
-    border-radius: 0 0 2px 2px;
-  }
-
-  &:hover {
-    border-color: rgba(229, 0, 0, 0.22);
-    box-shadow: var(--shadow-sm);
-    transform: translateY(-1px);
-  }
-
-  span {
-    display: block;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    letter-spacing: 0.02em;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-  }
-
-  strong {
-    display: block;
-    font-size: 2rem;
-    color: var(--ink);
-    line-height: 1;
-  }
-
-  small {
-    display: block;
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
-    color: var(--muted-light);
-  }
 }
+.ir-stat::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 1.5rem; right: 1.5rem;
+  height: 2px;
+  background: var(--brand-red);
+  opacity: 0.55;
+  border-radius: 0 0 2px 2px;
+}
+.ir-stat:hover {
+  border-color: rgba(229, 0, 0, 0.22);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+.ir-stat span {
+  display: block;
+  font-size: 0.7rem; /* Refined smaller */
+  text-transform: uppercase;
+  color: var(--ink-light);
+  letter-spacing: 0.02em;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+.ir-stat strong {
+  display: block;
+  font-size: 2rem;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.ir-stat small {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--muted-light);
+}
+
+/* ---------- Premium Data Grids (NTN, Offices, Management) ---------- */
+.ir-panel .grid > .card {
+  position: relative; /* Fixes anchoring for the ::before element */
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.ir-panel .grid > .card::before {
+  content: "";
+  position: absolute;
+  top: -1.5px; left: 1.5rem; right: 1.5rem;
+  height: 3px;
+  background: var(--brand-red);
+  opacity: 0.5;
+  border-radius: 0 0 2px 2px;
+  transition: opacity 0.2s ease;
+}
+
+.ir-panel .grid > .card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: rgba(229, 0, 0, 0.25);
+}
+.ir-panel .grid > .card:hover::before {
+  opacity: 1;
+}
+
+.ir-panel .grid > .card > span {
+  display: block;
+  font-size: 0.7rem; 
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ink-light);
+  margin-bottom: 0.5rem;
+}
+
+.ir-panel .grid > .card > h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.ir-panel .grid > .card a {
+  color: var(--brand-red);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.ir-panel .grid > .card a:hover {
+  color: var(--brand-red-dark);
+  text-decoration: underline;
+}
+
+/* ---------- Resource Cards (Annual Reports, etc.) ---------- */
+.ir-panel .card .kicker {
+  margin-bottom: 0.5rem;
+}
+.ir-panel .card h3 {
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+
+.ir-panel .card .btn--outline {
+  position: relative;
+  width: 100%;
+  margin-top: auto;
+  background: var(--bg-mist);
+  border-color: transparent;
+  font-size: 0.8125rem;
+  padding: 0.5rem 0.9rem;
+  min-height: 2.25rem;
+}
+
+.ir-panel .card .btn--outline:hover {
+  background: var(--brand-red);
+  color: #fff !important;
+  border-color: var(--brand-red);
+}
+
+
+/* ============================================================
+   PREMIUM DIRECTOR SPLIT LAYOUT
+   ============================================================ */
 
 .director-split-layout {
   display: grid;
@@ -315,121 +438,180 @@ body.investors-page {
 .director-list {
   display: flex;
   flex-direction: column;
-  border-inline-start: 2px solid var(--line);
+  border-left: 2px solid var(--line);
 }
 
 .director-name-btn {
   background: transparent;
   border: none;
-  border-inline-start: 3px solid transparent;
+  border-left: 3px solid transparent;
   padding: 1.25rem 1.5rem;
-  text-align: start;
+  text-align: left;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-inline-start: -2px;
+  margin-left: -2px;
+}
 
-  strong {
-    display: block;
-    font-size: 1.0625rem;
-    color: var(--ink);
-    margin-bottom: 0.25rem;
-  }
+.director-name-btn strong {
+  display: block;
+  font-size: 1.0625rem;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+  transition: color 0.2s ease;
+}
 
-  span {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
+.director-name-btn span {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
 
-  &:hover { background: var(--bg-mist); }
-  &.active {
-    background: #fdf5f5;
-    border-inline-start-color: var(--brand-red);
+.director-name-btn:hover {
+  background: var(--bg-mist);
+}
+.director-name-btn:hover strong {
+  color: var(--brand-red);
+}
 
-    strong { color: var(--brand-red); font-weight: 800; }
-  }
+.director-name-btn.active {
+  background: #fdf5f5;
+  border-left-color: var(--brand-red);
+}
+.director-name-btn.active strong {
+  color: var(--brand-red);
+  font-weight: 800;
+}
+
+.director-bio-container {
+  position: relative;
+  padding-top: 0.5rem;
+  min-height: 400px; 
 }
 
 .director-bio {
   display: none;
   animation: fadeIn 0.3s ease;
+}
+.director-bio.active {
+  display: block;
+}
 
-  &.active { display: block; }
+.director-bio h3 {
+  font-size: 1.75rem;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
+}
 
-  h3 {
-    font-size: 1.75rem;
-    color: var(--ink);
-    margin-bottom: 0.25rem;
+.director-bio .director-title {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--brand-red);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.director-bio p {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+.director-bio p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 1024px) {
+  body.investors-page {
+    --sticky-offset: calc(var(--header-h) + 1rem);
+  }
+  .ir-tabs { position: static; }
+  .ir-tabs::after { display: none; }
+  .ir-sidebar { 
+    position: static; 
+    top: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .ir-sidebar::-webkit-scrollbar { display: none; }
+  .ir-layout { grid-template-columns: 1fr; gap: 2rem; }
+
+  .ir-side-group.is-open {
+    display: inline-flex;
+    gap: 0;
+  }
+  .ir-side-link {
+    border-left: 0;
+    border-bottom: 3px solid transparent;
+    padding: 0.65rem 1rem;
+    font-size: 0.875rem;
+  }
+  .ir-side-link:hover,
+  .ir-side-link.active {
+    border-left-color: transparent;
+    border-bottom-color: var(--brand-red);
+    background: transparent;
+  }
+  .ir-side-link.active::after { display: none; }
+
+  .ir-panel.active {
+    padding: 1.5rem;
   }
 
-  .director-title {
-    display: block;
-    font-size: 0.8125rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: var(--brand-red);
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--line-soft);
+  .ir-panel > h2 {
+    padding-top: 0.65rem;
+  }
+  .ir-panel > h2::before {
+    width: 1.5rem;
   }
 
-  p {
-    color: var(--muted);
-    font-size: 1rem;
-    line-height: 1.8;
-    margin-bottom: 1.25rem;
+  .share-table th,
+  .share-table td {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
   }
 }
 
-@media (max-width: 1024px) {
-  body.investors-page { --sticky-offset: calc(var(--header-h) + 1rem); }
-  .ir-tabs { position: static; }
-  .ir-layout { grid-template-columns: 1fr; gap: 2rem; }
-
-  .ir-sidebar {
-    position: static;
-    overflow-x: auto;
-    white-space: nowrap;
-
-    .ir-side-group.is-open {
-      display: inline-flex;
-      gap: 0;
-    }
-
-    .ir-side-link {
-      border-inline-start: 0;
-      border-bottom: 3px solid transparent;
-      padding: 0.65rem 1rem;
-
-      &.active {
-        border-bottom-color: var(--brand-red);
-        background: transparent;
-      }
-    }
-  }
-
+@media (max-width: 900px) {
   .director-split-layout {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
   }
-
   .director-list {
     flex-direction: row;
     overflow-x: auto;
-    border-inline-start: none;
+    border-left: none;
     border-bottom: 2px solid var(--line);
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
   }
-
+  .director-list::-webkit-scrollbar { display: none; }
+  
   .director-name-btn {
-    border-inline-start: none;
+    border-left: none;
     border-bottom: 3px solid transparent;
-    padding: 0.75rem 1rem;
+    padding: 1rem;
     white-space: nowrap;
-
-    &.active {
-      border-bottom-color: var(--brand-red);
-    }
+    margin-left: 0;
   }
+  .director-name-btn.active {
+    border-bottom-color: var(--brand-red);
+  }
+}
+
+@media (max-width: 480px) {
+  .ir-stat strong { font-size: 1.75rem; }
 }
