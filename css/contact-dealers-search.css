@@ -115,7 +115,7 @@
 
 /* Textarea specific fix */
 .form-group textarea { 
-  min-height: 120px; 
+  min-height: 140px; 
   resize: vertical; 
   display: block;
 }

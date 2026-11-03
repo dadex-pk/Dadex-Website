@@ -11,8 +11,8 @@
   --brand-red-light: #fff2f2;
 
   /* Text & ink */
-  --ink: #17191c;
-  --ink-light: #24272a;
+  --ink: #292b2e;
+  --ink-light: #595a5c;
   --muted: #687078;
   --muted-light: #8f969d;
   --text: var(--ink);

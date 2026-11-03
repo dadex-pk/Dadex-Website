@@ -1,77 +1,94 @@
 /* ============================================================
-   HOME PAGE — Hero slider, trust bar, values, product feature cards
+   DADEX — HOME PAGE STYLES
    Loaded by: index.html only
+
+   Dependencies from main.css:
+   --bg-dark, --brand-red, --brand-accent-dark, --ink, --muted,
+   --line, --radius-md, --font-heading, --shadow-md
    ============================================================ */
 
 /* ============================================================
-   HERO
+   1. HERO SECTION
    ============================================================ */
 .home-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(4rem, 8vw, 7rem);
   background: var(--bg-dark);
   color: #fff;
-  padding: clamp(4rem, 8vw, 7rem) 0;
-  position: relative;
-  overflow: hidden;
-}
-.home-hero__inner {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 4rem;
-  align-items: center;
-}
-.home-hero__content h1 {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1.05;
-  margin-bottom: 1.5rem;
-  color: #fff;
-  letter-spacing: -0.03em;
-}
-.home-hero__content h1 em {
-  font-style: normal;
-  color: var(--brand-accent-dark);
-}
-.home-hero__content p {
-  font-size: 1.125rem;
-  color: #b3b3b8;
-  max-width: 48ch;
-  margin-bottom: 2.5rem;
-  line-height: 1.7;
-}
-.home-hero__actions {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
 }
 
-/* --- Hero slider --- */
-.home-hero__visual { min-width: 0; width: 100%; }
+.home-hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.home-hero__content h1 {
+  margin-bottom: 1.5rem;
+  color: #fff;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.home-hero__content h1 em {
+  color: var(--brand-accent-dark);
+  font-style: normal;
+}
+
+.home-hero__content p {
+  max-width: 48ch;
+  margin-bottom: 2.5rem;
+  color: #b3b3b8;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.home-hero__visual {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Hero image slider */
 .hero-slider {
   position: relative;
-  width: 100%;
-  aspect-ratio: 5 / 4;
-  min-height: 360px;
-  overflow: hidden;
   isolation: isolate;
-  border-radius: 16px;
+  width: 100%;
+  min-height: 360px;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  border-radius: var(--radius-md);
   background: #252525;
   box-shadow: 0 18px 45px rgb(0 0 0 / 18%);
 }
+
 .hero-slide {
   position: absolute;
-  inset: 0;
   z-index: 0;
+  inset: 0;
   overflow: hidden;
-  opacity: 0;
   visibility: hidden;
+  opacity: 0;
   pointer-events: none;
   transition: opacity 700ms ease, visibility 700ms ease;
 }
+
 .hero-slide.is-active {
   z-index: 1;
-  opacity: 1;
   visibility: visible;
+  opacity: 1;
   pointer-events: auto;
 }
+
 .hero-slide > img {
   display: block;
   width: 100%;
@@ -81,28 +98,34 @@
   transform: scale(1.02);
   transition: transform 5.5s ease;
 }
-.hero-slide.is-active > img { transform: scale(1.07); }
+
+.hero-slide.is-active > img {
+  transform: scale(1.07);
+}
+
 .hero-slide::after {
-  content: "";
   position: absolute;
-  inset: 0;
   z-index: 0;
+  inset: 0;
   background: linear-gradient(
     180deg,
     rgb(0 0 0 / 3%) 15%,
     rgb(0 0 0 / 20%) 48%,
     rgb(0 0 0 / 82%) 100%
   );
+  content: "";
   pointer-events: none;
 }
+
 .hero-slide__caption {
   position: absolute;
   z-index: 1;
   right: 28px;
-  bottom: 52px;
+  bottom: 62px;
   left: 28px;
   color: #fff;
 }
+
 .hero-slide__caption > span {
   display: inline-block;
   margin-bottom: 12px;
@@ -112,6 +135,7 @@
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
+
 .hero-slide__caption h2 {
   max-width: 520px;
   margin: 0 0 10px;
@@ -121,6 +145,7 @@
   line-height: 1.15;
   text-wrap: balance;
 }
+
 .hero-slide__caption p {
   max-width: 440px;
   margin: 0;
@@ -128,15 +153,17 @@
   font-size: 0.95rem;
   line-height: 1.6;
 }
+
 .hero-slider__controls {
   position: absolute;
-  right: 28px;
-  bottom: 22px;
   z-index: 3;
+  right: 28px;
+  bottom: 20px;
   display: flex;
   align-items: center;
   gap: 9px;
 }
+
 .hero-slider__dot {
   display: block;
   width: 9px;
@@ -148,46 +175,79 @@
   cursor: pointer;
   transition: width 250ms ease, background-color 250ms ease;
 }
+
 .hero-slider__dot.is-active {
   width: 27px;
-  background: var(--brand-red, #c90000);
+  background: var(--brand-red);
 }
-.hero-slider__dot:focus-visible {
+
+.hero-slider__toggle {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: 999px;
+  background: rgb(0 0 0 / 35%);
+  color: #fff;
+  font: inherit;
+  font-size: 0.75rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.hero-slider__toggle:hover {
+  border-color: #fff;
+  background: rgb(0 0 0 / 65%);
+}
+
+.hero-slider__dot:focus-visible,
+.hero-slider__toggle:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 4px;
 }
 
 /* ============================================================
-   TRUST BAR — six pillars
+   2. TRUST BAR — SIX PILLARS
    ============================================================ */
 .trust-bar {
   position: relative;
   z-index: 2;
-  padding: 34px 0;
-  background: #fff;
+  padding-block: 34px;
   border-bottom: 1px solid #e9e9e9;
+  background: #fff;
 }
+
 .trust-bar__inner {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
   width: min(100% - 48px, 1400px);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   margin-inline: auto;
 }
+
 .trust-item {
   min-width: 0;
   padding: 8px 18px;
   text-align: center;
 }
-.trust-item + .trust-item { border-left: 1px solid #e7e7e7; }
+
+.trust-item + .trust-item {
+  border-left: 1px solid #e7e7e7;
+}
+
 .trust-item > i {
   display: inline-flex;
+  min-height: 36px;
   align-items: center;
   justify-content: center;
-  min-height: 36px;
   margin-bottom: 12px;
-  color: var(--brand-red, #c90000);
+  color: var(--brand-red);
   font-size: 1.65rem;
 }
+
 .trust-item h3 {
   margin: 0 0 9px;
   color: #222;
@@ -196,6 +256,7 @@
   line-height: 1.4;
   text-wrap: balance;
 }
+
 .trust-item p {
   margin: 0;
   color: #666;
@@ -204,208 +265,682 @@
 }
 
 /* ============================================================
-   PRODUCT FEATURE CARDS — used only on home page
+   3. COMPANY INTRODUCTION
+   ============================================================ */
+.home-intro__inner {
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.home-intro__heading {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  text-wrap: balance;
+}
+
+.home-intro__rule {
+  width: 4rem;
+  height: 3px;
+  margin-top: 1.5rem;
+  background: var(--brand-red);
+}
+
+.home-intro__text {
+  margin-bottom: 2rem;
+  color: var(--muted);
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+/* ============================================================
+   4. PRODUCT FEATURE CARDS — HOMEPAGE ONLY
    ============================================================ */
 .card--text-feature {
   position: relative;
   display: flex;
+  height: 100%;
   flex-direction: column;
-  background: #ffffff;
+  overflow: hidden;
+  padding: 2rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  padding: 2rem;
+  background: #fff;
   text-decoration: none;
-  transition: all var(--transition);
-  overflow: hidden;
-  height: 100%;
+  transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    border-color 250ms ease;
 }
+
 .card--text-feature::after {
-  content: '';
   position: absolute;
-  left: 0;
+  right: 0;
   bottom: 0;
-  width: 100%;
+  left: 0;
   height: 3px;
   background: var(--brand-red);
+  content: "";
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform var(--transition);
+  transition: transform 250ms ease;
 }
+
 .card--text-feature:hover {
-  transform: translateY(-4px);
+  border-color: rgb(201 0 0 / 22%);
   box-shadow: var(--shadow-md);
-  border-color: rgba(229, 0, 0, 0.2);
+  transform: translateY(-4px);
 }
-.card--text-feature:hover::after { transform: scaleX(1); }
+
+.card--text-feature:hover::after,
+.card--text-feature:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.card--text-feature:focus-visible,
+.home-resource-card:focus-visible {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 4px;
+}
 
 .card-feature-top {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 1.5rem;
 }
+
 .home-product-icon {
   display: grid;
-  place-items: center;
   width: 3rem;
   height: 3rem;
+  flex: 0 0 3rem;
+  place-items: center;
   border-radius: 50%;
-  background: rgba(247, 201, 201, 0.486);
+  background: rgb(247 201 201 / 49%);
   color: var(--muted);
   font-size: 1.125rem;
-  transition: all var(--transition);
+  transition:
+    background-color 250ms ease,
+    color 250ms ease,
+    transform 250ms ease;
 }
-.card--text-feature:hover .home-product-icon {
+
+.card--text-feature:hover .home-product-icon,
+.card--text-feature:focus-visible .home-product-icon {
   background: var(--brand-red);
-  color: #ffffff;
+  color: #fff;
   transform: scale(1.05);
 }
+
 .home-product-number {
+  color: #e5e7eb;
   font-family: var(--font-heading);
   font-size: 2.25rem;
   font-weight: 800;
   line-height: 1;
-  color: #e5e7eb;
   letter-spacing: -0.04em;
-  transition: color var(--transition);
+  transition: color 250ms ease;
 }
-.card--text-feature:hover .home-product-number { color: var(--brand-red); }
-.card--text-feature .kicker {
-  font-size: 0.6875rem;
-  margin-bottom: 0.5rem;
+
+.card--text-feature:hover .home-product-number,
+.card--text-feature:focus-visible .home-product-number {
   color: var(--brand-red);
 }
+
+.card--text-feature .kicker {
+  margin-bottom: 0.5rem;
+  color: var(--brand-red);
+  font-size: 0.6875rem;
+}
+
 .card--text-feature h3 {
-  font-size: 1.25rem;
   margin-bottom: 0.5rem;
   color: var(--ink);
-  transition: color var(--transition);
+  font-size: 1.25rem;
+  transition: color 250ms ease;
 }
-.card--text-feature:hover h3 { color: var(--brand-red); }
+
+.card--text-feature:hover h3,
+.card--text-feature:focus-visible h3 {
+  color: var(--brand-red);
+}
+
 .card--text-feature .product-list {
-  font-size: 0.875rem;
-  color: var(--muted);
   margin: 0;
+  color: var(--muted);
+  font-size: 0.875rem;
   line-height: 1.6;
 }
+
 .card-arrow {
   position: absolute;
-  bottom: 1.5rem;
   right: 1.5rem;
+  bottom: 1.5rem;
+  color: var(--brand-red);
   font-size: 0.875rem;
-  color: var(--brand-red);
-  transition: all var(--transition);
+  transition: transform 250ms ease;
 }
-.card--text-feature:hover .card-arrow {
-  color: var(--brand-red);
+
+.card--text-feature:hover .card-arrow,
+.card--text-feature:focus-visible .card-arrow {
   transform: translateX(3px);
 }
 
-/* Discovery variant (6th card) */
+/* Sixth / discovery card */
 .card--discovery {
+  border-color: rgb(201 0 0 / 12%);
   background: #fffafa;
-  border-color: rgba(229, 0, 0, 0.1);
 }
+
 .card--discovery .home-product-icon {
   background: #fce8e8;
   color: var(--brand-red);
 }
-.card--discovery:hover .home-product-icon {
+
+.card--discovery:hover .home-product-icon,
+.card--discovery:focus-visible .home-product-icon {
   background: var(--brand-red);
-  color: #ffffff;
+  color: #fff;
 }
 
 /* ============================================================
-   VALUES SECTION (dark section with background image)
+   5. VALUES SECTION
    ============================================================ */
 .values-section {
   position: relative;
   isolation: isolate;
   overflow: hidden;
 }
+
 .values-section::before {
-  content: "";
   position: absolute;
-  inset: 0;
   z-index: -1;
-  background-image: url('../assets/images/corporate/building-blocks.webp');
+  inset: 0;
+  background-image: url("../assets/images/corporate/building-blocks.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  content: "";
   opacity: 0.4;
   pointer-events: none;
 }
+
 .values-section::after {
-  content: "";
   position: absolute;
-  inset: 0;
   z-index: -1;
+  inset: 0;
   background: radial-gradient(
     ellipse at 85% 50%,
-    rgba(229, 0, 0, 0.10) 0%,
+    rgb(229 0 0 / 10%) 0%,
     transparent 55%
   );
+  content: "";
   pointer-events: none;
 }
-.values-section > .container { position: relative; }
+
+.values-section > .container {
+  position: relative;
+}
 
 /* ============================================================
-   HOME PAGE RESPONSIVE
+   6. RESOURCES & SUPPORT
+   ============================================================ */
+.home-resources__inner {
+  display: grid;
+  grid-template-columns:1.5fr minmax(0, 1.2fr);
+  align-items: center;
+  gap: 3rem;
+}
+
+.home-resources__intro p {
+  max-width: 42ch;
+  margin-top: 1rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.home-resources__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.home-resource-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1.25rem;
+  padding: 1.5rem 1.5rem 3.5rem;
+  text-align: left;
+}
+
+.home-resource-card__icon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: 0 0 2.75rem;
+  place-items: center;
+  border-radius: 0.5rem;
+  background: rgb(201 0 0 / 8%);
+  color: var(--brand-red);
+  font-size: 1.25rem;
+}
+
+.home-resource-card__content {
+  flex: 1; 
+}
+.home-resource-card__content h3 {
+  margin-bottom: 0.5rem;
+}
+
+.home-resource-card__content p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.home-resource-card__arrow {
+  flex: 0 0 auto;
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--brand-red);
+  transition: transform 250ms ease;
+}
+
+.home-resource-card:hover .home-resource-card__arrow,
+.home-resource-card:focus-visible .home-resource-card__arrow {
+  transform: translateX(7px);
+}
+
+.home-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.home-section-header__text {
+  margin-bottom: 0;
+}
+.home-section-header__desc {
+  margin-top: 1rem;
+  max-width: 50ch;
+}
+
+/* --- Card Links --- */
+.home-card-link {
+  margin-top: 1.5rem;
+  font-weight: 700;
+  color: var(--brand-red);
+  font-size: 0.875rem;
+}
+.home-card-link i {
+  font-size: 0.75rem;
+  margin-left: 0.25rem;
+}
+
+/* --- Values Section Kickers --- */
+.home-kicker--light {
+  color: #fff;
+}
+.home-kicker--spaced {
+  margin-bottom: 1rem;
+}
+.home-value-icon {
+  font-size: 2rem;
+  color: var(--brand-accent-dark);
+  margin-bottom: 1.5rem;
+}
+
+
+
+/* ============================================================
+   HOME SERVICES SECTION
+   ============================================================ */
+
+.home-services__grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+/* --- Service Card --- */
+.home-service-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    min-height: 265px;
+    padding: 2rem 1.25rem 1.5rem;
+    text-decoration: none;
+    transition:
+        border-color 250ms ease,
+        box-shadow 250ms ease,
+        transform 250ms ease;
+}
+
+/* --- Card Number --- */
+.home-service-card .number {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.75rem;
+    line-height: 1;
+    color: #e5e7eb;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+/* --- Icon --- */
+.home-service-icon {
+    font-size: 1.8rem;
+    color: var(--brand-red);
+    margin: 0 0 1.25rem;
+}
+
+/* --- Heading --- */
+.home-service-card h3 {
+    font-size: 1rem;
+    line-height: 1.45;
+    margin: 0 0 0.65rem;
+    transition: color 250ms ease;
+}
+
+/* --- Description --- */
+.home-service-card p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--muted);
+}
+
+/* --- Hover & Focus --- */
+.home-service-card:hover,
+.home-service-card:focus-visible {
+    border-color: rgb(201 0 0 / 30%);
+    box-shadow: 0 10px 25px rgb(0 0 0 / 7%);
+    transform: translateY(-4px);
+}
+
+.home-service-card:hover h3,
+.home-service-card:focus-visible h3 {
+    color: var(--brand-red);
+}
+
+.home-service-card:focus-visible {
+    outline: 2px solid var(--brand-red);
+    outline-offset: 3px;
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 1100px) {
+    .home-services__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .home-services__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 450px) {
+    .home-services__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+    .home-service-card {
+        transition: none;
+    }
+
+    .home-service-card:hover,
+    .home-service-card:focus-visible {
+        transform: none;
+    }
+}
+
+/* --- Quality Section --- */
+.home-quality__inner {
+  align-items: center;
+  gap: 4rem;
+}
+.home-quality__desc {
+  font-size: 1.125rem;
+  color: var(--muted);
+  margin: 1.5rem 0 2rem;
+}
+.home-quality__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.home-quality__item {
+  background: #fff;
+  padding: 2rem;
+  text-align: center;
+}
+.home-quality__item strong {
+  display: block;
+  color: var(--brand-red);
+  font-size: 1.5rem;
+}
+.home-quality__item span {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+.home-quality__item small {
+  display: block;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+/* --- Final CTA Section --- */
+.home-cta {
+  border-top: 1px solid #333;
+}
+.home-cta__inner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+.home-cta__body {
+  max-width: 400px;
+}
+
+/* ============================================================
+   8. RESPONSIVE LAYOUTS
    ============================================================ */
 @media (max-width: 1100px) {
   .trust-bar__inner {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     row-gap: 28px;
   }
-  .trust-item:nth-child(4) { border-left: 0; }
+
+  .trust-item:nth-child(3n + 1) {
+    border-left: 0;
+  }
+  .trust-item:nth-child(4) {
+    border-left: 0;
+  }
 }
 
 @media (max-width: 1024px) {
   .home-hero__inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 3rem;
     text-align: center;
   }
-  .home-hero__actions { justify-content: center; }
-  .home-hero__visual { order: -1; max-width: 600px; margin: 0 auto; }
+
+  .home-hero__content p {
+    margin-inline: auto;
+  }
+
+  .home-hero__actions {
+    justify-content: center;
+  }
+
+  .home-hero__visual {
+    order: -1;
+    max-width: 600px;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-intro__inner {
+    gap: 2rem;
+  }
+
+  .home-resources__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .home-quality__inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
 @media (max-width: 767px) {
   .hero-slider {
-    aspect-ratio: 4 / 3;
     min-height: 300px;
+    aspect-ratio: 4 / 3;
     border-radius: 12px;
   }
-  .hero-slide__caption { right: 20px; bottom: 48px; left: 20px; }
-  .hero-slide__caption h2 { font-size: clamp(1.3rem, 5vw, 1.8rem); }
-  .hero-slide__caption p { font-size: 0.86rem; }
-  .hero-slider__controls { right: 20px; bottom: 18px; }
 
-  .trust-bar { padding: 28px 0; }
+  .hero-slide__caption {
+    right: 20px;
+    bottom: 58px;
+    left: 20px;
+  }
+
+  .hero-slide__caption h2 {
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+  }
+
+  .hero-slide__caption p {
+    font-size: 0.86rem;
+  }
+
+  .hero-slider__controls {
+    right: 20px;
+    bottom: 17px;
+    gap: 8px;
+  }
+
+  .trust-bar {
+    padding-block: 28px;
+  }
+
   .trust-bar__inner {
     width: min(100% - 28px, 600px);
     grid-template-columns: repeat(2, minmax(0, 1fr));
     row-gap: 24px;
   }
-  .trust-item { padding: 8px 12px; }
-  .trust-item:nth-child(odd) { border-left: 0; }
-  .trust-item:nth-child(even) { border-left: 1px solid #e7e7e7; }
-  .trust-item h3 { font-size: 0.9rem; }
-  .trust-item p { font-size: 0.8rem; }
 
-  .card--text-feature { padding: 1.5rem; }
+  .trust-item {
+    padding: 8px 12px;
+  }
+
+  .trust-item:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .trust-item:nth-child(even) {
+    border-left: 1px solid #e7e7e7;
+  }
+
+  .trust-item h3 {
+    font-size: 0.9rem;
+  }
+
+  .trust-item p {
+    font-size: 0.8rem;
+  }
+
+  .card--text-feature {
+    padding: 1.5rem;
+  }
+
+@media (max-width: 767px) {
+  .home-resources__cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+  .home-resource-card__content h3 {
+    font-size: 1rem;
+  }
+
+  .home-resource-card__content p {
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 380px) {
-  .hero-slider { min-height: 270px; }
-  .hero-slide__caption { right: 15px; left: 15px; }
-  .trust-bar__inner { width: calc(100% - 20px); }
-  .trust-item { padding-inline: 8px; }
+  .hero-slider {
+    min-height: 270px;
+  }
+
+  .hero-slide__caption {
+    right: 15px;
+    left: 15px;
+  }
+
+  .hero-slide__caption p {
+    font-size: 0.82rem;
+  }
+
+  .hero-slider__controls {
+    right: 15px;
+  }
+
+  .trust-bar__inner {
+    width: calc(100% - 20px);
+  }
+
+  .trust-item {
+    padding-inline: 8px;
+  }
 }
 
+/* ============================================================
+   9. ACCESSIBILITY — REDUCED MOTION
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .hero-slide,
   .hero-slide > img,
-  .hero-slider__dot { transition: none; }
-  .hero-slide.is-active > img { transform: none; }
+  .hero-slider__dot,
+  .hero-slider__toggle,
+  .card--text-feature,
+  .card--text-feature::after,
+  .home-product-icon,
+  .home-product-number,
+  .card--text-feature h3,
+  .card-arrow,
+  .home-resource-card__arrow {
+    scroll-behavior: auto;
+    transition: none;
+  }
+
+  .hero-slide.is-active > img {
+    transform: none;
+  }
+
+  .card--text-feature:hover {
+    transform: none;
+  }
 }
