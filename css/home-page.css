@@ -626,12 +626,12 @@
 /* --- Card Number --- */
 .home-service-card .number {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 1.2rem;
+    right: 1.2rem;
     font-size: 1.75rem;
     line-height: 1;
-    color: #e5e7eb;
-    font-weight: 700;
+    color: var(--muted-light);
+    font-weight: 900;
     pointer-events: none;
 }
 
