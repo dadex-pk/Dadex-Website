@@ -1002,13 +1002,14 @@ body.nav-open .back-to-top {
   background: rgba(255, 255, 255, 0.06);
   border-radius: 50%;
   color: var(--brand-accent-dark);
-  font-size: 0.875rem;
+  font-size: 0.92rem;
   text-decoration: none;
   transition: background-color var(--transition), transform var(--transition);
 }
 .site-footer .social-links a:hover {
   background: var(--brand-red);
   transform: translateY(-3px);
+  color: #fff;
 }
 
 .site-footer .footer-col h3 {

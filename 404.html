@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>Page Not Found – Dadex Eternit Limited</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found – Dadex Eternit Limited</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,31 +16,48 @@
 <body>
 <div data-component="header"></div>
 <main>
-  <section class="page-hero" style="padding: 8rem 0; text-align: center;">
+  <section class="page-hero" style="padding-block: clamp(6rem, 10vw, 10rem);">
     <div class="container">
-      <h1 style="font-size: 6rem; margin-bottom: 1rem; color: var(--brand-red);">404</h1>
-      <h2>Page Not Found</h2>
-      <p style="margin: 1rem auto 2rem; max-width: 40rem;">The page you were looking for could not be found. It may have been moved, renamed or removed.</p>
-      <a href="index.html" class="btn btn--primary">Return to Home</a>
+      <h1 style="font-size: clamp(5rem, 15vw, 10rem); line-height: 1; margin-bottom: 1rem; color: var(--brand-red);">404</h1>
+      <h2 style="margin-bottom: 1rem;">Looks like this pipeline is blocked.</h2>
+      <p style="margin-bottom: 2.5rem; font-size: 1.125rem;">The page you were looking for could not be found. It may have been moved, renamed, or removed. Let's get you back on track.</p>
+      
+      <!-- Instant Search Form -->
+      <form action="search.html" method="GET" style="max-width: 500px; margin: 0 auto 3rem; display: flex; gap: 0.5rem;">
+        <input type="search" name="q" placeholder="Search products, resources, or pages..." required style="flex: 1; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--line); font-family: inherit; font-size: 1rem;">
+        <button type="submit" class="btn btn--primary" aria-label="Search"><i class="fas fa-magnifying-glass"></i></button>
+      </form>
+
+      <a href="index.html" class="btn btn--outline" style="border-color: rgba(255,255,255,0.3); color: #fff;">Return to Home</a>
     </div>
   </section>
-  <section class="section">
+
+  <section class="section section--light">
     <div class="container">
       <div class="section-header center">
-        <h2>Explore Dadex <span>from here.</span></h2>
+        <h2>Popular Destinations</h2>
       </div>
-      <div class="grid grid-3">
-        <a href="products.html" class="card text-center" style="padding: 3rem 2rem;">
+      
+      <div class="grid grid-4">
+        <a href="products.html" class="card text-center" style="padding: 2.5rem 1.5rem;">
           <i class="fas fa-boxes-stacked" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
           <h3>Browse Products</h3>
+          <p>Explore our piping and roofing systems.</p>
         </a>
-        <a href="search.html" class="card text-center" style="padding: 3rem 2rem;">
-          <i class="fas fa-magnifying-glass" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
-          <h3>Search the Site</h3>
+        <a href="dealers.html" class="card text-center" style="padding: 2.5rem 1.5rem;">
+          <i class="fas fa-store" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+          <h3>Find a Dealer</h3>
+          <p>Locate an approved distributor near you.</p>
         </a>
-        <a href="contact.html" class="card text-center" style="padding: 3rem 2rem;">
+        <a href="investors.html" class="card text-center" style="padding: 2.5rem 1.5rem;">
+          <i class="fas fa-chart-line" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+          <h3>Investor Relations</h3>
+          <p>Financial reports and shareholder info.</p>
+        </a>
+        <a href="contact.html" class="card text-center" style="padding: 2.5rem 1.5rem;">
           <i class="fas fa-envelope" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
-          <h3>Contact Dadex</h3>
+          <h3>Contact Us</h3>
+          <p>Reach our sales and support teams.</p>
         </a>
       </div>
     </div>

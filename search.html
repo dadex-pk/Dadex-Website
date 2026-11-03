@@ -21,38 +21,59 @@
     <div class="container">
       <div class="kicker">Search</div>
       <h1>Search <span>Dadex</span></h1>
+      <p>Search across our complete catalog of products, technical resources, and corporate information.</p>
     </div>
   </section>
+
   <section class="section">
     <div class="container">
       <div style="max-width: 800px; margin: 0 auto;">
-        <div class="search-bar" style="display: flex; gap: 1rem; margin-bottom: 2rem;">
-          <input type="search" id="siteSearchInput" placeholder="Search products, projects, resources..." style="flex: 1; padding: 1rem; border: 1px solid var(--line); border-radius: var(--radius-sm);">
-          <button class="btn btn--primary" id="siteSearchButton">Search</button>
-        </div>
         
+        <!-- Premium Search Bar -->
+        <div class="search-input-wrapper">
+          <i class="fas fa-magnifying-glass search-icon"></i>
+          <input type="search" id="siteSearchInput" placeholder="Search products, projects, resources..." autocomplete="off">
+          <button type="button" id="searchClear" class="search-clear-btn" aria-label="Clear search">
+            <i class="fas fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Popular Searches (Visible before typing) -->
+        <div class="popular-searches" id="popularSearches">
+          <span>Popular:</span>
+          <button class="filter-btn" data-query="Aquadex">Aquadex</button>
+          <button class="filter-btn" data-query="T-Flex">T-Flex</button>
+          <button class="filter-btn" data-query="Manholes">Manholes</button>
+          <button class="filter-btn" data-query="Annual Reports">Annual Reports</button>
+        </div>
+
         <div class="flex-between" style="margin-bottom: 2rem;">
           <strong id="searchCount" style="color: var(--muted);">Start searching</strong>
-          <button class="btn btn--outline" id="searchClear">Clear</button>
         </div>
 
         <div class="grid grid-2" id="searchResults"></div>
 
+        <!-- Empty State -->
         <div id="searchEmpty" hidden style="text-align: center; padding: 4rem 0;">
-          <i class="fas fa-magnifying-glass" style="font-size: 3rem; color: var(--line); margin-bottom: 1rem;"></i>
+          <i class="fas fa-folder-open" style="font-size: 3rem; color: var(--line); margin-bottom: 1rem;"></i>
           <h3>No matching pages</h3>
-          <p>Try a broader keyword or browse the main sections of the Dadex website.</p>
+          <p>Try a broader keyword or browse the main sections.</p>
+          <p style="margin-top: 1rem;"><strong>Need help?</strong> Call our UAN: <a href="tel:111000789" style="color: var(--brand-red); font-weight: bold;">111-000-789</a></p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Enhanced Result Template -->
   <template id="searchResultTemplate">
-    <article class="card">
-      <span class="result-type" style="font-size: 0.75rem; font-weight: 800; color: var(--brand-red); text-transform: uppercase;"></span>
-      <h3 style="margin: 0.5rem 0;"></h3>
-      <p style="font-size: 0.875rem; margin-bottom: 1rem;"></p>
-      <a href="#" class="btn btn--outline" style="width: max-content; margin-top: auto;">Open page</a>
+    <article class="card search-result-card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+        <span class="result-badge"></span>
+        <i class="fas fa-arrow-up-right-from-square" style="color: var(--line); font-size: 0.875rem;"></i>
+      </div>
+      <h3 style="margin: 0 0 0.5rem;"></h3>
+      <p style="font-size: 0.875rem; color: var(--muted); margin-bottom: 1.5rem; flex: 1;"></p>
+      <a href="#" class="btn btn--outline" style="width: max-content; margin-top: auto;">Open page <i class="fas fa-arrow-right"></i></a>
     </article>
   </template>
 </main>

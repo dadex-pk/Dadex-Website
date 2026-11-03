@@ -603,33 +603,45 @@ function initSiteSearch() {
   if (!input) return;
 
   const index = window.DADEX_SEARCH_INDEX;
-  if (!Array.isArray(index)) {
-    console.warn(
-      '[Dadex] Search index not loaded. ' +
-      'Check script order in search.html (search-index.js before main.js).'
-    );
-    return;
-  }
+  if (!Array.isArray(index)) return;
 
-  const button = document.getElementById('siteSearchButton');
-  const clear = document.getElementById('searchClear');
   const grid = document.getElementById('searchResults');
   const empty = document.getElementById('searchEmpty');
   const count = document.getElementById('searchCount');
   const template = document.getElementById('searchResultTemplate');
+  const clearBtn = document.getElementById('searchClear');
+  const popularSearches = document.getElementById('popularSearches');
+  const popularBtns = document.querySelectorAll('[data-query]');
 
   if (!grid || !template) return;
 
-  const truncatePreview = (text, max = 160) => {
-    const clean = String(text || '').replace(/\s+/g, ' ').trim();
-    if (clean.length <= max) return clean;
-    const cut = clean.slice(0, max);
-    const lastSpace = cut.lastIndexOf(' ');
-    return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut) + '…';
+  // 1. Keyboard Shortcut (/ focuses search)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+      input.focus();
+    }
+  });
+
+  // 2. Clear Button Visibility
+  const toggleClearBtn = () => {
+    if (clearBtn) clearBtn.style.display = input.value.length > 0 ? 'grid' : 'none';
+    if (popularSearches) popularSearches.style.display = input.value.length > 0 ? 'none' : 'flex';
   };
 
+  // 3. Highlight Helper
+  const highlightText = (text, query) => {
+    if (!query) return text;
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+  };
+
+  // 4. Render Function
   const render = () => {
-    const q = input.value.trim().toLowerCase();
+    const q = input.value.trim();
+    const lowerQ = q.toLowerCase();
+    
+    toggleClearBtn();
 
     if (!q) {
       grid.replaceChildren();
@@ -638,21 +650,26 @@ function initSiteSearch() {
       return;
     }
 
-    const terms = q.split(/\s+/).filter(Boolean);
+    const terms = lowerQ.split(/\s+/).filter(Boolean);
     const rows = index
       .filter(p => terms.every(t => p.join(' ').toLowerCase().includes(t)))
       .slice(0, 60);
 
     if (count) {
-      count.textContent = `${rows.length} result${rows.length === 1 ? '' : 's'} found`;
+      count.textContent = `${rows.length} result${rows.length === 1 ? '' : 's'} found for "${q}"`;
     }
 
     const frag = document.createDocumentFragment();
     for (const p of rows) {
       const card = template.content.firstElementChild.cloneNode(true);
-      card.querySelector('.result-type').textContent = p[2];
-      card.querySelector('h3').textContent = p[0];
-      card.querySelector('p').textContent = truncatePreview(p[3]);
+      
+      // Set Badge
+      card.querySelector('.result-badge').textContent = p[2];
+      
+      // Set Highlighted Title & Preview
+      card.querySelector('h3').innerHTML = highlightText(p[0], q);
+      card.querySelector('p').innerHTML = highlightText(p[3].slice(0, 150) + '...', q);
+      
       card.querySelector('a').href = p[1];
       frag.appendChild(card);
     }
@@ -661,29 +678,34 @@ function initSiteSearch() {
     if (empty) empty.hidden = rows.length !== 0;
   };
 
-  if (button) button.addEventListener('click', render);
+  // 5. Event Listeners
   input.addEventListener('input', render);
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') render();
-  });
-
-  if (clear) {
-    clear.addEventListener('click', () => {
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
+  
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
       input.value = '';
       render();
       input.focus();
       if (location.search) {
-        try {
-          history.replaceState(null, '', location.pathname);
-        } catch (_) {}
+        try { history.replaceState(null, '', location.pathname); } catch (_) {}
       }
     });
   }
 
-  /* Pre-fill from URL ?q= if present */
-  const q = new URLSearchParams(location.search).get('q');
-  if (q) {
-    input.value = q;
+  // Popular Searches Click
+  popularBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      input.value = btn.dataset.query;
+      render();
+      input.focus();
+    });
+  });
+
+  // Pre-fill from URL ?q= if present
+  const qParam = new URLSearchParams(location.search).get('q');
+  if (qParam) {
+    input.value = qParam;
     render();
   }
 }
