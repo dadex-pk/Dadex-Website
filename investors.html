@@ -188,7 +188,7 @@
             <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Head Office</h3>
             <div class="grid grid-2" style="margin-bottom: 2rem;">
               <div class="card">
-                <h3>Dadex House</h3>
+                <h3>Dadex Head Office</h3>
                 <p>34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal, Karachi-75400.</p>
                 <p><strong>UAN:</strong> +92 21 111-000-789</p>
                 <p><strong>Email:</strong> <a href="mailto:info@dadex.com.pk">info@dadex.com.pk</a></p>
@@ -589,7 +589,7 @@
               <div class="card">
                 <div class="kicker">67th AGM</div>
                 <h3>27 October 2026 · 3:30 PM</h3>
-                <p>To be held at Dadex House, 34-A/1, Block-6, P.E.C.H.S., Shahrah-e-Faisal, Karachi.</p>
+                <p>To be held at Dadex Head Office, 34-A/1, Block-6, P.E.C.H.S., Shahrah-e-Faisal, Karachi.</p>
                 <p>The Register of Members and Share Transfer Books will remain closed from 20 to 27 October 2026 (both days inclusive). Entitlement to attend and vote is based on the Register as at 19 October 2026.</p>
               </div>
             </div>
@@ -603,7 +603,7 @@
             <div class="card" style="margin-top: 1.5rem;">
               <h3>Company Secretary</h3>
               <p><strong>Muhammad Yousuf</strong></p>
-              <p>Dadex Eternit Limited, Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal, Karachi-75400.</p>
+              <p>Dadex Eternit Limited, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal, Karachi-75400.</p>
             </div>
           </section>
 
@@ -711,7 +711,7 @@
               <div class="card">
                 <h3>Company Secretary</h3>
                 <p>Muhammad Yousuf</p>
-                <p>Dadex Eternit Limited<br/>Dadex House, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal, Karachi-75400.</p>
+                <p>Dadex Eternit Limited<br/>Dadex Head Office, 34-A/1, Block 6, P.E.C.H.S., Shahrah-e-Faisal, Karachi-75400.</p>
               </div>
               <div class="card">
                 <h3>Complaints</h3>
@@ -721,16 +721,15 @@
             </div>
           </section>
 
-        </div><!-- /.ir-content -->
-      </div><!-- /.ir-layout -->
-    </div><!-- /.container -->
+        </div>
+      </div>
+    </div>
    </section>
 </main>
 
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
 
-<!-- NEW PREMIUM DIRECTOR SCRIPT -->
 <script>
 (function () {
   const btns = document.querySelectorAll('.director-name-btn');
@@ -739,14 +738,12 @@
 
   btns.forEach(btn => {
     btn.addEventListener('click', () => {
-      // 1. Remove active from all buttons and bios
+   
       btns.forEach(b => b.classList.remove('active'));
       bios.forEach(b => b.classList.remove('active'));
 
-      // 2. Add active to clicked button
       btn.classList.add('active');
 
-      // 3. Find and activate the matching bio
       const targetId = 'dir-' + btn.dataset.director;
       const targetBio = document.getElementById(targetId);
       if (targetBio) {
