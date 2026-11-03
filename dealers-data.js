@@ -3,7 +3,7 @@
    ============================================================
 
    This is the ONLY file that needs to be updated when replacing
-   placeholder records with live, approved dealer data.
+   placeholder records with approved dealer data.
 
    SCHEMA (all fields are read by js/dealers.js):
      name         : Dealer or distributor business name
@@ -36,7 +36,7 @@ window.DADEX_DEALERS = [
      ============================================================ */
 
   {
-    name: "Burhani Traders",
+    name: "Taheri Sanitary",
     type: "Distributor",
     contactName: "Mr. Yousuf Taheri",
     province: "Sindh",
@@ -85,9 +85,6 @@ window.DADEX_DEALERS = [
     city: "Lahore",
     area: "Qaddafi Market",
     address: "11, Qaddafi Market Nishtar (Brandreth) Road, Lahore, Pakistan",
-    /* NOTE: source shows a second phone truncated as "042-3..."
-       — supply the full number and either append it here or add
-       as `whatsapp` if that's what it is. */
     phone: "042-37668390",
     email: "milyascom11@gmail.com",
     products: ["Aquadex"],
@@ -116,10 +113,7 @@ window.DADEX_DEALERS = [
 
   /* ============================================================
      DEALERS — Placeholder records
-     These will be replaced once the official dealer list is provided.
-     Keep active:true so the directory shows a populated grid during
-     review; switch to active:false if the directory should be empty
-     until real data lands.
+     To will be replaced with the official dealer list.
      ============================================================ */
   {
     name: "Dealer A",
