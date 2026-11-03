@@ -17,7 +17,7 @@
 
 @media (min-width: 900px) {
   .contact-layout {
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1.6fr 1fr;
     gap: 4rem;
   }
 }
@@ -32,16 +32,18 @@
 }
 
 .contact-card h3 { 
-  margin-bottom: 1rem; 
+  margin-bottom: 1.25rem;
+  font-size: 1.5rem; 
+  font-weight: 800;
 }
 
-/* The Flexbox magic for icon alignment */
 .contact-card p {
   display: flex;
   align-items: flex-start;
   gap: 0.63rem;
   margin-bottom: 0.75rem;
-  font-size: 0.9375rem;
+  font-size: 0.92rem;
+  font-weight: 400;
   color: var(--muted);
   line-height: 1.5;
 }
@@ -50,7 +52,6 @@
   margin-bottom: 0;
 }
 
-/* Ensure icons don't squish and align nicely with the text */
 .contact-card p i {
   flex-shrink: 0;
   margin-top: 0.25rem; 
@@ -71,23 +72,21 @@
 .contact-form-wrapper {
   background: var(--bg-dark);
   color: #fff;
-  padding: 3rem;
+  padding: 2rem;
   border-radius: var(--radius-lg);
 }
-.contact-form-wrapper h2 { color: #fff; margin-bottom: 0.5rem; }
+.contact-form-wrapper h2 { color: #fff; margin-bottom: 2rem; }
 .contact-form-wrapper p { color: #b3b3b8; margin-bottom: 2rem; }
 
 /* FORM ELEMENTS */
-.form-group {
-  margin-bottom: 1.5rem;
-}
+.form-group {margin-bottom: 1.5rem;}
 
 .form-group label {
   display: block;
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #e4e4e7 !important; /* Forces white/light grey text */
+  color: #ececec !important;
 }
 
 /* The Inputs, Selects, and Textareas */
