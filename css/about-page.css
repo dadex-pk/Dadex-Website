@@ -1,6 +1,5 @@
 /* ============================================================
-   ABOUT PAGE — Splits, glance cards, partners, certifications
-   Loaded by: about.html only
+   ABOUT PAGE 
    ============================================================ */
 
 .about-page .section { padding-block: clamp(4rem, 8vw, 6rem); }
@@ -17,11 +16,11 @@
 .about-split.is-flipped .about-split-image { order: 1; }
 
 .about-split-image img {
-  width: auto;
-  height: 100%;
+  width: 92%;
+  height: auto;
   max-height: 500px;
   object-fit: cover;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
 }
 .about-split-text h2 {
@@ -65,9 +64,9 @@
 /* --- Glance / stat cards --- */
 .glance-card {
   background: #fff;
-  padding: 2rem;
+  padding: 1.7rem 1.2rem;
   border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   transition: all var(--transition);
 }
 .glance-card:hover {
@@ -79,14 +78,14 @@
   font-family: var(--font-heading);
   font-size: 2.5rem;
   font-weight: 800;
-  color: var(--brand-red);
+  color: var(--muted);
   line-height: 1;
   margin-bottom: 0.5rem;
 }
 .glance-card h4 {
-  font-size: 1.125rem;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
-  color: var(--ink);
+  color: var(--brand-red);
 }
 .glance-card p {
   font-size: 0.875rem;
