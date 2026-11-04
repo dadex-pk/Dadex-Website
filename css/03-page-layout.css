@@ -13,7 +13,7 @@
 }
 
 /* Sections */
-.section { padding-block: var(--section-pad); }
+.section { padding-block: var(--section-pad); border-top: 1px solid rgba(0, 0, 0, 0.04); border-bottom: 1px solid rgba(0, 0, 0, 0.04); }
 .section--light { background-color: var(--bg-mist); }
 .section--dark {
   background-color: var(--bg-dark);

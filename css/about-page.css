@@ -8,7 +8,7 @@
 .about-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  gap: 1rem;
   align-items: start;
   justify-items: center;
 }
@@ -16,9 +16,10 @@
 .about-split.is-flipped .about-split-image { order: 1; }
 
 .about-split-image img {
-  width: 92%;
+  width: 412px;
+  max-width: 500px;
   height: auto;
-  max-height: 500px;
+  max-height: 630px;
   object-fit: cover;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
@@ -31,9 +32,10 @@
   font-size: 1.25rem;
   font-style: italic;
   color: var(--ink);
+  font-weight: 700;
   border-left: 4px solid var(--brand-red);
   padding-left: 1.5rem;
-  margin: 2rem 0 0;
+  margin: 5rem 0 0 2rem;
   line-height: 1.6;
   max-width: 30ch;
 }
@@ -59,6 +61,25 @@
   top: 0;
   color: var(--brand-red);
   font-weight: 900;
+}
+
+.section-values {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.section-values::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image: url("../assets/images/corporate/building-blocks.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  content: "";
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 /* --- Glance / stat cards --- */
@@ -144,7 +165,7 @@
 /* --- Partner items --- */
 .partner-item {
   padding: 1.5rem;
-  background: var(--bg-mist);
+  background: var(--bg-mist-light);
   border-left: 3px solid var(--brand-red);
   margin-bottom: 2.5rem;
   transition: border-color var(--transition);

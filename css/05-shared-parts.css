@@ -364,7 +364,7 @@ h3 span {
   margin: 3rem 0;
   background: var(--bg-mist);
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
 }
 .banner > * { min-width: 0; }
 .banner h3 { line-height: 1.3; margin: 0 0 0.5rem; }
