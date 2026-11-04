@@ -1,10 +1,5 @@
 /* ============================================================
    DADEX — HOME PAGE STYLES
-   Loaded by: index.html only
-
-   Dependencies from main.css:
-   --bg-dark, --brand-red, --brand-accent-dark, --ink, --muted,
-   --line, --radius-md, --font-heading, --shadow-md
    ============================================================ */
 
 /* ============================================================
@@ -26,10 +21,10 @@
 }
 
 .home-hero__content h1 {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
   color: #fff;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1.05;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.12;
   letter-spacing: -0.03em;
   text-wrap: balance;
 }
@@ -63,10 +58,10 @@
   position: relative;
   isolation: isolate;
   width: 100%;
-  min-height: 360px;
-  aspect-ratio: 5 / 4;
+  min-height: 313px;
+  aspect-ratio: 4 / 4;
   overflow: hidden;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background: #252525;
   box-shadow: 0 18px 45px rgb(0 0 0 / 18%);
 }
@@ -94,7 +89,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position:Center;
   transform: scale(1.02);
   transition: transform 5.5s ease;
 }
@@ -109,9 +104,10 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgb(0 0 0 / 3%) 15%,
-    rgb(0 0 0 / 20%) 48%,
-    rgb(0 0 0 / 82%) 100%
+    rgb(0 0 0 / 3%) 5%,
+    rgb(0 0 0 / 20%) 40%,
+    rgb(0 0 0 / 80%) 72%,
+    rgb(0 0 0 / 97%) 98%
   );
   content: "";
   pointer-events: none;
@@ -120,16 +116,16 @@
 .hero-slide__caption {
   position: absolute;
   z-index: 1;
-  right: 28px;
-  bottom: 62px;
-  left: 28px;
+  right: 21px;
+  bottom: 40px;
+  left: 21px;
   color: #fff;
 }
 
 .hero-slide__caption > span {
   display: inline-block;
-  margin-bottom: 12px;
-  color: #fff;
+  margin-bottom: 7px;
+  color: rgb(255 255 255 / 72%);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.13em;
@@ -138,26 +134,31 @@
 
 .hero-slide__caption h2 {
   max-width: 520px;
-  margin: 0 0 10px;
-  color: #fff;
-  font-size: clamp(1.45rem, 2.4vw, 2.2rem);
+  margin: 0 0 7px;
+  color:#fff;
+  font-size: clamp(1.2rem, 2.4vw, 2rem);
   font-weight: 800;
   line-height: 1.15;
   text-wrap: balance;
 }
 
+.hero-slide__caption h2 em {
+  color: var(--brand-accent-dark);
+  font-style: normal;
+}
+
 .hero-slide__caption p {
-  max-width: 440px;
-  margin: 0;
+  max-width: auto;
+  margin-bottom: 30px;
   color: rgb(255 255 255 / 88%);
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.6;
 }
 
 .hero-slider__controls {
   position: absolute;
   z-index: 3;
-  right: 28px;
+  right: 21px;
   bottom: 20px;
   display: flex;
   align-items: center;
@@ -166,8 +167,8 @@
 
 .hero-slider__dot {
   display: block;
-  width: 9px;
-  height: 9px;
+  width: 7px;
+  height: 7px;
   padding: 0;
   border: 0;
   border-radius: 999px;
@@ -177,8 +178,8 @@
 }
 
 .hero-slider__dot.is-active {
-  width: 27px;
-  background: var(--brand-red);
+  width: 25px;
+  background: var(--brand-accent-dark);
 }
 
 .hero-slider__toggle {
@@ -186,9 +187,9 @@
   min-height: 2rem;
   align-items: center;
   justify-content: center;
-  gap: 0.45rem;
-  padding: 0.35rem 0.65rem;
-  border: 1px solid rgb(255 255 255 / 45%);
+  gap: 0.5rem;
+  padding: 0.35rem 0.72rem;
+  border: 1px solid var(--muted-light);
   border-radius: 999px;
   background: rgb(0 0 0 / 35%);
   color: #fff;
@@ -200,7 +201,8 @@
 }
 
 .hero-slider__toggle:hover {
-  border-color: #fff;
+  border-color: var(--brand-accent-dark);
+  color: var(--brand-accent-dark);
   background: rgb(0 0 0 / 65%);
 }
 
@@ -211,7 +213,7 @@
 }
 
 /* ============================================================
-   2. TRUST BAR — SIX PILLARS
+   2. TRUST BAR
    ============================================================ */
 .trust-bar {
   position: relative;
