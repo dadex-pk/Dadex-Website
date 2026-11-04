@@ -20,7 +20,14 @@
   background: var(--brand-red);
   border-radius: 1px;
 }
-.section--dark .kicker { color: var(--brand-accent-dark); }
+.section--dark .kicker { color: var(--muted-light); }
+
+.section--dark .kicker::before {
+  content: "";
+  width: 0.5rem; height: 0.5rem;
+  background: var(--brand-accent-dark);
+  border-radius: 1px;
+}
 
 /* --- Card number --- */
 .card .number {
