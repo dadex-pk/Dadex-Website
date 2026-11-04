@@ -144,12 +144,7 @@ h3 span {
     justify-content: center;
     min-height: 500px;
     padding: clamp(4rem, 7.5vw, 6rem) 0;
-    background:
-        radial-gradient(
-            circle at 85% 35%,
-            rgb(201 0 0 / 7%) 0,
-            transparent 25rem),
-        var(--bg-dark);
+    background: var(--bg-dark);
     color: #fff;
     text-align: center;
 }
@@ -158,11 +153,11 @@ h3 span {
 .page-hero::before {
     content: "";
     position: absolute;
-    width: 46rem;
-    height: 46rem;
-    right: -15rem;
-    top: -22rem;
-    border: 5rem solid rgba(224, 55, 55, 0.11);
+    width: 45rem;
+    height: 45rem;
+    right: -12rem;
+    top: -17rem;
+    border: 6rem solid rgba(224, 55, 55, 0.11);
     border-radius: 50%;
     box-shadow:
         0 0 0 2rem rgb(201 0 0 / 2%),
