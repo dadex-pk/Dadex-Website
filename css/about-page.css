@@ -144,7 +144,7 @@
 /* --- Partner items --- */
 .partner-item {
   padding: 1.5rem;
-  background: #fff;
+  background: var(--bg-mist);
   border-left: 3px solid var(--brand-red);
   margin-bottom: 2.5rem;
   transition: border-color var(--transition);
@@ -168,23 +168,42 @@
   margin: 0;
 }
 
-/* --- Cert items --- */
-.cert-item {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  margin-bottom: 1rem;
+/* --- Quality Section --- */
+.about-quality__inner {
+  align-items: center;
+  gap: 4rem;
 }
-.cert-item h3 {
+.about-quality__desc {
   font-size: 1.125rem;
-  margin-bottom: 0.25rem;
+  color: var(--muted);
+  margin: 1.5rem 0 2rem;
+}
+.about-quality__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.about-quality__item {
+  background: #fff;
+  padding: 2rem;
+  text-align: center;
+}
+.about-quality__item strong {
+  display: block;
+  color: var(--brand-red);
+  font-size: 1.5rem;
+}
+.about-quality__item span {
+  font-size: 2rem;
+  font-weight: 800;
   color: var(--ink);
 }
-.cert-item p {
-  font-size: 0.875rem;
+.about-quality__item small {
+  display: block;
   color: var(--muted);
-  margin: 0;
+  margin-top: 0.5rem;
 }
 
 /* --- About page responsive --- */
