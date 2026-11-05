@@ -338,6 +338,7 @@ h3 span {
   transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
   height: 100%;
 }
+
 .card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-md);

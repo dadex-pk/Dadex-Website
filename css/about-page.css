@@ -4,11 +4,19 @@
 
 .about-page .section { padding-block: clamp(4rem, 8vw, 6rem); }
 
+.about-intro-image img {
+  width: auto;
+  height: 150%;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
 /* --- Split layouts (image + text) --- */
 .about-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 2rem;
   align-items: start;
   justify-items: center;
 }
@@ -28,6 +36,14 @@
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 1.5rem;
 }
+
+.about-split-text p {
+  font-size: clamp(0.92rem, 3vw, 1.12rem);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  max-width: 45ch;
+}
+
 .about-split-text blockquote {
   font-size: 1.25rem;
   font-style: italic;
@@ -82,6 +98,8 @@
   opacity: 0.15;
   pointer-events: none;
 }
+
+
 
 /* --- Glance / stat cards --- */
 .glance-card {
@@ -169,7 +187,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.11);
   border-left: 4px solid var(--brand-accent-dark);
   margin: 2rem 3rem 2rem 0;
   transition: border-color var(--transition);
@@ -182,7 +200,7 @@
 }
 
 .partner-item h3 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0.5rem 0 0.5rem;
   color: var(--brand-accent-dark);
 }

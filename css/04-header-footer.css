@@ -1,11 +1,9 @@
 /* ============================================================
    HEADER + FOOTER + WIDGETS
-   Loaded on every page. Contains site shell and floating tools.
    ============================================================ */
 
 body.nav-open { overflow: hidden; }
 
-/* Focus ring for shell elements */
 .site-header a:focus-visible,
 .site-header button:focus-visible,
 .site-footer a:focus-visible,
@@ -34,9 +32,9 @@ body.nav-open { overflow: hidden; }
 }
 .site-header.is-scrolled {
   box-shadow: var(--shadow-md);
-  background: rgba(255, 255, 255, 0.96);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.80);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 /* Collapsible tiers */
@@ -51,8 +49,7 @@ body.nav-open { overflow: hidden; }
     opacity 0.25s var(--ease),
     visibility 0.25s var(--ease);
 }
-.site-header.is-scrolled .utility-bar,
-.site-header.is-scrolled .header-products-tier {
+.site-header.is-scrolled .utility-bar {
   max-height: 0;
   opacity: 0;
   visibility: hidden;
@@ -67,6 +64,7 @@ body.nav-open { overflow: hidden; }
   transition: min-height var(--transition);
 }
 .site-header.is-scrolled .header-inner { min-height: var(--header-h-scrolled); }
+.site-header.is-scrolled .header-products-tier {min-height: 30px; max-height: 40px;}
 
 /* Utility bar */
 .site-header .utility-bar {
@@ -99,7 +97,7 @@ body.nav-open { overflow: hidden; }
 /* Main tier */
 .site-header .header-main-tier {
   background: var(--bg-surface);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--brand-red);
 }
 .site-header .brand { display: inline-flex; align-items: center; text-decoration: none; }
 .site-header .brand-logo {
@@ -190,7 +188,7 @@ body.nav-open { overflow: hidden; }
   gap: 12px;
   margin-left: 8px;
   padding: 10px 16px;
-  background: rgba(229, 0, 0, 0.08);
+  background: rgba(229, 0, 0, 0.12);
   border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 600;
@@ -204,8 +202,8 @@ body.nav-open { overflow: hidden; }
 
 /* Products tier */
 .site-header .header-products-tier {
-  background: #f6f6f4;
-  border-bottom: 1px solid var(--line);
+  background: rgba(229, 0, 0, 0.03);
+  border-bottom: 1px solid var(--brand-red);
 }
 .site-header .header-products-row {
   display: flex;
@@ -213,7 +211,7 @@ body.nav-open { overflow: hidden; }
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
-  min-height: 50px;
+  min-height: 45px;
 }
 .site-header .header-products-row .dropdown-toggle,
 .site-header .header-products-row .tier2-link {
@@ -397,7 +395,6 @@ body.nav-open { overflow: hidden; }
 .site-header .menu-toggle[aria-expanded="true"] .icon-close { display: inline; }
 .site-header .mobile-products-menu { display: none; }
 
-/* Hide widgets when drawer is open */
 body.nav-open .dexpert-fab,
 body.nav-open .back-to-top {
   opacity: 0;
