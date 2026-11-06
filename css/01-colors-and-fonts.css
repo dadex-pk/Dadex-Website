@@ -7,8 +7,10 @@
   /* Brand colors */
   --brand-red: #e50000;
   --brand-red-dark: #b50000;
-  --brand-accent-dark: #ff6a6a;
+  --brand-accent-dark: #ee5e5e;
+  --brand-accent-light: #f3b7b7;
   --brand-red-light: #fff2f2;
+  --brand-red-lighter: #fff6f6;
 
   /* Text & ink */
   --ink: #292b2e;
@@ -16,7 +18,6 @@
   --muted: #687078;
   --muted-light: #8f969d;
   --text: var(--ink);
-  --text-heading: var(--ink);
 
   /* Surfaces */
   --bg-body: #f3f3f369;

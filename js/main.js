@@ -223,7 +223,6 @@ function initHeaderState(header) {
 
   // Cache DOM lookups (they don't change)
   const utilityBar = header.querySelector('.utility-bar');
-  const productsTier = header.querySelector('.header-products-tier');
 
   let ticking = false;
 
@@ -233,9 +232,9 @@ function initHeaderState(header) {
     header.classList.toggle('is-scrolled', scrolled);
     document.body.classList.toggle('header-scrolled', scrolled);
 
+    // Only apply inert to the utility bar, which completely disappears.
     if (INERT_SUPPORTED) {
       if (utilityBar) utilityBar.inert = scrolled;
-      if (productsTier) productsTier.inert = scrolled;
     }
 
     ticking = false;
@@ -253,7 +252,6 @@ function initHeaderState(header) {
 
   update();
 }
-
 /* ============================================================
    7. NAVIGATION (mobile drawer, dropdowns, focus trap)
    ============================================================ */
@@ -463,12 +461,15 @@ function setActiveNavigation() {
 
   /* --- Mark parent dropdown as active --- */
   document
-    .querySelectorAll('.header-products-row .dropdown')
+    .querySelectorAll('.header-products-row .dropdown, .site-navigation .dropdown')
     .forEach(dropdown => {
       const active = dropdown.querySelector('a.nav-active');
       if (active) {
         const toggle = dropdown.querySelector('.dropdown-toggle');
-        if (toggle) toggle.classList.add('nav-parent-active');
+        if (toggle) {
+          toggle.classList.add('nav-parent-active');
+          toggle.setAttribute('aria-current', 'page');
+        }
       }
     });
 }
