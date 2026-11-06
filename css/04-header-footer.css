@@ -932,6 +932,13 @@ body.nav-open .back-to-top {
   isolation: isolate;
   overflow: clip;
 }
+
+.site-footer {
+  background: radial-gradient(ellipse at 50% 50%, rgb(229 0 0 / 10%) 0%, transparent 72%), var(--bg-dark);
+}
+
+
+/* Base styles for BOTH decorative circles */
 .site-footer::before,
 .site-footer::after {
   content: "";
@@ -940,15 +947,23 @@ body.nav-open .back-to-top {
   pointer-events: none;
   z-index: -1;
 }
+
+/* The Red Ring (Right side) */
 .site-footer::before {
-  width: 30rem; height: 30rem;
-  border: 5rem solid rgb(201 0 0 / 8%);
-  right: -7rem; bottom: 5rem;
+  width: 30rem; 
+  height: 30rem;
+  border: 4rem solid rgb(201 0 0 / 8%);
+  right: -7rem; 
+  bottom: 5rem;
 }
+
+/* The White Ring (Left side) */
 .site-footer::after {
-  width: 40rem; height: 40rem;
+  width: 40rem; 
+  height: 40rem;
   border: 6rem solid rgb(255 255 255 / 5%);
-  left: -10rem; bottom: 0;
+  left: -10rem; 
+  bottom: 0;
 }
 
 .site-footer .footer-grid {

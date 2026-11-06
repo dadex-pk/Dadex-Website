@@ -1,5 +1,6 @@
 /* ============================================================
    DADEX — HOME PAGE STYLES
+   Loaded by: index.html only
    ============================================================ */
 
 /* ============================================================
@@ -89,7 +90,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position:Center;
+  object-position: center;
   transform: scale(1.02);
   transition: transform 5.5s ease;
 }
@@ -135,7 +136,7 @@
 .hero-slide__caption h2 {
   max-width: 520px;
   margin: 0 0 7px;
-  color:#fff;
+  color: #fff;
   font-size: clamp(1.2rem, 2.4vw, 2rem);
   font-weight: 800;
   line-height: 1.15;
@@ -297,9 +298,8 @@
 }
 
 /* ============================================================
-   HOME PAGE — PRODUCT BRANDS
+   3.1 OUR PRODUCT BRANDS
    ============================================================ */
-
 .home-brands-section {
     background: #fff;
     border-top: 1px solid var(--line);
@@ -307,15 +307,13 @@
     padding-block: var(--section-pad);
 }
 
-/* --- Main Layout --- */
 .home-brands__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
     align-items: center;
     gap: clamp(2.5rem, 5vw, 5rem);
 }
 
-/* --- Introduction --- */
 .home-brands__header {
     max-width: 400px;
 }
@@ -326,7 +324,7 @@
 
 .home-brands__header h2 {
     margin: 0 0 1.25rem;
-    font-family: "Manrope", sans-serif;
+    font-family: var(--font-heading);
     font-size: clamp(2rem, 3.5vw, 2.85rem);
     font-weight: 800;
     line-height: 1.15;
@@ -341,12 +339,11 @@
 .home-brands__header p {
     max-width: 42ch;
     margin: 0;
-    color: var(--text-muted);
+    color: var(--muted);
     font-size: 0.98rem;
     line-height: 1.8;
 }
 
-/* --- Explore Link --- */
 .home-brands__link {
     display: inline-flex;
     align-items: center;
@@ -368,19 +365,13 @@
     outline-offset: 4px;
 }
 
-/* ============================================================
-   BRAND GRID
-   ============================================================ */
+/* Grid exactly 5 columns for 10 logos */
 .home-brands__grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 2fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 0.85rem;
     align-items: stretch;
 }
-
-/* ============================================================
-   BRAND CARD
-   ============================================================ */
 
 .brand-card {
     display: flex;
@@ -391,13 +382,8 @@
     border: 1px solid var(--line);
     border-radius: 6px;
     text-decoration: none;
-    transition:
-        border-color 250ms ease,
-        box-shadow 250ms ease,
-        transform 250ms ease;
+    transition: border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease;
 }
-
-/* --- Card Hover --- */
 
 .brand-card:hover {
     border-color: rgb(201 0 0 / 35%);
@@ -405,14 +391,11 @@
     transform: translateY(-3px);
 }
 
-/* --- Keyboard Accessibility --- */
-
 .brand-card:focus-visible {
     outline: 2px solid var(--brand-red);
     outline-offset: 3px;
 }
 
-/*    LOGO AREA  */
 .brand-card__logo {
     display: flex;
     align-items: center;
@@ -431,8 +414,6 @@
     max-height: 100%;
     object-fit: contain;
 }
-
-/* DESCRIPTION AREA */
 
 .brand-card__description {
     display: flex;
@@ -456,165 +437,8 @@
     color: var(--brand-red);
 }
 
-@media (max-width: 1100px) {
-    .home-brands__inner {
-        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.7fr);
-        gap: 2rem;
-    }
-
-    .home-brands__grid {
-        grid-template-columns: repeat(3, minmax(0, 2fr));
-    }
-}
-
-@media (max-width: 768px) {
-
-    .home-brands__inner {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-
-    .home-brands__header {
-        max-width: 600px;
-        margin-inline: auto;
-        text-align: center;
-    }
-
-    .home-brands__header p {
-        margin-inline: auto;
-    }
-
-    .home-brands__grid {
-        grid-template-columns: repeat(3, minmax(0, 2fr));
-    }
-}
-
-
-@media (max-width: 480px) {
-
-    .home-brands__grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.7rem;
-    }
-
-    .brand-card__logo {
-        height: 76px;
-        padding: 0.8rem;
-    }
-
-    .brand-card__description {
-        min-height: 58px;
-        padding-inline: 0.4rem;
-        font-size: 0.61rem;
-    }
-}
-
 /* ============================================================
-   REDUCED MOTION
-   ============================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .brand-card,
-    .brand-card__description,
-    .home-brands__link {
-        transition: none;
-    }
-
-    .brand-card:hover {
-        transform: none;
-    }
-
-}
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
-/* --- Smaller Desktop / Tablet --- */
-
-@media (max-width: 1100px) {
-
-    .home-brands__inner {
-        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.7fr);
-        gap: 2rem;
-    }
-
-    .home-brands__grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-}
-
-
-/* --- Tablet / Mobile --- */
-
-@media (max-width: 768px) {
-
-    .home-brands__inner {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-
-    .home-brands__header {
-        max-width: 600px;
-        margin-inline: auto;
-        text-align: center;
-    }
-
-    .home-brands__header p {
-        margin-inline: auto;
-    }
-
-    .home-brands__grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-}
-
-
-/* --- Small Mobile --- */
-
-@media (max-width: 480px) {
-
-    .home-brands__grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.7rem;
-    }
-
-    .brand-card {
-        min-height: 125px;
-        padding: 1rem 0.5rem;
-    }
-
-    .brand-card__logo {
-        height: 43px;
-        margin-bottom: 0.7rem;
-    }
-
-    .brand-card__desc {
-        font-size: 0.62rem;
-    }
-
-}
-
-
-/* --- Reduced Motion --- */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .brand-card,
-    .home-brands__link {
-        transition: none;
-    }
-
-    .brand-card:hover {
-        transform: none;
-    }
-
-}
-
-/* ============================================================
-   4. PRODUCT FEATURE CARDS — HOMEPAGE ONLY
+   4. PRODUCT FEATURE CARDS
    ============================================================ */
 .card--text-feature {
   position: relative;
@@ -627,10 +451,7 @@
   border-radius: var(--radius-md);
   background: #fff;
   text-decoration: none;
-  transition:
-    transform 250ms ease,
-    box-shadow 250ms ease,
-    border-color 250ms ease;
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
 }
 
 .card--text-feature::after {
@@ -680,10 +501,7 @@
   background: rgb(247 201 201 / 49%);
   color: var(--muted);
   font-size: 1.125rem;
-  transition:
-    background-color 250ms ease,
-    color 250ms ease,
-    transform 250ms ease;
+  transition: background-color 250ms ease, color 250ms ease, transform 250ms ease;
 }
 
 .card--text-feature:hover .home-product-icon,
@@ -747,7 +565,6 @@
   transform: translateX(3px);
 }
 
-/* Sixth / discovery card */
 .card--discovery {
   border-color: rgb(201 0 0 / 12%);
   background: #fffafa;
@@ -790,11 +607,7 @@
   position: absolute;
   z-index: -1;
   inset: 0;
-  background: radial-gradient(
-    ellipse at 85% 50%,
-    rgb(229 0 0 / 10%) 0%,
-    transparent 55%
-  );
+  background: radial-gradient(ellipse at 85% 50%, rgb(229 0 0 / 10%) 0%, transparent 55%);
   content: "";
   pointer-events: none;
 }
@@ -803,12 +616,78 @@
   position: relative;
 }
 
+.home-kicker--light { color: #fff; }
+.home-kicker--spaced { margin-bottom: 1rem; }
+.home-value-icon {
+  font-size: 2rem;
+  color: var(--brand-accent-dark);
+  margin-bottom: 1.5rem;
+}
+
 /* ============================================================
-   6. RESOURCES & SUPPORT
+   6. SERVICES SECTION
+   ============================================================ */
+.home-services__grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.home-service-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    min-height: 265px;
+    padding: 2rem 1.25rem 1.5rem;
+    text-decoration: none;
+    transition: border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease;
+}
+
+.home-service-icon {
+    font-size: 1.8rem;
+    color: var(--brand-red);
+    margin: 0 0 1.25rem;
+}
+
+.home-service-card h3 {
+    font-size: 1rem;
+    line-height: 1.45;
+    margin: 0 0 0.65rem;
+    transition: color 250ms ease;
+}
+
+.home-service-card p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--muted);
+}
+
+.home-service-card:hover,
+.home-service-card:focus-visible {
+    border-color: rgb(201 0 0 / 30%);
+    box-shadow: 0 10px 25px rgb(0 0 0 / 7%);
+    transform: translateY(-4px);
+}
+
+.home-service-card:hover h3,
+.home-service-card:focus-visible h3 {
+    color: var(--brand-red);
+}
+
+.home-service-card:focus-visible {
+    outline: 2px solid var(--brand-red);
+    outline-offset: 3px;
+}
+
+/* ============================================================
+   7. RESOURCES & SUPPORT
    ============================================================ */
 .home-resources__inner {
   display: grid;
-  grid-template-columns:1.5fr minmax(0, 1.2fr);
+  grid-template-columns: 1.5fr minmax(0, 1.2fr);
   align-items: center;
   gap: 3rem;
 }
@@ -852,6 +731,7 @@
 .home-resource-card__content {
   flex: 1; 
 }
+
 .home-resource-card__content h3 {
   margin-bottom: 0.5rem;
 }
@@ -884,152 +764,31 @@
   gap: 2rem;
   margin-bottom: 3rem;
 }
+
 .home-section-header__text {
   margin-bottom: 0;
 }
+
 .home-section-header__desc {
   margin-top: 1rem;
   max-width: 50ch;
 }
 
-/* --- Card Links --- */
 .home-card-link {
   margin-top: 1.5rem;
   font-weight: 700;
   color: var(--brand-red);
   font-size: 0.875rem;
 }
+
 .home-card-link i {
   font-size: 0.75rem;
   margin-left: 0.25rem;
 }
 
-/* --- Values Section Kickers --- */
-.home-kicker--light {
-  color: #fff;
-}
-.home-kicker--spaced {
-  margin-bottom: 1rem;
-}
-.home-value-icon {
-  font-size: 2rem;
-  color: var(--brand-accent-dark);
-  margin-bottom: 1.5rem;
-}
-
-
-
 /* ============================================================
-   HOME SERVICES SECTION
+   8. QUALITY SECTION
    ============================================================ */
-
-.home-services__grid {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 1rem;
-}
-
-/* --- Service Card --- */
-.home-service-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    min-width: 0;
-    min-height: 265px;
-    padding: 2rem 1.25rem 1.5rem;
-    text-decoration: none;
-    transition:
-        border-color 250ms ease,
-        box-shadow 250ms ease,
-        transform 250ms ease;
-}
-
-/* --- Card Number --- */
-.home-service-card .number {
-    position: absolute;
-    top: 1.2rem;
-    right: 1.2rem;
-    font-size: 1.75rem;
-    line-height: 1;
-    color: var(--muted-light);
-    font-weight: 900;
-    pointer-events: none;
-}
-
-/* --- Icon --- */
-.home-service-icon {
-    font-size: 1.8rem;
-    color: var(--brand-red);
-    margin: 0 0 1.25rem;
-}
-
-/* --- Heading --- */
-.home-service-card h3 {
-    font-size: 1rem;
-    line-height: 1.45;
-    margin: 0 0 0.65rem;
-    transition: color 250ms ease;
-}
-
-/* --- Description --- */
-.home-service-card p {
-    font-size: 0.85rem;
-    line-height: 1.6;
-    margin: 0;
-    color: var(--muted);
-}
-
-/* --- Hover & Focus --- */
-.home-service-card:hover,
-.home-service-card:focus-visible {
-    border-color: rgb(201 0 0 / 30%);
-    box-shadow: 0 10px 25px rgb(0 0 0 / 7%);
-    transform: translateY(-4px);
-}
-
-.home-service-card:hover h3,
-.home-service-card:focus-visible h3 {
-    color: var(--brand-red);
-}
-
-.home-service-card:focus-visible {
-    outline: 2px solid var(--brand-red);
-    outline-offset: 3px;
-}
-
-/* --- Responsive Layout --- */
-@media (max-width: 1100px) {
-    .home-services__grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 650px) {
-    .home-services__grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 450px) {
-    .home-services__grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* --- Reduced Motion --- */
-@media (prefers-reduced-motion: reduce) {
-    .home-service-card {
-        transition: none;
-    }
-
-    .home-service-card:hover,
-    .home-service-card:focus-visible {
-        transform: none;
-    }
-}
-
-/* --- Quality Section --- */
 .home-quality__inner {
   align-items: center;
   gap: 4rem;
@@ -1067,7 +826,9 @@
   margin-top: 0.5rem;
 }
 
-/* --- Final CTA Section --- */
+/* ============================================================
+   9. FINAL CTA
+   ============================================================ */
 .home-cta {
   border-top: 1px solid #333;
 }
@@ -1082,37 +843,40 @@
 }
 
 /* ============================================================
-   8. RESPONSIVE LAYOUTS
+   10. RESPONSIVE LAYOUTS
    ============================================================ */
+
+/* --- Smaller Desktop / Tablet --- */
 @media (max-width: 1100px) {
   .trust-bar__inner {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     row-gap: 28px;
   }
-
-  .trust-item:nth-child(3n + 1) {
-    border-left: 0;
+  .trust-item:nth-child(3n + 1) { border-left: 0; }
+  .trust-item:nth-child(4) { border-left: 0; }
+  
+  .home-brands__inner {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.7fr);
+    gap: 2rem;
   }
-  .trust-item:nth-child(4) {
-    border-left: 0;
+  .home-brands__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  
+  .home-services__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
+/* --- Tablet --- */
 @media (max-width: 1024px) {
   .home-hero__inner {
     grid-template-columns: minmax(0, 1fr);
     gap: 3rem;
     text-align: center;
   }
-
-  .home-hero__content p {
-    margin-inline: auto;
-  }
-
-  .home-hero__actions {
-    justify-content: center;
-  }
-
+  .home-hero__content p { margin-inline: auto; }
+  .home-hero__actions { justify-content: center; }
   .home-hero__visual {
     order: -1;
     max-width: 600px;
@@ -1122,8 +886,12 @@
 
 @media (max-width: 900px) {
   .home-intro__inner {
+    grid-template-columns: 1fr;
     gap: 2rem;
+    padding: 0;
+    text-align: center;
   }
+  .home-intro__rule { margin-inline: auto; }
 
   .home-resources__inner {
     grid-template-columns: minmax(0, 1fr);
@@ -1134,113 +902,91 @@
     grid-template-columns: 1fr;
     gap: 2rem;
   }
+  
+  .home-brands__inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .home-brands__header {
+    max-width: 600px;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .home-brands__header p {
+    margin-inline: auto;
+  }
 }
 
+/* --- Mobile --- */
 @media (max-width: 767px) {
   .hero-slider {
     min-height: 300px;
     aspect-ratio: 4 / 3;
     border-radius: 12px;
   }
-
   .hero-slide__caption {
     right: 20px;
     bottom: 58px;
     left: 20px;
   }
-
-  .hero-slide__caption h2 {
-    font-size: clamp(1.3rem, 5vw, 1.8rem);
-  }
-
-  .hero-slide__caption p {
-    font-size: 0.86rem;
-  }
-
+  .hero-slide__caption h2 { font-size: clamp(1.3rem, 5vw, 1.8rem); }
+  .hero-slide__caption p { font-size: 0.86rem; }
   .hero-slider__controls {
     right: 20px;
     bottom: 17px;
     gap: 8px;
   }
 
-  .trust-bar {
-    padding-block: 28px;
-  }
-
+  .trust-bar { padding-block: 28px; }
   .trust-bar__inner {
     width: min(100% - 28px, 600px);
     grid-template-columns: repeat(2, minmax(0, 1fr));
     row-gap: 24px;
   }
+  .trust-item { padding: 8px 12px; }
+  .trust-item:nth-child(odd) { border-left: 0; }
+  .trust-item:nth-child(even) { border-left: 1px solid #e7e7e7; }
+  .trust-item h3 { font-size: 0.9rem; }
+  .trust-item p { font-size: 0.8rem; }
 
-  .trust-item {
-    padding: 8px 12px;
+  .card--text-feature { padding: 1.5rem; }
+  
+  .home-resources__cards { grid-template-columns: 1fr; }
+  .home-resource-card { gap: 0.9rem; padding: 1.25rem 1.25rem 3rem; }
+  .home-resource-card__content h3 { font-size: 1rem; }
+  .home-resource-card__content p { font-size: 0.9rem; }
+
+  .home-services__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
 
-  .trust-item:nth-child(odd) {
-    border-left: 0;
+@media (max-width: 480px) {
+  .hero-slider { min-height: 270px; }
+  .hero-slide__caption { right: 15px; left: 15px; }
+  .hero-slide__caption p { font-size: 0.82rem; }
+  .hero-slider__controls { right: 15px; }
+  
+  .trust-bar__inner { width: calc(100% - 20px); }
+  .trust-item { padding-inline: 8px; }
+
+  .home-brands__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
   }
+  .brand-card__logo { height: 76px; padding: 0.8rem; }
+  .brand-card__description { min-height: 58px; padding-inline: 0.4rem; font-size: 0.61rem; }
 
-  .trust-item:nth-child(even) {
-    border-left: 1px solid #e7e7e7;
-  }
-
-  .trust-item h3 {
-    font-size: 0.9rem;
-  }
-
-  .trust-item p {
-    font-size: 0.8rem;
-  }
-
-  .card--text-feature {
-    padding: 1.5rem;
-  }
-
-@media (max-width: 767px) {
-  .home-resources__cards {
+  .home-services__grid {
     grid-template-columns: 1fr;
   }
-}
-
-  .home-resource-card__content h3 {
-    font-size: 1rem;
-  }
-
-  .home-resource-card__content p {
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .hero-slider {
-    min-height: 270px;
-  }
-
-  .hero-slide__caption {
-    right: 15px;
-    left: 15px;
-  }
-
-  .hero-slide__caption p {
-    font-size: 0.82rem;
-  }
-
-  .hero-slider__controls {
-    right: 15px;
-  }
-
-  .trust-bar__inner {
-    width: calc(100% - 20px);
-  }
-
-  .trust-item {
-    padding-inline: 8px;
+  .home-service-card {
+    min-height: 0;
   }
 }
 
 /* ============================================================
-   9. ACCESSIBILITY — REDUCED MOTION
+   11. ACCESSIBILITY — REDUCED MOTION
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .hero-slide,
@@ -1253,16 +999,17 @@
   .home-product-number,
   .card--text-feature h3,
   .card-arrow,
-  .home-resource-card__arrow {
+  .home-resource-card__arrow,
+  .brand-card,
+  .brand-card__description,
+  .home-brands__link,
+  .home-service-card {
     scroll-behavior: auto;
     transition: none;
   }
 
-  .hero-slide.is-active > img {
-    transform: none;
-  }
-
-  .card--text-feature:hover {
-    transform: none;
-  }
+  .hero-slide.is-active > img { transform: none; }
+  .card--text-feature:hover { transform: none; }
+  .brand-card:hover { transform: none; }
+  .home-service-card:hover { transform: none; }
 }

@@ -121,7 +121,7 @@ h3 span {
 .btn--outline {
   background: transparent;
   color: var(--brand-red);
-  border-color: var(--dadex-red);
+  border-color: var(--brand-red);;
 }
 .btn--outline:hover {
   border-color: var(--brand-red);
@@ -329,6 +329,7 @@ h3 span {
    CARDS — base + modifiers
    ============================================================ */
 .card {
+  position: relative; 
   display: flex;
   flex-direction: column;
   background: var(--bg-surface);

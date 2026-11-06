@@ -16,6 +16,7 @@
   --muted: #687078;
   --muted-light: #8f969d;
   --text: var(--ink);
+  --text-heading: var(--ink);
 
   /* Surfaces */
   --bg-body: #f3f3f369;
