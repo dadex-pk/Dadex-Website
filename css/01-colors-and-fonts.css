@@ -56,9 +56,9 @@
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 
   /* Header heights */
-  --header-h: 76px;
-  --header-h-scrolled: 64px;
-  --sticky-offset: calc(var(--header-h) + 1rem);
+  --header-h: 72px;
+  --header-h-scrolled: 50px;
+  --sticky-offset: calc(var(--header-h) + 1.5rem);
 }
 
 body.header-scrolled {
