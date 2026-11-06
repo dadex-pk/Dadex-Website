@@ -206,9 +206,6 @@
     function buildCard(d) {
       const node = cardTemplate.content.firstElementChild.cloneNode(true);
 
-      const locationParts = [d.area, d.city, d.province].filter(Boolean);
-      const locationLabel = d.location || locationParts.join(', ');
-
       /* Type + name — always present */
       node.querySelector('[data-field="type"]').textContent = d.type || 'Dealer';
       node.querySelector('[data-field="name"]').textContent = d.name || '';
@@ -219,15 +216,13 @@
       if (contactName) contactNameEl.textContent = contactName;
       else contactNameEl.remove();
 
-      /* Optional: location */
-      const locationEl = node.querySelector('[data-field="location"]');
-      if (locationLabel) locationEl.querySelector('span').textContent = locationLabel;
-      else locationEl.remove();
-
       /* Optional: address */
       const addressEl = node.querySelector('[data-field="address"]');
-      if (d.address) addressEl.textContent = d.address;
-      else addressEl.remove();
+      if (d.address) {
+        addressEl.querySelector('span').textContent = d.address;
+      } else {
+        addressEl.remove();
+      }
 
       /* Optional: phone */
       const phoneEl = node.querySelector('[data-field="phone"]');
@@ -268,6 +263,16 @@
         contextLink.querySelector('span').textContent = 'View ' + product.value;
       } else {
         contextLink.remove();
+      }
+
+      /* Set the icon based on Type */
+      const iconEl = node.querySelector('[data-field="icon"]');
+      if (iconEl) {
+        if (d.type === 'Distributor') {
+          iconEl.innerHTML = '<i class="fas fa-truck-fast"></i>';
+        } else {
+          iconEl.innerHTML = '<i class="fas fa-store"></i>';
+        }
       }
 
       /* Optional: map link */

@@ -141,17 +141,31 @@
 /* ============================================================
    DEALERS PAGE
    ============================================================ */
-
 .dealer-filters {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding-block: 1.25rem;
+  padding-inline: max(2rem, calc((100vw - var(--container)) / 2 + 2rem));
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+  border-top: 1px solid var(--brand-red-light);
+  border-bottom: 1px solid var(--brand-red-light);
+  background: var(--bg-mist-light);
   margin-bottom: 2rem;
+  position: sticky;
+  top: var(--sticky-offset, 10rem);
+  z-index: 100;
+  backdrop-filter: blur(2rem) saturate(160%);
+  -webkit-backdrop-filter: blur(1.625rem) saturate(160%);
+  color: var(--brand-red);
+  font-size: 1rem;
+  font-weight: 700; 
 }
+
 .dealer-filters select,
 .dealer-filters input {
   width: 100%;
@@ -197,7 +211,7 @@
   padding: 0.25rem 0.5rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-pill);
-  background: var(--bg-mist);
+  background: var(--bg-mist-light);
   color: var(--muted);
 }
 .dealer-context-link,
@@ -231,6 +245,161 @@
 }
 .dealer-empty h3 { margin-bottom: 0.5rem; color: var(--ink); }
 
+/* ============================================================
+   DEALER CARD TEMPLATE STYLES
+   ============================================================ */
+.dealer-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2rem;
+}
+.dealer-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 1rem 0 0;
+}
+
+.dealer-type {
+  font-size: 0.92rem;
+  background: var(--brand-red-light);
+  padding: 0.25rem 0.92rem;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.dealer-store-icon {
+  color: var(--brand-red);
+  font-size: 1.5rem;
+  opacity: 0.72; 
+}
+
+.dealer-card__name {
+  margin-bottom: 0.25rem;
+  color: var(--brand-red);
+  font-size: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line-soft);
+  margin-bottom: 0.4rem;
+}
+
+.dealer-card .dealer-contact-name {
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;}
+
+.dealer-card__location {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.dealer-card__location p {
+  margin-bottom: 0;
+  display: flex;
+  align-items: flex-start;
+  color: var(--ink);
+}
+
+.dealer-card__location i {
+  color: var(--brand-red);
+  width: 1.72rem;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.dealer-card__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.dealer-card__contact a {
+  color: var(--ink);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: color var(--transition);
+}
+
+.dealer-card__contact a:hover {
+  color: var(--brand-red);
+}
+
+.dealer-card__contact i {
+  color: var(--brand-red);
+  width: 1.72rem;
+  flex-shrink: 0;
+}
+
+.dealer-tags {
+  margin-top: auto;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line-soft);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;}
+
+.dealer-card__footer {
+  padding-top: 0;
+  margin-top: 0.5rem;
+}
+
+.dealer-tags span {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.6rem;
+}
+
+/* ============================================================
+   DEALER HELP BOX
+   ============================================================ */
+.dealer-help-box {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--bg-mist);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.dealer-help-icon {
+  font-size: 3rem;
+  color: var(--brand-red);
+  flex-shrink: 0;
+}
+
+.dealer-help-content {
+  flex: 1;
+}
+
+.dealer-help-content h3 {
+  margin-bottom: 0.25rem;
+  font-size: 1.25rem;
+}
+
+.dealer-help-content p {
+  margin: 0;
+  color: var(--muted);
+  max-width: 65ch;
+}
+
+@media (max-width: 768px) {
+  .dealer-help-box {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+}
 /* ============================================================
    SEARCH PAGE
    ============================================================ */

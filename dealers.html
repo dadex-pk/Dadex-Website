@@ -33,24 +33,24 @@
       <!-- Filters -->
       <div class="dealer-filters">
         <div>
-          <label for="provinceFilter" style="font-size: 0.75rem; font-weight: 800; display: block; margin-bottom: 0.5rem;">Province / Region</label>
+          <label for="provinceFilter">Province / Region</label>
           <select id="provinceFilter"><option value="">All Provinces</option></select>
         </div>
         <div>
-          <label for="cityFilter" style="font-size: 0.75rem; font-weight: 800; display: block; margin-bottom: 0.5rem;">City</label>
+          <label for="cityFilter">City</label>
           <select id="cityFilter"><option value="">All Cities</option></select>
         </div>
         <!-- Restored Area Filter -->
         <div>
-          <label for="areaFilter" style="font-size: 0.75rem; font-weight: 800; display: block; margin-bottom: 0.5rem;">Area</label>
+          <label for="areaFilter">Area</label>
           <select id="areaFilter"><option value="">All Areas</option></select>
         </div>
         <div>
-          <label for="productFilter" style="font-size: 0.75rem; font-weight: 800; display: block; margin-bottom: 0.5rem;">Product</label>
+          <label for="productFilter">Product</label>
           <select id="productFilter"><option value="">All Products</option></select>
         </div>
         <div>
-          <label for="nameSearch" style="font-size: 0.75rem; font-weight: 800; display: block; margin-bottom: 0.5rem;">Dealer Name</label>
+          <label for="nameSearch">Dealer Name</label>
           <input type="search" id="nameSearch" placeholder="Search dealer...">
         </div>
         <div style="display: flex; align-items: flex-end;">
@@ -72,47 +72,43 @@
       </div>
       
       <!-- Help Box -->
-      <div class="card flex-between" style="margin-top: 3rem; padding: 2rem; background: var(--bg-mist); border-color: var(--line);">
-        <div class="flex">
-          <i class="fas fa-headset" style="font-size: 2rem; color: var(--brand-red);"></i>
-          <div>
-            <h3 style="margin-bottom: 0.25rem;">Can't find a dealer?</h3>
-            <p style="margin: 0;">Our sales team can help identify the appropriate sales channel for your location or product requirement.</p>
-          </div>
+      <div class="dealer-help-box">
+        <i class="fas fa-headset dealer-help-icon" aria-hidden="true"></i>
+        <div class="dealer-help-content">
+          <h3>Can't find a dealer?</h3>
+          <p>Our sales team can help identify the appropriate sales channel for your location or product requirement.</p>
         </div>
         <a href="contact.html#sales-offices" class="btn btn--primary">Contact Sales</a>
       </div>
-
-    </div>
   </section>
+
 
   <!-- Dealer Card Template -->
   <template id="dealerCardTemplate">
-    <article class="card">
-      <div class="flex-between" style="margin-bottom: 1rem;">
-        <span class="dealer-type" data-field="type" style="font-size: 0.75rem; background: var(--bg-mist); padding: 0.25rem 0.5rem; border-radius: var(--radius-pill); font-weight: 700;"></span>
-        <i class="fas fa-store" style="color: var(--line);"></i>
+    <article class="card dealer-card">
+      
+      <div class="dealer-card__header">
+        <span class="dealer-type" data-field="type"></span>
+        <span class="dealer-store-icon" data-field="icon" aria-hidden="true"></span>
       </div>
       
-      <h3 data-field="name" style="margin-bottom: 0.25rem;"></h3>
-      <p class="dealer-contact-name" data-field="contact-name" style="font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem;"></p>
-      
-      <div style="font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem;">
-        <p data-field="location" style="margin-bottom: 0.25rem;"><i class="fas fa-map-marker-alt" style="color: var(--brand-red); width: 1.25rem;"></i><span></span></p>
-        <p data-field="address" style="margin-bottom: 0.25rem;"></p>
+      <h3 data-field="name" class="dealer-card__name"></h3>
+      <p class="dealer-contact-name" data-field="contact-name"></p>
+
+      <div class="dealer-card__location">
+        <p data-field="address"><i class="fas fa-map-marker-alt"></i> <span></span></p>
       </div>
 
-      <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem; margin-bottom: 1rem;">
-        <a data-field="phone" href="#" style="color: var(--ink); text-decoration: none;"><i class="fas fa-phone" style="color: var(--brand-red); width: 1.25rem;"></i> <span></span></a>
-        <a data-field="email" href="#" style="color: var(--ink); text-decoration: none;"><i class="fas fa-envelope" style="color: var(--brand-red); width: 1.25rem;"></i> <span></span></a>
+      <div class="dealer-card__contact">
+        <a data-field="phone" href="#"><i class="fas fa-phone"></i> <span></span></a>
+        <a data-field="email" href="#"><i class="fas fa-envelope"></i> <span></span></a>
       </div>
 
-      <!-- Elements for JS compatibility -->
       <div class="dealer-tags" data-field="tags"></div>
-      <div class="flex" style="margin-top: auto; padding-top: 1rem;">
+      
+      <div class="dealer-card__footer">
         <a class="dealer-context-link" data-field="context-link" href="#">
-          <span></span>
-          <i class="fas fa-arrow-right"></i>
+          <span></span> <i class="fas fa-arrow-right"></i>
         </a>
         <a class="dealer-map" data-field="map" href="#" rel="noopener" target="_blank">
           View location <i class="fas fa-arrow-up-right-from-square"></i>

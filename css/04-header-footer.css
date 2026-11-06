@@ -38,7 +38,7 @@ body.nav-open { overflow: hidden; }
 }
 
 /* Collapsible tiers */
-.site-header .utility-bar{
+.site-header .utility-bar {
   overflow: hidden;
   max-height: 500px;
   opacity: 1;
@@ -62,9 +62,9 @@ body.nav-open { overflow: hidden; }
   min-height: var(--header-h);
   transition: min-height var(--transition);
 }
-.site-header.is-scrolled .header-inner { min-height: var(--header-h-scrolled); }
-.site-header.is-scrolled .header-products-tier {min-height: 30px; max-height: 40px;}
-
+.site-header.is-scrolled .header-inner { 
+  min-height: var(--header-h-scrolled); 
+}
 /* Utility bar */
 .site-header .utility-bar {
   background: var(--bg-dark);
@@ -203,14 +203,25 @@ body.nav-open { overflow: hidden; }
 .site-header .header-products-tier {
   background: rgba(229, 0, 0, 0.03);
   border-bottom: 1px solid var(--brand-red);
+  overflow: hidden;
+  transition: max-height 0.35s var(--ease), min-height 0.35s var(--ease);
+  display: flex;
+  align-items: center;
 }
+
+/* 2. Ensure the inner row fills the space */
 .site-header .header-products-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
-  min-height: 45px;
+  width: 100%; 
+  min-height: 40px; 
+}
+
+.site-header.is-scrolled .header-products-row {
+  min-height: 33px; 
 }
 .site-header .header-products-row .dropdown-toggle,
 .site-header .header-products-row .tier2-link {
@@ -633,8 +644,9 @@ body.nav-open .back-to-top {
    DEXPERT ASSISTANT
    ============================================================ */
 .dexpert-dialog {
-  position:fixed;
+  position: fixed;
   margin: auto 0 0 auto;
+  inset: auto 16px 0 auto;
   width: min(400px, calc(100vw - 32px));
   max-height: min(85vh, 720px);
   padding: 0;
@@ -716,8 +728,10 @@ body.nav-open .back-to-top {
   cursor: pointer;
   transition: background-color var(--transition), color var(--transition);
 }
-.dexpert-close:hover { background: var(--brand-muted-light); color: #fff; }
-
+.dexpert-close:hover { 
+  background: var(--brand-red-light);
+  color: var(--brand-red); 
+}
 .dexpert-body {
   flex: 1 1 auto;
   min-height: 0;
@@ -922,7 +936,7 @@ body.nav-open .back-to-top {
    FOOTER
    ============================================================ */
 .site-footer {
-  background: var(--bg-dark);
+  background: radial-gradient(ellipse at 50% 50%, rgb(229 0 0 / 10%) 0%, transparent 72%), var(--bg-dark);
   color: #fff;
   padding: 4rem 0 2rem;
   border-top: 3px solid var(--brand-red);
@@ -930,11 +944,6 @@ body.nav-open .back-to-top {
   isolation: isolate;
   overflow: clip;
 }
-
-.site-footer {
-  background: radial-gradient(ellipse at 50% 50%, rgb(229 0 0 / 10%) 0%, transparent 72%), var(--bg-dark);
-}
-
 
 /* Base styles for BOTH decorative circles */
 .site-footer::before,
