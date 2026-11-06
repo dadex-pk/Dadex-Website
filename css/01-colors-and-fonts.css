@@ -25,6 +25,7 @@
   --bg-mist: #f4f5f6;
   --bg-mist-light:rgba(53, 1, 1, 0.02);
   --bg-dark: #17191c;
+  --bg-red-lighter:var(--brand-red-lighter);
 
   /* Lines */
   --line: #e4e7ea;
