@@ -1,0 +1,110 @@
+/* ============================================================
+   CAREERS PAGE
+   Loaded by: careers.html only
+   ============================================================ */
+
+/* --- Intro Grid --- */
+.careers-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.careers-lead-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.careers-intro-text p {
+  font-size: 1.0625rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+/* --- Image Styling --- */
+.careers-intro-image img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  object-fit: cover;
+}
+
+/* --- Join Section --- */
+.careers-join-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Optional: Adds a subtle red glow to the background */
+.careers-join-section::before {
+  content: "";
+  position: absolute;
+  width: 40rem;
+  height: 40rem;
+  border: 5rem solid rgba(229, 0, 0, 0.03);
+  border-radius: 50%;
+  right: -10rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.careers-join-box {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.careers-join-box .kicker {
+  justify-content: center;
+}
+
+.careers-join-box h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 1.5rem;
+}
+
+.careers-join-box p {
+  font-size: 1.125rem;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.careers-join-box p strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* --- Button Override --- */
+.careers-btn {
+  margin-top: 1rem;
+  padding-inline: 2.5rem;
+  min-height: 3.5rem;
+  font-size: 1rem;
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 900px) {
+  .careers-intro-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .careers-intro-image {
+    order: -1; /* Puts the image on top on mobile */
+  }
+
+  .careers-intro-text .kicker {
+    justify-content: center;
+  }
+}
