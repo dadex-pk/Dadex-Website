@@ -1,8 +1,10 @@
 /* ============================================================
-   DADEX ETERNIT LIMITED — SHARED UI (v6.1)
+   DADEX ETERNIT LIMITED — SHARED UI (v6.2)
    ------------------------------------------------------------
-   v6.1 changes
-     · Added Preloader logic (shows once per session)
+   v6.2 changes
+     · Fixed Preloader timing (handles cached loads)
+     · Fixed Mobile Focus Trap (includes hamburger button)
+     · Fixed DEXPERT duplicate injection on rapid clicks
    ============================================================ */
 
 'use strict';
@@ -90,7 +92,6 @@ async function loadSharedComponents() {
 
   if (!mounts.length) return;
 
-  // Friendly error if opened directly from disk
   if (location.protocol === 'file:') {
     mounts.forEach(mount =>
       renderComponentError(mount, {
@@ -124,7 +125,6 @@ async function loadOneComponent(mount, base) {
 
     const html = await response.text();
 
-    // Safety: if server returned a full HTML page, something is wrong
     if (/^\s*<!DOCTYPE\s+html/i.test(html)) {
       throw new Error(
         'Server returned a full HTML document, not a component fragment. ' +
@@ -166,7 +166,7 @@ function renderComponentError(mount, { name, url, reason }) {
 }
 
 /* ============================================================
-   5. PRELOADER
+   5. PRELOADER (FIXED)
    ============================================================ */
 
 function initPreloader() {
@@ -181,17 +181,23 @@ function initPreloader() {
     return;
   }
 
-  // Wait for page load, then hold the preloader for 1.8 seconds
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      preloader.classList.add('is-hidden');
-      sessionStorage.setItem('dadex_visited', 'true');
-      
-      // Remove from DOM after fade out is complete
-      setTimeout(() => preloader.remove(), 600);
-    }, 1800); // 1.8s guarantees the word fully completes and holds
-  });
+  const hidePreloader = () => {
+    // Move sessionStorage.setItem here to start of fade-out
+    sessionStorage.setItem('dadex_visited', 'true');
+    preloader.classList.add('is-hidden');
+    setTimeout(() => preloader.remove(), 600);
+  };
+
+  // FIX: Handle the case where the window has already loaded (e.g., cached)
+  if (document.readyState === 'complete') {
+    setTimeout(hidePreloader, 1800);
+  } else {
+    window.addEventListener('load', () => {
+      setTimeout(hidePreloader, 1800);
+    });
+  }
 }
+
 /* ============================================================
    6. DYNAMIC TEXT (year, company age)
    ============================================================ */
@@ -267,7 +273,7 @@ function initHeaderState(header) {
 }
 
 /* ============================================================
-   8. NAVIGATION (mobile drawer, dropdowns, focus trap)
+   8. NAVIGATION (mobile drawer, dropdowns, focus trap - FIXED)
    ============================================================ */
 
 function initNavigation(header) {
@@ -389,12 +395,19 @@ function initNavigation(header) {
     'input:not([disabled]), select:not([disabled]), ' +
     'textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])';
 
-  const getDrawerFocusables = () =>
-    Array.from(nav.querySelectorAll(FOCUSABLE_SELECTOR)).filter(
+  const getDrawerFocusables = () => {
+    const items = Array.from(nav.querySelectorAll(FOCUSABLE_SELECTOR)).filter(
       el => !el.hasAttribute('inert')
     );
+    // FIX: Include the hamburger button in the focus trap list
+    if (hamburger && !hamburger.hasAttribute('inert')) {
+      items.unshift(hamburger);
+    }
+    return items;
+  };
 
-  nav.addEventListener('keydown', event => {
+  // FIX: Attach to header instead of nav so the hamburger click is captured
+  header.addEventListener('keydown', event => {
     if (event.key !== 'Tab') return;
     if (!isMobile() || !nav.classList.contains('open')) return;
 
@@ -709,7 +722,7 @@ function initSiteSearch() {
 }
 
 /* ============================================================
-   14. DEXPERT ASSISTANT
+   14. DEXPERT ASSISTANT (FIXED)
    ============================================================ */
 
 const DEXPERT_PRODUCTS = [
@@ -765,6 +778,13 @@ function initDEXPERT() {
 
   function loadDialog() {
     if (dialogPromise) return dialogPromise;
+
+    // FIX: Check if the dialog already exists in the DOM
+    const existingDialog = document.getElementById('dexpertDialog');
+    if (existingDialog) {
+      dialogPromise = Promise.resolve(existingDialog);
+      return dialogPromise;
+    }
 
     dialogPromise = (async () => {
       const base = new URL('.', location.href);
