@@ -1041,18 +1041,15 @@
 }
 
 .loader-logo span {
-  /* Use Nunito for the rounded corners */
-  font-family: 'Nunito', sans-serif;
-  font-weight: 900;
+  /* Use Baloo 2 for the thick rounded corners */
+  font-family: 'Baloo 2', sans-serif; 
+  font-weight: 800; /* ExtraBold is the thickest weight */
   font-size: clamp(4rem, 10vw, 7rem);
   color: var(--brand-red);
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em; /* Baloo is slightly wider, so reduce spacing slightly */
   
-  /* Start invisible and to the left */
   opacity: 0;
   transform: translateX(-30px);
-  
-  /* The animation */
   animation: logoSlideIn 0.4s cubic-bezier(0.2, 0.65, 0.2, 1) forwards;
 }
 
