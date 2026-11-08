@@ -67,719 +67,518 @@
   </script>
 </head>
 <body class="home-page">
-<a class="sr-only" href="#main-content">Skip to content</a>
-<div data-component="header"></div>
 
-<main id="main-content">
-
-<!-- 1. HERO SECTION -->
-<section class="home-hero">
-  <div class="container home-hero__inner">
-
-    <!-- Hero Content -->
-    <div class="home-hero__content">
-      <div class="kicker">Dadex Eternit Limited</div>
-
-      <h1>
-        Engineering Trust with <em>Innovative Piping &amp; Roofing Solutions</em>
-      </h1>
-
-      <p>
-        Since 1959, Dadex has served Pakistan's evolving building and
-        infrastructure needs with quality products and technical
-        expertise across piping, roofing and ducting.
-      </p>
-
-      <div class="home-hero__actions">
-        <a class="btn btn--primary" href="products.html">
-          Explore Products <i class="fas fa-arrow-right" aria-hidden="true"></i>
-        </a>
-
-        <a class="btn btn--secondary" href="about.html">
-          About Dadex <i class="fas fa-arrow-right" aria-hidden="true"></i>
-        </a>
-      </div>
+  <!-- PRELOADER -->
+  <div id="preloader" aria-hidden="true">
+    <div class="loader-logo">
+      <span>D</span><span>A</span><span>D</span><span>E</span><span>X</span>
     </div>
+  </div>
 
-    <!-- Featured Solutions Slider -->
-    <div class="home-hero__visual">
-      <div
-        class="hero-slider"
-        role="region"
-        aria-roledescription="carousel"
-        aria-label="Featured Dadex solutions"
-      >
+  <a class="sr-only" href="#main-content">Skip to content</a>
+  <div data-component="header"></div>
 
-        <!-- 01: WATER SUPPLY -->
-        <article class="hero-slide is-active" aria-hidden="false">
-          <img
-            src="assets/images/products/polydex-premium.webp"
-            alt="Dadex Polydex Premium water supply piping system"
-            fetchpriority="high"
-          >
+  <main id="main-content">
 
-          <div class="hero-slide__caption">
-            <span>WATER SUPPLY</span>
-            <h2>Reliable <em>Water Supply Systems</em></h2>
-            <p>Dependable piping solutions for buildings and infrastructure.</p>
+    <!-- 1. HERO SECTION -->
+    <section class="home-hero">
+      <div class="container home-hero__inner">
+
+        <div class="home-hero__content">
+          <div class="kicker">Dadex Eternit Limited</div>
+          <h1>Engineering Trust with <em>Innovative Piping &amp; Roofing Solutions</em></h1>
+          <p>Since 1959, Dadex has served Pakistan's evolving building and infrastructure needs with quality products and technical expertise across piping, roofing and ducting.</p>
+
+          <div class="home-hero__actions">
+            <a class="btn btn--primary" href="products.html">Explore Products <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            <a class="btn btn--secondary" href="about.html">About Dadex <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
           </div>
-        </article>
+        </div>
 
-        <!-- 02: SEWERAGE & DRAINAGE -->
-        <article class="hero-slide" aria-hidden="true">
-          <img
-            src="assets/images/products/nikasi.webp"
-            alt="Dadex Nikasi sewerage and drainage system"
-            loading="lazy"
-          >
+        <div class="home-hero__visual">
+          <div class="hero-slider" role="region" aria-roledescription="carousel" aria-label="Featured Dadex solutions">
 
-          <div class="hero-slide__caption">
-            <span>SEWERAGE &amp; DRAINAGE</span>
-            <h2>Efficient <em>Drainage Solutions</em></h2>
-            <p>Systems for the collection and discharge of wastewater.</p>
+            <!-- 01: WATER SUPPLY -->
+            <article class="hero-slide is-active" aria-hidden="false">
+              <img src="assets/images/products/polydex-premium.webp" alt="Dadex Polydex Premium water supply piping system" fetchpriority="high">
+              <div class="hero-slide__caption">
+                <span>WATER SUPPLY</span>
+                <h2>Reliable <em>Water Supply Systems</em></h2>
+                <p>Dependable piping solutions for buildings and infrastructure.</p>
+              </div>
+            </article>
+
+            <!-- 02: SEWERAGE & DRAINAGE -->
+            <article class="hero-slide" aria-hidden="true">
+              <img src="assets/images/products/nikasi.webp" alt="Dadex Nikasi sewerage and drainage system" loading="lazy">
+              <div class="hero-slide__caption">
+                <span>SEWERAGE &amp; DRAINAGE</span>
+                <h2>Efficient <em>Drainage Solutions</em></h2>
+                <p>Systems for the collection and discharge of wastewater.</p>
+              </div>
+            </article>
+
+            <!-- 03: CABLE & UTILITY DUCTING -->
+            <article class="hero-slide" aria-hidden="true">
+              <img src="assets/images/products/cable-duct.webp" alt="Dadex PE Cable Duct system" loading="lazy">
+              <div class="hero-slide__caption">
+                <span>CABLE &amp; UTILITY DUCTING</span>
+                <h2><em>Safely Wired.</em> Reliably Protected.</h2>
+                <p>Protective ducting systems for electrical cables and utilities.</p>
+              </div>
+            </article>
+
+            <!-- 04: SPECIALISED SYSTEMS -->
+            <article class="hero-slide" aria-hidden="true">
+              <img src="assets/images/products/polyduct.webp" alt="Dadex Polyduct specialised piping system" loading="lazy">
+              <div class="hero-slide__caption">
+                <span>SPECIALISED SYSTEMS</span>
+                <h2>Solutions for <em>Specialised Applications</em></h2>
+                <p>Purpose-designed piping systems for demanding industrial and technical applications.</p>
+              </div>
+            </article>
+
+            <div class="hero-slider__controls" role="group" aria-label="Choose featured solution">
+              <button class="hero-slider__dot is-active" type="button" aria-label="Show water supply" aria-pressed="true"></button>
+              <button class="hero-slider__dot" type="button" aria-label="Show sewerage and drainage" aria-pressed="false"></button>
+              <button class="hero-slider__dot" type="button" aria-label="Show cable and utility ducting" aria-pressed="false"></button>
+              <button class="hero-slider__dot" type="button" aria-label="Show specialised systems" aria-pressed="false"></button>
+              <button class="hero-slider__toggle" type="button" aria-label="Pause slideshow" aria-pressed="false">
+                <i class="fas fa-pause" aria-hidden="true"></i>
+                <span>Pause</span>
+              </button>
+            </div>
+
           </div>
-        </article>
+        </div>
+      </div>
+    </section>
 
-        <!-- 03: CABLE & UTILITY DUCTING -->
-        <article class="hero-slide" aria-hidden="true">
-          <img
-            src="assets/images/products/cable-duct.webp"
-            alt="Dadex PE Cable Duct system"
-            loading="lazy"
-          >
+    <!-- 2. TRUST BAR -->
+    <section class="trust-bar" aria-label="Why choose Dadex">
+      <div class="trust-bar__inner">
+        <div class="trust-item">
+          <i class="fa-regular fa-calendar-days" aria-hidden="true"></i>
+          <h3>Established in 1959</h3>
+          <p>A legacy of engineering and manufacturing.</p>
+        </div>
+        <div class="trust-item">
+          <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+          <h3>Pioneer of Thermoplastic Piping in Pakistan</h3>
+          <p>Pioneering thermoplastic piping in Pakistan since 1992.</p>
+        </div>
+        <div class="trust-item">
+          <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+          <h3>Commitment to Quality</h3>
+          <p>A focus on product quality and reliability.</p>
+        </div>
+        <div class="trust-item">
+          <i class="fa-solid fa-flask" aria-hidden="true"></i>
+          <h3>In-House Testing Laboratory</h3>
+          <p>Dedicated facilities for product testing.</p>
+        </div>
+        <div class="trust-item">
+          <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+          <h3>Nationwide Presence</h3>
+          <p>Serving customers across Pakistan.</p>
+        </div>
+        <div class="trust-item">
+          <i class="fa-solid fa-gears" aria-hidden="true"></i>
+          <h3>Engineered Piping Solutions</h3>
+          <p>Systems for a wide range of applications.</p>
+        </div>
+      </div>
+    </section>
 
-          <div class="hero-slide__caption">
-            <span>CABLE &amp; UTILITY DUCTING</span>
-            <h2><em>Safely Wired.</em> Reliably Protected.</h2>
-            <p>Protective ducting systems for electrical cables and utilities.</p>
+    <!-- 3. INTRO -->
+    <section class="section bg-white">
+      <div class="container grid grid-2 home-intro__inner">
+        <div>
+          <div class="kicker">The Dadex Difference</div>
+          <h2 class="home-intro__heading">A legacy<br><span>built on trust.</span></h2>
+          <div class="home-intro__rule" aria-hidden="true"></div>
+        </div>
+        <div>
+          <p class="home-intro__text">Dadex Eternit Limited is a leading manufacturer of thermoplastic piping and roofing systems in Pakistan. Established as a public limited company in 1959, Dadex offers a broad range of solutions for water supply, soil, waste and vent, sewerage and drainage, electrical and cable protection, gas and specialised industrial applications.</p>
+          <a class="btn btn--outline" href="about.html">Discover Dadex <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3.1 OUR PRODUCT BRANDS -->
+    <section class="section home-brands-section" aria-labelledby="home-brands-title">
+      <div class="container home-brands__inner">
+        <div class="home-brands__header">
+          <div class="kicker">Our Product Portfolio</div>
+          <h2 id="home-brands-title">Distinctive Brands.<br><span>Trusted Solutions.</span></h2>
+          <p>Explore Dadex's diverse portfolio of established product brands, developed to address the piping, roofing and infrastructure needs of buildings, industries and communities.</p>
+          <a href="products.html" class="home-brands__link">Explore All Products <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="home-brands__grid">
+          <!-- 01. AQUADEX -->
+          <a href="product-aquadex.html" class="brand-card">
+            <div class="brand-card__logo"><img src="assets/images/logos/aquadex.png" alt="Aquadex"></div>
+            <div class="brand-card__description">uPVC Pressure Piping System</div>
+          </a>
+          <!-- 02. T-FLEX -->
+          <a href="product-tflex.html" class="brand-card">
+            <div class="brand-card__logo"><img src="assets/images/logos/t-flex.png" alt="T-Flex"></div>
+            <div class="brand-card__description">PE 100 Flexible Piping System</div>
+          </a>
+          <!-- 03. POLYDEX PREMIUM -->
+          <a href="product-polydex-premium.html" class="brand-card">
+            <div class="brand-card__logo"><img src="assets/images/logos/polydex-premium.png" alt="Polydex Premium"></div>
+            <div class="brand-card__description">PP-RCT Hot &amp; Cold Water System</div>
+          </a>
+          <!-- 04. POLYDEX -->
+          <a href="product-polydex.html" class="brand-card">
+            <div class="brand-card__logo"><img src="assets/images/logos/polydex.png" alt="Polydex"></div>
+            <div class="brand-card__description">PP-R Hot &amp; Cold Water System</div>
+          </a>
+          <!-- 05. THERMOLINE -->
+          <a href="product-thermoline.html" class="brand-card">
+            <div class="brand-card__logo"><img src="assets/images/logos/thermoline.png" alt="Thermoline"></div>
+            <div class="brand-card__description">PP-R Hot &amp; Cold Water System</div>
+          </a>
+          <!-- 06. NIKASI -->
+          <a href="product-nikasi.html" class="brand-card">
+            <div class="brand-card__logo"><img src="assets/images/logos/nikasi.png" alt="Nikasi"></div>
+            <div class="brand-card__description">uPVC Soil, Waste &amp; Vent System</div>
+          </a>
+          <!-- 07. POLYDUCT -->
+          <a href="product-polyduct.html" class="brand-card">
+            <div class="brand-card__logo"><img src="assets/images/logos/polyduct.png" alt="Polyduct"></div>
+            <div class="brand-card__description">Low-Noise SWV System</div>
+          </a>
+          <!-- 08. FLOW LINE -->
+          <a href="product-flow-line.html" class="brand-card">
+            <div class="brand-card__logo"><img src="assets/images/logos/flowline.png" alt="Flow Line"></div>
+            <div class="brand-card__description">uPVC Underground Sewerage System</div>
+          </a>
+          <!-- 09. ELECTRODUCT -->
+          <a href="product-electroduct.html" class="brand-card">
+            <div class="brand-card__logo"><img src="assets/images/logos/electroduct.png" alt="Electroduct"></div>
+            <div class="brand-card__description">uPVC Electrical Conduit System</div>
+          </a>
+          <!-- 10. T-FLEX GAS -->
+          <a href="product-tflex-gas.html" class="brand-card">
+            <div class="brand-card__logo"><img src="assets/images/logos/t-flex-gas.png" alt="T-Flex Gas"></div>
+            <div class="brand-card__description">T-Flex Gas Piping System</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PRODUCTS -->
+    <section class="section section--light">
+      <div class="container">
+        <div class="home-section-header">
+          <div class="section-header home-section-header__text">
+            <div class="kicker">Products &amp; Solutions</div>
+            <h2>Piping &amp; Roofing Solutions<br><span>for Essential Applications.</span></h2>
+            <p class="home-section-header__desc">Explore Dadex systems for water supply, drainage, infrastructure, utilities and specialised applications.</p>
           </div>
-        </article>
+          <a class="btn btn--primary" href="products.html">View All Products <i class="fas fa-arrow-right"></i></a>
+        </div>
 
-        <!-- 04: SPECIALISED SYSTEMS -->
-        <article class="hero-slide" aria-hidden="true">
-          <img
-            src="assets/images/products/polyduct.webp"
-            alt="Dadex Polyduct specialised piping system"
-            loading="lazy"
-          >
+        <div class="grid grid-3">
+          <a class="card card--text-feature" href="products.html#water-supply">
+            <div class="card-feature-top"><i class="fas fa-droplet home-product-icon" aria-hidden="true"></i><span class="home-product-number">01</span></div>
+            <div class="kicker">Water Supply</div><h3>Water Supply Systems</h3><p class="product-list">Aquadex · T-Flex · Polydex Premium · Polydex · Thermoline</p><i class="fas fa-arrow-right card-arrow"></i>
+          </a>
+          <a class="card card--text-feature" href="products.html#sewerage-drainage">
+            <div class="card-feature-top"><i class="fas fa-arrows-down-to-line home-product-icon" aria-hidden="true"></i><span class="home-product-number">02</span></div>
+            <div class="kicker">Sewerage &amp; Drainage</div><h3>Sewerage &amp; Drainage Systems</h3><p class="product-list">Flow Line · Nikasi · Polyduct · Magnaplast Inspection Chambers · Magnaplast Manholes · Catchpits</p><i class="fas fa-arrow-right card-arrow"></i>
+          </a>
+          <a class="card card--text-feature" href="products.html#cable-utility-ducting">
+            <div class="card-feature-top"><i class="fas fa-bolt home-product-icon" aria-hidden="true"></i><span class="home-product-number">03</span></div>
+            <div class="kicker">Cable &amp; Utility Ducting</div><h3>Cable Protection Systems</h3><p class="product-list">PE Cable Duct · Electroduct · Electrical Conduits</p><i class="fas fa-arrow-right card-arrow"></i>
+          </a>
+          <a class="card card--text-feature" href="products.html#specialised-industrial">
+            <div class="card-feature-top"><i class="fas fa-industry home-product-icon" aria-hidden="true"></i><span class="home-product-number">04</span></div>
+            <div class="kicker">Specialised &amp; Industrial</div><h3>Specialised Piping Systems</h3><p class="product-list">Gas · Chemical · Industrial Applications · Tubewell</p><i class="fas fa-arrow-right card-arrow"></i>
+          </a>
+          <a class="card card--text-feature" href="products.html#roofing">
+            <div class="card-feature-top"><i class="fas fa-house-chimney home-product-icon" aria-hidden="true"></i><span class="home-product-number">05</span></div>
+            <div class="kicker">Roofing</div><h3>Roofing &amp; Cladding</h3><p class="product-list">Corrugated Roofing Sheets</p><i class="fas fa-arrow-right card-arrow"></i>
+          </a>
+          <a class="card card--text-feature card--discovery" href="products.html">
+            <div class="card-feature-top"><i class="fas fa-border-all home-product-icon" aria-hidden="true"></i><span class="home-product-number">06</span></div>
+            <div class="kicker">Discover Dadex</div><h3>Explore All Products</h3><p class="product-list">Browse Dadex's complete range of piping and roofing systems for residential, commercial, infrastructure and industrial applications.</p><span class="text-link home-card-link">View Product Range <i class="fas fa-arrow-right"></i></span>
+          </a>
+        </div>
+      </div>
+    </section>
 
-          <div class="hero-slide__caption">
-            <span>SPECIALISED SYSTEMS</span>
-            <h2>Solutions for<em> Specialised Applications</em></h2>
-            <p>Purpose-designed piping systems for demanding industrial and technical applications.</p>
+    <!-- 5. VALUES -->
+    <section class="section section--dark values-section" id="values">
+      <div class="container">
+        <div class="section-header">
+          <div class="kicker home-kicker--light">Our Values</div>
+          <h2>Our values.<br><span>The principles that guide us.</span></h2>
+          <p>The principles that shape how we serve customers, develop products and conduct our business.</p>
+        </div>
+        <div class="grid grid-5">
+          <div class="card card--dark">
+            <div class="kicker home-kicker--spaced">01</div>
+            <i class="fas fa-users home-value-icon" aria-hidden="true"></i>
+            <h3>Customer Focus</h3>
+            <p>Understanding needs and delivering dependable support.</p>
           </div>
-        </article>
-
-        <!-- Slider Controls -->
-        <div
-          class="hero-slider__controls"
-          role="group"
-          aria-label="Choose featured solution"
-        >
-          <button
-            class="hero-slider__dot is-active"
-            type="button"
-            aria-label="Show water supply"
-            aria-pressed="true"
-          ></button>
-
-          <button
-            class="hero-slider__dot"
-            type="button"
-            aria-label="Show sewerage and drainage"
-            aria-pressed="false"
-          ></button>
-
-          <button
-            class="hero-slider__dot"
-            type="button"
-            aria-label="Show cable and utility ducting"
-            aria-pressed="false"
-          ></button>
-
-          <button
-            class="hero-slider__dot"
-            type="button"
-            aria-label="Show specialised systems"
-            aria-pressed="false"
-          ></button>
-
-          <button
-            class="hero-slider__toggle"
-            type="button"
-            aria-label="Pause slideshow"
-            aria-pressed="false"
-          >
-            <i class="fas fa-pause" aria-hidden="true"></i>
-            <span>Pause</span>
-          </button>
+          <div class="card card--dark">
+            <div class="kicker home-kicker--spaced">02</div>
+            <i class="fas fa-lightbulb home-value-icon" aria-hidden="true"></i>
+            <h3>Innovation</h3>
+            <p>Continuous improvement through new ideas and technologies.</p>
+          </div>
+          <div class="card card--dark">
+            <div class="kicker home-kicker--spaced">03</div>
+            <i class="fas fa-check-double home-value-icon" aria-hidden="true"></i>
+            <h3>Quality</h3>
+            <p>Maintaining consistent standards in products and processes.</p>
+          </div>
+          <div class="card card--dark">
+            <div class="kicker home-kicker--spaced">04</div>
+            <i class="fas fa-handshake home-value-icon" aria-hidden="true"></i>
+            <h3>Reliability</h3>
+            <p>Building lasting relationships through trust and commitment.</p>
+          </div>
+          <div class="card card--dark">
+            <div class="kicker home-kicker--spaced">05</div>
+            <i class="fas fa-scale-balanced home-value-icon" aria-hidden="true"></i>
+            <h3>Ethical Practices</h3>
+            <p>Acting with integrity, responsibility and transparency.</p>
+          </div>
         </div>
-
       </div>
-    </div>
+    </section>
 
-  </div>
-</section>
-
-<!-- 2. TRUST BAR -->
-<section class="trust-bar" aria-label="Why choose Dadex">
-  <div class="trust-bar__inner">
-    <div class="trust-item">
-      <i class="fa-regular fa-calendar-days" aria-hidden="true"></i>
-      <h3>Established in 1959</h3>
-      <p>A legacy of engineering and manufacturing.</p>
-    </div>
-    <div class="trust-item">
-      <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
-      <h3>Pioneer of Thermoplastic Piping in Pakistan</h3>
-      <p>Pioneering thermoplastic piping in Pakistan since 1992.</p>
-    </div>
-    <div class="trust-item">
-      <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
-      <h3>Commitment to Quality</h3>
-      <p>A focus on product quality and reliability.</p>
-    </div>
-    <div class="trust-item">
-      <i class="fa-solid fa-flask" aria-hidden="true"></i>
-      <h3>In-House Testing Laboratory</h3>
-      <p>Dedicated facilities for product testing.</p>
-    </div>
-    <div class="trust-item">
-      <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
-      <h3>Nationwide Presence</h3>
-      <p>Serving customers across Pakistan.</p>
-    </div>
-    <div class="trust-item">
-      <i class="fa-solid fa-gears" aria-hidden="true"></i>
-      <h3>Engineered Piping Solutions</h3>
-      <p>Systems for a wide range of applications.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 3. INTRO -->
-<section class="section bg-mist-light">
-  <div class="container grid grid-2 home-intro__inner">
-    <div>
-      <div class="kicker">The Dadex Difference</div>
-      <h2>A legacy<br><span>built on trust.</span></h2>
-      <div class="home-intro__rule" aria-hidden="true"></div>
-    </div>
-    <div>
-      <p class="home-intro__text">Dadex Eternit Limited is a leading manufacturer of thermoplastic piping and roofing systems in Pakistan. Established as a public limited company in 1959, Dadex offers a broad range of solutions for water supply, soil, waste and vent, sewerage and drainage, electrical and cable protection, gas and specialised industrial applications.</p>
-      <a class="btn btn--outline" href="about.html">Discover Dadex <i class="fas fa-arrow-right"></i></a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ==================================================
-     3.1 OUR PRODUCT BRANDS
-     ================================================== -->
-<section class="section home-brands-section" aria-labelledby="home-brands-title">
-
-  <div class="container home-brands__inner">
-
-    <!-- Left: Section Introduction -->
-    <div class="home-brands__header">
-
-      <div class="kicker">Our Product Portfolio</div>
-
-      <h2 id="home-brands-title">
-        Distinctive Brands.<br>
-        <span>Trusted Solutions.</span>
-      </h2>
-
-      <p>
-        Explore Dadex's diverse portfolio of established product
-        brands, developed to address the piping, roofing and
-        infrastructure needs of buildings, industries and communities.
-      </p>
-
-      <a href="products.html" class="home-brands__link">
-        Explore All Products
-        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-      </a>
-
-    </div>
-
-
-    <!-- Right: Brand Grid -->
-    <div class="home-brands__grid">
-
-
-      <!-- 01. AQUADEX -->
-      <a href="product-aquadex.html" class="brand-card">
-        <div class="brand-card__logo">
-          <img src="assets/images/logos/aquadex.png"
-               alt="Aquadex">
+    <!-- 6. SERVICES -->
+    <section class="section bg-white home-services">
+      <div class="container">
+        <div class="home-section-header">
+          <div class="section-header home-section-header__text">
+            <div class="kicker">Support Beyond the Product</div>
+            <h2>Technical expertise<br><span>when you need it.</span></h2>
+            <p>From product selection to installation guidance, Dadex supports customers throughout their project journey.</p>
+          </div>
+          <a class="btn btn--outline" href="services.html">Explore Services <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
         </div>
-         <div class="brand-card__description">
-          uPVC Pressure <br>Piping System
+
+        <div class="home-services__grid">
+          <a href="services.html" class="card home-service-card">
+            <span class="number">01</span>
+            <i class="fas fa-headset home-service-icon" aria-hidden="true"></i>
+            <h3>Technical Guidance &amp; Support</h3>
+            <p>Assistance with product selection, system applications and technical queries.</p>
+          </a>
+          <a href="services.html" class="card home-service-card">
+            <span class="number">02</span>
+            <i class="fas fa-ruler-combined home-service-icon" aria-hidden="true"></i>
+            <h3>System Planning, BOQ &amp; Estimates</h3>
+            <p>Support with system planning, material requirements and project estimates.</p>
+          </a>
+          <a href="services.html" class="card home-service-card">
+            <span class="number">03</span>
+            <i class="fas fa-screwdriver-wrench home-service-icon" aria-hidden="true"></i>
+            <h3>Tools &amp; Installation Equipment</h3>
+            <p>Access to relevant tools and equipment for proper installation.</p>
+          </a>
+          <a href="services.html" class="card home-service-card">
+            <span class="number">04</span>
+            <i class="fas fa-chalkboard-user home-service-icon" aria-hidden="true"></i>
+            <h3>Product Demonstrations &amp; Training</h3>
+            <p>Practical demonstrations and guidance on product applications and installation.</p>
+          </a>
+          <a href="services.html" class="card home-service-card">
+            <span class="number">05</span>
+            <i class="fas fa-circle-check home-service-icon" aria-hidden="true"></i>
+            <h3>Installation &amp; Testing Assistance</h3>
+            <p>Technical guidance on installation procedures, laying and system testing.</p>
+          </a>
         </div>
-      </a>
-
-
-      <!-- 02. T-FLEX -->
-      <a href="product-tflex.html" class="brand-card">
-        <div class="brand-card__logo">
-          <img src="assets/images/logos/t-flex.png"
-               alt="T-Flex">
-        </div>
-        <div class="brand-card__description">
-          PE 100 Flexible  <br>Piping System
-        </div>
-      </a>
-
-
-      <!-- 03. POLYDEX PREMIUM -->
-      <a href="product-polydex-premium.html" class="brand-card">
-        <div class="brand-card__logo">
-          <img src="assets/images/logos/polydex-premium.png"
-               alt="Polydex Premium">
-        </div>
-        <div class="brand-card__description">
-          PP-RCT Hot &amp; Cold  <br>Water System
-        </div>
-      </a>
-
-
-      <!-- 04. POLYDEX -->
-      <a href="product-polydex.html" class="brand-card">
-        <div class="brand-card__logo">
-          <img src="assets/images/logos/polydex.png"
-               alt="Polydex">
-        </div>
-        <div class="brand-card__description">
-          PP-R Hot &amp; Cold  <br>Water System
-        </div>
-      </a>
-
-
-      <!-- 05. THERMOLINE -->
-      <a href="product-thermoline.html" class="brand-card">
-        <div class="brand-card__logo">
-          <img src="assets/images/logos/thermoline.png"
-               alt="Thermoline">
-        </div>
-        <div class="brand-card__description">
-          PP-R Hot &amp; Cold <br> Water System
-        </div>
-      </a>
-
-
-      <!-- 06. NIKASI -->
-      <a href="product-nikasi.html" class="brand-card">
-        <div class="brand-card__logo">
-          <img src="assets/images/logos/nikasi.png"
-               alt="Nikasi">
-        </div>
-        <div class="brand-card__description">
-          uPVC Soil, Waste & Vent System </div>
-      </a>
-
-
-      <!-- 07. POLYDUCT -->
-      <a href="product-polyduct.html" class="brand-card">
-        <div class="brand-card__logo">
-          <img src="assets/images/logos/polyduct.png"
-               alt="Polyduct">
-        </div>
-        <div class="brand-card__description">
-          Low-Noise  <br>SWV System
-        </div>
-      </a>
-
-
-      <!-- 08. FLOW LINE -->
-      <a href="product-flow-line.html" class="brand-card">
-        <div class="brand-card__logo">
-          <img src="assets/images/logos/flowline.png"
-               alt="Flow Line">
-        </div>
-        <div class="brand-card__description">
-          uPVC Underground <br>Sewerage System
-        </div>
-      </a>
-
-
-      <!-- 09. ELECTRODUCT -->
-      <a href="product-electroduct.html" class="brand-card">
-        <div class="brand-card__logo">
-          <img src="assets/images/logos/electroduct.png"
-               alt="Electroduct">
-        </div>
-        <div class="brand-card__description">
-          uPVC Electrical Conduit System
-        </div>
-      </a>
-
-
-      <!-- 10. T-FLEX GAS -->
-      <a href="product-tflex-gas.html" class="brand-card">
-        <div class="brand-card__logo">
-          <img src="assets/images/logos/t-flex-gas.png"
-               alt="T-Flex Gas">
-        </div>
-        <div class="brand-card__description">
-          T-Flex Gas  <br>Piping System
-        </div>
-      </a>
-
-
-    </div>
-  </div>
-</section>
-
-
-<!-- 4. PRODUCTS -->
-<section class="section section--light">
-  <div class="container">
-    <div class="home-section-header">
-      <div class="section-header home-section-header__text">
-        <div class="kicker">Products &amp; Solutions</div>
-        <h2>Piping &amp; Roofing Solutions<br><span>for Essential Applications.</span></h2>
-        <p class="home-section-header__desc">Explore Dadex systems for water supply, drainage, infrastructure, utilities and specialised applications.</p>
       </div>
-      <a class="btn btn--primary" href="products.html">View All Products <i class="fas fa-arrow-right"></i></a>
-    </div>
+    </section>
 
-    <div class="grid grid-3">
-      <a class="card card--text-feature" href="products.html#water-supply">
-        <div class="card-feature-top"><i class="fas fa-droplet home-product-icon" aria-hidden="true"></i><span class="home-product-number">01</span></div>
-        <div class="kicker">Water Supply</div><h3>Water Supply Systems</h3><p class="product-list">Aquadex · T-Flex · Polydex Premium · Polydex · Thermoline</p><i class="fas fa-arrow-right card-arrow"></i>
-      </a>
-      <a class="card card--text-feature" href="products.html#sewerage-drainage">
-        <div class="card-feature-top"><i class="fas fa-arrows-down-to-line home-product-icon" aria-hidden="true"></i><span class="home-product-number">02</span></div>
-        <div class="kicker">Sewerage &amp; Drainage</div><h3>Sewerage &amp; Drainage Systems</h3><p class="product-list">Flow Line · Nikasi · Polyduct · Magnaplast Inspection Chambers · Magnaplast Manholes · Catchpits</p><i class="fas fa-arrow-right card-arrow"></i>
-      </a>
-      <a class="card card--text-feature" href="products.html#cable-utility-ducting">
-        <div class="card-feature-top"><i class="fas fa-bolt home-product-icon" aria-hidden="true"></i><span class="home-product-number">03</span></div>
-        <div class="kicker">Cable &amp; Utility Ducting</div><h3>Cable Protection Systems</h3><p class="product-list">PE Cable Duct · Electroduct · Electrical Conduits</p><i class="fas fa-arrow-right card-arrow"></i>
-      </a>
-      <a class="card card--text-feature" href="products.html#specialised-industrial">
-        <div class="card-feature-top"><i class="fas fa-industry home-product-icon" aria-hidden="true"></i><span class="home-product-number">04</span></div>
-        <div class="kicker">Specialised &amp; Industrial</div><h3>Specialised Piping Systems</h3><p class="product-list">Gas · Chemical · Industrial Applications · Tubewell</p><i class="fas fa-arrow-right card-arrow"></i>
-      </a>
-      <a class="card card--text-feature" href="products.html#roofing">
-        <div class="card-feature-top"><i class="fas fa-house-chimney home-product-icon" aria-hidden="true"></i><span class="home-product-number">05</span></div>
-        <div class="kicker">Roofing</div><h3>Roofing &amp; Cladding</h3><p class="product-list">Corrugated Roofing Sheets</p><i class="fas fa-arrow-right card-arrow"></i>
-      </a>
-      <a class="card card--text-feature card--discovery" href="products.html">
-        <div class="card-feature-top"><i class="fas fa-border-all home-product-icon" aria-hidden="true"></i><span class="home-product-number">06</span></div>
-        <div class="kicker">Discover Dadex</div><h3>Explore All Products</h3><p class="product-list">Browse Dadex's complete range of piping and roofing systems for residential, commercial, infrastructure and industrial applications.</p><span class="text-link home-card-link">View Product Range <i class="fas fa-arrow-right"></i></span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- 5. VALUES -->
-<section class="section section--dark values-section" id="values">
-  <div class="container">
-    <div class="section-header">
-      <div class="kicker home-kicker--light">Our Values</div>
-      <h2>Our values.<br><span>The principles that guide us.</span></h2>
-      <p>The principles that shape how we serve customers, develop products and conduct our business.</p>
-    </div>
-    <div class="grid grid-5">
-      <div class="card card--dark">
-        <div class="kicker home-kicker--spaced">01</div>
-        <i class="fas fa-users home-value-icon" aria-hidden="true"></i>
-        <h3>Customer Focus</h3>
-        <p>Understanding needs and delivering dependable support.</p>
-      </div>
-      <div class="card card--dark">
-        <div class="kicker home-kicker--spaced">02</div>
-        <i class="fas fa-lightbulb home-value-icon" aria-hidden="true"></i>
-        <h3>Innovation</h3>
-        <p>Continuous improvement through new ideas and technologies.</p>
-      </div>
-      <div class="card card--dark">
-        <div class="kicker home-kicker--spaced">03</div>
-        <i class="fas fa-check-double home-value-icon" aria-hidden="true"></i>
-        <h3>Quality</h3>
-        <p>Maintaining consistent standards in products and processes.</p>
-      </div>
-      <div class="card card--dark">
-        <div class="kicker home-kicker--spaced">04</div>
-        <i class="fas fa-handshake home-value-icon" aria-hidden="true"></i>
-        <h3>Reliability</h3>
-        <p>Building lasting relationships through trust and commitment.</p>
-      </div>
-      <div class="card card--dark">
-        <div class="kicker home-kicker--spaced">05</div>
-        <i class="fas fa-scale-balanced home-value-icon" aria-hidden="true"></i>
-        <h3>Ethical Practices</h3>
-        <p>Acting with integrity, responsibility and transparency.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- 6. SERVICES -->
-<section class="section bg-white home-services">
-  <div class="container">
-
-    <div class="home-section-header">
-      <div class="section-header home-section-header__text">
-        <div class="kicker">Support Beyond the Product</div>
-        <h2>
-          Technical expertise<br>
-          <span>when you need it.</span>
-        </h2>
-        <p>
-          From product selection to installation guidance,
-          Dadex supports customers throughout their project journey.
-        </p>
-      </div>
-
-      <a class="btn btn--primary" href="services.html">
-        Explore Services
-        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-      </a>
-    </div>
-
-    <div class="home-services__grid">
-
-      <a href="services.html" class="card home-service-card">
-        <span class="number">01</span>
-        <i class="fas fa-headset home-service-icon"
-           aria-hidden="true"></i>
-        <h3>Technical Guidance &amp; Support</h3>
-        <p>
-          Assistance with product selection, system applications
-          and technical queries.
-        </p>
-      </a>
-
-      <a href="services.html" class="card home-service-card">
-        <span class="number">02</span>
-        <i class="fas fa-ruler-combined home-service-icon"
-           aria-hidden="true"></i>
-        <h3>System Planning, BOQ &amp; Estimates</h3>
-        <p>
-          Support with system planning, material requirements
-          and project estimates.
-        </p>
-      </a>
-
-      <a href="services.html" class="card home-service-card">
-        <span class="number">03</span>
-        <i class="fas fa-screwdriver-wrench home-service-icon"
-           aria-hidden="true"></i>
-        <h3>Tools &amp; Installation Equipment</h3>
-        <p>
-          Access to relevant tools and equipment for
-          proper installation.
-        </p>
-      </a>
-
-      <a href="services.html" class="card home-service-card">
-        <span class="number">04</span>
-        <i class="fas fa-chalkboard-user home-service-icon"
-           aria-hidden="true"></i>
-        <h3>Product Demonstrations &amp; Training</h3>
-        <p>
-          Practical demonstrations and guidance on
-          product applications and installation.
-        </p>
-      </a>
-
-      <a href="services.html" class="card home-service-card">
-        <span class="number">05</span>
-        <i class="fas fa-circle-check home-service-icon"
-           aria-hidden="true"></i>
-        <h3>Installation &amp; Testing Assistance</h3>
-        <p>
-          Technical guidance on installation procedures,
-          laying and system testing.
-        </p>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- 7. RESOURCES & SUPPORT -->
-<section class="section" style="background: var(--brand-red-lighter); border-top: solid 1pt var(--brand-red-light); border-bottom: solid 1pt var(--brand-red-light);">
-  <div class="container home-resources__inner">
-    <div class="home-resources__intro">
-      <div class="kicker">Resources &amp; Support</div>
-      <h2>Knowledge and resources<br><span>for better decisions.</span></h2>
-      <p>Access product information or connect with our team for technical guidance.</p>
-    </div>
-    <div class="home-resources__cards">
-      <a href="literature.html" class="card home-resource-card">
-        <div class="home-resource-card__icon"><i class="fas fa-file-lines" aria-hidden="true"></i></div>
-        <div class="home-resource-card__content">
-          <h3>Product Literature</h3>
-          <p>Explore product catalogues, technical data and specifications.</p>
+    <!-- 7. RESOURCES & SUPPORT -->
+    <section class="section">
+      <div class="container home-resources__inner">
+        <div class="home-resources__intro">
+          <div class="kicker">Resources &amp; Support</div>
+          <h2>Knowledge and resources<br><span>for better decisions.</span></h2>
+          <p>Access product information or connect with our team for technical guidance.</p>
         </div>
-        <i class="fas fa-arrow-right home-resource-card__arrow" aria-hidden="true"></i>
-      </a>
-      <a href="contact.html" class="card home-resource-card">
-        <div class="home-resource-card__icon"><i class="fas fa-headset" aria-hidden="true"></i></div>
-        <div class="home-resource-card__content">
-          <h3>Technical Assistance</h3>
-          <p>Connect with our team for product guidance and support.</p>
+        <div class="home-resources__cards">
+          <a href="literature.html" class="card home-resource-card">
+            <div class="home-resource-card__icon"><i class="fas fa-file-lines" aria-hidden="true"></i></div>
+            <div class="home-resource-card__content">
+              <h3>Product Literature</h3>
+              <p>Explore product catalogues, technical data and specifications.</p>
+            </div>
+            <i class="fas fa-arrow-right home-resource-card__arrow" aria-hidden="true"></i>
+          </a>
+          <a href="contact.html" class="card home-resource-card">
+            <div class="home-resource-card__icon"><i class="fas fa-headset" aria-hidden="true"></i></div>
+            <div class="home-resource-card__content">
+              <h3>Technical Assistance</h3>
+              <p>Connect with our team for product guidance and support.</p>
+            </div>
+            <i class="fas fa-arrow-right home-resource-card__arrow" aria-hidden="true"></i>
+          </a>
         </div>
-        <i class="fas fa-arrow-right home-resource-card__arrow" aria-hidden="true"></i>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- 8. QUALITY & COMPLIANCE -->
-<section class="section bg-white">
-  <div class="container grid grid-2 home-quality__inner">
-    <div>
-      <div class="kicker">Quality &amp; Compliance</div>
-      <h2>Standards <br><span>we stand behind.</span></h2>
-      <p class="home-quality__desc">Dadex is committed to quality, reliability and ethical practices, supported by recognized management systems and standards.</p>
-      <a class="btn btn--outline" href="quality.html">Quality &amp; compliance <i class="fas fa-arrow-right"></i></a>
-    </div>
-    <div class="home-quality__grid">
-      <div class="home-quality__item">
-        <strong>ISO</strong>
-        <span>9001</span>
-        <small>Quality Management</small>
       </div>
-      <div class="home-quality__item">
-        <strong>ISO</strong>
-        <span>14001</span>
-        <small>Environmental Management</small>
+    </section>
+
+    <!-- 8. QUALITY & COMPLIANCE -->
+    <section class="section bg-white">
+      <div class="container grid grid-2 home-quality__inner">
+        <div>
+          <div class="kicker">Quality &amp; Compliance</div>
+          <h2>Standards <br><span>we stand behind.</span></h2>
+          <p class="home-quality__desc">Dadex is committed to quality, reliability and ethical practices, supported by recognized management systems and standards.</p>
+          <a class="btn btn--outline" href="quality.html">Quality &amp; compliance <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="home-quality__grid">
+          <div class="home-quality__item">
+            <strong>ISO</strong>
+            <span>9001</span>
+            <small>Quality Management</small>
+          </div>
+          <div class="home-quality__item">
+            <strong>ISO</strong>
+            <span>14001</span>
+            <small>Environmental Management</small>
+          </div>
+          <div class="home-quality__item">
+            <strong>ISO</strong>
+            <span>45001</span>
+            <small>Occupational Health &amp; Safety</small>
+          </div>
+          <div class="home-quality__item">
+            <strong>PSQCA</strong>
+            <span>Certified</span>
+            <small>Applicable Product Standards</small>
+          </div>
+        </div>
       </div>
-      <div class="home-quality__item">
-        <strong>ISO</strong>
-        <span>45001</span>
-        <small>Occupational Health &amp; Safety</small>
+    </section>
+
+    <!-- 9. FINAL CTA -->
+    <section class="section section--dark home-cta">
+      <div class="container home-cta__inner">
+        <div>
+          <div class="kicker">Dadex Eternit Limited</div>
+          <h2>Built on experience.<br/><span>Engineered for tomorrow.</span></h2>
+        </div>
+        <div class="home-cta__body">
+          <p>Explore Dadex products, technical services and resources, or connect with our team for assistance.</p>
+          <a class="btn btn--primary" href="contact.html">Contact Dadex <i class="fas fa-arrow-right"></i></a>
+        </div>
       </div>
-      <div class="home-quality__item">
-        <strong>PSQCA</strong>
-        <span>Certified</span>
-        <small>Applicable Product Standards</small>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- 9. FINAL CTA -->
-<section class="section section--dark home-cta">
-  <div class="container home-cta__inner">
-    <div>
-      <div class="kicker">Dadex Eternit Limited</div>
-      <h2>Built on experience.<br/><span>Engineered for tomorrow.</span></h2>
-    </div>
-    <div class="home-cta__body">
-      <p>Explore Dadex products, technical services and resources, or connect with our team for assistance.</p>
-      <a class="btn btn--primary" href="contact.html">Contact Dadex <i class="fas fa-arrow-right"></i></a>
-    </div>
-  </div>
-</section>
+  </main>
 
-</main>
+  <div data-component="footer"></div>
+  <script src="js/main.js"></script>
 
-<div data-component="footer"></div>
-<script src="js/main.js"></script>
+  <script>
+  /* HOMEPAGE HERO SLIDER */
+  (() => {
+    const sliders = document.querySelectorAll(".hero-slider");
+    sliders.forEach((slider) => {
+      if (slider.dataset.sliderReady === "true") return;
+      slider.dataset.sliderReady = "true";
 
-<script>
-/* HOMEPAGE HERO SLIDER (No changes to logic) */
-(() => {
-  const sliders = document.querySelectorAll(".hero-slider");
-  sliders.forEach((slider) => {
-    if (slider.dataset.sliderReady === "true") return;
-    slider.dataset.sliderReady = "true";
+      const slides = Array.from(slider.querySelectorAll(".hero-slide"));
+      const dots = Array.from(slider.querySelectorAll(".hero-slider__dot"));
+      const toggle = slider.querySelector(".hero-slider__toggle");
 
-    const slides = Array.from(slider.querySelectorAll(".hero-slide"));
-    const dots = Array.from(slider.querySelectorAll(".hero-slider__dot"));
-    const toggle = slider.querySelector(".hero-slider__toggle");
+      if (slides.length < 2 || slides.length !== dots.length) return;
 
-    if (slides.length < 2 || slides.length !== dots.length) return;
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let currentIndex = Math.max(0, slides.findIndex((slide) => slide.classList.contains("is-active")));
+      let timer = null;
+      let userPaused = false;
+      let interactionPaused = false;
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let currentIndex = Math.max(0, slides.findIndex((slide) => slide.classList.contains("is-active")));
-    let timer = null;
-    let userPaused = false;
-    let interactionPaused = false;
-
-    function updateToggle() {
-      if (!toggle) return;
-      const isPaused = userPaused || reducedMotion.matches;
-      toggle.setAttribute("aria-pressed", String(userPaused));
-      toggle.setAttribute("aria-label", isPaused ? "Play slideshow" : "Pause slideshow");
-      const icon = toggle.querySelector("i");
-      const label = toggle.querySelector("span");
-      if (icon) {
-        icon.classList.toggle("fa-play", isPaused);
-        icon.classList.toggle("fa-pause", !isPaused);
+      function updateToggle() {
+        if (!toggle) return;
+        const isPaused = userPaused || reducedMotion.matches;
+        toggle.setAttribute("aria-pressed", String(userPaused));
+        toggle.setAttribute("aria-label", isPaused ? "Play slideshow" : "Pause slideshow");
+        const icon = toggle.querySelector("i");
+        const label = toggle.querySelector("span");
+        if (icon) {
+          icon.classList.toggle("fa-play", isPaused);
+          icon.classList.toggle("fa-pause", !isPaused);
+        }
+        if (label) label.textContent = isPaused ? "Play" : "Pause";
       }
-      if (label) label.textContent = isPaused ? "Play" : "Pause";
-    }
 
-    function showSlide(index) {
-      currentIndex = (index + slides.length) % slides.length;
-      slides.forEach((slide, i) => {
-        const isActive = i === currentIndex;
-        slide.classList.toggle("is-active", isActive);
-        slide.setAttribute("aria-hidden", String(!isActive));
-      });
-      dots.forEach((dot, i) => {
-        const isActive = i === currentIndex;
-        dot.classList.toggle("is-active", isActive);
-        dot.setAttribute("aria-pressed", String(isActive));
-      });
-    }
-
-    function stopTimer() {
-      if (timer !== null) {
-        window.clearInterval(timer);
-        timer = null;
+      function showSlide(index) {
+        currentIndex = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => {
+          const isActive = i === currentIndex;
+          slide.classList.toggle("is-active", isActive);
+          slide.setAttribute("aria-hidden", String(!isActive));
+        });
+        dots.forEach((dot, i) => {
+          const isActive = i === currentIndex;
+          dot.classList.toggle("is-active", isActive);
+          dot.setAttribute("aria-pressed", String(isActive));
+        });
       }
-    }
 
-    function startTimer() {
-      stopTimer();
-      updateToggle();
-      if (userPaused || interactionPaused || document.hidden || reducedMotion.matches) return;
-      timer = window.setInterval(() => {
-        showSlide(currentIndex + 1);
-      }, 5000);
-    }
+      function stopTimer() {
+        if (timer !== null) {
+          window.clearInterval(timer);
+          timer = null;
+        }
+      }
 
-    dots.forEach((dot, index) => {
-      dot.addEventListener("click", () => {
-        showSlide(index);
-        startTimer();
+      function startTimer() {
+        stopTimer();
+        updateToggle();
+        if (userPaused || interactionPaused || document.hidden || reducedMotion.matches) return;
+        timer = window.setInterval(() => {
+          showSlide(currentIndex + 1);
+        }, 5000);
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          showSlide(index);
+          startTimer();
+        });
       });
+
+      if (toggle) {
+        toggle.addEventListener("click", () => {
+          userPaused = !userPaused;
+          startTimer();
+        });
+      }
+
+      slider.addEventListener("mouseenter", () => { interactionPaused = true; stopTimer(); });
+      slider.addEventListener("mouseleave", () => { interactionPaused = false; startTimer(); });
+      slider.addEventListener("focusin", () => { interactionPaused = true; stopTimer(); });
+      slider.addEventListener("focusout", (event) => {
+        if (!slider.contains(event.relatedTarget)) {
+          interactionPaused = false;
+          startTimer();
+        }
+      });
+
+      document.addEventListener("visibilitychange", startTimer);
+      reducedMotion.addEventListener?.("change", startTimer);
+
+      showSlide(currentIndex);
+      startTimer();
     });
-
-    if (toggle) {
-      toggle.addEventListener("click", () => {
-        userPaused = !userPaused;
-        startTimer();
-      });
-    }
-
-    slider.addEventListener("mouseenter", () => { interactionPaused = true; stopTimer(); });
-    slider.addEventListener("mouseleave", () => { interactionPaused = false; startTimer(); });
-    slider.addEventListener("focusin", () => { interactionPaused = true; stopTimer(); });
-    slider.addEventListener("focusout", (event) => {
-      if (!slider.contains(event.relatedTarget)) {
-        interactionPaused = false;
-        startTimer();
-      }
-    });
-
-    document.addEventListener("visibilitychange", startTimer);
-    reducedMotion.addEventListener?.("change", startTimer);
-
-    showSlide(currentIndex);
-    startTimer();
-  });
-})();
-</script>
+  })();
+  </script>
 
 </body>
 </html>
