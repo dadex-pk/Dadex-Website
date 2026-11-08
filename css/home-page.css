@@ -1013,3 +1013,67 @@
   .brand-card:hover { transform: none; }
   .home-service-card:hover { transform: none; }
 }
+
+/* ============================================================
+   PRELOADER ANIMATION
+   ============================================================ */
+
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#preloader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-logo {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.loader-logo span {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 800;
+  color: var(--brand-red);
+  letter-spacing: -0.04em;
+  
+  /* Start invisible and slightly lower */
+  opacity: 0;
+  transform: translateY(20px);
+  
+  /* The animation magic */
+  animation: logoFadeIn 0.5s cubic-bezier(0.2, 0.65, 0.2, 1) forwards;
+}
+
+/* Stagger the delay for each letter (D, A, D, E, X) */
+.loader-logo span:nth-child(1) { animation-delay: 0.1s; }
+.loader-logo span:nth-child(2) { animation-delay: 0.25s; }
+.loader-logo span:nth-child(3) { animation-delay: 0.4s; }
+.loader-logo span:nth-child(4) { animation-delay: 0.55s; }
+.loader-logo span:nth-child(5) { animation-delay: 0.7s; }
+
+@keyframes logoFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Accessibility: Respect reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .loader-logo span {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
