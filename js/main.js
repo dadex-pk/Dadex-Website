@@ -1,21 +1,8 @@
 /* ============================================================
-   DADEX ETERNIT LIMITED — SHARED UI (v6.0)
+   DADEX ETERNIT LIMITED — SHARED UI (v6.1)
    ------------------------------------------------------------
-   Loaded by every page. Handles:
-     · Header + footer injection
-     · Dynamic text (year, company age)
-     · Navigation (mobile drawer, dropdowns, focus trap)
-     · Page-specific init (project filter, mailto form,
-       investor tabs, site search)
-     · DEXPERT assistant
-     · Back-to-top widget
-
-   v6.0 changes
-     · Removed dead code (initLiteratureFilter, REMOVED_SEARCH_URLS)
-     · Simplified site search (no deferred-bind pattern)
-     · Cleaned investor panels (removed redundant handlers)
-     · Cached header queries (fewer scroll lookups)
-     · Reorganized into 15 numbered sections
+   v6.1 changes
+     · Added Preloader logic (shows once per session)
    ============================================================ */
 
 'use strict';
@@ -76,6 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
+  run('preloader',        initPreloader);
   run('dynamic-text',     initDynamicSiteText);
   run('header-state',     () => initHeaderState(header));
   run('navigation',       () => initNavigation(header));
@@ -178,7 +166,32 @@ function renderComponentError(mount, { name, url, reason }) {
 }
 
 /* ============================================================
-   5. DYNAMIC TEXT (year, company age)
+   5. PRELOADER
+   ============================================================ */
+
+function initPreloader() {
+  const preloader = document.getElementById('preloader');
+  if (!preloader) return;
+
+  // Check if the user has already seen it in this session
+  const hasVisited = sessionStorage.getItem('dadex_visited');
+
+  if (hasVisited) {
+    preloader.remove();
+    return;
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      preloader.classList.add('is-hidden');
+      sessionStorage.setItem('dadex_visited', 'true');
+      setTimeout(() => preloader.remove(), 600);
+    }, 1200); 
+  });
+}
+
+/* ============================================================
+   6. DYNAMIC TEXT (year, company age)
    ============================================================ */
 
 function initDynamicSiteText() {
@@ -207,7 +220,7 @@ function initDynamicSiteText() {
 }
 
 /* ============================================================
-   6. HEADER STATE (scroll collapse)
+   7. HEADER STATE (scroll collapse)
    ============================================================ */
 
 function initHeaderState(header) {
@@ -221,7 +234,6 @@ function initHeaderState(header) {
 
   header.dataset.headerState = isHome ? 'home' : 'internal';
 
-  // Cache DOM lookups (they don't change)
   const utilityBar = header.querySelector('.utility-bar');
 
   let ticking = false;
@@ -232,7 +244,6 @@ function initHeaderState(header) {
     header.classList.toggle('is-scrolled', scrolled);
     document.body.classList.toggle('header-scrolled', scrolled);
 
-    // Only apply inert to the utility bar, which completely disappears.
     if (INERT_SUPPORTED) {
       if (utilityBar) utilityBar.inert = scrolled;
     }
@@ -252,8 +263,9 @@ function initHeaderState(header) {
 
   update();
 }
+
 /* ============================================================
-   7. NAVIGATION (mobile drawer, dropdowns, focus trap)
+   8. NAVIGATION (mobile drawer, dropdowns, focus trap)
    ============================================================ */
 
 function initNavigation(header) {
@@ -401,7 +413,7 @@ function initNavigation(header) {
 }
 
 /* ============================================================
-   8. ACTIVE NAVIGATION HIGHLIGHT
+   9. ACTIVE NAVIGATION HIGHLIGHT
    ============================================================ */
 
 function setActiveNavigation() {
@@ -412,7 +424,6 @@ function setActiveNavigation() {
 
   const path = normalisePath(window.location.pathname);
 
-  /* --- Primary nav links --- */
   document.querySelectorAll('.site-navigation a').forEach(link => {
     link.classList.remove('nav-active');
     link.removeAttribute('aria-current');
@@ -434,7 +445,6 @@ function setActiveNavigation() {
     } catch (_) {}
   });
 
-  /* --- Product tier + mobile menu links (incl. hash match) --- */
   document
     .querySelectorAll('.header-products-row a, .mobile-products-menu a')
     .forEach(item => {
@@ -459,7 +469,6 @@ function setActiveNavigation() {
       } catch (_) {}
     });
 
-  /* --- Mark parent dropdown as active --- */
   document
     .querySelectorAll('.header-products-row .dropdown, .site-navigation .dropdown')
     .forEach(dropdown => {
@@ -475,7 +484,7 @@ function setActiveNavigation() {
 }
 
 /* ============================================================
-   9. PROJECT FILTER (projects.html)
+   10. PROJECT FILTER (projects.html)
    ============================================================ */
 
 function initProjectFilter() {
@@ -502,7 +511,7 @@ function initProjectFilter() {
 }
 
 /* ============================================================
-   10. MAILTO FORM (contact.html)
+   11. MAILTO FORM (contact.html)
    ============================================================ */
 
 function initMailtoForm() {
@@ -530,7 +539,7 @@ function initMailtoForm() {
 }
 
 /* ============================================================
-   11. INVESTOR PANELS (investors.html)
+   12. INVESTOR PANELS (investors.html)
    ============================================================ */
 
 function initInvestorPanels() {
@@ -570,7 +579,6 @@ function initInvestorPanels() {
 
   const sync = () => activate((location.hash || '#overview').slice(1));
 
-  /* Group tab clicks — update hash and activate in one step */
   tabs.forEach(t => {
     t.addEventListener('click', event => {
       event.preventDefault();
@@ -594,9 +602,7 @@ function initInvestorPanels() {
 }
 
 /* ============================================================
-   12. SITE SEARCH (search.html)
-   ------------------------------------------------------------
-   Requires search-index.js to be loaded first — see search.html.
+   13. SITE SEARCH (search.html)
    ============================================================ */
 
 function initSiteSearch() {
@@ -616,7 +622,6 @@ function initSiteSearch() {
 
   if (!grid || !template) return;
 
-  // 1. Keyboard Shortcut (/ focuses search)
   document.addEventListener('keydown', (e) => {
     if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
       e.preventDefault();
@@ -624,20 +629,17 @@ function initSiteSearch() {
     }
   });
 
-  // 2. Clear Button Visibility
   const toggleClearBtn = () => {
     if (clearBtn) clearBtn.style.display = input.value.length > 0 ? 'grid' : 'none';
     if (popularSearches) popularSearches.style.display = input.value.length > 0 ? 'none' : 'flex';
   };
 
-  // 3. Highlight Helper
   const highlightText = (text, query) => {
     if (!query) return text;
     const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
     return text.replace(regex, '<mark>$1</mark>');
   };
 
-  // 4. Render Function
   const render = () => {
     const q = input.value.trim();
     const lowerQ = q.toLowerCase();
@@ -664,13 +666,9 @@ function initSiteSearch() {
     for (const p of rows) {
       const card = template.content.firstElementChild.cloneNode(true);
       
-      // Set Badge
       card.querySelector('.result-badge').textContent = p[2];
-      
-      // Set Highlighted Title & Preview
       card.querySelector('h3').innerHTML = highlightText(p[0], q);
       card.querySelector('p').innerHTML = highlightText(p[3].slice(0, 150) + '...', q);
-      
       card.querySelector('a').href = p[1];
       frag.appendChild(card);
     }
@@ -679,7 +677,6 @@ function initSiteSearch() {
     if (empty) empty.hidden = rows.length !== 0;
   };
 
-  // 5. Event Listeners
   input.addEventListener('input', render);
   input.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
   
@@ -694,7 +691,6 @@ function initSiteSearch() {
     });
   }
 
-  // Popular Searches Click
   popularBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       input.value = btn.dataset.query;
@@ -703,7 +699,6 @@ function initSiteSearch() {
     });
   });
 
-  // Pre-fill from URL ?q= if present
   const qParam = new URLSearchParams(location.search).get('q');
   if (qParam) {
     input.value = qParam;
@@ -712,7 +707,7 @@ function initSiteSearch() {
 }
 
 /* ============================================================
-   13. DEXPERT ASSISTANT
+   14. DEXPERT ASSISTANT
    ============================================================ */
 
 const DEXPERT_PRODUCTS = [
@@ -746,10 +741,8 @@ const DEXPERT_APPS = [
 ];
 
 function initDEXPERT() {
-  // Only one instance per page
   if (document.querySelector('.dexpert-fab')) return;
 
-  /* --- Create the floating button --- */
   const fab = document.createElement('button');
   fab.className = 'dexpert-fab';
   fab.type = 'button';
@@ -761,7 +754,6 @@ function initDEXPERT() {
   `;
   document.body.appendChild(fab);
 
-  /* --- Page context (changes the home view) --- */
   const path = window.location.pathname.split('/').pop() || 'index.html';
   const isProduct = path.startsWith('product') && path !== 'products.html';
   const isInvestor = /investor|financial-reports/i.test(path);
@@ -769,7 +761,6 @@ function initDEXPERT() {
 
   let dialogPromise = null;
 
-  /* --- Lazy-load the dialog fragment --- */
   function loadDialog() {
     if (dialogPromise) return dialogPromise;
 
@@ -798,9 +789,7 @@ function initDEXPERT() {
       const resultTpl = temp.querySelector('template#dexpertResultTemplate');
 
       if (!dialog || !homeTpl || !resultTpl) {
-        throw new Error(
-          'dexpert.html is missing one of the required elements.'
-        );
+        throw new Error('dexpert.html is missing one of the required elements.');
       }
 
       document.body.appendChild(homeTpl);
@@ -818,7 +807,6 @@ function initDEXPERT() {
     return dialogPromise;
   }
 
-  /* --- Build the action links in the home view --- */
   function buildActions(container, actions) {
     if (!container) return;
     const frag = document.createDocumentFragment();
@@ -831,7 +819,6 @@ function initDEXPERT() {
     container.replaceChildren(frag);
   }
 
-  /* --- Home view (varies by page type) --- */
   function renderHome(dialog, homeTpl) {
     const body = dialog.querySelector('#dexpertBody');
     if (!body) return;
@@ -874,7 +861,6 @@ function initDEXPERT() {
     body.replaceChildren(node);
   }
 
-  /* --- Search result view --- */
   function renderAnswer(dialog, homeTpl, resultTpl, query) {
     const body = dialog.querySelector('#dexpertBody');
     if (!body) return;
@@ -884,81 +870,59 @@ function initDEXPERT() {
 
     if (!q) {
       [label, heading, message, href, cta] = [
-        'DEXPERT',
-        'Try a search',
+        'DEXPERT', 'Try a search',
         'Enter a product or application such as Aquadex, water supply or gas.',
-        'products.html',
-        'Browse products'
+        'products.html', 'Browse products'
       ];
     } else {
       const product = DEXPERT_PRODUCTS.find(
         p => q.includes(p[0].toLowerCase()) || p[0].toLowerCase().includes(q)
       );
-      const app =
-        !product &&
-        DEXPERT_APPS.find(
-          a => q.includes(a[0].toLowerCase()) || a[0].toLowerCase().includes(q)
-        );
+      const app = !product && DEXPERT_APPS.find(
+        a => q.includes(a[0].toLowerCase()) || a[0].toLowerCase().includes(q)
+      );
 
       if (product) {
         [label, heading, message, href, cta] = [
-          'PRODUCT',
-          product[0],
+          'PRODUCT', product[0],
           'Open the product page for its approved information.',
-          product[1],
-          'Open product'
+          product[1], 'Open product'
         ];
       } else if (app) {
         [label, heading, message, href, cta] = [
-          'APPLICATION',
-          app[0],
+          'APPLICATION', app[0],
           'Explore the systems listed for this application area.',
-          app[1],
-          'Explore'
+          app[1], 'Explore'
         ];
       } else if (/report|annual|financial|investor|shareholder|agm/.test(q)) {
         [label, heading, message, href, cta] = [
-          'INVESTOR',
-          'Investor Relations',
+          'INVESTOR', 'Investor Relations',
           'Find annual reports, financial information and shareholder references.',
-          'investors.html#annual',
-          'Open investor information'
+          'investors.html#annual', 'Open investor information'
         ];
-      } else if (
-        /brochure|flyer|leaflet|literature|document|datasheet|certificate|drawing/.test(
-          q
-        )
-      ) {
+      } else if (/brochure|flyer|leaflet|literature|document|datasheet|certificate|drawing/.test(q)) {
         [label, heading, message, href, cta] = [
-          'LITERATURE',
-          'Literature',
+          'LITERATURE', 'Literature',
           'Find brochures, flyers, corporate publications and technical documents.',
-          'literature.html',
-          'Open Literature'
+          'literature.html', 'Open Literature'
         ];
       } else if (/video|installation|demonstration/.test(q)) {
         [label, heading, message, href, cta] = [
-          'VIDEOS',
-          'Videos',
+          'VIDEOS', 'Videos',
           'Installation guides, product overviews and application demonstrations.',
-          'videos.html',
-          'Open Videos'
+          'videos.html', 'Open Videos'
         ];
       } else if (/calculator|pressure drop|flow|head loss|sizing/.test(q)) {
         [label, heading, message, href, cta] = [
-          'CALCULATORS',
-          'Calculators',
+          'CALCULATORS', 'Calculators',
           'Engineering calculators for pipe selection, hydraulic design and unit conversion.',
-          'calculators.html',
-          'Open Calculators'
+          'calculators.html', 'Open Calculators'
         ];
       } else {
         [label, heading, message, href, cta] = [
-          'DEXPERT',
-          'No direct match',
+          'DEXPERT', 'No direct match',
           'Try a product, application or resource term.',
-          'products.html',
-          'Browse products'
+          'products.html', 'Browse products'
         ];
       }
     }
@@ -971,16 +935,11 @@ function initDEXPERT() {
     node.querySelector('[data-cta]').textContent = cta;
 
     body.replaceChildren(node);
-    node
-      .querySelector('.dexpert-back')
-      .addEventListener('click', () => renderHome(dialog, homeTpl));
+    node.querySelector('.dexpert-back').addEventListener('click', () => renderHome(dialog, homeTpl));
   }
 
-  /* --- Wire dialog events --- */
   function wireDialog(dialog, homeTpl, resultTpl) {
-    dialog
-      .querySelector('.dexpert-close')
-      .addEventListener('click', () => dialog.close());
+    dialog.querySelector('.dexpert-close').addEventListener('click', () => dialog.close());
 
     dialog.addEventListener('click', e => {
       if (e.target === dialog) dialog.close();
@@ -1007,10 +966,8 @@ function initDEXPERT() {
     renderHome(dialog, homeTpl);
   }
 
-  /* --- Open the dialog --- */
   const open = async () => {
     try {
-      // Close mobile nav first so DEXPERT doesn't layer on top
       const nav = document.getElementById('site-navigation');
       if (nav && nav.classList.contains('open')) {
         nav.classList.remove('open');
@@ -1033,7 +990,6 @@ function initDEXPERT() {
     }
   };
 
-  /* --- FAB click --- */
   fab.addEventListener('click', () => {
     if (fab.getAttribute('aria-expanded') === 'true') {
       document.getElementById('dexpertDialog')?.close();
@@ -1042,7 +998,6 @@ function initDEXPERT() {
     }
   });
 
-  /* --- Delegate any [data-open-dexpert] buttons --- */
   document.addEventListener('click', e => {
     if (e.target.closest('[data-open-dexpert]')) {
       e.preventDefault();
@@ -1050,12 +1005,11 @@ function initDEXPERT() {
     }
   });
 
-  /* --- Preload on idle --- */
   scheduleIdle(() => loadDialog().catch(() => {}));
 }
 
 /* ============================================================
-   14. BACK TO TOP
+   15. BACK TO TOP
    ============================================================ */
 
 function initBackToTop() {
@@ -1069,19 +1023,14 @@ function initBackToTop() {
   document.body.appendChild(btn);
 
   const update = () => {
-    btn.classList.toggle(
-      'is-visible',
-      window.scrollY > SCROLL_TOP_THRESHOLD
-    );
+    btn.classList.toggle('is-visible', window.scrollY > SCROLL_TOP_THRESHOLD);
   };
 
   window.addEventListener('scroll', update, { passive: true });
   update();
 
   btn.addEventListener('click', () => {
-    const prefersReduced = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({
       top: 0,
       behavior: prefersReduced ? 'auto' : 'smooth'
