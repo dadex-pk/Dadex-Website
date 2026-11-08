@@ -185,8 +185,8 @@ function initPreloader() {
     setTimeout(() => {
       preloader.classList.add('is-hidden');
       sessionStorage.setItem('dadex_visited', 'true');
-      setTimeout(() => preloader.remove(), 600);
-    }, 1200); 
+      setTimeout(() => preloader.remove(), 1100);
+    }, 1900); 
   });
 }
 
