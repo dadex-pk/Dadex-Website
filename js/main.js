@@ -181,15 +181,17 @@ function initPreloader() {
     return;
   }
 
+  // Wait for page load, then hold the preloader for 1.8 seconds
   window.addEventListener('load', () => {
     setTimeout(() => {
       preloader.classList.add('is-hidden');
       sessionStorage.setItem('dadex_visited', 'true');
-      setTimeout(() => preloader.remove(), 1100);
-    }, 1900); 
+      
+      // Remove from DOM after fade out is complete
+      setTimeout(() => preloader.remove(), 600);
+    }, 1800); // 1.8s guarantees the word fully completes and holds
   });
 }
-
 /* ============================================================
    6. DYNAMIC TEXT (year, company age)
    ============================================================ */
