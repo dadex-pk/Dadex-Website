@@ -104,13 +104,29 @@
 
 /* Filter bar base comes from shared-parts.css (.lit-filter-btn).
    This adds the centered variant on the literature page. */
+
+
+
 .lit-filter-bar {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-bottom: 3rem;
   justify-content: center;
+  position: sticky;
+  top: calc(var(--header-h-scrolled) + 40px); 
+  z-index: 90; 
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--line);
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50%);
+  box-shadow: 0 1px 0 rgba(15, 18, 21, 0.02);
 }
+
+
 
 .lit-card {
   display: flex;

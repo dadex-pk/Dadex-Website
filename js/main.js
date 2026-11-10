@@ -65,12 +65,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
-  run('preloader',        initPreloader);
+   run('preloader',        initPreloader);
   run('dynamic-text',     initDynamicSiteText);
   run('header-state',     () => initHeaderState(header));
   run('navigation',       () => initNavigation(header));
   run('active-nav',       setActiveNavigation);
   run('project-filter',   initProjectFilter);
+  run('products-filter',  initProductsFilter);
   run('mailto-form',      initMailtoForm);
   run('investor-panels',  initInvestorPanels);
   run('site-search',      initSiteSearch);
@@ -515,6 +516,32 @@ function initProjectFilter() {
   });
 }
 
+/* ============================================================
+   10.1 PRODUCTS FILTER (products.html)
+   ============================================================ */
+
+function initProductsFilter() {
+  const filterGroup = document.getElementById('productFilter');
+  if (!filterGroup) return;
+
+  const buttons = filterGroup.querySelectorAll('.filter-btn[data-filter]');
+  const groups = document.querySelectorAll('.product-category-group');
+  if (!buttons.length || !groups.length) return;
+
+  filterGroup.addEventListener('click', event => {
+    const button = event.target.closest('.filter-btn[data-filter]');
+    if (!button || !filterGroup.contains(button)) return;
+
+    // Toggle active state on buttons
+    buttons.forEach(b => b.classList.toggle('active', b === button));
+
+    // Show/Hide categories
+    const value = button.dataset.filter;
+    groups.forEach(group => {
+      group.hidden = !(value === 'all' || group.dataset.category === value);
+    });
+  });
+}
 /* ============================================================
    11. MAILTO FORM (contact.html)
    ============================================================ */

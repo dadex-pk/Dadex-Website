@@ -10,14 +10,22 @@
 
 /* --- Horizontal group tabs --- */
 .ir-tabs {
-  position: sticky;
-  top: var(--header-h);
-  z-index: 50;
-  background: #fff;
-  border-bottom: 2px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin-bottom: 3rem;
+  justify-content: center;
+  position: sticky;
+  top: calc(var(--header-h-scrolled) + 40px); 
+  z-index: 90; 
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.4rem 1rem;
+  border-bottom: 1px solid var(--line);
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50%);
   box-shadow: 0 1px 0 rgba(15, 18, 21, 0.02);
-  border-radius: 100px;
 }
 .ir-tabs::after {
   content: "";
@@ -94,15 +102,15 @@
 /* --- Two-column layout --- */
 .ir-layout {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 2rem;
+  grid-template-columns: 272px 1fr;
+  gap: 1.5rem;
   align-items: start;
 }
 
 /* --- Sidebar --- */
 .ir-sidebar {
   position: sticky;
-  top: calc(var(--header-h) + var(--ir-tabs-h) + 1.5rem);
+  top: calc(var(--header-h) + var(--ir-tabs-h) + 4rem);
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
@@ -156,7 +164,7 @@
   border-radius: var(--radius-md);
   padding: 3rem;
   box-shadow: var(--shadow-sm);
-}
+  }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(5px); }
   to   { opacity: 1; transform: none; }
@@ -191,7 +199,7 @@
 .ir-panel > p {
   color: var(--muted);
   line-height: 1.6;
-  min-width: 92%;
+  max-width: 92%; 
 }
 .ir-panel > p + .grid,
 .ir-panel > p + .share-table { margin-top: 1.5rem; }
@@ -207,10 +215,16 @@
   text-decoration-thickness: 2px;
 }
 
+.ir-panel li{
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+
 /* --- Share tables --- */
 .share-table {
   overflow-x: auto;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--line);
   background: #fff;
@@ -226,21 +240,21 @@
 .share-table td {
   padding: 0.9rem 1.25rem;
   border-bottom: 1px solid var(--line-soft);
-  font-size: 0.9375rem;
+  font-size: 0.92rem;
 }
 .share-table th {
-  background: var(--bg-mist);
+  background: var(--brand-red-light);
   padding-top: 1rem;
   padding-bottom: 1rem;
   border-bottom: 2px solid var(--line);
-  font-size: 0.75rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--muted);
-  font-weight: 800;
+  color: var(--ink);
+  font-weight: 700;
 }
-.share-table tbody tr:nth-child(even) td { background: #fbfcfc; }
-.share-table tbody tr:hover td { background: #fdf5f5; }
+.share-table tbody tr:nth-child(even) td { background: var(--bg-mist-light); }
+.share-table tbody tr:hover td { background:var(--brand-red-lighter); }
 .share-table tr:last-child td,
 .share-table tbody tr:last-child th,
 .share-table tfoot th {
@@ -390,17 +404,18 @@
 .director-list {
   display: flex;
   flex-direction: column;
-  border-left: 2px solid var(--line);
-}
+  border-left: 0px solid var(--line);
+  }
+
 .director-name-btn {
-  background: transparent;
+  background: var(--bg-mist-light);
   border: none;
-  border-left: 3px solid transparent;
-  padding: 1.25rem 1.5rem;
+  border-left: 5px solid var(--line);
+  padding: 1rem 1.25rem;
   text-align: left;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-left: -2px;
+  margin: 0.4rem 0;
 }
 .director-name-btn strong {
   display: block;
@@ -417,8 +432,8 @@
   letter-spacing: 0.05em;
   color: var(--muted);
 }
-.director-name-btn:hover { background: var(--bg-mist); }
-.director-name-btn:hover strong { color: var(--brand-red); }
+.director-name-btn:hover { background: var(--bg-mist);  border-left: 5px solid var(--muted);}
+.director-name-btn:hover strong { color: var(--brand-red);}
 .director-name-btn.active {
   background: #fdf5f5;
   border-left-color: var(--brand-red);
@@ -442,23 +457,23 @@
   font-size: 1.75rem;
   color: var(--ink);
   margin-bottom: 0.25rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 .director-bio .director-title {
   display: block;
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--brand-red);
   margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--line);
 }
 .director-bio p {
-  color: var(--muted);
+  color: var(--ink-light);
   font-size: 1rem;
-  line-height: 1.8;
+  line-height: 1.7;
   margin-bottom: 1.25rem;
 }
 .director-bio p:last-child { margin-bottom: 0; }
