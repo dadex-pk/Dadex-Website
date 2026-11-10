@@ -89,3 +89,64 @@ button, input, select, textarea, optgroup, option {
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================================
+   PRELOADER ANIMATION (Custom Image Slices)
+   ============================================================ */
+
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#preloader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.custom-logo-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* The gap adjusts the spacing between the image slices. 
+     You may need to tweak this depending on how tightly you cropped the images. */
+  gap: 2px; 
+}
+
+.logo-part {
+  /* Set a uniform height for all letters to ensure they align perfectly */
+  height: 70px; 
+  width: auto;
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: logoSlideIn 0.4s cubic-bezier(0.2, 0.65, 0.2, 1) forwards;
+}
+
+/* Stagger the animation for each letter */
+.part-1 { animation-delay: 0.1s; }
+.part-2 { animation-delay: 0.25s; }
+.part-3 { animation-delay: 0.4s; }
+.part-4 { animation-delay: 0.55s; }
+.part-5 { animation-delay: 0.7s; }
+
+@keyframes logoSlideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Accessibility: Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .logo-part {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
