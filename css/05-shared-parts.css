@@ -107,14 +107,13 @@ h3 span {
 }
 
 .btn--secondary {
-  background: var(--brand-red-light);
+  background: #fff;
   color: var(--brand-red);
   border-color: var(--brand-red);
 }
 .btn--secondary:hover {
-  background: var(--brand-accent-dark);
-  border-color: var(--brand-accent-dark);
-  color: var(--brand-red-dark);
+  background: var(--muted-light);
+  color: var(--ink);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(229, 0, 0, 0.2);
 }
