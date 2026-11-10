@@ -166,29 +166,19 @@ function renderComponentError(mount, { name, url, reason }) {
 }
 
 /* ============================================================
-   5. PRELOADER (FIXED)
+   5. PRELOADER
    ============================================================ */
 
 function initPreloader() {
   const preloader = document.getElementById('preloader');
   if (!preloader) return;
 
-  // Check if the user has already seen it in this session
-  const hasVisited = sessionStorage.getItem('dadex_visited');
-
-  if (hasVisited) {
-    preloader.remove();
-    return;
-  }
-
   const hidePreloader = () => {
-    // Move sessionStorage.setItem here to start of fade-out
-    sessionStorage.setItem('dadex_visited', 'true');
     preloader.classList.add('is-hidden');
+    // Remove from DOM after fade out is complete
     setTimeout(() => preloader.remove(), 600);
   };
 
-  // FIX: Handle the case where the window has already loaded (e.g., cached)
   if (document.readyState === 'complete') {
     setTimeout(hidePreloader, 1800);
   } else {
