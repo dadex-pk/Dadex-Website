@@ -65,13 +65,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
-   run('preloader',        initPreloader);
+  run('preloader',        initPreloader);
   run('dynamic-text',     initDynamicSiteText);
   run('header-state',     () => initHeaderState(header));
   run('navigation',       () => initNavigation(header));
   run('active-nav',       setActiveNavigation);
   run('project-filter',   initProjectFilter);
   run('products-filter',  initProductsFilter);
+  run('product-tabs',     initProductTabs);
   run('mailto-form',      initMailtoForm);
   run('investor-panels',  initInvestorPanels);
   run('site-search',      initSiteSearch);
@@ -1074,5 +1075,55 @@ function initBackToTop() {
       top: 0,
       behavior: prefersReduced ? 'auto' : 'smooth'
     });
+  });
+}
+
+/* ============================================================
+   PRODUCT TABS (Show/Hide)
+   ============================================================ */
+function initProductTabs() {
+  const tabs = document.querySelectorAll('.product-tabs a');
+  const sections = document.querySelectorAll('main > .section[id]');
+  
+  if (!tabs.length || !sections.length) return;
+
+  // 1. Set the initial active state based on the URL hash (or default to overview)
+  const hash = window.location.hash.replace('#', '') || 'overview';
+  
+  const showSection = (id) => {
+    tabs.forEach(tab => {
+      tab.classList.toggle('active', tab.getAttribute('href') === `#${id}`);
+    });
+    sections.forEach(section => {
+      section.classList.toggle('is-active', section.id === id);
+    });
+  };
+
+  // Show the initial section
+  showSection(hash);
+
+  // 2. Add click listeners to sidebar links
+  tabs.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = tab.getAttribute('href').replace('#', '');
+      
+      // Update URL hash without scrolling
+      history.pushState(null, null, `#${id}`);
+      
+      // Show the new section
+      showSection(id);
+      
+      // On mobile, scroll to the top of the content so the user sees the tab change
+      if (window.innerWidth < 900) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  });
+  
+  // Listen for back/forward browser buttons
+  window.addEventListener('hashchange', () => {
+    const newHash = window.location.hash.replace('#', '') || 'overview';
+    showSection(newHash);
   });
 }
