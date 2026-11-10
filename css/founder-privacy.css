@@ -6,7 +6,6 @@
 /* ============================================================
    FOUNDER CHAIRMAN PAGE
    ============================================================ */
-
 .position-list {
   list-style: none;
   padding: 0;
@@ -30,6 +29,192 @@
   background: var(--brand-red);
 }
 
+/* ============================================================
+   FOUNDER CHAIRMAN PAGE
+ ============================================================ */
+.founder-profile__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    align-items: center;
+    gap: clamp(3rem, 5vw, 6rem);
+}
+
+/* --- Portrait --- */
+.founder-profile__portrait {
+    margin: 0;
+    overflow: hidden;
+    background: var(--bg-mist-light);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.founder-profile__portrait img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 620px;
+    object-fit: cover;
+    object-position: center top;
+}
+
+/* --- Portrait Caption --- */
+.founder-profile__portrait figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-mist-light);
+    border-top: 2px solid var(--brand-accent-light);
+}
+
+.founder-profile__name {
+    color: var(--brand-red);
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.founder-profile__designation {
+    color: var(--text-heading);
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+/* --- Biography --- */
+.founder-profile__content p {
+    color: var(--ink-light);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    padding-right: 1rem;
+}
+
+.founder-profile__content p strong {
+    color: var(--text-heading);
+}
+
+/* --- Founder Quote --- */
+.founder-quote {
+    margin: 2.5rem 3rem 0 0;
+    padding: 1.5rem 1.5rem 1.5rem 2.5rem;
+    border-left: 4px solid var(--brand-accent-dark);
+    background: var(--bg-mist-light);
+    color: var(--brand-accent-dark);
+    font-size: clamp(0.92rem, 1.5vw, 1.15rem);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.65;
+}
+
+.founder-quote cite {
+    display: block;
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 1.6;
+}
+.founder-card {
+    width: 100%;
+    max-width: 30rem;
+    padding: 2rem;
+}
+
+.founder-card h3 {
+    margin-bottom: 0;
+    padding: 1rem 1rem 0.5rem 0;
+    color: var(--text-heading);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.040em;
+    border-bottom: 2px solid var(--brand-red);
+}
+
+/* ============================================================
+   HISTORICAL POSITIONS
+   ============================================================ */
+
+.position-list {
+    list-style: none;
+    padding: 1rem 0 0 0;
+    margin: 0;
+}
+
+.position-list li {
+    position: relative;
+    padding: 0.55rem 0 0.55rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+}
+
+.position-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.1rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand-red);
+}
+
+.position-list li:last-child {
+    border-bottom: 0;
+}
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .founder-profile__inner {
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        gap: 2.5rem;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .founder-profile__inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .founder-profile__portrait {
+        width: 100%;
+        max-width: 520px;
+        margin-inline: auto;
+    }
+
+    .founder-profile__portrait img {
+        max-height: 560px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .founder-profile__inner {
+        gap: 2rem;
+    }
+
+    .founder-profile__portrait figcaption {
+        padding: 1rem 1.15rem;
+    }
+
+    .founder-quote {
+        margin-top: 2rem;
+        padding-left: 1rem;
+    }
+
+}
 /* ============================================================
    PRIVACY POLICY PAGE
    ============================================================ */
