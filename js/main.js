@@ -1,10 +1,10 @@
 /* ============================================================
-   DADEX ETERNIT LIMITED — SHARED UI (v6.2)
+   DADEX ETERNIT LIMITED — SHARED UI (v6.3)
    ------------------------------------------------------------
-   v6.2 changes
-     · Fixed Preloader timing (handles cached loads)
-     · Fixed Mobile Focus Trap (includes hamburger button)
-     · Fixed DEXPERT duplicate injection on rapid clicks
+   v6.3 changes
+     · Added missing initProductTabs to the boot sequence
+     · Fixed Focus Trap picking up display:none elements
+     · Made Back-to-Top idempotent to prevent memory leaks
    ============================================================ */
 
 'use strict';
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   run('active-nav',       setActiveNavigation);
   run('project-filter',   initProjectFilter);
   run('products-filter',  initProductsFilter);
-  run('product-tabs',     initProductTabs);
+  run('product-tabs',     initProductTabs); // FIX: Missing init
   run('mailto-form',      initMailtoForm);
   run('investor-panels',  initInvestorPanels);
   run('site-search',      initSiteSearch);
@@ -177,7 +177,6 @@ function initPreloader() {
 
   const hidePreloader = () => {
     preloader.classList.add('is-hidden');
-    // Remove from DOM after fade out is complete
     setTimeout(() => preloader.remove(), 600);
   };
 
@@ -265,7 +264,7 @@ function initHeaderState(header) {
 }
 
 /* ============================================================
-   8. NAVIGATION (mobile drawer, dropdowns, focus trap - FIXED)
+   8. NAVIGATION (mobile drawer, dropdowns, focus trap)
    ============================================================ */
 
 function initNavigation(header) {
@@ -388,17 +387,22 @@ function initNavigation(header) {
     'textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])';
 
   const getDrawerFocusables = () => {
-    const items = Array.from(nav.querySelectorAll(FOCUSABLE_SELECTOR)).filter(
-      el => !el.hasAttribute('inert')
-    );
+    const items = Array.from(nav.querySelectorAll(FOCUSABLE_SELECTOR)).filter(el => {
+      // FIX: Explicitly filter out hidden elements (display:none, visibility:hidden, or 0 size)
+      return !el.hasAttribute('inert') &&
+             el.offsetWidth > 0 &&
+             el.offsetHeight > 0 &&
+             getComputedStyle(el).visibility !== 'hidden';
+    });
+    
     // FIX: Include the hamburger button in the focus trap list
-    if (hamburger && !hamburger.hasAttribute('inert')) {
+    if (hamburger && !hamburger.hasAttribute('inert') && hamburger.offsetWidth > 0) {
       items.unshift(hamburger);
     }
     return items;
   };
 
-  // FIX: Attach to header instead of nav so the hamburger click is captured
+  // Attach to header instead of nav so the hamburger click is captured
   header.addEventListener('keydown', event => {
     if (event.key !== 'Tab') return;
     if (!isMobile() || !nav.classList.contains('open')) return;
@@ -533,16 +537,68 @@ function initProductsFilter() {
     const button = event.target.closest('.filter-btn[data-filter]');
     if (!button || !filterGroup.contains(button)) return;
 
-    // Toggle active state on buttons
     buttons.forEach(b => b.classList.toggle('active', b === button));
 
-    // Show/Hide categories
     const value = button.dataset.filter;
     groups.forEach(group => {
       group.hidden = !(value === 'all' || group.dataset.category === value);
     });
   });
 }
+
+/* ============================================================
+   10.2 PRODUCT TABS (product-*.html)
+   ============================================================ */
+
+function initProductTabs() {
+  const tabs = document.querySelectorAll('.product-tabs a');
+  const sections = document.querySelectorAll('main > .section[id]');
+  
+  if (!tabs.length || !sections.length) return;
+
+  const hash = window.location.hash.replace('#', '') || 'overview';
+  
+  const showSection = (id) => {
+    tabs.forEach(tab => {
+      tab.classList.toggle('active', tab.getAttribute('href') === `#${id}`);
+    });
+    sections.forEach(section => {
+      section.classList.toggle('is-active', section.id === id);
+    });
+    
+    // Handle the #downloads section specifically since it has a special CSS layout
+    const downloadsSection = document.getElementById('downloads');
+    if (downloadsSection) {
+      if (id === 'downloads') {
+        downloadsSection.classList.add('is-active');
+      } else {
+        downloadsSection.classList.remove('is-active');
+      }
+    }
+  };
+
+  showSection(hash);
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = tab.getAttribute('href').replace('#', '');
+      
+      history.pushState(null, null, `#${id}`);
+      showSection(id);
+      
+      if (window.innerWidth < 900) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  });
+  
+  window.addEventListener('hashchange', () => {
+    const newHash = window.location.hash.replace('#', '') || 'overview';
+    showSection(newHash);
+  });
+}
+
 /* ============================================================
    11. MAILTO FORM (contact.html)
    ============================================================ */
@@ -740,7 +796,7 @@ function initSiteSearch() {
 }
 
 /* ============================================================
-   14. DEXPERT ASSISTANT (FIXED)
+   14. DEXPERT ASSISTANT
    ============================================================ */
 
 const DEXPERT_PRODUCTS = [
@@ -797,7 +853,6 @@ function initDEXPERT() {
   function loadDialog() {
     if (dialogPromise) return dialogPromise;
 
-    // FIX: Check if the dialog already exists in the DOM
     const existingDialog = document.getElementById('dexpertDialog');
     if (existingDialog) {
       dialogPromise = Promise.resolve(existingDialog);
@@ -1053,6 +1108,10 @@ function initDEXPERT() {
    ============================================================ */
 
 function initBackToTop() {
+  // FIX: Prevent memory leaks and duplicate listeners if this is called multiple times
+  if (window._dadexBackToTopInit) return;
+  window._dadexBackToTopInit = true;
+
   if (document.querySelector('.back-to-top')) return;
 
   const btn = document.createElement('button');
@@ -1075,55 +1134,5 @@ function initBackToTop() {
       top: 0,
       behavior: prefersReduced ? 'auto' : 'smooth'
     });
-  });
-}
-
-/* ============================================================
-   PRODUCT TABS (Show/Hide)
-   ============================================================ */
-function initProductTabs() {
-  const tabs = document.querySelectorAll('.product-tabs a');
-  const sections = document.querySelectorAll('main > .section[id]');
-  
-  if (!tabs.length || !sections.length) return;
-
-  // 1. Set the initial active state based on the URL hash (or default to overview)
-  const hash = window.location.hash.replace('#', '') || 'overview';
-  
-  const showSection = (id) => {
-    tabs.forEach(tab => {
-      tab.classList.toggle('active', tab.getAttribute('href') === `#${id}`);
-    });
-    sections.forEach(section => {
-      section.classList.toggle('is-active', section.id === id);
-    });
-  };
-
-  // Show the initial section
-  showSection(hash);
-
-  // 2. Add click listeners to sidebar links
-  tabs.forEach(tab => {
-    tab.addEventListener('click', (e) => {
-      e.preventDefault();
-      const id = tab.getAttribute('href').replace('#', '');
-      
-      // Update URL hash without scrolling
-      history.pushState(null, null, `#${id}`);
-      
-      // Show the new section
-      showSection(id);
-      
-      // On mobile, scroll to the top of the content so the user sees the tab change
-      if (window.innerWidth < 900) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    });
-  });
-  
-  // Listen for back/forward browser buttons
-  window.addEventListener('hashchange', () => {
-    const newHash = window.location.hash.replace('#', '') || 'overview';
-    showSection(newHash);
   });
 }
