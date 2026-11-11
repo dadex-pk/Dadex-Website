@@ -255,871 +255,473 @@
    ------------------------------------------------------------
    Shared template for all 19 product pages.
    ============================================================ */
+/* ============================================================
+   PRODUCT DETAIL PAGE (PDP) - POLYDEX TEMPLATE
+   ============================================================ */
 
-
-/* ------------------------------------------------------------
-   2.1 PRODUCT HERO
-   ------------------------------------------------------------ */
-
-.product-hero {
-    padding: clamp(2.5rem, 5vw, 4.5rem) 0;
-    background: var(--bg-surface);
-    border-bottom: 1px solid var(--line);
+.product-detail-page {
+  background: #fff;
 }
 
-.product-hero__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: center;
-    gap: clamp(2rem, 4vw, 4rem);
+/* --- 1. HERO SECTION --- */
+.pdp-hero {
+  position: relative;
+  padding: calc(var(--header-h) + 4rem) 0 5rem;
+  background: #fff;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
 }
 
-.product-hero__content {
-    min-width: 0;
+/* Subtle background decoration */
+.pdp-hero::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(229, 0, 0, 0.04) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
 }
 
-.product-hero__content h1 {
-    margin: 0 0 0.75rem;
-    font-size: clamp(2rem, 4.5vw, 3.75rem);
-    line-height: 1.08;
-    letter-spacing: -0.03em;
-    text-transform: uppercase;
-    overflow-wrap: break-word;
-    hyphens: none;
+.pdp-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
 }
 
-.product-hero__subtitle {
-    margin: 0 0 1.25rem;
-    color: var(--brand-red);
-    font-size: clamp(1.125rem, 2vw, 1.5rem);
-    font-weight: 800;
-    line-height: 1.35;
+.pdp-hero__content h1 {
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  color: var(--ink);
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
 }
 
-.product-hero__desc {
-    max-width: 55ch;
-    margin: 0 0 1.75rem;
-    color: var(--muted);
-    font-size: clamp(1rem, 1.3vw, 1.125rem);
-    line-height: 1.75;
+.pdp-hero__subtitle {
+  color: var(--brand-red);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
 }
 
-.product-hero__image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-    aspect-ratio: 1 / 1;
-    padding: clamp(1rem, 2.5vw, 2rem);
-    overflow: hidden;
-    background: #fff;
-
+.pdp-hero__description {
+  font-size: 1.125rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  max-width: 50ch;
 }
 
-.product-hero__image img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    object-fit: contain;
-    object-position: center;
+.pdp-hero__actions {
+  display: flex;
+  gap: 1rem;
 }
 
-
-/* ------------------------------------------------------------
-   2.2 PRODUCT FEATURES
-   ------------------------------------------------------------ */
-
-.product-features {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 0.75rem 1.25rem;
-    margin: 0 0 2rem;
+.pdp-hero__media img {
+  width: 100%;
+  max-width: 650px;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08));
 }
 
-.product-features span {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    min-width: 0;
-    color: var(--ink);
-    font-size: 0.9375rem;
-    font-weight: 600;
-    line-height: 1.5;
-}
-
-.product-features span::before {
-    content: "✓";
-    flex: 0 0 auto;
-    color: var(--brand-red);
-    font-weight: 900;
-}
-
-
-/* ------------------------------------------------------------
-   2.3 FULL-WIDTH PRODUCT INFORMATION STRIP
-   ------------------------------------------------------------ */
-
+/* --- 2. PRODUCT STRIP (ICONS) --- */
 .product-strip {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-
-    width: 100vw;
-    max-width: 100vw;
-    margin: 0 calc(50% - 50vw) 2rem;
-    padding-inline: max(1rem, calc((100vw - var(--container)) / 2));
-
-    background: #fff;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0 calc(50% - 50vw);
+  padding-inline: max(1rem, calc((100vw - var(--container)) / 2));
+  background: #fff;
+  border-bottom: 1px solid var(--line);
 }
 
 .product-strip-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    min-width: 0;
-    padding: clamp(1rem, 3vw, 1.5rem) 1.5rem;
-
-    border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border-right: 1px solid var(--line);
 }
 
 .product-strip-item:last-child {
-    border-right: 0;
+  border-right: 0;
+}
+
+.product-strip-icon {
+  font-size: 2rem;
+  color: var(--brand-red);
+  flex-shrink: 0;
+}
+
+.product-strip-item div {
+  display: flex;
+  flex-direction: column;
 }
 
 .product-strip-label {
-    display: block;
-    margin-bottom: 0.4rem;
-
-    color: var(--muted);
-    font-size: 0.6875rem;
-    font-weight: 800;
-    line-height: 1.4;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.15rem;
 }
 
 .product-strip-item strong {
-    color: var(--brand-red);
-    font-size: clamp(0.9375rem, 1.4vw, 1.125rem);
-    line-height: 1.4;
-
-    overflow-wrap: break-word;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 800;
 }
 
-
-/* ------------------------------------------------------------
-   2.4 PRODUCT PAGE — DESKTOP GRID & SIDEBAR
-   ------------------------------------------------------------ */
-
-@media (min-width: 900px) {
-
-    /*
-       Main page grid:
-       Row 1: Full-width product hero
-       Row 2: Full-width product information strip
-       Row 3: Sidebar tabs + active content panel
-       Row 4: Related products heading
-       Row 5: Related products cards
-       Row 6: Contact CTA
-    */
-
-    main:has(.product-hero) {
-        display: grid !important;
-        grid-template-columns: 280px minmax(0, 1fr);
-        column-gap: 4rem;
-        align-items: start;
-
-        width: min(calc(100% - 4rem), var(--container));
-        margin-inline: auto;
-        padding-top: 3rem;
-        padding-bottom: 5rem;
-    }
-
-    /* Full-width hero */
-    main:has(.product-hero) > .product-hero {
-        grid-column: 1 / -1;
-        grid-row: 1;
-
-        width: 100vw;
-        margin-inline: calc(50% - 50vw);
-        margin-bottom: 0;
-
-        border-bottom: 0;
-    }
-
-    /* Unwrap the container holding the product strip and tabs */
-    main:has(.product-hero) > .container:has(.product-tabs) {
-        display: contents !important;
-    }
-
-    /* Full-width product information strip */
-    main:has(.product-hero) > .product-strip,
-    main:has(.product-hero) .product-strip {
-        grid-column: 1 / -1;
-        grid-row: 2;
-    }
-
-    /* Product navigation sidebar */
-    main:has(.product-hero) .product-tabs {
-        grid-column: 1;
-        grid-row: 3;
-
-        position: sticky;
-        top: calc(var(--header-h-scrolled, 64px) + 2rem);
-        align-self: start;
-
-        display: flex !important;
-        flex-direction: column;
-
-        height: max-content;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: var(--radius-md);
-        box-shadow: var(--shadow-sm);
-
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
-    }
-
-    /* Sidebar navigation links */
-    main:has(.product-hero) .product-tabs a {
-        display: block;
-        padding: 1.25rem 1.5rem;
-
-        color: var(--ink-light);
-        font-size: 0.9375rem;
-        line-height: 1.5;
-        text-decoration: none;
-        white-space: normal;
-
-        background: #fff;
-        border: 0;
-        border-left: 3px solid transparent;
-        border-bottom: 1px solid var(--line-soft);
-        border-radius: 0;
-
-        transition:
-            color 0.2s ease,
-            background-color 0.2s ease,
-            border-color 0.2s ease;
-    }
-
-    main:has(.product-hero) .product-tabs a:last-child {
-        border-bottom: 0;
-    }
-
-    main:has(.product-hero) .product-tabs a:hover {
-        color: var(--brand-red);
-        background: #fff8f8;
-    }
-
-    main:has(.product-hero) .product-tabs a.active {
-        color: var(--brand-red);
-        background: #fff2f2;
-        border-left-color: var(--brand-red);
-    }
-
-    /* Active content panel */
-    main:has(.product-hero) > .section {
-        grid-column: 2;
-        grid-row: 3;
-
-        min-width: 0;
-        margin: 0;
-        padding: 3rem;
-
-        background: #fff !important;
-        border: 1px solid var(--line);
-        border-top: 0;
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-sm);
-
-        display: none !important;
-    }
-
-    main:has(.product-hero) > .section.is-active {
-        display: block !important;
-        animation: productFadeIn 0.3s ease both;
-    }
-
-    /* Downloads section is unwrapped to place its contents in the grid */
-    main:has(.product-hero) > #downloads {
-        display: contents !important;
-    }
-
-    main:has(.product-hero) > #downloads > .container {
-        display: contents !important;
-    }
-
-    /* Downloads banner: visible only when Downloads tab is active */
-    main:has(.product-hero) > #downloads .p2-banner:not(.dark) {
-        grid-column: 2;
-        grid-row: 3;
-
-        display: none;
-
-        min-width: 0;
-        margin: 0;
-        padding: 3rem;
-
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-sm);
-    }
-
-    main:has(.product-hero) > #downloads.is-active .p2-banner:not(.dark) {
-        display: flex !important;
-        animation: productFadeIn 0.3s ease both;
-    }
-
-    /* --- ROW 4: Related Products Heading --- */
-    main:has(.product-hero) > #downloads .section-header {
-        grid-column: 1 / -1;
-        grid-row: 4;
-
-        margin-top: 5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    /* --- ROW 5: Related Products Cards --- */
-    main:has(.product-hero) > #downloads .p2-related {
-        grid-column: 1 / -1;
-        grid-row: 5;
-
-        margin: 0;
-    }
-
-    /* --- ROW 6: Contact CTA --- */
-    main:has(.product-hero) > #downloads .p2-banner.dark {
-        grid-column: 1 / -1;
-        grid-row: 6;
-
-        margin-top: 4rem;
-        margin-bottom: 0;
-    }
+/* --- 3. STICKY SECTION NAVIGATION --- */
+.pdp-nav-wrap {
+  position: sticky;
+  top: var(--header-h-scrolled);
+  z-index: 90;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
 }
 
+.pdp-section-nav {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.pdp-section-nav::-webkit-scrollbar { display: none; }
 
-/* ------------------------------------------------------------
-   2.5 TECHNICAL SUMMARY
-   ------------------------------------------------------------ */
-
-.p2-tech-summary {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1px;
-
-    margin: 0;
-    overflow: hidden;
-
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
+.pdp-section-nav a {
+  display: block;
+  padding: 1.25rem 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
-.p2-tech-summary-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    min-width: 0;
-    padding: clamp(1rem, 2vw, 1.5rem);
-
-    text-align: center;
-    background: #fff;
+.pdp-section-nav a:hover {
+  color: var(--ink);
 }
 
-.p2-tech-summary-item span {
-    display: block;
-    margin-bottom: 0.4rem;
-
-    color: var(--muted);
-    font-size: 0.75rem;
-    font-weight: 800;
-    line-height: 1.4;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+.pdp-section-nav a.active {
+  color: var(--brand-red);
+  border-bottom-color: var(--brand-red);
+  font-weight: 700;
 }
 
-.p2-tech-summary-item strong {
-    color: var(--brand-red);
-    font-size: clamp(0.9375rem, 1.4vw, 1.125rem);
-    line-height: 1.4;
-
-    overflow-wrap: break-word;
+/* --- 4. GENERIC SECTION STYLES --- */
+.pdp-section {
+  padding: clamp(4rem, 6vw, 5rem) 0;
+  scroll-margin-top: calc(var(--header-h-scrolled) + 60px);
 }
 
-
-/* ------------------------------------------------------------
-   2.6 TECHNICAL SPECIFICATION TABLES
-   ------------------------------------------------------------ */
-
-.spec-table-wrap {
-    width: 100%;
-    max-width: 100%;
-    margin: 2rem 0;
-
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
-
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
+.pdp-section--light {
+  background: var(--bg-mist);
 }
 
-.spec-table {
-    width: 100%;
-    margin: 0;
-
-    border-collapse: collapse;
-    background: #fff;
+.pdp-section-heading {
+  margin-bottom: 3rem;
+  max-width: 600px;
+}
+.pdp-section-heading h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: 1rem;
 }
 
-.spec-table-wrap .spec-table {
-    min-width: 520px;
+/* --- 5. TWO-COLUMN LAYOUTS --- */
+.pdp-two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
 }
 
-.spec-table th,
-.spec-table td {
-    padding: 1rem 1.25rem;
-
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    text-align: left;
-    vertical-align: top;
-
-    border-bottom: 1px solid var(--line);
+.pdp-section__intro h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: 1.5rem;
 }
 
-.spec-table th {
-    width: 30%;
-
-    color: var(--brand-red);
-    font-weight: 700;
-    background: rgb(229 0 0 / 4%);
-
-    overflow-wrap: break-word;
+.pdp-section__intro p {
+  font-size: 1.125rem;
+  color: var(--muted);
+  line-height: 1.7;
 }
 
-.spec-table td {
-    color: var(--muted);
-    background: #fff;
+/* Overview & Install Panels */
+.pdp-overview-panel,
+.pdp-install-panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--brand-red);
+  border-radius: var(--radius-md);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-sm);
 }
 
-.spec-table tbody tr:hover th,
-.spec-table tbody tr:hover td {
-    background-color: #fff8f8;
+.pdp-overview-panel__heading {
+  margin-bottom: 1.5rem;
+}
+.pdp-overview-panel__heading h3 {
+  font-size: 1.25rem;
+  margin: 0;
 }
 
-.spec-table tr:last-child th,
-.spec-table tr:last-child td {
-    border-bottom: 0;
+.pdp-install-panel h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--ink);
 }
 
-
-/* ------------------------------------------------------------
-   2.7 TECHNICAL NOTES
-   ------------------------------------------------------------ */
-
-.p2-tech-notes {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.25rem;
-
-    margin: 3rem 0;
+/* Check Lists */
+.pdp-check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.p2-tech-note {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-
-    min-width: 0;
-    padding: 1.5rem;
-
-    background: var(--bg-mist);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
+.pdp-check-list li {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--ink-light);
+  line-height: 1.5;
 }
 
-.p2-tech-note i {
-    flex: 0 0 auto;
-
-    color: var(--brand-red);
-    font-size: 1.5rem;
-    line-height: 1.3;
+.pdp-check-list i {
+  color: var(--brand-red);
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
 }
 
-.p2-tech-note h4 {
-    margin: 0 0 0.375rem;
-
-    font-size: 1rem;
-    line-height: 1.4;
+.pdp-note {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  background: var(--bg-mist);
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  margin: 0;
 }
 
-.p2-tech-note p {
-    margin: 0;
-
-    color: var(--muted);
-    font-size: 0.875rem;
-    line-height: 1.65;
+/* --- 6. SPECIFICATION TABLE --- */
+.pdp-spec-table-wrap {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #fff;
+  margin-bottom: 1.5rem;
 }
 
-
-/* ------------------------------------------------------------
-   2.8 INFORMATION & DOWNLOAD BANNERS
-   ------------------------------------------------------------ */
-
-.p2-banner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-
-    min-width: 0;
-    margin: 3rem 0;
-    padding: clamp(1.5rem, 3vw, 2rem);
-
-    background: var(--bg-mist);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
+.pdp-spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
 }
 
-.p2-banner > * {
-    min-width: 0;
+.pdp-spec-table th {
+  width: 30%;
+  padding: 1.25rem 1.5rem;
+  background: var(--brand-red-light);
+  color: var(--brand-red);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  border-bottom: 1px solid var(--line);
 }
 
-.p2-banner h3 {
-    margin: 0 0 0.5rem;
-    line-height: 1.3;
+.pdp-spec-table td {
+  padding: 1.25rem 1.5rem;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.6;
 }
 
-.p2-banner p {
-    margin: 0;
-
-    color: var(--muted);
-    line-height: 1.65;
+.pdp-spec-table tr:last-child th,
+.pdp-spec-table tr:last-child td {
+  border-bottom: 0;
 }
 
-/* Dark contact banner */
-
-.p2-banner.dark {
-    color: #fff;
-    background: var(--bg-dark);
-    border-color: transparent;
+.pdp-table-note {
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-style: italic;
 }
 
-.p2-banner.dark h3 {
-    color: #fff;
+/* --- 7. DOWNLOADS (From previous step) --- */
+.product-downloads-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
-.p2-banner.dark p {
-    color: #d1d1d6;
+.download-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+  text-decoration: none;
 }
 
+.download-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--brand-red);
+  box-shadow: var(--shadow-md);
+}
 
-/* ------------------------------------------------------------
-   2.9 RELATED PRODUCTS
-   ------------------------------------------------------------ */
+.download-card__icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  background: var(--brand-red-light);
+  color: var(--brand-red);
+  border-radius: var(--radius-sm);
+  font-size: 1.5rem;
+}
 
+.download-card__content { flex: 1; }
+.download-card__content h4 { margin: 0 0 0.25rem; color: var(--ink); font-size: 1.125rem; }
+.download-card__content span { font-size: 0.875rem; color: var(--muted); }
+.download-card__action { color: var(--brand-red); font-size: 1.25rem; transition: transform 0.2s ease; }
+.download-card:hover .download-card__action { transform: translateY(3px); }
+
+/* --- 8. RELATED PRODUCTS (From previous step) --- */
 .p2-related {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1rem;
-
-    margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
 }
 
 .p2-related a {
-    display: flex;
-    flex-direction: column;
-
-    min-width: 0;
-    padding: 1.25rem;
-
-    color: inherit;
-    text-decoration: none;
-
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
-
-    overflow-wrap: break-word;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 .p2-related a:hover {
-    border-color: var(--brand-red);
-    box-shadow: var(--shadow-sm);
-    transform: translateY(-3px);
+  border-color: var(--brand-red);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-3px);
 }
 
-.p2-related h4 {
-    margin: 0 0 0.375rem;
-
-    color: var(--ink);
-    font-size: 1rem;
-    line-height: 1.4;
+.related-img {
+  width: 100%;
+  height: 180px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--line);
+  padding: 1rem;
 }
 
-.p2-related span {
-    color: var(--muted);
-    font-size: 0.8125rem;
-    line-height: 1.5;
+.related-img img {
+  max-width: 85%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
 }
 
+.p2-related a:hover .related-img img { transform: scale(1.05); }
 
-/* ------------------------------------------------------------
-   2.10 ANCHOR SCROLL OFFSET
-   ------------------------------------------------------------ */
+.related-content { padding: 1.25rem; }
 
-.product-hero,
-.product-strip,
-.p2-tech-summary,
-.spec-table-wrap,
-.p2-tech-notes,
-.p2-banner,
-.p2-related,
-main:has(.product-hero) > .section[id] {
-    scroll-margin-top: calc(var(--header-h-scrolled, 64px) + 2rem);
+.p2-related h4 { margin: 0 0 0.375rem; color: var(--ink); font-size: 1rem; }
+.p2-related span { color: var(--muted); font-size: 0.8125rem; }
+
+/* --- 9. TECHNICAL SUPPORT CTA --- */
+.pdp-support {
+  background: radial-gradient(circle at 80% 50%, rgba(229, 0, 0, 0.25) 0%, var(--bg-dark) 70%);
+  color: #fff;
+  padding: clamp(4rem, 6vw, 5rem) 0;
 }
 
-
-/* ------------------------------------------------------------
-   2.11 PRODUCT PAGE — TABLET
-   ------------------------------------------------------------ */
-
-@media (max-width: 899.98px) {
-
-    .product-hero__inner {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 2rem;
-    }
-
-    .product-hero__image {
-        width: 100%;
-        max-width: 560px;
-        aspect-ratio: 4 / 3;
-        justify-self: center;
-    }
-
-    .p2-tech-notes {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .p2-related {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    /* Keep product tabs in their normal document flow */
-    .product-tabs {
-        position: relative;
-        top: auto;
-    }
+.pdp-support__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
 }
 
+.pdp-support__content h2 {
+  color: #fff;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: 1rem;
+}
 
-/* ------------------------------------------------------------
-   2.12 PRODUCT PAGE — MOBILE
-   ------------------------------------------------------------ */
+.pdp-support__content p {
+  color: #d1d1d6;
+  margin: 0;
+  max-width: 50ch;
+}
 
-@media (max-width: 768px) {
+.pdp-support .kicker {
+  color: var(--brand-accent-dark);
+}
 
-    .product-strip {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 1024px) {
+  .pdp-hero__inner { gap: 2rem; }
+  .pdp-two-column { gap: 2rem; }
+  .p2-related { grid-template-columns: repeat(2, 1fr); }
+}
 
-    .product-strip-item {
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-    }
-
-    .product-strip-item:nth-child(odd) {
-        border-right: 1px solid var(--line);
-    }
-
-    .product-strip-item:nth-last-child(-n + 2) {
-        border-bottom: 0;
-    }
+@media (max-width: 900px) {
+  .pdp-hero__inner { grid-template-columns: 1fr; text-align: center; }
+  .pdp-hero__description { margin-inline: auto; }
+  .pdp-hero__actions { justify-content: center; }
+  .pdp-two-column { grid-template-columns: 1fr; }
+  
+  .product-strip { grid-template-columns: repeat(2, 1fr); }
+  .product-strip-item { border-right: 0; border-bottom: 1px solid var(--line); }
+  .product-strip-item:nth-child(odd) { border-right: 1px solid var(--line); }
+  .product-strip-item:nth-last-child(-n+2) { border-bottom: 0; }
+  
+  .pdp-support__inner { flex-direction: column; text-align: center; }
+  .pdp-support__content p { margin-inline: auto; }
 }
 
 @media (max-width: 600px) {
-
-    .product-hero {
-        padding: 2.25rem 0;
-    }
-
-    .product-hero__content h1 {
-        font-size: clamp(2rem, 8vw, 2.75rem);
-    }
-
-    .product-hero__subtitle {
-        margin-bottom: 1rem;
-        font-size: 1.2rem;
-    }
-
-    .product-hero__desc {
-        margin-bottom: 1.5rem;
-
-        font-size: 1rem;
-        line-height: 1.7;
-    }
-
-    .product-hero__image {
-        aspect-ratio: 1 / 1;
-        padding: 1rem;
-    }
-
-    .product-features {
-        gap: 0.75rem 1rem;
-    }
-
-    /* Product information strip */
-
-    .product-strip-item {
-        padding: 1rem;
-    }
-
-    .product-strip-item strong {
-        font-size: 0.9375rem;
-    }
-
-    /* Technical summary */
-
-    .p2-tech-summary {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .p2-tech-summary-item {
-        padding: 1rem;
-    }
-
-    .p2-tech-summary-item strong {
-        font-size: 1rem;
-    }
-
-    /* Product tabs */
-
-    .product-tabs {
-        gap: 1.25rem;
-        margin-bottom: 1.5rem;
-        padding: 0.625rem 0;
-    }
-
-    .product-tabs a {
-        font-size: 0.875rem;
-    }
-
-    /* Technical tables */
-
-    .spec-table th,
-    .spec-table td {
-        padding: 0.75rem;
-        font-size: 0.875rem;
-    }
-
-    /* Technical notes */
-
-    .p2-tech-notes {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 1rem;
-        margin: 2rem 0;
-    }
-
-    .p2-tech-note {
-        padding: 1.125rem;
-    }
-
-    /* Banners */
-
-    .p2-banner {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1.25rem;
-
-        margin: 2rem 0;
-        padding: 1.5rem;
-    }
-
-    /* Related products */
-
-    .p2-related {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.75rem;
-    }
-
-    .p2-related a {
-        padding: 1rem;
-    }
-}
-
-@media (max-width: 360px) {
-
-    .p2-related {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .p2-tech-summary-item {
-        padding: 0.75rem;
-    }
-
-    .product-strip-item {
-        padding: 0.875rem;
-    }
-}
-
-
-/* ------------------------------------------------------------
-   2.13 ACCESSIBILITY & REDUCED MOTION
-   ------------------------------------------------------------ */
-
-@keyframes productFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.product-tabs a:focus-visible,
-.p2-related a:focus-visible,
-.card--product a:focus-visible {
-    outline: 2px solid var(--brand-red);
-    outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    .product-tabs a,
-    .p2-related a,
-    .card--product h3 {
-        transition: none !important;
-    }
-
-    .p2-related a:hover {
-        transform: none;
-    }
-
-    main:has(.product-hero) > .section.is-active,
-    main:has(.product-hero) > #downloads .p2-banner:not(.dark) {
-        animation: none !important;
-    }
+  .product-strip { grid-template-columns: 1fr; }
+  .product-strip-item { border-right: 0 !important; border-bottom: 1px solid var(--line); }
+  .product-strip-item:last-child { border-bottom: 0; }
+  
+  .p2-related { grid-template-columns: 1fr; }
+  
+  .pdp-spec-table th, 
+  .pdp-spec-table td { 
+    display: block; 
+    width: 100%; 
+    border-bottom: 0; 
+  }
+  .pdp-spec-table th { padding-bottom: 0.25rem; background: transparent; }
+  .pdp-spec-table td { padding-top: 0; padding-bottom: 1.25rem; }
+  .pdp-spec-table tr { border-bottom: 1px solid var(--line); }
 }
