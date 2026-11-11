@@ -62,4 +62,6 @@
 /* Universal utilities */
 .bg-white { background-color: var(--bg-surface); }
 .bg-mist { background-color: var(--bg-mist); }
+.bg-light { background-color: var(--bg-mist); }
+.bg-mist-light { background-color: var(--bg-mist-light); }
 .text-center { text-align: center; }

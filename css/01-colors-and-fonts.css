@@ -16,11 +16,13 @@
   --ink: #292b2e;
   --ink-light: #595a5c;
   --muted: #687078;
-  --muted-light: #8f969d;
+  --muted-light: #8f969d;    
+  --muted-on-light: #6f777f;
   --text: var(--ink);
+  --text-heading: var(--ink);
 
   /* Surfaces */
-  --bg-body: #f3f3f369;
+  --bg-body: #fafafa;
   --bg-surface: #ffffff;
   --bg-mist: #f4f5f6;
   --bg-mist-light:rgba(53, 1, 1, 0.02);
@@ -60,7 +62,7 @@
   /* Header heights */
   --header-h: 72px;
   --header-h-scrolled: 50px;
-  --sticky-offset: calc(var(--header-h) + 1.5rem);
+  --sticky-offset: calc(var(--dadex-header-offset, var(--header-h)) + 0.5rem);
 }
 
 body.header-scrolled {

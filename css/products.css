@@ -38,19 +38,16 @@
 
 .products-filter-bar {
     position: sticky;
-    top: var(--header-h-scrolled, 64px);
+    top: calc(var(--dadex-header-offset, var(--header-h)) + 0.5rem);
     z-index: 90;
-
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     gap: 0.75rem;
-
     margin-inline: calc(50% - 50vw);
     margin-bottom: 3rem;
     padding: 1.25rem max(1rem, calc((100vw - var(--container)) / 2));
-
     background: rgb(255 255 255 / 94%);
     border-bottom: 1px solid var(--line);
     box-shadow: 0 1px 0 rgb(15 18 21 / 2%);
@@ -385,7 +382,7 @@
 /* --- 3. STICKY SECTION NAVIGATION --- */
 .pdp-nav-wrap {
   position: sticky;
-  top: var(--header-h-scrolled);
+  top: calc(var(--dadex-header-offset, var(--header-h)) + 0.3rem);
   z-index: 90;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);

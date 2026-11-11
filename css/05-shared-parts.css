@@ -11,7 +11,7 @@
   font-weight: 800;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--muted-light);
+  color: var(--muted-on-light);
   margin-bottom: 1rem;
 }
 .kicker::before {
@@ -112,15 +112,15 @@ h3 span {
   border-color: var(--brand-red);
 }
 .btn--secondary:hover {
-  background: var(--muted-light);
-  color: var(--ink);
+  background: var(--brand-red-light);
+  color: var(--brand-red-dark);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(229, 0, 0, 0.2);
 }
 .btn--outline {
   background: transparent;
   color: var(--brand-red);
-  border-color: var(--brand-red);;
+  border-color: var(--brand-red);
 }
 .btn--outline:hover {
   border-color: var(--brand-red);

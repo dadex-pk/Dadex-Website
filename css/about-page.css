@@ -1,12 +1,32 @@
 /* ============================================================
-   ABOUT PAGE 
+   ABOUT PAGE (v2.0)
+   Depends on: 01-colors-and-fonts … 05-shared-parts
+   ------------------------------------------------------------
+   v2.0 changes
+     · vw-based max-widths replaced with ch / rem and reset on
+       tablet + mobile (lists and paragraphs were ~115px wide).
+     · Fixed-pixel image width no longer overflows phones.
+     · Decorative rings anchored to their own sections.
+     · Class names now match about.html (about-glance,
+       about-vision, about-quality__inner, …).
+     · Partner cards use auto-fit; dead media rules removed.
    ============================================================ */
 
 .about-page .section { padding-block: clamp(4rem, 8vw, 6rem); }
 
+/* Shared helpers formerly done with inline styles */
+.about-split-text .about-lead {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.about-split-text .btn { margin-top: 1rem; }
+
+/* --- Intro image --- */
 .about-intro-image img {
-  width: auto;
-  height: 150%;
+  width: 100%;
+  max-width: 36rem;
+  height: auto;
   object-fit: cover;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
@@ -19,14 +39,14 @@
   gap: 2rem;
   align-items: start;
   justify-items: center;
-    max-width: 72vw;
+  max-width: min(72vw, 64rem);
 }
 .about-split.is-flipped .about-split-text { order: 2; }
 .about-split.is-flipped .about-split-image { order: 1; }
 
 .about-split-image img {
-  width: 412px;
-  max-width: 500px;
+  width: min(100%, 412px);
+  max-width: 100%;
   height: auto;
   max-height: 630px;
   object-fit: cover;
@@ -37,14 +57,12 @@
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 1.5rem;
 }
-
 .about-split-text p {
   font-size: clamp(0.92rem, 3vw, 1.12rem);
   font-weight: 500;
   margin-bottom: 1.5rem;
   max-width: 45ch;
 }
-
 .about-split-text blockquote {
   font-size: 1.25rem;
   font-style: italic;
@@ -57,19 +75,24 @@
   max-width: 30ch;
 }
 
-/* --- At a Glance --- */
-
-.container .container-glance::before {
+/* --- At a glance --- */
+.about-glance {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.about-glance::before {
   content: "";
   position: absolute;
-  width: 50rem; 
+  width: 50rem;
   height: 50rem;
   border: 7rem solid rgb(201 0 0 / 3%);
   border-radius: 50%;
-  right: -12rem; 
-  top: 63rem;
+  right: -14rem;
+  top: 50%;
+  transform: translateY(-50%);
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 
 .glance-card {
@@ -77,7 +100,7 @@
   padding: 1.7rem 1.2rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-  transition: all var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 .glance-card:hover {
   transform: translateY(-3px);
@@ -92,7 +115,7 @@
   line-height: 1;
   margin-bottom: 0.5rem;
 }
-.glance-card h4 {
+.glance-card h3 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
   color: var(--brand-red);
@@ -104,40 +127,38 @@
   line-height: 1.5;
 }
 
-/*-- Vision --*/
-.container-vision {
+/* Six columns are too tight between 1024px and 1280px */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .about-page .grid-6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* --- Vision --- */
+.about-vision {
   position: relative;
   overflow: hidden;
   isolation: isolate;
 }
-
-.container-vision::before {
+.about-vision::before {
   content: "";
   position: absolute;
-  width: 50rem; 
+  width: 50rem;
   height: 50rem;
   border: 7rem solid rgb(0 0 0 / 3%);
   border-radius: 50%;
-  left: 7rem; 
+  left: 7rem;
   top: -7rem;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 
 /* --- Mission list --- */
-.container-mission {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-
 .mission-list {
   list-style: none;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 30vw;
+  max-width: 45ch;
   align-items: flex-start;
 }
 .mission-list li {
@@ -160,8 +181,8 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  background: #fff;
 }
-
 .section-values::before {
   position: absolute;
   z-index: -1;
@@ -174,13 +195,20 @@
   opacity: 0.15;
   pointer-events: none;
 }
-
 .section-values .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   padding: 4rem 2rem;
   align-items: start;
+}
+.values-mark {
+  max-width: 83%;
+  margin: 4rem 0;
+}
+.values-title {
+  font-size: clamp(1.2rem, 3vw, 2.5rem);
+  margin-bottom: 1.5rem;
 }
 .about-split-image-values {
   display: block;
@@ -206,29 +234,29 @@
   isolation: isolate;
   background: radial-gradient(ellipse at 50%, rgb(229 0 0 / 5%) 0%, transparent 100%), var(--bg-dark);
 }
+.partners-section .kicker { color: var(--brand-accent-dark); }
 
 /* Circles */
 .partners-section::before {
   content: "";
   position: absolute;
-  width: 40rem; 
+  width: 40rem;
   height: 40rem;
   border: 7rem solid rgb(201 0 0 / 8%);
   border-radius: 50%;
-  right: -5rem; 
+  right: -5rem;
   bottom: -10rem;
   pointer-events: none;
   z-index: -1;
 }
-
 .partners-section::after {
   content: "";
   position: absolute;
-  width: 40rem; 
+  width: 40rem;
   height: 40rem;
   border: 6rem solid rgb(255 255 255 / 5%);
   border-radius: 50%;
-  left: -10rem; 
+  left: -10rem;
   top: -10rem;
   pointer-events: none;
   z-index: -1;
@@ -238,31 +266,29 @@
 .partners-grid {
   display: flex;
   flex-direction: column;
-  gap: 6rem;
+  gap: 4rem;
   align-items: flex-start;
 }
-
 .partners-header h2 {
   color: #fff;
   margin-bottom: 3rem;
 }
-
 .partners-header p {
   color: rgba(255, 255, 255, 0.72);
   font-size: 1.125rem;
   line-height: 1.5;
-  max-width: 33vw;
+  max-width: 45ch;
   margin: 0;
 }
 
-/* Cards Grid */
+/* Cards grid — reflows from 3 → 2 → 1 columns on its own */
 .partners-cards {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 2.5rem;
 }
 
-/* Individual Partner Card */
 .partner-item {
   display: flex;
   flex-direction: column;
@@ -271,37 +297,32 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-left: 3px solid var(--brand-accent-dark);
   border-radius: var(--radius-sm);
-  transition: all 250ms ease;
+  transition: background-color 250ms ease, transform 250ms ease, border-color 250ms ease;
 }
-
 .partner-item:hover {
   background: rgba(255, 255, 255, 0.08);
   transform: translateY(-3px);
   border-color: rgba(255, 255, 255, 0.2);
   border-left-color: var(--brand-red);
 }
-
 .partner-item-name {
-  display: block; 
+  display: block;
   margin-bottom: 0.92rem;
 }
-
 .partner-item h3 {
   display: inline;
   font-size: 2rem;
   color: var(--brand-accent-dark);
   margin: 0;
 }
-
-.partner-item span {
-  display: inline; 
+.partner-item-name span {
+  display: inline;
   font-size: 1.2rem;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.05em;
   font-weight: 700;
 }
-
 .partner-item p {
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.85);
@@ -309,17 +330,16 @@
   line-height: 1.5;
 }
 
-/* --- Quality Section --- */
+/* --- Quality section --- */
 .about-quality__inner {
   align-items: center;
   gap: 4rem;
 }
-
-.home-quality__inner p {
+.about-quality__inner p {
   font-size: 1.125rem;
   color: var(--muted);
   margin: 2rem 0;
-  max-width: 30vw;
+  max-width: 45ch;
 }
 .about-quality__grid {
   display: grid;
@@ -341,7 +361,7 @@
 .about-quality__item span {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--muted-light);
+  color: var(--muted-on-light);
 }
 .about-quality__item small {
   display: block;
@@ -350,30 +370,33 @@
   font-size: 1rem;
 }
 
-/* Responsive */
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 @media (max-width: 1024px) {
-  .partners-grid {
+  .about-split {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2rem;
+    max-width: none;
+    justify-items: start;
   }
-}
-
-@media (max-width: 768px) {
-  .partners-cards {
-    grid-template-columns: 1fr; /* Stacks cards on phones */
-  }
-}
-
-
-/* --- About page responsive --- */
-@media (max-width: 1024px) {
-  .about-split { grid-template-columns: 1fr; gap: 2rem; }
   .about-split.is-flipped .about-split-text,
   .about-split.is-flipped .about-split-image { order: initial; }
+
   .section-values .container {
     grid-template-columns: 1fr;
     padding: 3rem 1.5rem;
     gap: 2rem;
   }
   .about-split-image-values { width: 100%; }
+  .values-mark { margin: 2rem 0; }
+
+  .about-quality__inner { gap: 2rem; }
+}
+
+@media (max-width: 480px) {
+  .partner-item { padding: 1.5rem; }
+  .partner-item h3 { font-size: 1.6rem; }
+  .partner-item-name span { font-size: 1rem; }
+  .about-quality__item { padding: 1.25rem 0.75rem; }
 }

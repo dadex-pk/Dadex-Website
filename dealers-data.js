@@ -2,10 +2,14 @@
    DADEX DEALER & DISTRIBUTOR DIRECTORY
    ============================================================
 
+   VERIFY BEFORE LAUNCH: Burhani Traders' address matches the Dadex Islamabad Sales
+   Office on contact.html, and Taheri Sanitary / Burhani Traders phones share the
+   same last 7 digits. Confirm both with Sales.
+
    This is the ONLY file that needs to be updated when replacing
    placeholder records with approved dealer data.
 
-   SCHEMA (all fields are read by js/dealers.js):
+   SCHEMA (read by js/dealers.js):
      name         : Dealer or distributor business name
      type         : "Dealer" | "Distributor"
      contactName  : Name of the contact person at the dealership
@@ -20,12 +24,12 @@
 
    OPTIONAL FIELDS (add only if available and approved):
      mapUrl       : Google Maps share link
-     whatsapp     : WhatsApp number (if different from phone)
+     whatsapp     : WhatsApp number (shown only if the card template has data-field="whatsapp")
 
 
    CURRENT CONTENTS
      · DISTRIBUTORS — 5 approved records
-     · DEALERS      — 10 placeholder records, awaiting official list
+     · DEALERS      — 6 placeholder records (hidden), awaiting official list
    ============================================================ */
 
 window.DADEX_DEALERS = [
@@ -53,7 +57,7 @@ window.DADEX_DEALERS = [
     name: "Burhani Traders",
     type: "Distributor",
     contactName: "Mr. Juzer",
-    province: "Islamabad",
+    province: "Islamabad Capital Territory",
     city: "Islamabad",
     area: "PWD Road",
     address: "C786, Block C, Sector C, Main PWD Road, Islamabad",
@@ -113,7 +117,8 @@ window.DADEX_DEALERS = [
 
   /* ============================================================
      DEALERS — Placeholder records
-     To will be replaced with the official dealer list.
+     Hidden (active: false) until replaced with the official dealer list.
+     Set active: true only for real, approved records.
      ============================================================ */
   {
     name: "Dealer A",
@@ -126,7 +131,7 @@ window.DADEX_DEALERS = [
     phone: "021-0000001",
     email: "dealer.a@example.com",
     products: ["Aquadex", "Nikasi"],
-    active: true
+    active: false
   },
   {
     name: "Dealer B",
@@ -139,7 +144,7 @@ window.DADEX_DEALERS = [
     phone: "042-0000002",
     email: "dealer.b@example.com",
     products: ["Polydex", "Polydex Premium", "Thermoline"],
-    active: true
+    active: false
   },
   
   {
@@ -153,7 +158,7 @@ window.DADEX_DEALERS = [
     phone: "061-0000004",
     email: "dealer.c@example.com",
     products: ["Nikasi", "Polyduct"],
-    active: true
+    active: false
   },
  
   {
@@ -167,7 +172,7 @@ window.DADEX_DEALERS = [
     phone: "051-0000006",
     email: "dealer.d@example.com",
     products: ["Aquadex", "Polydex Premium"],
-    active: true
+    active: false
   },
   {
     name: "Dealer E",
@@ -180,7 +185,7 @@ window.DADEX_DEALERS = [
     phone: "041-0000007",
     email: "dealer.e@example.com",
     products: ["Corrugated Sheets"],
-    active: true
+    active: false
   },
   {
     name: "Dealer F",
@@ -193,6 +198,6 @@ window.DADEX_DEALERS = [
     phone: "022-0000009",
     email: "dealer.f@example.com",
     products: ["Flow Line", "Manholes", "Catchpits"],
-    active: true
+    active: false
   },
 ];
