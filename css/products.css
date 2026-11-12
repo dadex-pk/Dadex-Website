@@ -1,5 +1,5 @@
 /* ============================================================
-   DADEX ETERNIT LIMITED — PRODUCTS CSS
+   DADEX ETERNIT LIMITED — PRODUCTS CSS (MOBILE-POLISHED & OPTIMISED)
    ============================================================ */
 
 
@@ -45,13 +45,17 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 0.75rem;
+    min-height: 64px;
     margin-inline: calc(50% - 50vw);
     margin-bottom: 3rem;
-    padding: 1.25rem max(1rem, calc((100vw - var(--container)) / 2));
+    padding: 1.25rem max(1rem, calc((100vw - var(--container)) / 2), env(safe-area-inset-right)) 1.25rem max(1rem, calc((100vw - var(--container)) / 2), env(safe-area-inset-left));
     background: rgb(255 255 255 / 94%);
     border-bottom: 1px solid var(--line);
     box-shadow: 0 1px 0 rgb(15 18 21 / 2%);
 
+    /* GPU layer promotion & rendering containment */
+    will-change: transform;
+    contain: layout paint style;
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
 }
@@ -85,6 +89,7 @@
 
 .products-grid {
     margin-bottom: 5rem;
+    contain: layout style;
 }
 
 
@@ -109,16 +114,25 @@
    ------------------------------------------------------------ */
 
 .card--product {
+    display: flex;
+    flex-direction: column;
     min-width: 0;
     padding: 0;
     overflow: hidden;
     text-align: left;
+    contain: layout paint style;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card--product:active {
+    transform: scale(0.98); /* Native touch feedback */
 }
 
 .card--product img {
     display: block;
     width: 100%;
-    height: 313px;
+    height: auto;
+    aspect-ratio: 4 / 3; /* Fluid sizing prevents letterbox whitespace */
     padding: 0.4rem;
     object-fit: contain;
     object-position: center;
@@ -137,7 +151,7 @@
 
 .card--product h3 {
     color: var(--brand-red);
-    transition: color var(--transition);
+    transition: color var(--transition, 0.2s ease);
 }
 
 .card--product:hover h3 {
@@ -177,20 +191,548 @@
 }
 
 
-/* ------------------------------------------------------------
-   1.7 MAIN PRODUCTS PAGE — RESPONSIVE
-   ------------------------------------------------------------ */
+/* ============================================================
+   SECTION 2 — PRODUCT DETAIL PAGE (PDP)
+   ============================================================ */
+
+.product-detail-page {
+    background: #fff;
+}
+
+/* --- 2.1 HERO SECTION --- */
+.pdp-hero {
+    position: relative;
+    padding: 3rem;
+    background: #fff;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+}
+
+.pdp-hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    max-width: var(--container);
+    margin-inline: auto;
+}
+
+.pdp-hero__content h1 {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+}
+
+.pdp-hero__subtitle {
+    color: var(--brand-red);
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+.pdp-hero__description {
+    font-size: 1.1rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 50ch;
+}
+
+.pdp-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.pdp-hero__media img {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    margin-inline: auto;
+    background: transparent;
+}
+
+/* --- 2.2 PRODUCT STRIP (ICONS) --- */
+.product-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0 calc(50% - 50vw);
+    padding-left: max(2rem, calc((100vw - var(--container)) / 2), env(safe-area-inset-left));
+    padding-right: max(2rem, calc((100vw - var(--container)) / 2), env(safe-area-inset-right));
+    background: var(--brand-red-lighter);
+    border-bottom: 1px solid var(--line);
+}
+
+.product-strip-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding: 2.5rem 1rem;
+    border-right: 1px solid var(--line);
+}
+
+.product-strip-item:last-child {
+    border-right: 0;
+}
+
+.product-strip-icon {
+    font-size: 2rem;
+    color: var(--brand-red);
+    flex-shrink: 0;
+}
+
+.product-strip-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-strip-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+}
+
+.product-strip-item strong {
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+/* --- 2.3 STICKY SECTION NAVIGATION --- */
+.pdp-nav-wrap {
+    position: sticky;
+    top: calc(var(--dadex-header-offset, var(--header-h)));
+    z-index: 90;
+    min-height: 54px;
+    background: var(--brand-red);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 4px 12px rgb(255 0 0 / 2%);
+
+    will-change: transform;
+    contain: layout paint style;
+}
+
+.pdp-section-nav {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 max(1rem, env(safe-area-inset-left));
+    contain: content;
+}
+
+.pdp-section-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.pdp-section-nav a {
+    display: block;
+    padding: 0.5rem 1.25rem;
+    margin: 0.72rem 0;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--line);
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: var(--radius-md);
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.pdp-section-nav a:hover {
+    color: #fff;
+}
+
+.pdp-section-nav a.active {
+    color: var(--brand-red);
+    background: #fff;
+    font-weight: 600;
+}
+
+/* --- 2.4 GENERIC SECTION STYLES --- */
+.pdp-section {
+    padding: clamp(4rem, 6vw, 5rem) 0;
+    scroll-margin-top: calc(var(--header-h-scrolled) + 60px);
+}
+
+.pdp-section--light {
+    background: var(--bg-mist);
+}
+
+.pdp-section-heading {
+    margin-bottom: 3rem;
+    max-width: 600px;
+}
+
+.pdp-section-heading h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    margin-bottom: 1rem;
+}
+
+/* --- 2.5 TWO-COLUMN LAYOUTS --- */
+.pdp-two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.pdp-section__intro h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    margin-bottom: 1.5rem;
+}
+
+.pdp-section__intro p {
+    font-size: 1.125rem;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+/* Overview & Install Panels */
+.pdp-overview-panel,
+.pdp-install-panel {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--brand-red);
+    border-radius: var(--radius-md);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.pdp-overview-panel__heading {
+    margin-bottom: 1.5rem;
+}
+
+.pdp-overview-panel__heading h3,
+.pdp-install-panel h3 {
+    font-size: 1.25rem;
+    margin: 0 0 1.5rem 0;
+    color: var(--ink);
+}
+
+/* Check Lists */
+.pdp-check-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pdp-check-list li {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--ink-light);
+    line-height: 1.5;
+}
+
+.pdp-check-list i {
+    color: var(--brand-red);
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.pdp-note {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    background: var(--bg-mist);
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    margin: 0;
+}
+
+/* --- 2.6 SPECIFICATION TABLE --- */
+.pdp-spec-table-wrap {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.pdp-spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.pdp-spec-table th {
+    width: 30%;
+    padding: 1.25rem 1.5rem;
+    background: var(--brand-red-light);
+    color: var(--brand-red);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.pdp-spec-table td {
+    padding: 1.25rem 1.5rem;
+    background: #fff;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    border-bottom: 1px solid var(--line);
+    line-height: 1.6;
+}
+
+.pdp-spec-table tr:last-child th,
+.pdp-spec-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.pdp-table-note {
+    font-size: 0.875rem;
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* --- 2.7 DOWNLOADS --- */
+.product-downloads-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.9rem;
+    contain: layout style;
+}
+
+.download-card {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.2rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.download-card:active {
+    transform: scale(0.98);
+}
+
+.download-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--brand-red);
+    box-shadow: var(--shadow-md);
+}
+
+.download-card__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    flex-shrink: 0;
+    background: var(--brand-red-light);
+    color: var(--brand-red);
+    border-radius: var(--radius-sm);
+    font-size: 1.5rem;
+}
+
+.download-card__content {
+    flex: 1;
+    min-width: 0;
+}
+
+.download-card__content h4 {
+    margin: 0 0 0.25rem;
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.download-card__content span {
+    font-size: 0.875rem;
+    color: var(--muted);
+}
+
+.download-card__action {
+    color: var(--brand-red);
+    font-size: 1.25rem;
+    transition: transform 0.2s ease;
+}
+
+.download-card:hover .download-card__action {
+    transform: translateY(3px);
+}
+
+/* --- 2.8 RELATED PRODUCTS --- */
+.p2-related {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+    contain: layout style;
+}
+
+.p2-related a {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    text-decoration: none;
+    contain: layout paint style;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.p2-related a:active {
+    transform: scale(0.98);
+}
+
+.p2-related a:hover {
+    border-color: var(--brand-red);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-3px);
+}
+
+.related-img {
+    width: 100%;
+    height: 180px;
+    aspect-ratio: 16 / 9;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--line);
+    padding: 1rem;
+}
+
+.related-img img {
+    max-width: 85%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.p2-related a:hover .related-img img {
+    transform: scale(1.05);
+}
+
+.related-content {
+    padding: 1.25rem;
+}
+
+.p2-related h4 {
+    margin: 0 0 0.375rem;
+    color: var(--brand-red);
+    font-size: 1.2rem;
+}
+
+.p2-related span {
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+/* --- 2.9 TECHNICAL SUPPORT CTA --- */
+.pdp-support {
+    background: linear-gradient(90deg, rgb(138 7 1) -40%, rgb(0 0 0) 50%, rgb(160 9 1) 140%);
+    color: #fff;
+    padding: clamp(4rem, 6vw, 5rem) 0;
+}
+
+.pdp-support__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+.pdp-support__content h2 {
+    color: #fff;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    margin-bottom: 1rem;
+}
+
+.pdp-support__content p {
+    color: #d1d1d6;
+    margin: 0;
+    max-width: 50ch;
+}
+
+.pdp-support .kicker {
+    color: var(--brand-accent-dark);
+}
+
+
+/* ============================================================
+   SECTION 3 — CONSOLIDATED RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+@media (max-width: 1024px) {
+    .pdp-hero__inner,
+    .pdp-two-column {
+        gap: 2rem;
+    }
+
+    .p2-related,
+    .product-downloads-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .pdp-hero__inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .pdp-hero__description {
+        margin-inline: auto;
+    }
+
+    .pdp-hero__actions {
+        justify-content: center;
+    }
+
+    .pdp-two-column {
+        grid-template-columns: 1fr;
+    }
+
+    .product-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .product-strip-item {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .product-strip-item:nth-child(odd) {
+        border-right: 1px solid var(--line);
+    }
+
+    .product-strip-item:nth-last-child(-n+2) {
+        border-bottom: 0;
+    }
+
+    .pdp-support__inner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .pdp-support__content p {
+        margin-inline: auto;
+    }
+}
 
 @media (max-width: 768px) {
-
     .products-filter-bar {
         gap: 0.5rem;
         padding-block: 1rem;
         margin-bottom: 2.5rem;
-    }
-
-    .card--product img {
-        height: 260px;
     }
 
     .card--product .card__body {
@@ -203,11 +745,10 @@
 
     .products-cta .container {
         gap: 2rem;
-    }
+      }
 }
 
 @media (max-width: 600px) {
-
     .products-hero-stats {
         gap: 0.875rem 1.25rem;
         margin-top: 1.5rem;
@@ -216,10 +757,6 @@
     .products-filter-bar {
         justify-content: flex-start;
         margin-bottom: 2rem;
-    }
-
-    .card--product img {
-        height: 220px;
     }
 
     .card--product .card__body {
@@ -233,492 +770,45 @@
     .products-page-header {
         margin-bottom: 1.5rem;
     }
+
+    .product-strip,
+    .p2-related,
+    .product-downloads-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-strip-item {
+        border-right: 0 !important;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .product-strip-item:last-child {
+        border-bottom: 0;
+    }
+
+    .pdp-spec-table th,
+    .pdp-spec-table td {
+        display: block;
+        width: 100%;
+        border-bottom: 0;
+    }
+
+    .pdp-spec-table th {
+        padding-bottom: 0.25rem;
+    }
+
+    .pdp-spec-table td {
+        padding-top: 0;
+        padding: 1rem;
+    }
+
+    .pdp-spec-table tr {
+        border-bottom: 1px solid var(--line);
+    }
 }
 
 @media (max-width: 380px) {
-
-    .card--product img {
-        height: 180px;
-    }
-
     .card--product .card__body {
         padding: 0.875rem;
     }
-}
-
-
-/* ============================================================
-   SECTION 2 — INDIVIDUAL PRODUCT PAGES
-   ------------------------------------------------------------
-   Shared template for all 19 product pages.
-   ============================================================ */
-/* ============================================================
-   PRODUCT DETAIL PAGE (PDP) - POLYDEX TEMPLATE
-   ============================================================ */
-
-.product-detail-page {
-  background: #fff;
-}
-
-/* --- 1. HERO SECTION --- */
-.pdp-hero {
-  position: relative;
-  padding: calc(var(--header-h) + 4rem) 0 5rem;
-  background: #fff;
-  overflow: hidden;
-  border-bottom: 1px solid var(--line);
-}
-
-/* Subtle background decoration */
-.pdp-hero::before {
-  content: "";
-  position: absolute;
-  top: -10%;
-  right: -5%;
-  width: 45vw;
-  height: 45vw;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(229, 0, 0, 0.04) 0%, transparent 70%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-.pdp-hero__inner {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.pdp-hero__content h1 {
-  font-size: clamp(3rem, 6vw, 4.5rem);
-  color: var(--ink);
-  letter-spacing: -0.03em;
-  margin-bottom: 0.5rem;
-  line-height: 1.1;
-}
-
-.pdp-hero__subtitle {
-  color: var(--brand-red);
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-}
-
-.pdp-hero__description {
-  font-size: 1.125rem;
-  color: var(--muted);
-  line-height: 1.7;
-  margin-bottom: 2.5rem;
-  max-width: 50ch;
-}
-
-.pdp-hero__actions {
-  display: flex;
-  gap: 1rem;
-}
-
-.pdp-hero__media img {
-  width: 100%;
-  max-width: 650px;
-  height: auto;
-  display: block;
-  margin-inline: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08));
-}
-
-/* --- 2. PRODUCT STRIP (ICONS) --- */
-.product-strip {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  width: 100vw;
-  max-width: 100vw;
-  margin: 0 calc(50% - 50vw);
-  padding-inline: max(1rem, calc((100vw - var(--container)) / 2));
-  background: #fff;
-  border-bottom: 1px solid var(--line);
-}
-
-.product-strip-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 1.5rem;
-  border-right: 1px solid var(--line);
-}
-
-.product-strip-item:last-child {
-  border-right: 0;
-}
-
-.product-strip-icon {
-  font-size: 2rem;
-  color: var(--brand-red);
-  flex-shrink: 0;
-}
-
-.product-strip-item div {
-  display: flex;
-  flex-direction: column;
-}
-
-.product-strip-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 0.15rem;
-}
-
-.product-strip-item strong {
-  color: var(--ink);
-  font-size: 1rem;
-  font-weight: 800;
-}
-
-/* --- 3. STICKY SECTION NAVIGATION --- */
-.pdp-nav-wrap {
-  position: sticky;
-  top: calc(var(--dadex-header-offset, var(--header-h)) + 0.3rem);
-  z-index: 90;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-}
-
-.pdp-section-nav {
-  display: flex;
-  justify-content: flex-start;
-  gap: 2.5rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.pdp-section-nav::-webkit-scrollbar { display: none; }
-
-.pdp-section-nav a {
-  display: block;
-  padding: 1.25rem 0;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--muted);
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-}
-
-.pdp-section-nav a:hover {
-  color: var(--ink);
-}
-
-.pdp-section-nav a.active {
-  color: var(--brand-red);
-  border-bottom-color: var(--brand-red);
-  font-weight: 700;
-}
-
-/* --- 4. GENERIC SECTION STYLES --- */
-.pdp-section {
-  padding: clamp(4rem, 6vw, 5rem) 0;
-  scroll-margin-top: calc(var(--header-h-scrolled) + 60px);
-}
-
-.pdp-section--light {
-  background: var(--bg-mist);
-}
-
-.pdp-section-heading {
-  margin-bottom: 3rem;
-  max-width: 600px;
-}
-.pdp-section-heading h2 {
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  margin-bottom: 1rem;
-}
-
-/* --- 5. TWO-COLUMN LAYOUTS --- */
-.pdp-two-column {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
-}
-
-.pdp-section__intro h2 {
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  margin-bottom: 1.5rem;
-}
-
-.pdp-section__intro p {
-  font-size: 1.125rem;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-/* Overview & Install Panels */
-.pdp-overview-panel,
-.pdp-install-panel {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--brand-red);
-  border-radius: var(--radius-md);
-  padding: 2.5rem;
-  box-shadow: var(--shadow-sm);
-}
-
-.pdp-overview-panel__heading {
-  margin-bottom: 1.5rem;
-}
-.pdp-overview-panel__heading h3 {
-  font-size: 1.25rem;
-  margin: 0;
-}
-
-.pdp-install-panel h3 {
-  font-size: 1.25rem;
-  margin-bottom: 1.5rem;
-  color: var(--ink);
-}
-
-/* Check Lists */
-.pdp-check-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 1.5rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.pdp-check-list li {
-  display: flex;
-  gap: 0.75rem;
-  font-size: 0.9375rem;
-  color: var(--ink-light);
-  line-height: 1.5;
-}
-
-.pdp-check-list i {
-  color: var(--brand-red);
-  margin-top: 0.25rem;
-  font-size: 0.875rem;
-}
-
-.pdp-note {
-  font-size: 0.8125rem;
-  color: var(--muted);
-  background: var(--bg-mist);
-  padding: 1rem;
-  border-radius: var(--radius-sm);
-  margin: 0;
-}
-
-/* --- 6. SPECIFICATION TABLE --- */
-.pdp-spec-table-wrap {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background: #fff;
-  margin-bottom: 1.5rem;
-}
-
-.pdp-spec-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.pdp-spec-table th {
-  width: 30%;
-  padding: 1.25rem 1.5rem;
-  background: var(--brand-red-light);
-  color: var(--brand-red);
-  font-weight: 700;
-  font-size: 0.9375rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.pdp-spec-table td {
-  padding: 1.25rem 1.5rem;
-  color: var(--muted);
-  font-size: 0.9375rem;
-  border-bottom: 1px solid var(--line);
-  line-height: 1.6;
-}
-
-.pdp-spec-table tr:last-child th,
-.pdp-spec-table tr:last-child td {
-  border-bottom: 0;
-}
-
-.pdp-table-note {
-  font-size: 0.875rem;
-  color: var(--muted);
-  font-style: italic;
-}
-
-/* --- 7. DOWNLOADS (From previous step) --- */
-.product-downloads-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.download-card {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 1.5rem;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
-.download-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--brand-red);
-  box-shadow: var(--shadow-md);
-}
-
-.download-card__icon {
-  display: grid;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  background: var(--brand-red-light);
-  color: var(--brand-red);
-  border-radius: var(--radius-sm);
-  font-size: 1.5rem;
-}
-
-.download-card__content { flex: 1; }
-.download-card__content h4 { margin: 0 0 0.25rem; color: var(--ink); font-size: 1.125rem; }
-.download-card__content span { font-size: 0.875rem; color: var(--muted); }
-.download-card__action { color: var(--brand-red); font-size: 1.25rem; transition: transform 0.2s ease; }
-.download-card:hover .download-card__action { transform: translateY(3px); }
-
-/* --- 8. RELATED PRODUCTS (From previous step) --- */
-.p2-related {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-.p2-related a {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.p2-related a:hover {
-  border-color: var(--brand-red);
-  box-shadow: var(--shadow-sm);
-  transform: translateY(-3px);
-}
-
-.related-img {
-  width: 100%;
-  height: 180px;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid var(--line);
-  padding: 1rem;
-}
-
-.related-img img {
-  max-width: 85%;
-  max-height: 100%;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.p2-related a:hover .related-img img { transform: scale(1.05); }
-
-.related-content { padding: 1.25rem; }
-
-.p2-related h4 { margin: 0 0 0.375rem; color: var(--ink); font-size: 1rem; }
-.p2-related span { color: var(--muted); font-size: 0.8125rem; }
-
-/* --- 9. TECHNICAL SUPPORT CTA --- */
-.pdp-support {
-  background: radial-gradient(circle at 80% 50%, rgba(229, 0, 0, 0.25) 0%, var(--bg-dark) 70%);
-  color: #fff;
-  padding: clamp(4rem, 6vw, 5rem) 0;
-}
-
-.pdp-support__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 3rem;
-}
-
-.pdp-support__content h2 {
-  color: #fff;
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  margin-bottom: 1rem;
-}
-
-.pdp-support__content p {
-  color: #d1d1d6;
-  margin: 0;
-  max-width: 50ch;
-}
-
-.pdp-support .kicker {
-  color: var(--brand-accent-dark);
-}
-
-/* --- RESPONSIVE DESIGN --- */
-@media (max-width: 1024px) {
-  .pdp-hero__inner { gap: 2rem; }
-  .pdp-two-column { gap: 2rem; }
-  .p2-related { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 900px) {
-  .pdp-hero__inner { grid-template-columns: 1fr; text-align: center; }
-  .pdp-hero__description { margin-inline: auto; }
-  .pdp-hero__actions { justify-content: center; }
-  .pdp-two-column { grid-template-columns: 1fr; }
-  
-  .product-strip { grid-template-columns: repeat(2, 1fr); }
-  .product-strip-item { border-right: 0; border-bottom: 1px solid var(--line); }
-  .product-strip-item:nth-child(odd) { border-right: 1px solid var(--line); }
-  .product-strip-item:nth-last-child(-n+2) { border-bottom: 0; }
-  
-  .pdp-support__inner { flex-direction: column; text-align: center; }
-  .pdp-support__content p { margin-inline: auto; }
-}
-
-@media (max-width: 600px) {
-  .product-strip { grid-template-columns: 1fr; }
-  .product-strip-item { border-right: 0 !important; border-bottom: 1px solid var(--line); }
-  .product-strip-item:last-child { border-bottom: 0; }
-  
-  .p2-related { grid-template-columns: 1fr; }
-  
-  .pdp-spec-table th, 
-  .pdp-spec-table td { 
-    display: block; 
-    width: 100%; 
-    border-bottom: 0; 
-  }
-  .pdp-spec-table th { padding-bottom: 0.25rem; background: transparent; }
-  .pdp-spec-table td { padding-top: 0; padding-bottom: 1.25rem; }
-  .pdp-spec-table tr { border-bottom: 1px solid var(--line); }
 }
