@@ -38,7 +38,7 @@
 
 .products-filter-bar {
     position: sticky;
-    top: calc(var(--dadex-header-offset, var(--header-h)) + 0.5rem);
+    top: var(--dadex-header-offset, var(--header-h));
     z-index: 90;
     display: flex;
     align-items: center;
@@ -49,7 +49,7 @@
     margin-inline: calc(50% - 50vw);
     margin-bottom: 3rem;
     padding: 1.25rem max(1rem, calc((100vw - var(--container)) / 2), env(safe-area-inset-right)) 1.25rem max(1rem, calc((100vw - var(--container)) / 2), env(safe-area-inset-left));
-    background: rgb(255 255 255 / 94%);
+    background: rgb(255 255 255 / 72%);
     border-bottom: 1px solid var(--line);
     box-shadow: 0 1px 0 rgb(15 18 21 / 2%);
 
@@ -320,7 +320,6 @@
     background: var(--brand-red);
     border-bottom: 1px solid var(--line);
     box-shadow: 0 4px 12px rgb(255 0 0 / 2%);
-
     will-change: transform;
     contain: layout paint style;
 }
