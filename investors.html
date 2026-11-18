@@ -726,24 +726,27 @@
 <script src="js/main.js"></script>
 
 <script>
-(function () {
-  const btns = document.querySelectorAll('.director-name-btn');
-  const bios = document.querySelectorAll('.director-bio');
-  if (!btns.length || !bios.length) return;
+(() => {
+  document.addEventListener('click', (event) => {
+    const btn = event.target.closest('.director-name-btn');
+    if (!btn) return;
 
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-   
-      btns.forEach(b => b.classList.remove('active'));
-      bios.forEach(b => b.classList.remove('active'));
+    const directorKey = btn.dataset.director;
+    if (!directorKey) return;
 
-      btn.classList.add('active');
+    const btns = document.querySelectorAll('.director-name-btn');
+    const bios = document.querySelectorAll('.director-bio');
 
-      const targetId = 'dir-' + btn.dataset.director;
-      const targetBio = document.getElementById(targetId);
-      if (targetBio) {
-        targetBio.classList.add('active');
-      }
+    btns.forEach((b) => {
+      const isActive = b === btn;
+      b.classList.toggle('active', isActive);
+      b.setAttribute('aria-selected', isActive);
+    });
+
+    bios.forEach((bio) => {
+      const isTarget = bio.id === `dir-${directorKey}`;
+      bio.classList.toggle('active', isTarget);
+      bio.setAttribute('aria-hidden', !isTarget);
     });
   });
 })();

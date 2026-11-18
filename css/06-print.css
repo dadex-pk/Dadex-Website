@@ -1,0 +1,189 @@
+/* ============================================================
+   PRINT STYLESHEET — shared across every page
+   Loaded via <link rel="stylesheet" media="print">.
+   Zero cost on screen.
+   ============================================================ */
+
+@media print {
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 1.5cm;
+  }
+
+  /* Reset */
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 10.5pt !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Hide chrome */
+  .site-header,
+  .site-footer,
+  .dexpert-fab,
+  .dexpert-dialog,
+  .back-to-top,
+  .skip-link,
+  .sr-only,
+  .nav-open,
+  [data-component] {
+    display: none !important;
+  }
+
+  /* Hide interactive-only affordances */
+  button:not([type="submit"]),
+  .filter-group,
+  .filter-btn,
+  .lit-filter-bar,
+  .products-filter-bar,
+  .pdp-nav-wrap,
+  .pdp-section-nav,
+  .copy-btn,
+  .calc-toolbar,
+  .calc-actions,
+  .calc-action,
+  .nav-search,
+  .search-bar,
+  .search-input-wrapper,
+  .popular-searches,
+  .video-play,
+  .video-lightbox,
+  .news-tabs-wrapper,
+  .ir-tabs,
+  .ir-sidebar,
+  .cta,
+  .services-cta,
+  .home-cta,
+  .products-cta,
+  .pdp-support {
+    display: none !important;
+  }
+
+  /* Content containers — span full width */
+  main,
+  .container {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Section spacing tighten */
+  .section {
+    padding-block: 0.5cm !important;
+    border: 0 !important;
+  }
+
+  /* Hero — flatten to text */
+  .page-hero,
+  .home-hero,
+  .pdp-hero {
+    background: #fff !important;
+    color: #000 !important;
+    padding: 0 0 0.5cm !important;
+    border-bottom: 1px solid #000;
+    min-height: 0 !important;
+  }
+  .page-hero::before,
+  .page-hero::after,
+  .home-hero::before,
+  .home-hero::after {
+    display: none !important;
+  }
+  .page-hero h1,
+  .page-hero p,
+  .home-hero h1,
+  .home-hero p,
+  .pdp-hero h1,
+  .pdp-hero__subtitle,
+  .pdp-hero__description {
+    color: #000 !important;
+  }
+  .page-hero h1 span,
+  .home-hero h1 em,
+  .pdp-hero__subtitle {
+    color: #000 !important;
+  }
+
+  /* Grids → 2 col max, breaks avoided */
+  .grid,
+  .grid-2, .grid-3, .grid-4, .grid-5, .grid-6 {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.4cm !important;
+  }
+
+  .card {
+    border: 1px solid #999 !important;
+    padding: 0.4cm !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    background: #fff !important;
+  }
+
+  .card h2,
+  .card h3,
+  .card p {
+    color: #000 !important;
+  }
+
+  /* Images — cap height, avoid page breaks */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Links — no underlines, no colours, no href expansion */
+  a {
+    color: #000 !important;
+    text-decoration: none !important;
+    border: 0 !important;
+  }
+
+  /* Tables — full width, borders */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 9pt !important;
+  }
+  th, td {
+    border: 1px solid #999 !important;
+    padding: 0.2cm 0.3cm !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  /* Chapter / section heading breaks */
+  h1, h2 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  h3, h4 {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Long lists — keep bullets */
+  ul, ol {
+    margin-bottom: 0.3cm;
+  }
+
+  /* Hide inline print-date fallback (calculators overrides with its own) */
+  [data-print-date] {
+    color: #000 !important;
+  }
+
+  /* Kill animations & transitions */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+  }
+}

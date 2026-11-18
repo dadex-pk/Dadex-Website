@@ -1,46 +1,5 @@
 /* ============================================================
    DADEX ETERNIT LIMITED — SHARED UI (v7.2)
-   ------------------------------------------------------------
-   v7.2 changes (site audit fixes)
-     · DEXPERT: ASTM UPVC SWV and HTplus added to product
-       catalogue. Minimum query length for "contains product"
-       matching raised from 3 to 4 characters to prevent any
-       future 3-char query from matching a longer product key.
-     · Component error fallback: when the header fails to load,
-       a minimal fallback navigation is rendered alongside the
-       error banner so users are never left with a blank top of
-       page.
-
-   v7.1 changes (code-review fixes)
-     · Products: #sewerage-drainage targets the "Sewerage &
-       Drainage" group; "Soil, Waste & Vent" gets
-       #soil-waste-vent. Hash decoding is guarded; tab clicks
-       no longer add duplicate history entries.
-     · Mailto form: code-point-safe truncation (no URIError on
-       emoji), CRLF line breaks, recipient validated.
-     · DEXPERT: word-prefix product matching (unique matches
-       only), "Soil, Waste & Vent" intent, site-search fallback,
-       guarded template lookups, backdrop click ignores drag-
-       selections, aria-controls is set once the dialog exists.
-     · Navigation: matchMedia breakpoint; Enter/Space toggles
-       an open dropdown on desktop; focusout ignores clicks
-       inside the menu.
-     · Active nav: an exact #hash match wins over hash-less
-       links.
-     · Search: removed-page check ignores paths/hashes,
-       popular buttons scoped to their container, [hidden]
-       replaces inline display styles.
-     · Investors: in-page anchors that are not panels are
-       left alone.
-     · Header offset falls back to a resize listener.
-
-   CSS contract:
-     · Dropdown visibility is driven by [aria-expanded="true"]
-       (04-header-footer.css) — no .is-open rules are required.
-     · Anchors clear the sticky header through scroll-margin-top
-       (01-colors-and-fonts.css), fed by --dadex-header-offset.
-     · [hidden] must win over component display rules
-       (e.g. .search-clear-btn[hidden], .popular-searches[hidden]).
    ============================================================ */
 
 (() => {
@@ -832,7 +791,7 @@
     }, 50), { passive: true });
   }
 
-  /* ============================================================
+ /* ============================================================
      11. MAILTO FORM (contact.html)
      ============================================================ */
 
@@ -887,12 +846,16 @@
 
         let href = build(message);
         let truncated = false;
-        /* Trim by code point: slicing UTF-16 units can leave half of an
-           emoji behind, and encodeURIComponent then throws a URIError. */
+        
+        /* Trim by code point, stepping back to word boundaries to avoid cutting words in half. */
         let chars = Array.from(message);
         while (href.length > MAILTO_MAX_LENGTH && chars.length > 0) {
-          chars = chars.slice(0, Math.max(0, chars.length - 100));
-          message = chars.join('');
+          let targetLen = Math.max(0, chars.length - 80);
+          while (targetLen > 0 && /\w/.test(chars[targetLen - 1]) && /\w/.test(chars[targetLen])) {
+            targetLen--;
+          }
+          chars = chars.slice(0, targetLen);
+          message = chars.join('').trim() + '…';
           href = build(message);
           truncated = true;
         }
@@ -948,8 +911,7 @@
     const sync = () => {
       let id = (location.hash || '#overview').slice(1);
       try { id = decodeURIComponent(id); } catch (_) { /* keep raw */ }
-      /* A hash that names an ordinary element (not a panel) is a normal
-         in-page anchor: leave the active panel alone. */
+
       if (!panelIds.has(id) && document.getElementById(id)) return;
       activate(id);
     };
@@ -973,10 +935,6 @@
 
   /* ============================================================
      13. SITE SEARCH (search.html)
-     ------------------------------------------------------------
-     Index rows: [ title, url, category, body ]
-     Source: window.DADEX_SEARCH_INDEX (search-index.js),
-     with data/search-index.json as a fallback.
      ============================================================ */
 
   async function loadSearchIndex() {
@@ -998,7 +956,6 @@
         const category = String(row[2] ?? '').trim();
         let body = String(row[3] ?? '').replace(/\s+/g, ' ').trim();
 
-        /* Scraped bodies start with the page title; drop it. */
         if (title && body.startsWith(title)) body = body.slice(title.length).trim();
 
         return { title, url, category, body };
@@ -1198,10 +1155,9 @@
     render();
   }
 
-  /* ============================================================
+ /* ============================================================
      14. DEXPERT ASSISTANT
      ============================================================ */
-
   const DEXPERT_PRODUCTS = [
     ['Aquadex', 'product-aquadex.html'],
     ['T-Flex', 'product-tflex.html'],
@@ -1235,6 +1191,24 @@
     ['Roofing', 'products.html#roofing']
   ];
 
+  /* Synonym dictionary to map colloquial terms, abbreviations, and common typos */
+  const DEXPERT_SYNONYMS = {
+    'pvc': 'astm upvc swv',
+    'upvc': 'astm upvc swv',
+    'drain': 'sewerage drainage',
+    'sewer': 'sewerage drainage',
+    'manhole': 'manholes',
+    'chamber': 'inspection chambers',
+    'gas': 't-flex gas',
+    'air': 't-flex compressed air',
+    'conduit': 'electrical conduits',
+    'roof': 'corrugated sheets',
+    'sheet': 'corrugated sheets',
+    'valve': 'non-return valves',
+    'borewell': 'upvc tubewell casing & screen pipes system',
+    'tubewell': 'upvc tubewell casing & screen pipes system'
+  };
+
   const dexKey = s => String(s).toLowerCase().replace(/[^a-z0-9]/g, '');
 
   /* Words too generic to identify a single product on their own. */
@@ -1255,83 +1229,115 @@
   const DEXPERT_APPS_KEYED = DEXPERT_APPS
     .map(([name, href]) => ({ name, href, key: dexKey(name) }));
 
-  const intent = (re, label, heading, message, href, cta) =>
-    ({ re, label, heading, message, href, cta });
+  const intent = (re, label, heading, message, href, cta, secondaryActions = []) =>
+    ({ re, label, heading, message, href, cta, secondaryActions });
 
   const DEXPERT_INTENTS = [
     intent(/\b(report|annual|financial|investor|shareholder|agm|dividend)\b/,
       'INVESTOR', 'Investor Relations',
       'Find annual reports, financial information and shareholder references.',
-      'investors.html#annual', 'Open investor information'),
+      'investors.html#annual', 'Open investor information',
+      [['contact.html', 'Investor Enquiry']]
+    ),
     intent(/\b(brochure|flyer|leaflet|literature|document|datasheet|certificate|drawing)s?\b/,
       'LITERATURE', 'Literature',
       'Find brochures, flyers, corporate publications and technical documents.',
-      'literature.html', 'Open Literature'),
+      'literature.html', 'Open Literature',
+      [['calculators.html', 'Calculators']]
+    ),
     intent(/\b(video|installation|demonstration)s?\b/,
       'VIDEOS', 'Videos',
       'Installation guides, product overviews and application demonstrations.',
-      'videos.html', 'Open Videos'),
+      'videos.html', 'Open Videos',
+      [['literature.html', 'Literature']]
+    ),
     intent(/\b(calculator|pressure drop|flow rate|head loss|sizing)s?\b/,
       'CALCULATORS', 'Calculators',
       'Engineering calculators for pipe selection, hydraulic design and unit conversion.',
-      'calculators.html', 'Open Calculators'),
+      'calculators.html', 'Open Calculators',
+      [['literature.html', 'Literature']]
+    ),
     intent(/\b(dealer|distributor|stockist|retailer|buy|where to)\b/,
       'DEALERS', 'Find a Dealer',
       'Locate Dadex dealers and distributors by province, city, area or product.',
-      'dealers.html', 'Open dealer locator'),
+      'dealers.html', 'Open dealer locator',
+      [['contact.html', 'Contact Sales']]
+    ),
     intent(/\b(contact|sales|office|phone|call|quote|quotation|price|pricing|enquiry|inquiry)\b/,
       'CONTACT', 'Contact Dadex',
       'Reach the head office or your nearest sales office.',
-      'contact.html', 'Contact Dadex'),
+      'contact.html', 'Contact Dadex',
+      [['dealers.html', 'Find a Dealer']]
+    ),
     intent(/\b(swv|soil|ventilation)\b/,
       'APPLICATION', 'Soil, Waste & Vent',
       'Explore the systems listed for this application area.',
-      'products.html#soil-waste-vent', 'Explore'),
+      'products.html#soil-waste-vent', 'Explore',
+      [['literature.html', 'Technical Literature']]
+    ),
     intent(/\b(drain\w*|sewer\w*|sewage|manhole|septic)\b/,
       'APPLICATION', 'Sewerage & Drainage',
       'Explore the systems listed for this application area.',
-      'products.html#sewerage-drainage', 'Explore'),
+      'products.html#sewerage-drainage', 'Explore',
+      [['literature.html', 'Technical Literature']]
+    ),
     intent(/\b(cable|duct\w*|conduit\w*|wiring|electrical|telecom\w*)\b/,
       'APPLICATION', 'Cable & Utility Ducting',
       'Explore the systems listed for this application area.',
-      'products.html#cable-utility-ducting', 'Explore'),
+      'products.html#cable-utility-ducting', 'Explore',
+      [['literature.html', 'Technical Literature']]
+    ),
     intent(/\b(gas|compressed air|tubewell|borewell|well|industrial)\b/,
       'APPLICATION', 'Specialised & Industrial',
       'Explore the systems listed for this application area.',
-      'products.html#specialised-industrial', 'Explore'),
+      'products.html#specialised-industrial', 'Explore',
+      [['literature.html', 'Technical Literature']]
+    ),
     intent(/\b(roof\w*|sheet\w*|cladding|shed\w*|warehouse\w*)\b/,
       'APPLICATION', 'Roofing',
       'Explore the systems listed for this application area.',
-      'products.html#roofing', 'Explore'),
+      'products.html#roofing', 'Explore',
+      [['literature.html', 'Technical Literature']]
+    ),
     intent(/\b(plumb\w*|water|hot|cold|domestic|home|house|housing|bathroom|kitchen|apartment|pressure)\b/,
       'APPLICATION', 'Water Supply',
       'Explore the systems listed for this application area.',
-      'products.html#water-supply', 'Explore')
+      'products.html#water-supply', 'Explore',
+      [['dealers.html', 'Find a Dealer']]
+    )
   ];
 
   function resolveDexpertQuery(query) {
-    const q = String(query || '').toLowerCase().trim();
+    let q = String(query || '').toLowerCase().trim();
+    
+    // Check synonym / shorthand dictionary replacement
+    if (DEXPERT_SYNONYMS[q]) {
+      q = DEXPERT_SYNONYMS[q];
+    }
+
     const qKey = dexKey(q);
 
     if (!qKey) {
       return {
         label: 'DEXPERT', heading: 'Try a search',
         message: 'Enter a product or application such as Aquadex, water supply or gas.',
-        href: 'products.html', cta: 'Browse products'
+        href: 'products.html', cta: 'Browse products', secondaryActions: []
       };
     }
 
     const productResult = p => ({
       label: 'PRODUCT', heading: p.name,
       message: 'Open the product page for its approved information.',
-      href: p.href, cta: 'Open product'
+      href: p.href, cta: 'Open product',
+      secondaryActions: [
+        ['dealers.html', 'Find a dealer'],
+        ['literature.html', 'Literature']
+      ]
     });
 
     // 1. Exact product name
     let product = DEXPERT_PRODUCTS_BY_LENGTH.find(p => p.key === qKey);
     // 2. Query contains a product name (longest first).
-    //    Minimum 4 characters so a 3-char query can never accidentally
-    //    match a longer product key that happens to contain it.
     if (!product && qKey.length >= 4) {
       product = DEXPERT_PRODUCTS_BY_LENGTH.find(p => qKey.includes(p.key));
     }
@@ -1350,7 +1356,8 @@
       return {
         label: 'APPLICATION', heading: app.name,
         message: 'Explore the systems listed for this application area.',
-        href: app.href, cta: 'Explore'
+        href: app.href, cta: 'Explore',
+        secondaryActions: [['dealers.html', 'Find a dealer']]
       };
     }
 
@@ -1359,15 +1366,18 @@
     if (hit) {
       return {
         label: hit.label, heading: hit.heading, message: hit.message,
-        href: hit.href, cta: hit.cta
+        href: hit.href, cta: hit.cta, secondaryActions: hit.secondaryActions
       };
     }
+
+    // Telemetry log for unmatched queries
+    console.info('[Dexpert Unmatched Query]:', query);
 
     return {
       label: 'DEXPERT', heading: 'No direct match',
       message: 'Try a product, application or resource term, or search the whole site.',
       href: `search.html?q=${encodeURIComponent(String(query || '').trim())}`,
-      cta: 'Search the site'
+      cta: 'Search the site', secondaryActions: []
     };
   }
 
@@ -1422,7 +1432,14 @@
           throw new Error('dexpert.html is missing one of the required elements.');
         }
 
-        document.body.append(homeTpl, resultTpl, dialog);
+        if (!document.getElementById('dexpertHomeTemplate')) document.body.appendChild(homeTpl);
+        else homeTpl.remove();
+
+        if (!document.getElementById('dexpertResultTemplate')) document.body.appendChild(resultTpl);
+        else resultTpl.remove();
+
+        if (!document.getElementById('dexpertDialog')) document.body.appendChild(dialog);
+
         wireDialog(dialog, homeTpl, resultTpl);
         return dialog;
       })();
@@ -1509,6 +1526,28 @@
       const link = $('.dexpert-result-link', node) || $('a[href]', node);
       if (link) link.href = r.href;
 
+      // Render secondary action chips if available
+      const secondaryContainer = $('.dexpert-secondary-actions', node) || (() => {
+        const c = document.createElement('div');
+        c.className = 'dexpert-secondary-actions';
+        c.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem;';
+        if (link && link.parentNode) link.parentNode.appendChild(c);
+        return c;
+      })();
+
+      if (r.secondaryActions && r.secondaryActions.length) {
+        const frag = document.createDocumentFragment();
+        for (const [shref, slabel] of r.secondaryActions) {
+          const chip = document.createElement('a');
+          chip.href = shref;
+          chip.className = 'dexpert-chip';
+          chip.textContent = slabel;
+          chip.style.cssText = 'font-size:12px;padding:4px 10px;background:#f0f2f5;border-radius:4px;color:#292b2e;text-decoration:none;';
+          frag.appendChild(chip);
+        }
+        secondaryContainer.replaceChildren(frag);
+      }
+
       body.replaceChildren(node);
       const back = $('.dexpert-back', node);
       if (back) back.addEventListener('click', () => renderHome(dialog, homeTpl));
@@ -1520,8 +1559,6 @@
       const closeBtn = $('.dexpert-close', dialog);
       if (closeBtn) closeBtn.addEventListener('click', () => dialog.close());
 
-      /* Close on a backdrop click only when the press also started on the
-         backdrop, so finishing a text-selection drag outside doesn't close. */
       let pressedOnBackdrop = false;
       dialog.addEventListener('pointerdown', e => {
         pressedOnBackdrop = e.target === dialog;
@@ -1532,7 +1569,6 @@
           pressedOnBackdrop = false;
           return;
         }
-        /* Navigating (including same-page #anchors) must dismiss the modal. */
         if (e.target.closest('a[href]')) dialog.close();
       });
 
@@ -1542,11 +1578,69 @@
 
       const form = $('.dexpert-ask', dialog);
       const input = $('#expert-input', dialog);
+      
+      // Real-time autocomplete suggestions container setup
+      let suggestionBox = $('.dexpert-suggestions', dialog);
+      if (input && !suggestionBox) {
+        suggestionBox = document.createElement('div');
+        suggestionBox.className = 'dexpert-suggestions';
+        suggestionBox.style.cssText = 'position:absolute;background:#fff;border:1px solid #e4e7ea;border-radius:4px;max-height:160px;overflow-y:auto;z-index:10;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.1);left:0;right:0;margin-top:4px;';
+        if (input.parentNode) {
+          input.parentNode.style.position = 'relative';
+          input.parentNode.appendChild(suggestionBox);
+        }
+
+        input.addEventListener('input', debounce(() => {
+          const val = input.value.trim().toLowerCase();
+          if (val.length < 2) {
+            suggestionBox.style.display = 'none';
+            return;
+          }
+
+          // Match products or apps starting with or containing the input value
+          const matches = DEXPERT_PRODUCTS
+            .filter(([name]) => name.toLowerCase().includes(val))
+            .slice(0, 4);
+
+          if (!matches.length) {
+            suggestionBox.style.display = 'none';
+            return;
+          }
+
+          const frag = document.createDocumentFragment();
+          for (const [name] of matches) {
+            const item = document.createElement('button');
+            item.type = 'button';
+            item.textContent = name;
+            item.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;background:none;border:none;font-size:13px;cursor:pointer;color:#292b2e;';
+            item.addEventListener('mouseenter', () => item.style.background = '#f7f9fa');
+            item.addEventListener('mouseleave', () => item.style.background = 'none');
+            item.addEventListener('click', () => {
+              input.value = name;
+              suggestionBox.style.display = 'none';
+              renderAnswer(dialog, homeTpl, resultTpl, name);
+              input.value = '';
+            });
+            frag.appendChild(item);
+          }
+          suggestionBox.replaceChildren(frag);
+          suggestionBox.style.display = 'block';
+        }, 120));
+
+        // Hide suggestions on outside click
+        document.addEventListener('click', e => {
+          if (!input.contains(e.target) && !suggestionBox.contains(e.target)) {
+            suggestionBox.style.display = 'none';
+          }
+        });
+      }
+
       if (form && input) {
         form.addEventListener('submit', e => {
           e.preventDefault();
           const query = input.value.trim();
           if (!query) return;
+          if (suggestionBox) suggestionBox.style.display = 'none';
           renderAnswer(dialog, homeTpl, resultTpl, query);
           input.value = '';
         });
@@ -1560,11 +1654,11 @@
         const nav = document.getElementById('site-navigation');
         if (nav && nav.classList.contains('open')) {
           const toggle = $('.menu-toggle');
-          if (toggle) toggle.click(); // close drawer through its own logic
+          if (toggle) toggle.click();
         }
 
         const dialog = await loadDialog();
-        fab.setAttribute('aria-controls', 'dexpertDialog'); // exists now
+        fab.setAttribute('aria-controls', 'dexpertDialog');
         if (dialog.open) return;
 
         dialog.showModal();
@@ -1578,7 +1672,6 @@
       }
     };
 
-    /* Warm the dialog up before the first click. */
     const preload = () => { loadDialog().catch(() => {}); };
     fab.addEventListener('pointerenter', preload, { once: true });
     fab.addEventListener('focus', preload, { once: true });
