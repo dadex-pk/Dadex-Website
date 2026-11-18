@@ -5,7 +5,7 @@
 
 .investors-page {
   --ir-tabs-h: 3.3rem;
-  --sticky-offset: calc(var(--header-h) + var(--ir-tabs-h) + 1rem);
+  --sticky-offset: calc(var(--dadex-header-offset, var(--header-h)) + var(--ir-tabs-h) + 1rem);
 }
 
 /* --- Horizontal group tabs --- */
@@ -16,8 +16,8 @@
   margin-bottom: 3rem;
   justify-content: center;
   position: sticky;
-  top: calc(var(--header-h-scrolled) + 40px); 
-  z-index: 90; 
+  top: var(--dadex-header-offset, calc(var(--header-h-scrolled) + 40px));
+  z-index: 90;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -110,7 +110,7 @@
 /* --- Sidebar --- */
 .ir-sidebar {
   position: sticky;
-  top: calc(var(--header-h) + var(--ir-tabs-h) + 4rem);
+  top: calc(var(--dadex-header-offset, var(--header-h)) + var(--ir-tabs-h) + 1rem);
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
@@ -164,10 +164,20 @@
   border-radius: var(--radius-md);
   padding: 3rem;
   box-shadow: var(--shadow-sm);
-  }
+}
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(5px); }
   to   { opacity: 1; transform: none; }
+}
+
+/* Utility: replace inline margin-top on panel grids */
+.ir-panel > .grid,
+.ir-panel > .ir-stat-grid {
+  margin-top: 2rem;
+}
+.ir-panel > .ir-stat-grid + .grid,
+.ir-panel > .grid + .grid {
+  margin-top: 1.5rem;
 }
 
 .ir-panel > h2 {
@@ -199,7 +209,7 @@
 .ir-panel > p {
   color: var(--muted);
   line-height: 1.6;
-  max-width: 92%; 
+  max-width: 92%;
 }
 .ir-panel > p + .grid,
 .ir-panel > p + .share-table { margin-top: 1.5rem; }
@@ -219,7 +229,6 @@
   font-size: 1rem;
   margin-bottom: 1rem;
 }
-
 
 /* --- Share tables --- */
 .share-table {
@@ -405,7 +414,7 @@
   display: flex;
   flex-direction: column;
   border-left: 0px solid var(--line);
-  }
+}
 
 .director-name-btn {
   background: var(--bg-mist-light);
@@ -480,7 +489,7 @@
 
 /* --- Investors responsive --- */
 @media (max-width: 1024px) {
-  .investors-page { --sticky-offset: calc(var(--header-h) + 1rem); }
+  .investors-page { --sticky-offset: calc(var(--dadex-header-offset, var(--header-h)) + 1rem); }
   .ir-tabs { position: static; }
   .ir-tabs::after { display: none; }
   .ir-sidebar {

@@ -1,0 +1,57 @@
+/* ============================================================
+   QUALITY & COMPLIANCE PAGE
+   Loaded by: quality.html only
+   ============================================================ */
+
+.quality-certs {
+  padding-block: clamp(4rem, 8vw, 6rem);
+}
+
+.quality-certs__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.quality-certs__grid > div:first-child h2 {
+  margin-bottom: 0.75rem;
+}
+
+.quality-certs__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .quality-certs__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+}
+
+.quality-she__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 800px;
+}
+
+.quality-she__list li {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.quality-she__list li:last-child {
+  border-bottom: 0;
+}
+
+.quality-she__list i {
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: var(--brand-red);
+}

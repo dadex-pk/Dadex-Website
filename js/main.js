@@ -1,32 +1,46 @@
 /* ============================================================
-   DADEX ETERNIT LIMITED — SHARED UI (v7.0)
+   DADEX ETERNIT LIMITED — SHARED UI (v7.2)
    ------------------------------------------------------------
-   v7.0 changes (full audit pass)
-     · Boot: page features no longer wait on the header/footer
-       fetch (forms, search, filters work immediately); only
-       header-dependent code runs after injection.
-     · Deep links: hash targets re-scrolled after the header is
-       injected; header height exposed as --dadex-header-offset.
-     · Products page: #water-supply / #sewerage-drainage / … ids
-       are assigned automatically to the category groups.
-     · Search: reads window.DADEX_SEARCH_INDEX (JSON fallback),
-       ranked results, contextual snippets, multi-term highlight.
-     · DEXPERT: longest-match product resolution (Polydex vs
-       Polydex Premium, T-Flex vs T-Flex Gas), intent rules,
-       dialog closes on link click.
-     · Navigation: dropdowns work by click, touch, hover and
-       keyboard on desktop; page content is inert while the
-       mobile drawer is open; correct ARIA states.
-     · Active nav: resolved against document.baseURI and
-       refreshed on hashchange.
-     · Preloader: minimum display + hard fail-safe timeout.
-     · Mailto form: validation, length guard, visible fallback.
-     · Investor panels: fall back to "overview" on unknown hash.
+   v7.2 changes (site audit fixes)
+     · DEXPERT: ASTM UPVC SWV and HTplus added to product
+       catalogue. Minimum query length for "contains product"
+       matching raised from 3 to 4 characters to prevent any
+       future 3-char query from matching a longer product key.
+     · Component error fallback: when the header fails to load,
+       a minimal fallback navigation is rendered alongside the
+       error banner so users are never left with a blank top of
+       page.
 
-   Suggested CSS (add to main.css):
-     html { scroll-padding-top: var(--dadex-header-offset, 0px); }
-     .dropdown.is-open > .dropdown-menu,
-     .dropdown.is-open > .mega-menu { same rules as :hover }
+   v7.1 changes (code-review fixes)
+     · Products: #sewerage-drainage targets the "Sewerage &
+       Drainage" group; "Soil, Waste & Vent" gets
+       #soil-waste-vent. Hash decoding is guarded; tab clicks
+       no longer add duplicate history entries.
+     · Mailto form: code-point-safe truncation (no URIError on
+       emoji), CRLF line breaks, recipient validated.
+     · DEXPERT: word-prefix product matching (unique matches
+       only), "Soil, Waste & Vent" intent, site-search fallback,
+       guarded template lookups, backdrop click ignores drag-
+       selections, aria-controls is set once the dialog exists.
+     · Navigation: matchMedia breakpoint; Enter/Space toggles
+       an open dropdown on desktop; focusout ignores clicks
+       inside the menu.
+     · Active nav: an exact #hash match wins over hash-less
+       links.
+     · Search: removed-page check ignores paths/hashes,
+       popular buttons scoped to their container, [hidden]
+       replaces inline display styles.
+     · Investors: in-page anchors that are not panels are
+       left alone.
+     · Header offset falls back to a resize listener.
+
+   CSS contract:
+     · Dropdown visibility is driven by [aria-expanded="true"]
+       (04-header-footer.css) — no .is-open rules are required.
+     · Anchors clear the sticky header through scroll-margin-top
+       (01-colors-and-fonts.css), fed by --dadex-header-offset.
+     · [hidden] must win over component display rules
+       (e.g. .search-clear-btn[hidden], .popular-searches[hidden]).
    ============================================================ */
 
 (() => {
@@ -49,8 +63,9 @@
 
   const SEARCH_MAX_RESULTS = 60;
   const SEARCH_SNIPPET_LENGTH = 160;
+  /* File names (lower-case) of pages that no longer exist. */
   const REMOVED_SEARCH_URLS = new Set([
-    'careers.html', 'faq.html', 'whistleblowing.html',
+    'faq.html', 'whistleblowing.html',
     'technical-resources.html', 'solutions.html'
   ]);
 
@@ -64,11 +79,24 @@
 
   const PRODUCT_HASH_MAP = {
     'water-supply': ['water'],
-    'sewerage-drainage': ['swv', 'drainage'],
+    'soil-waste-vent': ['swv'],
+    'sewerage-drainage': ['drainage'],
     'cable-utility-ducting': ['ducting'],
     'specialised-industrial': ['special'],
     'roofing': ['roofing']
   };
+
+  /* Minimal fallback nav shown when the header component fails
+     to load (network error, file:// context, SPA fallback, …). */
+  const FALLBACK_NAV_LINKS = [
+    ['index.html', 'Home'],
+    ['products.html', 'Products'],
+    ['about.html', 'About'],
+    ['services.html', 'Services'],
+    ['projects.html', 'Projects'],
+    ['investors.html', 'Investors'],
+    ['contact.html', 'Contact']
+  ];
 
   /* ============================================================
      2. UTILITIES
@@ -112,6 +140,10 @@
   function scrollBehavior() {
     return reducedMotion() ? 'auto' : 'smooth';
   }
+
+  /* "./pages/Faq.html?x=1#top" -> "faq.html" */
+  const urlFileName = u =>
+    String(u).split(/[?#]/)[0].split('/').pop().toLowerCase();
 
   /* ============================================================
      3. BOOT SEQUENCE
@@ -238,6 +270,36 @@
       small.textContent = `Attempted URL: ${url}`;
       box.appendChild(small);
     }
+
+    /* Header failed → inject a minimal fallback navigation so
+       users can still reach the main pages. */
+    if (name === 'header') {
+      const nav = document.createElement('nav');
+      nav.setAttribute('aria-label', 'Fallback navigation');
+      nav.style.cssText =
+        'display:flex;flex-wrap:wrap;gap:1rem;align-items:center;' +
+        'padding:12px 20px;background:#fff;border-bottom:1px solid #e4e7ea;' +
+        'font:600 14px/1.5 system-ui,-apple-system,sans-serif;';
+
+      const brand = document.createElement('a');
+      brand.href = 'index.html';
+      brand.textContent = 'Dadex';
+      brand.style.cssText =
+        'color:#c90000;font-weight:800;font-size:15px;' +
+        'text-decoration:none;margin-right:auto;';
+      nav.appendChild(brand);
+
+      FALLBACK_NAV_LINKS.slice(1).forEach(([href, text]) => {
+        const a = document.createElement('a');
+        a.href = href;
+        a.textContent = text;
+        a.style.cssText = 'color:#292b2e;text-decoration:none;';
+        nav.appendChild(a);
+      });
+
+      box.appendChild(nav);
+    }
+
     mount.replaceChildren(box);
   }
 
@@ -312,13 +374,15 @@
 
     const utilityBar = header.querySelector('.utility-bar');
 
+    const setOffset = () =>
+      document.documentElement.style.setProperty(
+        '--dadex-header-offset', `${header.offsetHeight}px`
+      );
+    setOffset();
     if ('ResizeObserver' in window) {
-      const setOffset = () =>
-        document.documentElement.style.setProperty(
-          '--dadex-header-offset', `${header.offsetHeight}px`
-        );
       new ResizeObserver(setOffset).observe(header);
-      setOffset();
+    } else {
+      window.addEventListener('resize', debounce(setOffset, 100));
     }
 
     let ticking = false;
@@ -362,7 +426,8 @@
     const LABEL_OPEN = 'Open navigation menu';
     const LABEL_CLOSE = 'Close navigation menu';
 
-    const isMobile = () => window.innerWidth <= MOBILE_NAV_MAX;
+    const mobileQuery = window.matchMedia(`(max-width: ${MOBILE_NAV_MAX}px)`);
+    const isMobile = () => mobileQuery.matches;
     const isDrawerOpen = () => nav.classList.contains('open');
     const toggleOf = dd => $('.dropdown-toggle', dd);
     const menuOf = dd => $('.dropdown-menu, .mega-menu', dd);
@@ -422,6 +487,7 @@
     dropdowns.forEach(dd => {
       const toggle = toggleOf(dd);
       let hoverTimer = null;
+      let pointerInside = false;
 
       toggle.addEventListener('click', event => {
         event.preventDefault();
@@ -431,7 +497,10 @@
         /* On hover-capable desktops the menu is usually already open
            from hovering; a click should keep it open, not close it. */
         const hoverDesktop = !isMobile() && canHover.matches;
-        const next = hoverDesktop ? true : !isOpen;
+        /* event.detail === 0 means the click came from the keyboard
+           (Enter/Space): that must be able to close the menu again. */
+        const viaKeyboard = event.detail === 0;
+        const next = hoverDesktop && !viaKeyboard ? true : !isOpen;
 
         closeAllDropdowns(dd);
         setDropdown(dd, next);
@@ -477,18 +546,21 @@
       dd.addEventListener('focusout', event => {
         if (isMobile()) return;
         if (event.relatedTarget && dd.contains(event.relatedTarget)) return;
-        if (event.relatedTarget === null && document.hasFocus() === false) return;
+        if (event.relatedTarget === null &&
+            (document.hasFocus() === false || pointerInside)) return;
         setDropdown(dd, false);
       });
 
       /* Hover keeps aria-expanded truthful on desktop. */
       dd.addEventListener('mouseenter', () => {
+        pointerInside = true;
         if (isMobile() || !canHover.matches) return;
         clearTimeout(hoverTimer);
         closeAllDropdowns(dd);
         setDropdown(dd, true);
       });
       dd.addEventListener('mouseleave', () => {
+        pointerInside = false;
         if (isMobile() || !canHover.matches) return;
         clearTimeout(hoverTimer);
         hoverTimer = setTimeout(() => {
@@ -532,7 +604,7 @@
       if (isMobile()) return;
       if (isDrawerOpen()) setDrawer(false);
       closeAllDropdowns();
-    }, 150), { passive: true });
+    }, 150));
 
     /* ---------- Focus trap (mobile drawer) ---------- */
 
@@ -589,6 +661,7 @@
       el.removeAttribute('aria-current');
     });
 
+    const candidates = [];
     links.forEach(link => {
       const href = link.getAttribute('href');
       if (!href || href.startsWith('#')) return;
@@ -601,8 +674,13 @@
       const samePath =
         target === here || (target !== '/' && here.startsWith(`${target}/`));
       if (!samePath) return;
-      if (url.hash && url.hash !== hash) return;
+      candidates.push({ link, hash: url.hash });
+    });
 
+    /* An exact #hash match wins; otherwise the plain page link is active. */
+    const exact = hash ? candidates.filter(c => c.hash === hash) : [];
+    const active = exact.length ? exact : candidates.filter(c => !c.hash);
+    active.forEach(({ link }) => {
       link.classList.add('nav-active');
       link.setAttribute('aria-current', 'page');
     });
@@ -689,7 +767,8 @@
 
     /* A category link must never land on a hidden group. */
     window.addEventListener('hashchange', () => {
-      const id = decodeURIComponent(location.hash.slice(1));
+      let id = location.hash.slice(1);
+      try { id = decodeURIComponent(id); } catch (_) { /* keep raw */ }
       const target = id && document.getElementById(id);
       if (!target || !target.classList.contains('product-category-group')) return;
       if (target.hidden) applyFilter('all');
@@ -725,7 +804,9 @@
       tab.addEventListener('click', event => {
         event.preventDefault();
         section.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
-        history.pushState(null, '', tab.getAttribute('href'));
+        if (location.hash !== tab.getAttribute('href')) {
+          history.pushState(null, '', tab.getAttribute('href'));
+        }
         setActive(tab);
       });
     });
@@ -760,7 +841,8 @@
       const configured =
         form.dataset.mailtoTo ||
         (form.getAttribute('action') || '').replace(/^mailto:/i, '').split('?')[0];
-      const to = configured || DEFAULT_MAIL_TO;
+      /* Only accept something that looks like an address (not "#" etc.). */
+      const to = /^[^\s@]+@[^\s@]+$/.test(configured) ? configured : DEFAULT_MAIL_TO;
 
       let status = $('.form-status', form);
       if (!status) {
@@ -795,14 +877,22 @@
         const subject = String(data.get('subject') || 'General Inquiry').trim();
         let message = String(data.get('message') || '').trim();
 
+        const CRLF = '\r\n';
         const build = msg =>
           `mailto:${to}?subject=${encodeURIComponent(subject)}` +
-          `&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`)}`;
+          `&body=${encodeURIComponent(
+            `Name: ${name}${CRLF}Email: ${email}${CRLF}${CRLF}` +
+            msg.replace(/\r?\n/g, CRLF)
+          )}`;
 
         let href = build(message);
         let truncated = false;
-        while (href.length > MAILTO_MAX_LENGTH && message.length > 0) {
-          message = message.slice(0, Math.max(0, message.length - 100));
+        /* Trim by code point: slicing UTF-16 units can leave half of an
+           emoji behind, and encodeURIComponent then throws a URIError. */
+        let chars = Array.from(message);
+        while (href.length > MAILTO_MAX_LENGTH && chars.length > 0) {
+          chars = chars.slice(0, Math.max(0, chars.length - 100));
+          message = chars.join('');
           href = build(message);
           truncated = true;
         }
@@ -858,6 +948,9 @@
     const sync = () => {
       let id = (location.hash || '#overview').slice(1);
       try { id = decodeURIComponent(id); } catch (_) { /* keep raw */ }
+      /* A hash that names an ordinary element (not a panel) is a normal
+         in-page anchor: leave the active panel alone. */
+      if (!panelIds.has(id) && document.getElementById(id)) return;
       activate(id);
     };
 
@@ -882,7 +975,7 @@
      13. SITE SEARCH (search.html)
      ------------------------------------------------------------
      Index rows: [ title, url, category, body ]
-     Source: window.DADEX_SEARCH_INDEX (js/search-index.js),
+     Source: window.DADEX_SEARCH_INDEX (search-index.js),
      with data/search-index.json as a fallback.
      ============================================================ */
 
@@ -910,7 +1003,7 @@
 
         return { title, url, category, body };
       })
-      .filter(e => e.title && e.url && !REMOVED_SEARCH_URLS.has(e.url) && safeHttpUrl(e.url))
+      .filter(e => e.title && e.url && !REMOVED_SEARCH_URLS.has(urlFileName(e.url)) && safeHttpUrl(e.url))
       .map(e => ({
         ...e,
         titleL: e.title.toLowerCase(),
@@ -980,7 +1073,7 @@
     const template = document.getElementById('searchResultTemplate');
     const clearBtn = document.getElementById('searchClear');
     const popularSearches = document.getElementById('popularSearches');
-    const popularBtns = $$('[data-query]');
+    const popularBtns = popularSearches ? $$('[data-query]', popularSearches) : [];
 
     if (!grid || !template) return;
 
@@ -1001,8 +1094,8 @@
 
     const toggleClearBtn = () => {
       const has = input.value.length > 0;
-      if (clearBtn) clearBtn.style.display = has ? 'grid' : 'none';
-      if (popularSearches) popularSearches.style.display = has ? 'none' : 'flex';
+      if (clearBtn) clearBtn.hidden = !has;
+      if (popularSearches) popularSearches.hidden = has;
     };
 
     const syncUrl = q => {
@@ -1121,6 +1214,8 @@
     ['Catchpits', 'product-catchpits.html'],
     ['Nikasi', 'product-nikasi.html'],
     ['Polyduct', 'product-polyduct.html'],
+    ['ASTM UPVC SWV', 'product-astm.html'],
+    ['HTplus', 'product-htplus.html'],
     ['PE Cable Duct', 'product-pe-cable-duct.html'],
     ['Electrical Conduits', 'product-electrical-conduits.html'],
     ['Electroduct', 'product-electroduct.html'],
@@ -1133,6 +1228,7 @@
 
   const DEXPERT_APPS = [
     ['Water Supply', 'products.html#water-supply'],
+    ['Soil, Waste & Vent', 'products.html#soil-waste-vent'],
     ['Sewerage & Drainage', 'products.html#sewerage-drainage'],
     ['Cable & Utility Ducting', 'products.html#cable-utility-ducting'],
     ['Specialised & Industrial', 'products.html#specialised-industrial'],
@@ -1141,10 +1237,19 @@
 
   const dexKey = s => String(s).toLowerCase().replace(/[^a-z0-9]/g, '');
 
-  /* Longest names first so "T-Flex Gas" beats "T-Flex" and
-     "Polydex Premium" beats "Polydex". */
+  /* Words too generic to identify a single product on their own. */
+  const DEXPERT_GENERIC_WORDS = new Set([
+    'pipe', 'pipes', 'system', 'systems', 'duct', 'ducts', 'cable',
+    'casing', 'screen', 'electrical', 'compressed', 'return'
+  ]);
+
   const DEXPERT_PRODUCTS_BY_LENGTH = DEXPERT_PRODUCTS
-    .map(([name, href]) => ({ name, href, key: dexKey(name) }))
+    .map(([name, href]) => ({
+      name, href,
+      key: dexKey(name),
+      words: name.toLowerCase().split(/[^a-z0-9]+/)
+        .filter(w => w.length >= 4 && !DEXPERT_GENERIC_WORDS.has(w))
+    }))
     .sort((a, b) => b.key.length - a.key.length);
 
   const DEXPERT_APPS_KEYED = DEXPERT_APPS
@@ -1178,6 +1283,10 @@
       'CONTACT', 'Contact Dadex',
       'Reach the head office or your nearest sales office.',
       'contact.html', 'Contact Dadex'),
+    intent(/\b(swv|soil|ventilation)\b/,
+      'APPLICATION', 'Soil, Waste & Vent',
+      'Explore the systems listed for this application area.',
+      'products.html#soil-waste-vent', 'Explore'),
     intent(/\b(drain\w*|sewer\w*|sewage|manhole|septic)\b/,
       'APPLICATION', 'Sewerage & Drainage',
       'Explore the systems listed for this application area.',
@@ -1220,14 +1329,17 @@
 
     // 1. Exact product name
     let product = DEXPERT_PRODUCTS_BY_LENGTH.find(p => p.key === qKey);
-    // 2. Query contains a product name (longest first)
-    if (!product && qKey.length >= 3) {
+    // 2. Query contains a product name (longest first).
+    //    Minimum 4 characters so a 3-char query can never accidentally
+    //    match a longer product key that happens to contain it.
+    if (!product && qKey.length >= 4) {
       product = DEXPERT_PRODUCTS_BY_LENGTH.find(p => qKey.includes(p.key));
     }
-    // 3. Query is a meaningful fragment of a product name
+    // 3. Query is the start of a word that belongs to exactly one product.
     if (!product && qKey.length >= 4) {
-      product = DEXPERT_PRODUCTS_BY_LENGTH.slice().reverse()
-        .find(p => p.key.includes(qKey));
+      const hits = DEXPERT_PRODUCTS_BY_LENGTH
+        .filter(p => p.words.some(w => w.startsWith(qKey)));
+      if (hits.length === 1) product = hits[0];
     }
     if (product) return productResult(product);
 
@@ -1253,8 +1365,9 @@
 
     return {
       label: 'DEXPERT', heading: 'No direct match',
-      message: 'Try a product, application or resource term.',
-      href: 'products.html', cta: 'Browse products'
+      message: 'Try a product, application or resource term, or search the whole site.',
+      href: `search.html?q=${encodeURIComponent(String(query || '').trim())}`,
+      cta: 'Search the site'
     };
   }
 
@@ -1265,7 +1378,6 @@
     fab.className = 'dexpert-fab';
     fab.type = 'button';
     fab.setAttribute('aria-expanded', 'false');
-    fab.setAttribute('aria-controls', 'dexpertDialog');
     fab.innerHTML =
       '<img src="assets/images/Dexpert.png" alt="" aria-hidden="true">' +
       '<span><strong>Ask DEXPERT</strong></span>';
@@ -1385,14 +1497,21 @@
       const r = resolveDexpertQuery(query);
       const node = resultTpl.content.firstElementChild.cloneNode(true);
 
-      $('[data-label]', node).textContent = r.label;
-      $('[data-heading]', node).textContent = r.heading;
-      $('[data-message]', node).textContent = r.message;
-      $('a', node).href = r.href;
-      $('[data-cta]', node).textContent = r.cta;
+      const setText = (selector, text) => {
+        const el = $(selector, node);
+        if (el) el.textContent = text;
+      };
+      setText('[data-label]', r.label);
+      setText('[data-heading]', r.heading);
+      setText('[data-message]', r.message);
+      setText('[data-cta]', r.cta);
+
+      const link = $('.dexpert-result-link', node) || $('a[href]', node);
+      if (link) link.href = r.href;
 
       body.replaceChildren(node);
-      $('.dexpert-back', node).addEventListener('click', () => renderHome(dialog, homeTpl));
+      const back = $('.dexpert-back', node);
+      if (back) back.addEventListener('click', () => renderHome(dialog, homeTpl));
     }
 
     function wireDialog(dialog, homeTpl, resultTpl) {
@@ -1401,8 +1520,18 @@
       const closeBtn = $('.dexpert-close', dialog);
       if (closeBtn) closeBtn.addEventListener('click', () => dialog.close());
 
+      /* Close on a backdrop click only when the press also started on the
+         backdrop, so finishing a text-selection drag outside doesn't close. */
+      let pressedOnBackdrop = false;
+      dialog.addEventListener('pointerdown', e => {
+        pressedOnBackdrop = e.target === dialog;
+      });
       dialog.addEventListener('click', e => {
-        if (e.target === dialog) { dialog.close(); return; }
+        if (e.target === dialog) {
+          if (pressedOnBackdrop) dialog.close();
+          pressedOnBackdrop = false;
+          return;
+        }
         /* Navigating (including same-page #anchors) must dismiss the modal. */
         if (e.target.closest('a[href]')) dialog.close();
       });
@@ -1435,6 +1564,7 @@
         }
 
         const dialog = await loadDialog();
+        fab.setAttribute('aria-controls', 'dexpertDialog'); // exists now
         if (dialog.open) return;
 
         dialog.showModal();

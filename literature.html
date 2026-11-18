@@ -8,8 +8,7 @@
   <meta name="theme-color" content="#c90000">
   <meta name="robots" content="index, follow">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <link rel="canonical" href="https://www.dadex.com/literature.html">
-
+<link rel="canonical" href="https://www.dadex.com/literature.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -19,6 +18,7 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/projects-videos-literature.css">
 </head>
+
 <body class="core-page">
 <a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
@@ -38,14 +38,14 @@
     <div class="container">
       
       <!-- Filter Bar -->
-      <div class="lit-filter-bar">
-        <button class="lit-filter-btn active" data-filter="all">All Documents</button>
-        <button class="lit-filter-btn" data-filter="water">Water Supply</button>
-        <button class="lit-filter-btn" data-filter="drainage">Sewerage &amp; Drainage</button>
-        <button class="lit-filter-btn" data-filter="ducting">Cable &amp; Ducting</button>
-        <button class="lit-filter-btn" data-filter="special">Specialised</button>
-        <button class="lit-filter-btn" data-filter="roofing">Roofing</button>
-        <button class="lit-filter-btn" data-filter="corporate">Corporate</button>
+      <div class="lit-filter-bar" role="group" aria-label="Filter literature">
+        <button type="button" class="lit-filter-btn active" data-filter="all" aria-pressed="true">All Documents</button>
+        <button type="button" class="lit-filter-btn" data-filter="water" aria-pressed="false">Water Supply</button>
+        <button type="button" class="lit-filter-btn" data-filter="drainage" aria-pressed="false">Sewerage &amp; Drainage</button>
+        <button type="button" class="lit-filter-btn" data-filter="ducting" aria-pressed="false">Cable &amp; Ducting</button>
+        <button type="button" class="lit-filter-btn" data-filter="special" aria-pressed="false">Specialised</button>
+        <button type="button" class="lit-filter-btn" data-filter="roofing" aria-pressed="false">Roofing</button>
+        <button type="button" class="lit-filter-btn" data-filter="corporate" aria-pressed="false">Corporate</button>
       </div>
 
       <!-- Grid -->
@@ -378,9 +378,11 @@
 
     function filterCards(category) {
       let visibleCount = 0;
-      
+
       filterBtns.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.filter === category);
+        const active = btn.dataset.filter === category;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', String(active));
       });
 
       cards.forEach(card => {

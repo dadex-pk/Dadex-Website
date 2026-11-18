@@ -64,8 +64,7 @@ button, input, select, textarea, optgroup, option {
   border: 0;
 }
 
-.sr-only:focus,
-.sr-only:active {
+.sr-only:focus {
   position: fixed;
   top: 1rem; left: 1rem;
   z-index: 9999;
@@ -114,21 +113,17 @@ button, input, select, textarea, optgroup, option {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* The gap adjusts the spacing between the image slices. 
-     You may need to tweak this depending on how tightly you cropped the images. */
-  gap: 2px; 
+  gap: 2px;
 }
 
 .logo-part {
-  /* Set a uniform height for all letters to ensure they align perfectly */
-  height: 70px; 
+  height: 70px;
   width: auto;
   opacity: 0;
   transform: translateX(-30px);
   animation: logoSlideIn 0.4s cubic-bezier(0.2, 0.65, 0.2, 1) forwards;
 }
 
-/* Stagger the animation for each letter */
 .part-1 { animation-delay: 0.1s; }
 .part-2 { animation-delay: 0.25s; }
 .part-3 { animation-delay: 0.4s; }
@@ -142,7 +137,6 @@ button, input, select, textarea, optgroup, option {
   }
 }
 
-/* Accessibility: Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .logo-part {
     animation: none;

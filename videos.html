@@ -4,6 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Videos — Dadex Eternit Limited</title>
+  <meta name="description" content="Dadex installation guides, product overviews and application demonstration videos.">
+  <meta name="theme-color" content="#c90000">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.dadex.com/videos.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,12 +15,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/01-colors-and-fonts.css">
+  <link rel="stylesheet" href="css/02-basic-styles.css">
+  <link rel="stylesheet" href="css/03-page-layout.css">
+  <link rel="stylesheet" href="css/04-header-footer.css">
+  <link rel="stylesheet" href="css/05-shared-parts.css">
   <link rel="stylesheet" href="css/projects-videos-literature.css">
 </head>
 <body>
+<a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
-<main>
+<main id="main-content">
   <section class="page-hero">
     <div class="container">
       <div class="kicker">Resources</div>
@@ -24,22 +33,24 @@
       <p>Installation guides, product overviews and application demonstrations.</p>
     </div>
   </section>
-  
+
   <section class="section section--light">
     <div class="container">
-      
-      <div class="filter-group">
-        <button class="filter-btn active" data-video-filter="all">All Videos</button>
-        <button class="filter-btn" data-video-filter="installation">Installation Guides</button>
-        <button class="filter-btn" data-video-filter="overview">Product Overviews</button>
+
+      <div class="filter-group" role="group" aria-label="Filter videos">
+        <button type="button" class="filter-btn active" data-video-filter="all" aria-pressed="true">All Videos</button>
+        <button type="button" class="filter-btn" data-video-filter="installation" aria-pressed="false">Installation Guides</button>
+        <button type="button" class="filter-btn" data-video-filter="overview" aria-pressed="false">Product Overviews</button>
       </div>
 
       <div class="grid grid-3" id="videoGrid">
-        
+
         <article class="card video-card" data-category="installation">
           <div class="video-thumbnail">
             <img src="assets/images/products/aquadex.webp" alt="Aquadex installation guide">
-            <button class="video-play" data-video="https://www.youtube.com/embed/VIDEO_ID_AQUADEX" data-video-type="youtube"><i class="fas fa-play"></i></button>
+            <button class="video-play" type="button" data-video="https://www.youtube.com/embed/VIDEO_ID_AQUADEX" aria-label="Play Aquadex installation guide video">
+              <i class="fas fa-play" aria-hidden="true"></i>
+            </button>
           </div>
           <div class="video-body">
             <span class="video-category">Installation</span>
@@ -51,7 +62,9 @@
         <article class="card video-card" data-category="installation">
           <div class="video-thumbnail">
             <img src="assets/images/products/tflex.webp" alt="T-Flex butt fusion jointing">
-            <button class="video-play" data-video="https://www.youtube.com/embed/VIDEO_ID_TFLEX" data-video-type="youtube"><i class="fas fa-play"></i></button>
+            <button class="video-play" type="button" data-video="https://www.youtube.com/embed/VIDEO_ID_TFLEX" aria-label="Play T-Flex butt fusion jointing video">
+              <i class="fas fa-play" aria-hidden="true"></i>
+            </button>
           </div>
           <div class="video-body">
             <span class="video-category">Installation</span>
@@ -63,7 +76,9 @@
         <article class="card video-card" data-category="overview">
           <div class="video-thumbnail">
             <img src="assets/images/products/tflex-gas.webp" alt="T-Flex Gas product overview">
-            <button class="video-play" data-video="https://www.youtube.com/embed/VIDEO_ID_TFLEXGAS" data-video-type="youtube"><i class="fas fa-play"></i></button>
+            <button class="video-play" type="button" data-video="https://www.youtube.com/embed/VIDEO_ID_TFLEXGAS" aria-label="Play T-Flex Gas product overview video">
+              <i class="fas fa-play" aria-hidden="true"></i>
+            </button>
           </div>
           <div class="video-body">
             <span class="video-category">Product Overview</span>
@@ -76,26 +91,32 @@
     </div>
   </section>
 
-  <div class="video-lightbox" id="videoLightbox">
+  <dialog class="video-lightbox" id="videoLightbox" aria-label="Video player">
     <div class="video-lightbox-inner">
-      <button class="video-lightbox-close" type="button">×</button>
+      <button class="video-lightbox-close" type="button" aria-label="Close video">
+        <i class="fas fa-xmark" aria-hidden="true"></i>
+      </button>
       <div id="videoLightboxFrame" style="width:100%;height:100%"></div>
     </div>
-  </div>
+  </dialog>
 
 </main>
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
 <script>
-(function(){
+(function () {
   var filterBtns = document.querySelectorAll('[data-video-filter]');
   var cards = document.querySelectorAll('.video-card');
-  
-  filterBtns.forEach(function(btn){
-    btn.addEventListener('click', function(){
+
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
       var value = btn.dataset.videoFilter;
-      filterBtns.forEach(function(b){ b.classList.toggle('active', b === btn); });
-      cards.forEach(function(card){
+      filterBtns.forEach(function (b) {
+        var on = b === btn;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      cards.forEach(function (card) {
         card.hidden = !(value === 'all' || card.dataset.category === value);
       });
     });
@@ -103,19 +124,27 @@
 
   var lightbox = document.getElementById('videoLightbox');
   var frame = document.getElementById('videoLightboxFrame');
-  var closeBtn = document.querySelector('.video-lightbox-close');
+  var closeBtn = lightbox.querySelector('.video-lightbox-close');
 
-  document.querySelectorAll('.video-play').forEach(function(btn){
-    btn.addEventListener('click', function(){
+  function closeLightbox() {
+    frame.innerHTML = '';
+    if (lightbox.open) lightbox.close();
+  }
+
+  document.querySelectorAll('.video-play').forEach(function (btn) {
+    btn.addEventListener('click', function () {
       var src = btn.getAttribute('data-video');
-      frame.innerHTML = '<iframe src="'+src+'" style="width:100%;height:100%;border:0;" allow="autoplay; fullscreen"></iframe>';
-      lightbox.classList.add('open');
+      frame.innerHTML =
+        '<iframe src="' + src + '" style="width:100%;height:100%;border:0;" ' +
+        'allow="autoplay; fullscreen" allowfullscreen title="Dadex product video"></iframe>';
+      lightbox.showModal();
     });
   });
 
-  closeBtn.addEventListener('click', function(){
-    frame.innerHTML = '';
-    lightbox.classList.remove('open');
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('close', function () { frame.innerHTML = ''; });
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLightbox();
   });
 })();
 </script>

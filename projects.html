@@ -4,6 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Projects – Dadex Eternit Limited</title>
+  <meta name="description" content="Project references where Dadex piping, drainage, ducting and roofing systems serve public utilities, industry, infrastructure and building developments across Pakistan.">
+  <meta name="theme-color" content="#c90000">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.dadex.com/projects.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +15,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/01-colors-and-fonts.css">
+  <link rel="stylesheet" href="css/02-basic-styles.css">
+  <link rel="stylesheet" href="css/03-page-layout.css">
+  <link rel="stylesheet" href="css/04-header-footer.css">
+  <link rel="stylesheet" href="css/05-shared-parts.css">
   <link rel="stylesheet" href="css/projects-videos-literature.css">
 </head>
 <body>
@@ -31,93 +39,121 @@
     <div class="container">
       <p style="font-size: 1.125rem; color: var(--muted); margin-bottom: 2rem;">Dadex systems are supplied through project contractors, distributors and technical teams to organisations across Pakistan. The references below reflect <strong>applications and sectors</strong> where Dadex products and technical services have been used.</p>
 
-      <div class="filter-group" id="projectFilter">
-        <button class="filter-btn active" data-filter="all">All Projects</button>
-        <button class="filter-btn" data-filter="water">Water</button>
-        <button class="filter-btn" data-filter="gas">Gas</button>
-        <button class="filter-btn" data-filter="drainage">Sewerage & Drainage</button>
-        <button class="filter-btn" data-filter="ducting">Ducting & Cable</button>
-        <button class="filter-btn" data-filter="industrial">Industrial</button>
-        <button class="filter-btn" data-filter="building">Building Services</button>
-        <button class="filter-btn" data-filter="housing">Housing & Development</button>
+      <div class="filter-group" id="projectFilter" role="group" aria-label="Filter projects">
+        <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">All Projects</button>
+        <button type="button" class="filter-btn" data-filter="water" aria-pressed="false">Water</button>
+        <button type="button" class="filter-btn" data-filter="gas" aria-pressed="false">Gas</button>
+        <button type="button" class="filter-btn" data-filter="drainage" aria-pressed="false">Sewerage &amp; Drainage</button>
+        <button type="button" class="filter-btn" data-filter="ducting" aria-pressed="false">Ducting &amp; Cable</button>
+        <button type="button" class="filter-btn" data-filter="industrial" aria-pressed="false">Industrial</button>
+        <button type="button" class="filter-btn" data-filter="building" aria-pressed="false">Building Services</button>
+        <button type="button" class="filter-btn" data-filter="housing" aria-pressed="false">Housing &amp; Development</button>
       </div>
 
       <div class="grid grid-3" id="projectGrid">
+
         <article class="card project-card" data-category="water">
-          <div style="height: 200px; overflow: hidden; background: #f7f7f5;"><img src="assets/images/products/aquadex.webp" style="width: 100%; height: 100%; object-fit: contain; padding: 1rem;"></div>
-          <div style="padding: 1.5rem;">
-            <span style="color: var(--brand-red); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Public Utility · Water</span>
-            <h3 style="margin: 0.5rem 0;">Karachi Water & Sewerage Board</h3>
+          <div class="project-card__media">
+            <img src="assets/images/products/aquadex.webp" alt="Aquadex UPVC pressure pipes" loading="lazy" width="400" height="300">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__category">Public Utility · Water</span>
+            <h3 class="project-card__title">Karachi Water &amp; Sewerage Board</h3>
             <p>Potable water distribution network serving Karachi, using the Aquadex UPVC pressure piping system.</p>
           </div>
         </article>
+
         <article class="card project-card" data-category="gas">
-          <div style="height: 200px; overflow: hidden; background: #f7f7f5;"><img src="assets/images/products/tflex-gas.webp" style="width: 100%; height: 100%; object-fit: contain; padding: 1rem;"></div>
-          <div style="padding: 1.5rem;">
-            <span style="color: var(--brand-red); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Gas Infrastructure</span>
-            <h3 style="margin: 0.5rem 0;">Sui Southern Gas Company</h3>
+          <div class="project-card__media">
+            <img src="assets/images/products/tflex-gas.webp" alt="T-Flex PE gas piping" loading="lazy" width="400" height="300">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__category">Gas Infrastructure</span>
+            <h3 class="project-card__title">Sui Southern Gas Company</h3>
             <p>Gas distribution infrastructure across Sindh, using T-Flex PE 100 gas piping systems.</p>
           </div>
         </article>
+
         <article class="card project-card" data-category="industrial">
-          <div style="height: 200px; overflow: hidden; background: #f7f7f5;"><img src="assets/images/products/tflex-compressed-air.webp" style="width: 100%; height: 100%; object-fit: contain; padding: 1rem;"></div>
-          <div style="padding: 1.5rem;">
-            <span style="color: var(--brand-red); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Industrial</span>
-            <h3 style="margin: 0.5rem 0;">PARCO Refinery Project</h3>
+          <div class="project-card__media">
+            <img src="assets/images/products/tflex-compressed-air.webp" alt="T-Flex PE compressed air piping" loading="lazy" width="400" height="300">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__category">Industrial</span>
+            <h3 class="project-card__title">PARCO Refinery Project</h3>
             <p>Specialised piping systems supplied for industrial applications at the Pak-Arab Refinery complex.</p>
           </div>
         </article>
+
         <article class="card project-card" data-category="drainage">
-          <div style="height: 200px; overflow: hidden; background: #f7f7f5;"><img src="assets/images/products/flowline.webp" style="width: 100%; height: 100%; object-fit: contain; padding: 1rem;"></div>
-          <div style="padding: 1.5rem;">
-            <span style="color: var(--brand-red); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Residential · Drainage</span>
-            <h3 style="margin: 0.5rem 0;">Bahria Town Lahore</h3>
+          <div class="project-card__media">
+            <img src="assets/images/products/flowline.webp" alt="Flow Line UPVC sewerage pipes" loading="lazy" width="400" height="300">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__category">Residential · Drainage</span>
+            <h3 class="project-card__title">Bahria Town Lahore</h3>
             <p>Nikasi UPVC SWV and Flowline drainage systems for residential and commercial developments.</p>
           </div>
         </article>
+
         <article class="card project-card" data-category="water">
-          <div style="height: 200px; overflow: hidden; background: #f7f7f5;"><img src="assets/images/products/polydex.webp" style="width: 100%; height: 100%; object-fit: contain; padding: 1rem;"></div>
-          <div style="padding: 1.5rem;">
-            <span style="color: var(--brand-red); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Public Utility · Water</span>
-            <h3 style="margin: 0.5rem 0;">WASA Water Supply Schemes</h3>
+          <div class="project-card__media">
+            <img src="assets/images/products/polydex.webp" alt="Polydex PP-R pipes" loading="lazy" width="400" height="300">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__category">Public Utility · Water</span>
+            <h3 class="project-card__title">WASA Water Supply Schemes</h3>
             <p>Polydex PP-R and Aquadex systems supplied for multiple water supply schemes across Punjab.</p>
           </div>
         </article>
+
         <article class="card project-card" data-category="ducting">
-          <div style="height: 200px; overflow: hidden; background: #f7f7f5;"><img src="assets/images/products/cable-duct.webp" style="width: 100%; height: 100%; object-fit: contain; padding: 1rem;"></div>
-          <div style="padding: 1.5rem;">
-            <span style="color: var(--brand-red); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Infrastructure · Ducting</span>
-            <h3 style="margin: 0.5rem 0;">Civil Aviation Authority</h3>
+          <div class="project-card__media">
+            <img src="assets/images/products/cable-duct.webp" alt="PE cable duct" loading="lazy" width="400" height="300">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__category">Infrastructure · Ducting</span>
+            <h3 class="project-card__title">Civil Aviation Authority</h3>
             <p>Cable ducting and conduit systems supplied for airport infrastructure projects.</p>
           </div>
         </article>
+
         <article class="card project-card" data-category="gas">
-          <div style="height: 200px; overflow: hidden; background: #f7f7f5;"><img src="assets/images/products/tflex-gas.webp" style="width: 100%; height: 100%; object-fit: contain; padding: 1rem;"></div>
-          <div style="padding: 1.5rem;">
-            <span style="color: var(--brand-red); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Gas Distribution</span>
-            <h3 style="margin: 0.5rem 0;">Sui Northern Gas Pipelines</h3>
+          <div class="project-card__media">
+            <img src="assets/images/products/tflex-gas.webp" alt="T-Flex PE gas piping" loading="lazy" width="400" height="300">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__category">Gas Distribution</span>
+            <h3 class="project-card__title">Sui Northern Gas Pipelines</h3>
             <p>T-Flex gas piping systems supplied for SNGPL distribution projects.</p>
           </div>
         </article>
+
         <article class="card project-card" data-category="housing">
-          <div style="height: 200px; overflow: hidden; background: #f7f7f5;"><img src="assets/images/products/nikasi.webp" style="width: 100%; height: 100%; object-fit: contain; padding: 1rem;"></div>
-          <div style="padding: 1.5rem;">
-            <span style="color: var(--brand-red); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Housing & Development</span>
-            <h3 style="margin: 0.5rem 0;">Eden Garden Housing Scheme</h3>
+          <div class="project-card__media">
+            <img src="assets/images/products/nikasi.webp" alt="Nikasi UPVC soil, waste and vent pipes" loading="lazy" width="400" height="300">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__category">Housing &amp; Development</span>
+            <h3 class="project-card__title">Eden Garden Housing Scheme</h3>
             <p>Complete SWV and drainage solutions using Nikasi and Flowline systems for the housing development.</p>
           </div>
         </article>
+
         <article class="card project-card" data-category="building">
-          <div style="height: 200px; overflow: hidden; background: #f7f7f5;"><img src="assets/images/products/polydex-premium.webp" style="width: 100%; height: 100%; object-fit: contain; padding: 1rem;"></div>
-          <div style="padding: 1.5rem;">
-            <span style="color: var(--brand-red); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Building Services</span>
-            <h3 style="margin: 0.5rem 0;">Aga Khan Housing Network</h3>
+          <div class="project-card__media">
+            <img src="assets/images/products/polydex-premium.webp" alt="Polydex Premium PP-RCT pipes" loading="lazy" width="400" height="300">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__category">Building Services</span>
+            <h3 class="project-card__title">Aga Khan Housing Network</h3>
             <p>Hot and cold water plumbing systems supplied using Polydex Premium PP-RCT.</p>
           </div>
         </article>
+
       </div>
-      
-      <p style="margin-top: 2rem; padding: 1rem; background: var(--bg-mist); border-left: 3px solid var(--brand-red); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.875rem; color: var(--muted);"><strong>Note on references.</strong> Project references reflect applications and sectors where Dadex systems have been supplied. Project-specific scope, quantities and delivery information can be provided by Dadex Sales and Technical Services where appropriate.</p>
+
+      <p class="project-note"><strong>Note on references.</strong> Project references reflect applications and sectors where Dadex systems have been supplied. Project-specific scope, quantities and delivery information can be provided by Dadex Sales and Technical Services where appropriate.</p>
     </div>
   </section>
 
@@ -144,7 +180,7 @@
         <p>A selection of the public utilities, industrial companies, developers and infrastructure organizations associated with Dadex applications.</p>
       </div>
       <div class="grid grid-4">
-        <div class="card text-center"><h3>KWSB</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Water & sewerage</p></div>
+        <div class="card text-center"><h3>KWSB</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Water &amp; sewerage</p></div>
         <div class="card text-center"><h3>SSGC</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Gas infrastructure</p></div>
         <div class="card text-center"><h3>SNGPL</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Gas distribution</p></div>
         <div class="card text-center"><h3>PARCO</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Industrial</p></div>

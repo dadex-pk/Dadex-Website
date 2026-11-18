@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page Not Found – Dadex Eternit Limited</title>
+  <meta name="description" content="The page you were looking for could not be found. Browse Dadex piping and roofing systems or return to the home page.">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#c90000">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,24 +14,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/01-colors-and-fonts.css">
+  <link rel="stylesheet" href="css/02-basic-styles.css">
+  <link rel="stylesheet" href="css/03-page-layout.css">
+  <link rel="stylesheet" href="css/04-header-footer.css">
+  <link rel="stylesheet" href="css/05-shared-parts.css">
+  <link rel="stylesheet" href="css/404-page.css">
 </head>
 <body>
+<a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
-<main>
-  <section class="page-hero" style="padding-block: clamp(6rem, 10vw, 10rem);">
-    <div class="container">
-      <h1 style="font-size: clamp(5rem, 15vw, 10rem); line-height: 1; margin-bottom: 1rem; color: var(--brand-red);">404</h1>
-      <h2 style="margin-bottom: 1rem;">Looks like this pipeline is blocked.</h2>
-      <p style="margin-bottom: 2.5rem; font-size: 1.125rem;">The page you were looking for could not be found. It may have been moved, renamed, or removed. Let's get you back on track.</p>
-      
-      <!-- Instant Search Form -->
-      <form action="search.html" method="GET" style="max-width: 500px; margin: 0 auto 3rem; display: flex; gap: 0.5rem;">
-        <input type="search" name="q" placeholder="Search products, resources, or pages..." required style="flex: 1; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--line); font-family: inherit; font-size: 1rem;">
-        <button type="submit" class="btn btn--primary" aria-label="Search"><i class="fas fa-magnifying-glass"></i></button>
+
+<main id="main-content">
+  <section class="page-hero error-hero">
+    <div class="container error-hero__container">
+      <h1 class="error-hero__title">
+        <span class="error-hero__code" aria-hidden="true">404</span>
+        Page not found
+      </h1>
+      <p class="error-hero__lead">Looks like this pipeline is blocked.</p>
+      <p class="error-hero__desc">The page you were looking for could not be found. It may have been moved, renamed, or removed. Let's get you back on track.</p>
+
+      <form action="search.html" method="GET" class="error-hero__search" role="search">
+        <label for="errorSearch" class="sr-only">Search Dadex</label>
+        <input id="errorSearch" type="search" name="q" placeholder="Search products, resources, or pages..." required>
+        <button type="submit" class="btn btn--primary" aria-label="Search">
+          <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+        </button>
       </form>
 
-      <a href="index.html" class="btn btn--outline" style="border-color: rgba(255,255,255,0.3); color: #fff;">Return to Home</a>
+      <a href="index.html" class="btn btn--outline error-hero__home">Return to Home</a>
     </div>
   </section>
 
@@ -37,25 +52,25 @@
       <div class="section-header center">
         <h2>Popular Destinations</h2>
       </div>
-      
+
       <div class="grid grid-4">
-        <a href="products.html" class="card text-center" style="padding: 2.5rem 1.5rem;">
-          <i class="fas fa-boxes-stacked" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+        <a href="products.html" class="card text-center error-card">
+          <i class="fas fa-boxes-stacked error-card__icon" aria-hidden="true"></i>
           <h3>Browse Products</h3>
           <p>Explore our piping and roofing systems.</p>
         </a>
-        <a href="dealers.html" class="card text-center" style="padding: 2.5rem 1.5rem;">
-          <i class="fas fa-store" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+        <a href="dealers.html" class="card text-center error-card">
+          <i class="fas fa-store error-card__icon" aria-hidden="true"></i>
           <h3>Find a Dealer</h3>
           <p>Locate an approved distributor near you.</p>
         </a>
-        <a href="investors.html" class="card text-center" style="padding: 2.5rem 1.5rem;">
-          <i class="fas fa-chart-line" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+        <a href="investors.html" class="card text-center error-card">
+          <i class="fas fa-chart-line error-card__icon" aria-hidden="true"></i>
           <h3>Investor Relations</h3>
           <p>Financial reports and shareholder info.</p>
         </a>
-        <a href="contact.html" class="card text-center" style="padding: 2.5rem 1.5rem;">
-          <i class="fas fa-envelope" style="font-size: 2.5rem; color: var(--brand-red); margin-bottom: 1rem;"></i>
+        <a href="contact.html" class="card text-center error-card">
+          <i class="fas fa-envelope error-card__icon" aria-hidden="true"></i>
           <h3>Contact Us</h3>
           <p>Reach our sales and support teams.</p>
         </a>
@@ -63,6 +78,7 @@
     </div>
   </section>
 </main>
+
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
 </body>

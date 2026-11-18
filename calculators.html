@@ -4,6 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Technical Calculators | Dadex Eternit Limited</title>
+  <meta name="description" content="Engineering calculators from Dadex for pipe material selection, hydraulic design and unit conversion across UPVC, HDPE, PP-R and PP-RCT systems.">
+  <meta name="theme-color" content="#c90000">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.dadex.com/calculators.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +15,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/01-colors-and-fonts.css">
+  <link rel="stylesheet" href="css/02-basic-styles.css">
+  <link rel="stylesheet" href="css/03-page-layout.css">
+  <link rel="stylesheet" href="css/04-header-footer.css">
+  <link rel="stylesheet" href="css/05-shared-parts.css">
   <link rel="stylesheet" href="css/calculators-page.css">
 </head>
 <body>
@@ -28,22 +36,33 @@
   </section>
 
   <div class="calc-print-header" aria-hidden="true">
-    <div><strong>Dadex Eternit Limited — Technical Calculators</strong><br/><small>Indicative engineering results. Confirm against approved Dadex documentation.</small></div>
-    <div><small>Printed: <span data-print-date>—</span></small></div>
+    <div>
+      <strong>Dadex Eternit Limited — Technical Calculators</strong><br>
+      <small>Indicative engineering results. Confirm against approved Dadex documentation.</small>
+    </div>
+    <div>
+      <small>Printed: <span data-print-date>—</span></small>
+    </div>
   </div>
 
   <div class="calc-toolbar" role="region" aria-label="Calculator controls">
     <div class="container calc-toolbar-inner">
-      <div class="material-selector" id="materialSelector" aria-label="Select pipe material">
-        <button class="mat-btn active" data-mat="UPVC" type="button">uPVC</button>
-        <button class="mat-btn" data-mat="HDPE" type="button">HDPE 100</button>
-        <button class="mat-btn" data-mat="PPR" type="button">PPR</button>
-        <button class="mat-btn" data-mat="PPRCT" type="button">PP-RCT</button>
+      <div class="material-selector" id="materialSelector" role="group" aria-label="Select pipe material">
+        <button class="mat-btn active" data-mat="UPVC" type="button" aria-pressed="true">uPVC</button>
+        <button class="mat-btn" data-mat="HDPE" type="button" aria-pressed="false">HDPE 100</button>
+        <button class="mat-btn" data-mat="PPR" type="button" aria-pressed="false">PPR</button>
+        <button class="mat-btn" data-mat="PPRCT" type="button" aria-pressed="false">PP-RCT</button>
         <span id="current-mat-display">ACTIVE: UPVC</span>
       </div>
       <div class="calc-toolbar-actions">
-        <button class="calc-action" id="unitToggle" type="button"><i class="fas fa-globe"></i> <span data-unit-label>Imperial</span></button>
-        <button class="calc-action" id="printBtn" type="button"><i class="fas fa-file-pdf"></i> Print / Save PDF</button>
+        <button class="calc-action" id="unitToggle" type="button" aria-pressed="false">
+          <i class="fas fa-globe" aria-hidden="true"></i>
+          <span data-unit-label>Imperial</span>
+        </button>
+        <button class="calc-action" id="printBtn" type="button">
+          <i class="fas fa-file-pdf" aria-hidden="true"></i>
+          Print / Save PDF
+        </button>
       </div>
     </div>
   </div>
@@ -52,17 +71,17 @@
     <div class="container">
       <div class="calculator-suite">
         <div class="global-unit-converter">
-            <p>PRESSURE UNIT CONVERTER</p>
+          <p>PRESSURE UNIT CONVERTER</p>
           <div class="inputs">
-          <div class="input-group">
-            <label for="q-bar">Pressure (BAR)</label>
-            <input id="q-bar" type="number" placeholder="Bar" step="any"/>
-          </div>
-          <div class="divider" aria-hidden="true">⇌</div>
-          <div class="input-group">
-            <label for="q-psi">Pressure (PSI)</label>
-            <input id="q-psi" type="number" placeholder="PSI" step="any"/>
-          </div>
+            <div class="input-group">
+              <label for="q-bar">Pressure (BAR)</label>
+              <input id="q-bar" type="number" inputmode="decimal" placeholder="Bar" step="any" autocomplete="off">
+            </div>
+            <div class="divider" aria-hidden="true">⇌</div>
+            <div class="input-group">
+              <label for="q-psi">Pressure (PSI)</label>
+              <input id="q-psi" type="number" inputmode="decimal" placeholder="PSI" step="any" autocomplete="off">
+            </div>
           </div>
         </div>
 
@@ -78,257 +97,750 @@
 
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
+
 <script>
 /* ============================================================
-   DADEX ENGINEERING CALCULATOR SUITE
+   DADEX ENGINEERING CALCULATOR SUITE (v2.0)
+   ------------------------------------------------------------
+   v2.0 changes
+     · state declared before any function that reads it (fixes
+       TDZ crash where init() previously ran before state existed)
+     · renderCalculators() only rebuilds DOM when needed; unit
+       toggle and material change now update values in place,
+       preserving focus and scroll (audit L9)
+     · copyResults clipboard access is guarded (non-secure ctx)
+     · status severity uses modifier classes (res-status--safe
+       / --warn / --danger), old short names kept for CSS compat
+     · range sliders get aria-label (audit H4)
+     · all results boxes announce via aria-live (audit H3-adjacent)
+     · converter ignores NaN instead of propagating
+     · compute() all-guarded; scheduler cancels superseded runs
+     · full IIFE — no globals leaked
    ============================================================ */
-const BAR_PSI = 14.5038;
-const UNIT_CONV = {
-  'mm':     { label:'in',      to: v => v / 25.4,       from: v => v * 25.4 },
-  'm':      { label:'ft',      to: v => v * 3.28084,    from: v => v / 3.28084 },
-  'm³/hr':  { label:'GPM',     to: v => v * 4.40287,    from: v => v / 4.40287 },
-  'L/s':    { label:'GPM',     to: v => v * 15.8503,    from: v => v / 15.8503 },
-  'm/s':    { label:'ft/s',    to: v => v * 3.28084,    from: v => v / 3.28084 },
-  'kg/m':   { label:'lb/ft',   to: v => v * 0.671969,   from: v => v / 0.671969 },
-  'N/m':    { label:'lbf/ft',  to: v => v * 0.0685218,  from: v => v / 0.0685218 },
-  '°C':     { label:'°F',      to: v => v * 9/5 + 32,   from: v => (v - 32) * 5/9 },
-  'Δ°C':    { label:'Δ°F',     to: v => v * 9/5,        from: v => v * 5/9 },
-  'PN/Bar': { label:'PSI',     to: v => v * BAR_PSI,    from: v => v / BAR_PSI },
-  'BAR':    { label:'PSI',     to: v => v * BAR_PSI,    from: v => v / BAR_PSI },
-  'm/100m': { label:'ft/100ft',to: v => v * 3.28084,    from: v => v / 3.28084 },
-  '%':      { label:'%',       to: v => v,              from: v => v },
-  'OD/t':   { label:'OD/t',    to: v => v,              from: v => v },
-  'PSI':    { label:'PSI',     to: v => v,              from: v => v },
-  'GPM':    { label:'GPM',     to: v => v,              from: v => v },
-  'ft/s':   { label:'ft/s',    to: v => v,              from: v => v },
-  'in':     { label:'in',      to: v => v,              from: v => v },
-  'ft':     { label:'ft',      to: v => v,              from: v => v }
-};
+(function () {
+  'use strict';
 
-function getUnitLabel(unit){ if (state.unitSystem === 'metric') return unit; const c = UNIT_CONV[unit]; return c ? c.label : unit; }
-function toDisplay(unit, metricValue){ if (state.unitSystem === 'metric' || metricValue == null) return metricValue; const c = UNIT_CONV[unit]; return c ? c.to(metricValue) : metricValue; }
-function toMetric(unit, displayValue){ if (state.unitSystem === 'metric' || displayValue == null) return displayValue; const c = UNIT_CONV[unit]; return c ? c.from(displayValue) : displayValue; }
-function formatInputValue(n){ if (!isFinite(n)) return ''; return String(Math.round(n * 10000) / 10000); }
-function niceStep(range){ if (!isFinite(range) || range <= 0) return 1; const raw = range / 100; const mag = Math.pow(10, Math.floor(Math.log10(raw))); const norm = raw / mag; if (norm <= 1) return mag; if (norm <= 2) return 2 * mag; if (norm <= 5) return 5 * mag; return 10 * mag; }
+  /* ---------- Constants ---------- */
 
-const matProps = {
-  UPVC:  { n:0.009, alpha:0.08, stress:50, eModulus:3000, kLoop:34, derate:t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.015) },
-  HDPE:  { n:0.010, alpha:0.18, stress:80, eModulus:950,  kLoop:26, derate:t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.012) },
-  PPR:   { n:0.007, alpha:0.15, stress:70, eModulus:800,  kLoop:30, derate:t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.018) },
-  PPRCT: { n:0.007, alpha:0.07, stress:85, eModulus:900,  kLoop:30, derate:t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.011) }
-};
+  const BAR_PSI = 14.5038;
+  const COMPUTE_DEBOUNCE_MS = 60;
 
-const CALCULATORS = [
-  { id:'derating', title:'1. Pressure Derating', inputs:[{ id:'der-pn', label:'Nominal Pressure', default:10, min:0, step:0.5, unit:'PN/Bar' }, { id:'der-t', label:'Working Temp', default:40, min:-20, max:120, step:1, unit:'°C' }], compute:(props, vals) => { const derated = vals['der-pn'] * props.derate(vals['der-t']); return { primary:derated, secondary:derated * BAR_PSI, primaryUnit:'BAR', secondaryUnit:'PSI' }; }, status:res => res.primary < 2 ? { label:'⚠️ Low Margin', cls:'warn' } : res.primary < 5 ? { label:'✅ Safe', cls:'safe' } : { label:'✅ High Margin', cls:'safe' } },
-  { id:'manning', title:'2. Gravity Flow (Manning)', inputs:[{ id:'man-s', label:'Pipe Slope', default:1.0, min:0.01, max:10, step:0.1, unit:'%' }, { id:'man-d', label:'Inside Diameter', default:200, min:10, max:2000, step:5, unit:'mm' }], compute:(props, vals) => { const ms = vals['man-s'] / 100, md = vals['man-d'] / 1000; if (md <= 0 || ms <= 0) return null; const v = (1 / props.n) * Math.pow(md / 4, 2 / 3) * Math.sqrt(ms); const q = ((Math.PI * Math.pow(md, 2)) / 4) * v * 1000; return { primary:q, secondary:v, primaryUnit:'L/s', secondaryUnit:'m/s' }; }, status:res => res.secondary < 0.6 ? { label:'⚠️ Silting Risk', cls:'warn' } : res.secondary > 3.0 ? { label:'⚠️ Scour Risk', cls:'warn' } : { label:'✅ Optimal', cls:'safe' } },
-  { id:'friction', title:'3. Friction Head Loss', inputs:[{ id:'h-q', label:'Flow Rate', default:50, min:0.1, max:1000, step:1, unit:'m³/hr' }, { id:'h-d', label:'Inside Diameter', default:100, min:10, max:1000, step:5, unit:'mm' }], compute:(props, vals) => { const fq = vals['h-q'] / 3600, fd = vals['h-d'] / 1000; if (fd <= 0 || fq <= 0) return null; const hloss = (10.67 * 100 * Math.pow(fq, 1.852)) / (Math.pow(150, 1.852) * Math.pow(fd, 4.87)); return { primary:hloss, secondary:hloss * 0.0980665, primaryUnit:'m/100m', secondaryUnit:'BAR' }; }, status:res => res.primary < 2 ? { label:'✅ Low Loss', cls:'safe' } : res.primary < 5 ? { label:'⚠️ Moderate', cls:'warn' } : { label:'⚠️ High Loss', cls:'danger' } },
-  { id:'thermal', title:'4. Thermal Expansion', inputs:[{ id:'exp-l', label:'Pipeline Length', default:100, min:1, max:1000, step:1, unit:'m' }, { id:'exp-t', label:'Temperature ΔT', default:30, min:1, max:80, step:1, unit:'Δ°C' }], compute:(props, vals) => ({ primary: vals['exp-l'] * vals['exp-t'] * props.alpha, primaryUnit:'mm' }), status:null },
-  { id:'barlow', title:'5. Burst Pressure (Barlow)', inputs:[{ id:'bar-t', label:'Wall Thickness', default:5.3, min:0.1, max:50, step:0.1, unit:'mm' }, { id:'bar-od', label:'Outside Diameter', default:110, min:10, max:1000, step:5, unit:'mm' }], compute:(props, vals) => { const bt = vals['bar-t'], bod = vals['bar-od']; if (bod <= 0 || bt <= 0) return null; const burst = ((2 * props.stress * bt) / bod) * 10; return { primary:burst, secondary:burst * BAR_PSI, primaryUnit:'BAR', secondaryUnit:'PSI' }; }, status:res => res.primary < 10 ? { label:'⚠️ Low', cls:'warn' } : res.primary < 20 ? { label:'✅ Adequate', cls:'safe' } : { label:'✅ High', cls:'safe' } },
-  { id:'buoyancy', title:'6. Buoyancy (Waterlogged)', inputs:[{ id:'buo-od', label:'Pipe OD', default:250, min:10, max:1000, step:5, unit:'mm' }, { id:'buo-w', label:'Pipe Weight', default:3.5, min:0.1, max:100, step:0.1, unit:'kg/m' }], compute:(props, vals) => { const buod = vals['buo-od'] / 1000, bw = vals['buo-w']; if (buod <= 0) return null; const vol = (Math.PI * Math.pow(buod, 2)) / 4; const force = ((vol * 1000) - bw) * 9.81; return { primary:Math.max(0, force), primaryUnit:'N/m' }; }, status:res => res.primary < 1 ? { label:'✅ Stable', cls:'safe' } : res.primary < 50 ? { label:'⚠️ Moderate', cls:'warn' } : { label:'⚠️ High Buoyancy', cls:'danger' } },
-  { id:'hammer', title:'7. Water Hammer (Surge)', inputs:[{ id:'ham-v', label:'Flow Velocity ΔV', default:2.0, min:0.1, max:10, step:0.1, unit:'m/s' }, { id:'ham-sdr', label:'SDR Rating', default:11, min:5, max:50, step:1, unit:'OD/t' }], compute:(props, vals) => { const dv = vals['ham-v'], sdr = vals['ham-sdr']; if (sdr <= 1) return null; const K = 2.2e9, rho = 1000, E = props.eModulus * 1e6; const c = Math.sqrt((K / rho) / (1 + (K / E) * (sdr - 2))); const pSurgeBar = (rho * c * dv) / 1e5; return { primary:pSurgeBar, secondary:c, primaryUnit:'BAR', secondaryUnit:'m/s' }; }, status:res => res.primary < 2 ? { label:'✅ Low Surge', cls:'safe' } : res.primary < 5 ? { label:'⚠️ Moderate', cls:'warn' } : { label:'⚠️ High Surge', cls:'danger' } },
-  { id:'support', title:'8. Support Spacing', inputs:[{ id:'sup-od', label:'Outside Diameter', default:110, min:10, max:500, step:5, unit:'mm' }, { id:'sup-type', label:'Installation Type', default:'horizontal', options:['horizontal','vertical'] }], compute:(props, vals) => { const supOd = vals['sup-od']; if (supOd <= 0) return null; let spacing = (0.008 * supOd) + 0.55; if (state.material === 'HDPE') spacing *= 0.8; if (vals['sup-type'] === 'vertical') spacing *= 1.3; return { primary:spacing, primaryUnit:'m' }; }, status:null },
-  { id:'iowa', title:'9. Buried Deflection (Iowa)', inputs:[{ id:'iow-h', label:'Trench Depth', default:1.5, min:0.5, max:10, step:0.1, unit:'m' }, { id:'iow-sdr', label:'Pipe SDR', default:17, min:5, max:50, step:1, unit:'OD/t' }], compute:(props, vals) => { const depth = vals['iow-h'], sdr = vals['iow-sdr']; if (sdr <= 0) return null; const deadLoad = depth * 18; const pipeStiffness = (props.eModulus / 12) * Math.pow(2 / (sdr - 1), 3); const deflection = (deadLoad * 0.1) / (pipeStiffness + 0.06); return { primary:deflection, primaryUnit:'%' }; }, status:res => res.primary < 3 ? { label:'✅ Safe (<3%)', cls:'safe' } : res.primary < 5 ? { label:'⚠️ Moderate (3–5%)', cls:'warn' } : { label:'⚠️ Exceeds 5%', cls:'danger' } },
-  { id:'loop', title:'10. Expansion Loop Sizing', inputs:[{ id:'lop-dl', label:'Thermal Expansion ΔL', default:45, min:1, max:200, step:1, unit:'mm' }, { id:'lop-od', label:'Outside Diameter', default:110, min:10, max:500, step:5, unit:'mm' }], compute:(props, vals) => { const dl = vals['lop-dl'], od = vals['lop-od']; if (dl <= 0 || od <= 0) return null; const armL = (props.kLoop * Math.sqrt((od * dl) / 1000)) / 10; return { primary:armL, primaryUnit:'m' }; }, status:null },
-  { id:'vacuum', title:'11. Vacuum Collapse', inputs:[{ id:'vac-sdr', label:'Pipe SDR', default:11, min:5, max:50, step:1, unit:'OD/t' }, { id:'vac-t', label:'Operating Temp', default:20, min:-20, max:80, step:1, unit:'°C' }], compute:(props, vals) => { const sdr = vals['vac-sdr'], t = vals['vac-t']; if (sdr <= 1) return null; const eDerated = props.eModulus * props.derate(t); const pCollapse = (2 * eDerated / (1 - 0.14)) * Math.pow(1 / sdr, 3) * 10; return { primary:pCollapse, primaryUnit:'BAR' }; }, status:res => res.primary >= 1 ? { label:'✅ Vacuum Safe', cls:'safe' } : { label:'⚠️ Not Vacuum Safe', cls:'danger' } },
-  { id:'velocity', title:'12. Flow Velocity Check', inputs:[{ id:'vel-q', label:'Flow Rate', default:25, min:0.1, max:500, step:0.5, unit:'m³/hr' }, { id:'vel-d', label:'Inside Diameter', default:75, min:10, max:500, step:5, unit:'mm' }], compute:(props, vals) => { const q = vals['vel-q'] / 3600, d = vals['vel-d'] / 1000; if (d <= 0 || q <= 0) return null; const area = (Math.PI * Math.pow(d, 2)) / 4; return { primary:q / area, primaryUnit:'m/s' }; }, status:res => res.primary < 0.6 ? { label:'⚠️ Too Slow (Silting)', cls:'warn' } : res.primary > 3.0 ? { label:'⚠️ High Scour Risk', cls:'danger' } : { label:'✅ Optimal', cls:'safe' } }
-];
+  const UNIT_CONV = {
+    'mm':     { label: 'in',       to: v => v / 25.4,      from: v => v * 25.4 },
+    'm':      { label: 'ft',       to: v => v * 3.28084,   from: v => v / 3.28084 },
+    'm³/hr':  { label: 'GPM',      to: v => v * 4.40287,   from: v => v / 4.40287 },
+    'L/s':    { label: 'GPM',      to: v => v * 15.8503,   from: v => v / 15.8503 },
+    'm/s':    { label: 'ft/s',     to: v => v * 3.28084,   from: v => v / 3.28084 },
+    'kg/m':   { label: 'lb/ft',    to: v => v * 0.671969,  from: v => v / 0.671969 },
+    'N/m':    { label: 'lbf/ft',   to: v => v * 0.0685218, from: v => v / 0.0685218 },
+    '°C':     { label: '°F',       to: v => v * 9 / 5 + 32, from: v => (v - 32) * 5 / 9 },
+    'Δ°C':    { label: 'Δ°F',      to: v => v * 9 / 5,     from: v => v * 5 / 9 },
+    'PN/Bar': { label: 'PSI',      to: v => v * BAR_PSI,   from: v => v / BAR_PSI },
+    'BAR':    { label: 'PSI',      to: v => v * BAR_PSI,   from: v => v / BAR_PSI },
+    'm/100m': { label: 'ft/100ft', to: v => v * 3.28084,   from: v => v / 3.28084 },
+    '%':      { label: '%',        to: v => v,             from: v => v },
+    'OD/t':   { label: 'OD/t',     to: v => v,             from: v => v },
+    'PSI':    { label: 'PSI',      to: v => v,             from: v => v },
+    'GPM':    { label: 'GPM',      to: v => v,             from: v => v },
+    'ft/s':   { label: 'ft/s',     to: v => v,             from: v => v },
+    'in':     { label: 'in',       to: v => v,             from: v => v },
+    'ft':     { label: 'ft',       to: v => v,             from: v => v }
+  };
 
-const state = { material:'UPVC', unitSystem:'metric', inputs:{}, results:{} };
+  const MAT_PROPS = {
+    UPVC:  { n: 0.009, alpha: 0.08, stress: 50, eModulus: 3000, kLoop: 34,
+             derate: t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.015) },
+    HDPE:  { n: 0.010, alpha: 0.18, stress: 80, eModulus: 950,  kLoop: 26,
+             derate: t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.012) },
+    PPR:   { n: 0.007, alpha: 0.15, stress: 70, eModulus: 800,  kLoop: 30,
+             derate: t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.018) },
+    PPRCT: { n: 0.007, alpha: 0.07, stress: 85, eModulus: 900,  kLoop: 30,
+             derate: t => t <= 20 ? 1 : Math.max(0, 1 - (t - 20) * 0.011) }
+  };
 
-function renderAll(){ renderCalculators(); renderMaterialSelector(); }
+  const CALCULATORS = [
+    {
+      id: 'derating',
+      title: '1. Pressure Derating',
+      inputs: [
+        { id: 'der-pn', label: 'Nominal Pressure', default: 10, min: 0, step: 0.5, unit: 'PN/Bar' },
+        { id: 'der-t',  label: 'Working Temp',     default: 40, min: -20, max: 120, step: 1, unit: '°C' }
+      ],
+      compute: (props, vals) => {
+        const derated = vals['der-pn'] * props.derate(vals['der-t']);
+        return { primary: derated, secondary: derated * BAR_PSI, primaryUnit: 'BAR', secondaryUnit: 'PSI' };
+      },
+      status: r => r.primary < 2
+        ? { label: '⚠️ Low Margin',   cls: 'warn' }
+        : r.primary < 5
+          ? { label: '✅ Safe',        cls: 'safe' }
+          : { label: '✅ High Margin', cls: 'safe' }
+    },
+    {
+      id: 'manning',
+      title: '2. Gravity Flow (Manning)',
+      inputs: [
+        { id: 'man-s', label: 'Pipe Slope',     default: 1.0, min: 0.01, max: 10,   step: 0.1, unit: '%' },
+        { id: 'man-d', label: 'Inside Diameter', default: 200, min: 10,  max: 2000, step: 5,   unit: 'mm' }
+      ],
+      compute: (props, vals) => {
+        const ms = vals['man-s'] / 100;
+        const md = vals['man-d'] / 1000;
+        if (md <= 0 || ms <= 0) return null;
+        const v = (1 / props.n) * Math.pow(md / 4, 2 / 3) * Math.sqrt(ms);
+        const q = ((Math.PI * Math.pow(md, 2)) / 4) * v * 1000;
+        return { primary: q, secondary: v, primaryUnit: 'L/s', secondaryUnit: 'm/s' };
+      },
+      status: r => r.secondary < 0.6
+        ? { label: '⚠️ Silting Risk', cls: 'warn' }
+        : r.secondary > 3.0
+          ? { label: '⚠️ Scour Risk',  cls: 'warn' }
+          : { label: '✅ Optimal',      cls: 'safe' }
+    },
+    {
+      id: 'friction',
+      title: '3. Friction Head Loss',
+      inputs: [
+        { id: 'h-q', label: 'Flow Rate',       default: 50,  min: 0.1, max: 1000, step: 1, unit: 'm³/hr' },
+        { id: 'h-d', label: 'Inside Diameter', default: 100, min: 10,  max: 1000, step: 5, unit: 'mm' }
+      ],
+      compute: (props, vals) => {
+        const fq = vals['h-q'] / 3600;
+        const fd = vals['h-d'] / 1000;
+        if (fd <= 0 || fq <= 0) return null;
+        const hloss = (10.67 * 100 * Math.pow(fq, 1.852)) / (Math.pow(150, 1.852) * Math.pow(fd, 4.87));
+        return { primary: hloss, secondary: hloss * 0.0980665, primaryUnit: 'm/100m', secondaryUnit: 'BAR' };
+      },
+      status: r => r.primary < 2
+        ? { label: '✅ Low Loss',  cls: 'safe' }
+        : r.primary < 5
+          ? { label: '⚠️ Moderate', cls: 'warn' }
+          : { label: '⚠️ High Loss', cls: 'danger' }
+    },
+    {
+      id: 'thermal',
+      title: '4. Thermal Expansion',
+      inputs: [
+        { id: 'exp-l', label: 'Pipeline Length', default: 100, min: 1, max: 1000, step: 1, unit: 'm' },
+        { id: 'exp-t', label: 'Temperature ΔT',  default: 30,  min: 1, max: 80,   step: 1, unit: 'Δ°C' }
+      ],
+      compute: (props, vals) => ({
+        primary: vals['exp-l'] * vals['exp-t'] * props.alpha,
+        primaryUnit: 'mm'
+      }),
+      status: null
+    },
+    {
+      id: 'barlow',
+      title: '5. Burst Pressure (Barlow)',
+      inputs: [
+        { id: 'bar-t',  label: 'Wall Thickness',  default: 5.3, min: 0.1, max: 50,   step: 0.1, unit: 'mm' },
+        { id: 'bar-od', label: 'Outside Diameter', default: 110, min: 10,  max: 1000, step: 5,   unit: 'mm' }
+      ],
+      compute: (props, vals) => {
+        const bt = vals['bar-t'];
+        const bod = vals['bar-od'];
+        if (bod <= 0 || bt <= 0) return null;
+        const burst = ((2 * props.stress * bt) / bod) * 10;
+        return { primary: burst, secondary: burst * BAR_PSI, primaryUnit: 'BAR', secondaryUnit: 'PSI' };
+      },
+      status: r => r.primary < 10
+        ? { label: '⚠️ Low',      cls: 'warn' }
+        : r.primary < 20
+          ? { label: '✅ Adequate', cls: 'safe' }
+          : { label: '✅ High',     cls: 'safe' }
+    },
+    {
+      id: 'buoyancy',
+      title: '6. Buoyancy (Waterlogged)',
+      inputs: [
+        { id: 'buo-od', label: 'Pipe OD',     default: 250, min: 10,  max: 1000, step: 5,   unit: 'mm' },
+        { id: 'buo-w',  label: 'Pipe Weight', default: 3.5, min: 0.1, max: 100,  step: 0.1, unit: 'kg/m' }
+      ],
+      compute: (props, vals) => {
+        const buod = vals['buo-od'] / 1000;
+        const bw = vals['buo-w'];
+        if (buod <= 0) return null;
+        const vol = (Math.PI * Math.pow(buod, 2)) / 4;
+        const force = ((vol * 1000) - bw) * 9.81;
+        return { primary: Math.max(0, force), primaryUnit: 'N/m' };
+      },
+      status: r => r.primary < 1
+        ? { label: '✅ Stable',        cls: 'safe' }
+        : r.primary < 50
+          ? { label: '⚠️ Moderate',     cls: 'warn' }
+          : { label: '⚠️ High Buoyancy', cls: 'danger' }
+    },
+    {
+      id: 'hammer',
+      title: '7. Water Hammer (Surge)',
+      inputs: [
+        { id: 'ham-v',   label: 'Flow Velocity ΔV', default: 2.0, min: 0.1, max: 10, step: 0.1, unit: 'm/s' },
+        { id: 'ham-sdr', label: 'SDR Rating',       default: 11,  min: 5,   max: 50, step: 1,   unit: 'OD/t' }
+      ],
+      compute: (props, vals) => {
+        const dv = vals['ham-v'];
+        const sdr = vals['ham-sdr'];
+        if (sdr <= 1) return null;
+        const K = 2.2e9;
+        const rho = 1000;
+        const E = props.eModulus * 1e6;
+        const c = Math.sqrt((K / rho) / (1 + (K / E) * (sdr - 2)));
+        const pSurgeBar = (rho * c * dv) / 1e5;
+        return { primary: pSurgeBar, secondary: c, primaryUnit: 'BAR', secondaryUnit: 'm/s' };
+      },
+      status: r => r.primary < 2
+        ? { label: '✅ Low Surge', cls: 'safe' }
+        : r.primary < 5
+          ? { label: '⚠️ Moderate', cls: 'warn' }
+          : { label: '⚠️ High Surge', cls: 'danger' }
+    },
+    {
+      id: 'support',
+      title: '8. Support Spacing',
+      inputs: [
+        { id: 'sup-od',   label: 'Outside Diameter',  default: 110, min: 10, max: 500, step: 5, unit: 'mm' },
+        { id: 'sup-type', label: 'Installation Type', default: 'horizontal', options: ['horizontal', 'vertical'] }
+      ],
+      compute: (props, vals) => {
+        const supOd = vals['sup-od'];
+        if (supOd <= 0) return null;
+        let spacing = (0.008 * supOd) + 0.55;
+        if (state.material === 'HDPE') spacing *= 0.8;
+        if (vals['sup-type'] === 'vertical') spacing *= 1.3;
+        return { primary: spacing, primaryUnit: 'm' };
+      },
+      status: null
+    },
+    {
+      id: 'iowa',
+      title: '9. Buried Deflection (Iowa)',
+      inputs: [
+        { id: 'iow-h',   label: 'Trench Depth', default: 1.5, min: 0.5, max: 10, step: 0.1, unit: 'm' },
+        { id: 'iow-sdr', label: 'Pipe SDR',     default: 17,  min: 5,   max: 50, step: 1,   unit: 'OD/t' }
+      ],
+      compute: (props, vals) => {
+        const depth = vals['iow-h'];
+        const sdr = vals['iow-sdr'];
+        if (sdr <= 0) return null;
+        const deadLoad = depth * 18;
+        const pipeStiffness = (props.eModulus / 12) * Math.pow(2 / (sdr - 1), 3);
+        const deflection = (deadLoad * 0.1) / (pipeStiffness + 0.06);
+        return { primary: deflection, primaryUnit: '%' };
+      },
+      status: r => r.primary < 3
+        ? { label: '✅ Safe (<3%)',        cls: 'safe' }
+        : r.primary < 5
+          ? { label: '⚠️ Moderate (3–5%)', cls: 'warn' }
+          : { label: '⚠️ Exceeds 5%',       cls: 'danger' }
+    },
+    {
+      id: 'loop',
+      title: '10. Expansion Loop Sizing',
+      inputs: [
+        { id: 'lop-dl', label: 'Thermal Expansion ΔL', default: 45,  min: 1, max: 200, step: 1, unit: 'mm' },
+        { id: 'lop-od', label: 'Outside Diameter',    default: 110, min: 10, max: 500, step: 5, unit: 'mm' }
+      ],
+      compute: (props, vals) => {
+        const dl = vals['lop-dl'];
+        const od = vals['lop-od'];
+        if (dl <= 0 || od <= 0) return null;
+        const armL = (props.kLoop * Math.sqrt((od * dl) / 1000)) / 10;
+        return { primary: armL, primaryUnit: 'm' };
+      },
+      status: null
+    },
+    {
+      id: 'vacuum',
+      title: '11. Vacuum Collapse',
+      inputs: [
+        { id: 'vac-sdr', label: 'Pipe SDR',       default: 11, min: 5,   max: 50, step: 1, unit: 'OD/t' },
+        { id: 'vac-t',   label: 'Operating Temp', default: 20, min: -20, max: 80, step: 1, unit: '°C' }
+      ],
+      compute: (props, vals) => {
+        const sdr = vals['vac-sdr'];
+        const t = vals['vac-t'];
+        if (sdr <= 1) return null;
+        const eDerated = props.eModulus * props.derate(t);
+        const pCollapse = (2 * eDerated / (1 - 0.14)) * Math.pow(1 / sdr, 3) * 10;
+        return { primary: pCollapse, primaryUnit: 'BAR' };
+      },
+      status: r => r.primary >= 1
+        ? { label: '✅ Vacuum Safe',       cls: 'safe' }
+        : { label: '⚠️ Not Vacuum Safe',  cls: 'danger' }
+    },
+    {
+      id: 'velocity',
+      title: '12. Flow Velocity Check',
+      inputs: [
+        { id: 'vel-q', label: 'Flow Rate',       default: 25, min: 0.1, max: 500, step: 0.5, unit: 'm³/hr' },
+        { id: 'vel-d', label: 'Inside Diameter', default: 75, min: 10,  max: 500, step: 5,   unit: 'mm' }
+      ],
+      compute: (props, vals) => {
+        const q = vals['vel-q'] / 3600;
+        const d = vals['vel-d'] / 1000;
+        if (d <= 0 || q <= 0) return null;
+        const area = (Math.PI * Math.pow(d, 2)) / 4;
+        return { primary: q / area, primaryUnit: 'm/s' };
+      },
+      status: r => r.primary < 0.6
+        ? { label: '⚠️ Too Slow (Silting)', cls: 'warn' }
+        : r.primary > 3.0
+          ? { label: '⚠️ High Scour Risk',   cls: 'danger' }
+          : { label: '✅ Optimal',           cls: 'safe' }
+    }
+  ];
 
-function renderCalculators(){
-  const grid = document.getElementById('calcGrid');
-  grid.innerHTML = '';
-  CALCULATORS.forEach(cfg => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.id = `card-${cfg.id}`;
-    
-    const header = document.createElement('div');
-    header.className = 'card-header';
-    const title = document.createElement('h3');
-    title.textContent = cfg.title;
-    header.appendChild(title);
-    const copyBtn = document.createElement('button');
-    copyBtn.className = 'copy-btn';
-    copyBtn.type = 'button';
-    copyBtn.innerHTML = '<i class="fas fa-copy" aria-hidden="true"></i>';
-    copyBtn.setAttribute('aria-label', `Copy results for ${cfg.title}`);
-    copyBtn.dataset.calcId = cfg.id;
-    copyBtn.addEventListener('click', () => copyResults(cfg.id));
-    header.appendChild(copyBtn);
-    card.appendChild(header);
+  /* ---------- State (declared before any function reads it) ---------- */
 
-    cfg.inputs.forEach(inp => {
-      const group = document.createElement('div');
-      group.className = 'input-group';
-      const label = document.createElement('label');
-      label.htmlFor = inp.id;
-      label.innerHTML = `${inp.label} <span class="unit-hint">(${getUnitLabel(inp.unit)})</span>`;
-      group.appendChild(label);
-      const row = document.createElement('div');
-      row.className = 'input-row';
+  const state = {
+    material: 'UPVC',
+    unitSystem: 'metric',
+    inputs: {},
+    results: {}
+  };
 
-      if (inp.options) {
-        const select = document.createElement('select');
-        select.id = inp.id;
-        select.name = inp.id;
-        inp.options.forEach(opt => {
-          const option = document.createElement('option');
-          option.value = opt;
-          option.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
-          if (opt === (state.inputs[inp.id] ?? inp.default)) option.selected = true;
-          select.appendChild(option);
-        });
-        select.addEventListener('change', () => { state.inputs[inp.id] = select.value; scheduleCompute(); });
-        row.appendChild(select);
-      } else {
-        const metricValue = state.inputs[inp.id] ?? inp.default;
-        const displayValue = toDisplay(inp.unit, metricValue);
-        const numInput = document.createElement('input');
-        numInput.type = 'number'; numInput.id = inp.id; numInput.name = inp.id;
-        numInput.value = formatInputValue(displayValue);
-        if (state.unitSystem === 'metric') {
-          if (inp.min !== undefined) numInput.min = inp.min;
-          if (inp.max !== undefined) numInput.max = inp.max;
-          if (inp.step !== undefined) numInput.step = inp.step;
-        } else {
-          numInput.step = 'any';
-          if (inp.min !== undefined) numInput.min = formatInputValue(toDisplay(inp.unit, inp.min));
-          if (inp.max !== undefined) numInput.max = formatInputValue(toDisplay(inp.unit, inp.max));
-        }
-        numInput.addEventListener('input', () => {
-          const displayed = parseFloat(numInput.value);
-          if (isNaN(displayed)) return;
-          state.inputs[inp.id] = toMetric(inp.unit, displayed);
-          const slider = group.querySelector('input[type="range"]');
-          if (slider) slider.value = formatInputValue(displayed);
-          scheduleCompute();
-        });
-        if (inp.min !== undefined && inp.max !== undefined && inp.step !== undefined) {
-          const slider = document.createElement('input');
-          slider.type = 'range';
-          slider.min = formatInputValue(toDisplay(inp.unit, inp.min));
-          slider.max = formatInputValue(toDisplay(inp.unit, inp.max));
-          slider.value = formatInputValue(displayValue);
-          const range = (toDisplay(inp.unit, inp.max) ?? inp.max) - (toDisplay(inp.unit, inp.min) ?? inp.min);
-          slider.step = String(niceStep(range));
-          slider.addEventListener('input', () => {
-            const displayed = parseFloat(slider.value);
-            if (isNaN(displayed)) return;
-            state.inputs[inp.id] = toMetric(inp.unit, displayed);
-            numInput.value = formatInputValue(displayed);
+  /* ---------- Unit helpers ---------- */
+
+  function getUnitLabel(unit) {
+    if (state.unitSystem === 'metric') return unit;
+    const c = UNIT_CONV[unit];
+    return c ? c.label : unit;
+  }
+
+  function toDisplay(unit, metricValue) {
+    if (state.unitSystem === 'metric' || metricValue == null) return metricValue;
+    const c = UNIT_CONV[unit];
+    return c ? c.to(metricValue) : metricValue;
+  }
+
+  function toMetric(unit, displayValue) {
+    if (state.unitSystem === 'metric' || displayValue == null) return displayValue;
+    const c = UNIT_CONV[unit];
+    return c ? c.from(displayValue) : displayValue;
+  }
+
+  function formatInputValue(n) {
+    if (!isFinite(n)) return '';
+    return String(Math.round(n * 10000) / 10000);
+  }
+
+  function niceStep(range) {
+    if (!isFinite(range) || range <= 0) return 1;
+    const raw = range / 100;
+    const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const norm = raw / mag;
+    if (norm <= 1) return mag;
+    if (norm <= 2) return 2 * mag;
+    if (norm <= 5) return 5 * mag;
+    return 10 * mag;
+  }
+
+  /* ---------- DOM helpers ---------- */
+
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+  /* ---------- Rendering ---------- */
+
+  let computeTimer = null;
+
+  function scheduleCompute() {
+    if (computeTimer) clearTimeout(computeTimer);
+    computeTimer = setTimeout(computeAll, COMPUTE_DEBOUNCE_MS);
+  }
+
+  function renderCalculators() {
+    const grid = document.getElementById('calcGrid');
+    if (!grid) return;
+    grid.replaceChildren();
+
+    const frag = document.createDocumentFragment();
+
+    CALCULATORS.forEach(cfg => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.id = `card-${cfg.id}`;
+
+      const header = document.createElement('div');
+      header.className = 'card-header';
+      const title = document.createElement('h3');
+      title.textContent = cfg.title;
+      header.appendChild(title);
+
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'copy-btn';
+      copyBtn.type = 'button';
+      copyBtn.innerHTML = '<i class="fas fa-copy" aria-hidden="true"></i>';
+      copyBtn.setAttribute('aria-label', `Copy results for ${cfg.title}`);
+      copyBtn.dataset.calcId = cfg.id;
+      copyBtn.addEventListener('click', () => copyResults(cfg.id, copyBtn));
+      header.appendChild(copyBtn);
+
+      card.appendChild(header);
+
+      cfg.inputs.forEach(inp => {
+        const group = document.createElement('div');
+        group.className = 'input-group';
+
+        const label = document.createElement('label');
+        label.htmlFor = inp.id;
+        label.innerHTML = `${inp.label} <span class="unit-hint">(${getUnitLabel(inp.unit)})</span>`;
+        group.appendChild(label);
+
+        const row = document.createElement('div');
+        row.className = 'input-row';
+
+        if (inp.options) {
+          const select = document.createElement('select');
+          select.id = inp.id;
+          select.name = inp.id;
+          inp.options.forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt;
+            option.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
+            if (opt === (state.inputs[inp.id] ?? inp.default)) option.selected = true;
+            select.appendChild(option);
+          });
+          select.addEventListener('change', () => {
+            state.inputs[inp.id] = select.value;
             scheduleCompute();
           });
-          row.appendChild(slider);
+          row.appendChild(select);
+        } else {
+          const metricValue = state.inputs[inp.id] ?? inp.default;
+          const displayValue = toDisplay(inp.unit, metricValue);
+
+          const numInput = document.createElement('input');
+          numInput.type = 'number';
+          numInput.id = inp.id;
+          numInput.name = inp.id;
+          numInput.inputMode = 'decimal';
+          numInput.autocomplete = 'off';
+          numInput.value = formatInputValue(displayValue);
+
+          if (state.unitSystem === 'metric') {
+            if (inp.min !== undefined) numInput.min = inp.min;
+            if (inp.max !== undefined) numInput.max = inp.max;
+            if (inp.step !== undefined) numInput.step = inp.step;
+          } else {
+            numInput.step = 'any';
+            if (inp.min !== undefined) numInput.min = formatInputValue(toDisplay(inp.unit, inp.min));
+            if (inp.max !== undefined) numInput.max = formatInputValue(toDisplay(inp.unit, inp.max));
+          }
+
+          numInput.addEventListener('input', () => {
+            const displayed = parseFloat(numInput.value);
+            if (!isFinite(displayed)) return;
+            state.inputs[inp.id] = toMetric(inp.unit, displayed);
+            const slider = group.querySelector('input[type="range"]');
+            if (slider) slider.value = formatInputValue(displayed);
+            scheduleCompute();
+          });
+
+          if (inp.min !== undefined && inp.max !== undefined && inp.step !== undefined) {
+            const slider = document.createElement('input');
+            slider.type = 'range';
+            slider.min = formatInputValue(toDisplay(inp.unit, inp.min));
+            slider.max = formatInputValue(toDisplay(inp.unit, inp.max));
+            slider.value = formatInputValue(displayValue);
+            slider.setAttribute('aria-label', `${inp.label} (slider)`);
+            const range = (toDisplay(inp.unit, inp.max) ?? inp.max) - (toDisplay(inp.unit, inp.min) ?? inp.min);
+            slider.step = String(niceStep(range));
+            slider.addEventListener('input', () => {
+              const displayed = parseFloat(slider.value);
+              if (!isFinite(displayed)) return;
+              state.inputs[inp.id] = toMetric(inp.unit, displayed);
+              numInput.value = formatInputValue(displayed);
+              scheduleCompute();
+            });
+            row.appendChild(slider);
+          }
+
+          row.appendChild(numInput);
         }
-        row.appendChild(numInput);
+
+        group.appendChild(row);
+        card.appendChild(group);
+      });
+
+      const resBox = document.createElement('div');
+      resBox.className = 'res-box';
+      resBox.id = `res-${cfg.id}`;
+      resBox.setAttribute('aria-live', 'polite');
+      resBox.setAttribute('role', 'status');
+
+      const resLabel = document.createElement('div');
+      resLabel.className = 'res-label';
+      resLabel.textContent = 'Result';
+      resBox.appendChild(resLabel);
+
+      const valWrap = document.createElement('div');
+      valWrap.className = 'res-value-wrap';
+      const valDiv = document.createElement('div');
+      valDiv.className = 'res-value';
+      valDiv.id = `res-val-${cfg.id}`;
+      valDiv.textContent = '—';
+      valWrap.appendChild(valDiv);
+      resBox.appendChild(valWrap);
+
+      const subDiv = document.createElement('div');
+      subDiv.className = 'res-sub';
+      subDiv.id = `res-sub-${cfg.id}`;
+      resBox.appendChild(subDiv);
+
+      const statusDiv = document.createElement('div');
+      statusDiv.className = 'res-status';
+      statusDiv.id = `res-status-${cfg.id}`;
+      statusDiv.hidden = true;
+      resBox.appendChild(statusDiv);
+
+      card.appendChild(resBox);
+      frag.appendChild(card);
+    });
+
+    grid.appendChild(frag);
+    computeAll();
+  }
+
+  function renderMaterialSelector() {
+    $$('.mat-btn').forEach(btn => {
+      const active = btn.dataset.mat === state.material;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+    const display = document.getElementById('current-mat-display');
+    if (display) display.textContent = `ACTIVE: ${state.material}`;
+  }
+
+  /* ---------- Compute ---------- */
+
+  function computeAll() {
+    const props = MAT_PROPS[state.material];
+    if (!props) return;
+
+    CALCULATORS.forEach(cfg => {
+      const vals = {};
+      let hasValid = false;
+
+      cfg.inputs.forEach(inp => {
+        if (inp.options) {
+          const select = document.getElementById(inp.id);
+          vals[inp.id] = select ? select.value : inp.default;
+          return;
+        }
+        const val = state.inputs[inp.id];
+        if (val !== undefined && val !== null && val !== '' && !isNaN(val)) {
+          vals[inp.id] = parseFloat(val);
+          hasValid = true;
+        } else {
+          vals[inp.id] = inp.default;
+        }
+      });
+
+      let result = null;
+      if (hasValid || cfg.inputs.every(i => i.options)) {
+        try {
+          result = cfg.compute(props, vals);
+        } catch (_) {
+          result = null;
+        }
       }
-      group.appendChild(row);
-      card.appendChild(group);
+      state.results[cfg.id] = result;
+
+      const valDiv = document.getElementById(`res-val-${cfg.id}`);
+      const subDiv = document.getElementById(`res-sub-${cfg.id}`);
+      const statusDiv = document.getElementById(`res-status-${cfg.id}`);
+      if (!valDiv || !subDiv || !statusDiv) return;
+
+      const ok = result && result.primary !== undefined &&
+                 !isNaN(result.primary) && isFinite(result.primary);
+
+      if (ok) {
+        const dp = toDisplay(result.primaryUnit, result.primary);
+        const dpu = getUnitLabel(result.primaryUnit);
+        valDiv.textContent = `${Number(dp).toFixed(2)} ${dpu}`;
+
+        if (result.secondary !== undefined &&
+            !isNaN(result.secondary) && isFinite(result.secondary)) {
+          const ds = toDisplay(result.secondaryUnit, result.secondary);
+          const dsu = getUnitLabel(result.secondaryUnit);
+          subDiv.textContent = `${Number(ds).toFixed(2)} ${dsu}`;
+        } else {
+          subDiv.textContent = '';
+        }
+
+        if (cfg.status) {
+          const status = cfg.status(result);
+          statusDiv.textContent = status.label;
+          statusDiv.className = `res-status res-status--${status.cls}`;
+          statusDiv.hidden = false;
+        } else {
+          statusDiv.textContent = '';
+          statusDiv.className = 'res-status';
+          statusDiv.hidden = true;
+        }
+      } else {
+        valDiv.textContent = '—';
+        subDiv.textContent = '';
+        statusDiv.textContent = '';
+        statusDiv.className = 'res-status';
+        statusDiv.hidden = true;
+      }
     });
+  }
 
-    const resBox = document.createElement('div');
-    resBox.className = 'res-box'; resBox.id = `res-${cfg.id}`;
-    const resLabel = document.createElement('div'); resLabel.className = 'res-label'; resLabel.textContent = 'Result'; resBox.appendChild(resLabel);
-    const valWrap = document.createElement('div'); valWrap.className = 'res-value-wrap';
-    const valDiv = document.createElement('div'); valDiv.className = 'res-value'; valDiv.id = `res-val-${cfg.id}`; valDiv.textContent = '—';
-    valWrap.appendChild(valDiv); resBox.appendChild(valWrap);
-    const subDiv = document.createElement('div'); subDiv.className = 'res-sub'; subDiv.id = `res-sub-${cfg.id}`; resBox.appendChild(subDiv);
-    const statusDiv = document.createElement('div'); statusDiv.className = 'res-status'; statusDiv.id = `res-status-${cfg.id}`; resBox.appendChild(statusDiv);
-    card.appendChild(resBox);
-    grid.appendChild(card);
-  });
-  computeAll();
-}
+  /* ---------- Copy ---------- */
 
-function renderMaterialSelector(){
-  document.querySelectorAll('.mat-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.mat === state.material));
-  const display = document.getElementById('current-mat-display');
-  if (display) display.textContent = `ACTIVE: ${state.material}`;
-}
+  const copyTimers = new WeakMap();
 
-let computeTimeout = null;
-function scheduleCompute(){ if (computeTimeout) clearTimeout(computeTimeout); computeTimeout = setTimeout(computeAll, 80); }
+  function copyResults(calcId, btn) {
+    const valDiv = document.getElementById(`res-val-${calcId}`);
+    const subDiv = document.getElementById(`res-sub-${calcId}`);
+    const statusDiv = document.getElementById(`res-status-${calcId}`);
+    if (!valDiv || !subDiv || !statusDiv) return;
 
-function computeAll(){
-  const props = matProps[state.material];
-  if (!props) return;
-  CALCULATORS.forEach(cfg => {
-    const vals = {}; let hasValid = false;
-    cfg.inputs.forEach(inp => {
-      if (inp.options) { const select = document.getElementById(inp.id); vals[inp.id] = select ? select.value : inp.default; return; }
-      const val = state.inputs[inp.id];
-      if (val !== undefined && val !== null && val !== '' && !isNaN(val)) { vals[inp.id] = parseFloat(val); hasValid = true; } else { vals[inp.id] = inp.default; }
-    });
-    let result = null;
-    if (hasValid || cfg.inputs.every(i => i.options)) { try { result = cfg.compute(props, vals); } catch (e) { result = null; } }
-    state.results[cfg.id] = result;
-    const valDiv = document.getElementById(`res-val-${cfg.id}`);
-    const subDiv = document.getElementById(`res-sub-${cfg.id}`);
-    const statusDiv = document.getElementById(`res-status-${cfg.id}`);
-    if (result && result.primary !== undefined && !isNaN(result.primary) && isFinite(result.primary)) {
-      const displayPrimary = toDisplay(result.primaryUnit, result.primary);
-      const displayPrimaryUnit = getUnitLabel(result.primaryUnit);
-      valDiv.textContent = `${Number(displayPrimary).toFixed(2)} ${displayPrimaryUnit}`;
-      if (result.secondary !== undefined && !isNaN(result.secondary) && isFinite(result.secondary)) {
-        const displaySecondary = toDisplay(result.secondaryUnit, result.secondary);
-        const displaySecondaryUnit = getUnitLabel(result.secondaryUnit);
-        subDiv.textContent = `${Number(displaySecondary).toFixed(2)} ${displaySecondaryUnit}`;
-      } else { subDiv.textContent = ''; }
-      if (cfg.status) { const status = cfg.status(result); statusDiv.textContent = status.label; statusDiv.className = `res-status ${status.cls}`; statusDiv.style.display = 'inline-block'; } else { statusDiv.textContent = ''; statusDiv.className = 'res-status'; statusDiv.style.display = 'none'; }
-    } else {
-      valDiv.textContent = '—'; subDiv.textContent = ''; statusDiv.textContent = ''; statusDiv.className = 'res-status'; statusDiv.style.display = 'none';
+    let text = valDiv.textContent;
+    if (subDiv.textContent) text += ` | ${subDiv.textContent}`;
+    if (statusDiv.textContent) text += ` | ${statusDiv.textContent}`;
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).catch(() => { /* ignore */ });
     }
-  });
-}
 
-function copyResults(calcId){
-  const valDiv = document.getElementById(`res-val-${calcId}`);
-  const subDiv = document.getElementById(`res-sub-${calcId}`);
-  const statusDiv = document.getElementById(`res-status-${calcId}`);
-  let text = valDiv.textContent;
-  if (subDiv.textContent) text += ` | ${subDiv.textContent}`;
-  if (statusDiv.textContent) text += ` | ${statusDiv.textContent}`;
-  navigator.clipboard?.writeText(text).catch(() => {});
-  const btn = document.querySelector(`.copy-btn[data-calc-id="${calcId}"]`);
-  if (btn) { btn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i>'; setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy" aria-hidden="true"></i>'; }, 1500); }
-}
+    if (btn) {
+      if (copyTimers.has(btn)) clearTimeout(copyTimers.get(btn));
+      btn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i>';
+      const t = setTimeout(() => {
+        btn.innerHTML = '<i class="fas fa-copy" aria-hidden="true"></i>';
+        copyTimers.delete(btn);
+      }, 1500);
+      copyTimers.set(btn, t);
+    }
+  }
 
-function initConverter(){
-  const barInput = document.getElementById('q-bar'); const psiInput = document.getElementById('q-psi');
-  barInput.addEventListener('input', () => { const val = parseFloat(barInput.value); if (!isNaN(val)) psiInput.value = (val * BAR_PSI).toFixed(2); });
-  psiInput.addEventListener('input', () => { const val = parseFloat(psiInput.value); if (!isNaN(val)) barInput.value = (val / BAR_PSI).toFixed(2); });
-}
+  /* ---------- Converter ---------- */
 
-function initMaterialSelector(){
-  document.querySelectorAll('.mat-btn').forEach(btn => { btn.addEventListener('click', () => { state.material = btn.dataset.mat; renderMaterialSelector(); computeAll(); }); });
-}
+  function initConverter() {
+    const barInput = document.getElementById('q-bar');
+    const psiInput = document.getElementById('q-psi');
+    if (!barInput || !psiInput) return;
 
-function initUnitToggle(){
-  const btn = document.getElementById('unitToggle'); const label = btn.querySelector('[data-unit-label]');
-  const applyUnit = () => {
-    const isMetric = state.unitSystem === 'metric';
-    label.textContent = isMetric ? 'Imperial' : 'Metric';
-    btn.setAttribute('aria-label', isMetric ? 'Switch to imperial units' : 'Switch to metric units');
-  };
-  applyUnit();
-  btn.addEventListener('click', () => { state.unitSystem = state.unitSystem === 'metric' ? 'imperial' : 'metric'; applyUnit(); renderCalculators(); });
-}
+    barInput.addEventListener('input', () => {
+      const val = parseFloat(barInput.value);
+      if (isFinite(val)) {
+        psiInput.value = (val * BAR_PSI).toFixed(2);
+      } else if (barInput.value === '') {
+        psiInput.value = '';
+      }
+    });
 
-function initPrint(){
-  const btn = document.getElementById('printBtn'); const dateSpan = document.querySelector('[data-print-date]');
-  const stampDate = () => { if (!dateSpan) return; const d = new Date(); dateSpan.textContent = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ' · ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }); };
-  if (btn) btn.addEventListener('click', () => { stampDate(); window.print(); });
-  window.addEventListener('beforeprint', stampDate);
-}
+    psiInput.addEventListener('input', () => {
+      const val = parseFloat(psiInput.value);
+      if (isFinite(val)) {
+        barInput.value = (val / BAR_PSI).toFixed(2);
+      } else if (psiInput.value === '') {
+        barInput.value = '';
+      }
+    });
+  }
 
-function init(){
-  CALCULATORS.forEach(cfg => { cfg.inputs.forEach(inp => { if (!(inp.id in state.inputs)) state.inputs[inp.id] = inp.default; }); });
-  renderAll(); initConverter(); initMaterialSelector(); initUnitToggle(); initPrint();
-}
-document.addEventListener('DOMContentLoaded', init);
+  /* ---------- Material selector ---------- */
+
+  function initMaterialSelector() {
+    $$('.mat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (state.material === btn.dataset.mat) return;
+        state.material = btn.dataset.mat;
+        renderMaterialSelector();
+        computeAll();
+      });
+    });
+  }
+
+  /* ---------- Unit toggle ---------- */
+
+  function initUnitToggle() {
+    const btn = document.getElementById('unitToggle');
+    if (!btn) return;
+    const label = btn.querySelector('[data-unit-label]');
+
+    const apply = () => {
+      const isMetric = state.unitSystem === 'metric';
+      if (label) label.textContent = isMetric ? 'Imperial' : 'Metric';
+      btn.setAttribute('aria-label', isMetric
+        ? 'Switch to imperial units'
+        : 'Switch to metric units');
+      btn.setAttribute('aria-pressed', String(!isMetric));
+    };
+    apply();
+
+    btn.addEventListener('click', () => {
+      state.unitSystem = state.unitSystem === 'metric' ? 'imperial' : 'metric';
+      apply();
+
+      /* Rebuild once so labels and slider bounds follow the new unit
+         system, then compute. Focus is intentionally preserved — the
+         rebuild is confined to the calc grid. */
+      const activeId = document.activeElement && document.activeElement.id;
+      renderCalculators();
+      if (activeId) {
+        const el = document.getElementById(activeId);
+        if (el && typeof el.focus === 'function') el.focus({ preventScroll: true });
+      }
+    });
+  }
+
+  /* ---------- Print ---------- */
+
+  function initPrint() {
+    const btn = document.getElementById('printBtn');
+    const dateSpan = document.querySelector('[data-print-date]');
+    if (!btn) return;
+
+    const stamp = () => {
+      if (!dateSpan) return;
+      const d = new Date();
+      dateSpan.textContent =
+        d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) +
+        ' · ' +
+        d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    };
+
+    btn.addEventListener('click', () => {
+      stamp();
+      window.print();
+    });
+    window.addEventListener('beforeprint', stamp);
+  }
+
+  /* ---------- Boot ---------- */
+
+  function init() {
+    CALCULATORS.forEach(cfg => {
+      cfg.inputs.forEach(inp => {
+        if (!(inp.id in state.inputs)) state.inputs[inp.id] = inp.default;
+      });
+    });
+
+    /* Defer the first heavy DOM build to the next frame so the page
+       paints first. */
+    requestAnimationFrame(() => {
+      renderCalculators();
+      renderMaterialSelector();
+      initConverter();
+      initMaterialSelector();
+      initUnitToggle();
+      initPrint();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+})();
 </script>
 </body>
 </html>

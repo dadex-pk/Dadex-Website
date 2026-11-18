@@ -4,19 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Dadex | Dadex Eternit Limited</title>
-
+  <meta name="description" content="Search Dadex products, technical resources and corporate information.">
+  <meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#c90000">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/01-colors-and-fonts.css">
+  <link rel="stylesheet" href="css/02-basic-styles.css">
+  <link rel="stylesheet" href="css/03-page-layout.css">
+  <link rel="stylesheet" href="css/04-header-footer.css">
+  <link rel="stylesheet" href="css/05-shared-parts.css">
   <link rel="stylesheet" href="css/contact-dealers-search.css">
 </head>
 <body>
+<a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
-<main>
+<main id="main-content">
   <section class="page-hero">
     <div class="container">
       <div class="kicker">Search</div>
@@ -28,23 +35,22 @@
   <section class="section">
     <div class="container">
       <div style="max-width: 800px; margin: 0 auto;">
-        
-        <!-- Premium Search Bar -->
+
         <div class="search-input-wrapper">
-          <i class="fas fa-magnifying-glass search-icon"></i>
+          <label for="siteSearchInput" class="sr-only">Search Dadex</label>
+          <i class="fas fa-magnifying-glass search-icon" aria-hidden="true"></i>
           <input type="search" id="siteSearchInput" placeholder="Search products, projects, resources..." autocomplete="off">
-          <button type="button" id="searchClear" class="search-clear-btn" aria-label="Clear search">
-            <i class="fas fa-xmark"></i>
+          <button type="button" id="searchClear" class="search-clear-btn" aria-label="Clear search" hidden>
+            <i class="fas fa-xmark" aria-hidden="true"></i>
           </button>
         </div>
 
-        <!-- Popular Searches (Visible before typing) -->
         <div class="popular-searches" id="popularSearches">
           <span>Popular:</span>
-          <button class="filter-btn" data-query="Aquadex">Aquadex</button>
-          <button class="filter-btn" data-query="T-Flex">T-Flex</button>
-          <button class="filter-btn" data-query="Manholes">Manholes</button>
-          <button class="filter-btn" data-query="Annual Reports">Annual Reports</button>
+          <button type="button" class="filter-btn" data-query="Aquadex">Aquadex</button>
+          <button type="button" class="filter-btn" data-query="T-Flex">T-Flex</button>
+          <button type="button" class="filter-btn" data-query="Manholes">Manholes</button>
+          <button type="button" class="filter-btn" data-query="Annual Reports">Annual Reports</button>
         </div>
 
         <div class="flex-between" style="margin-bottom: 2rem;">
@@ -53,9 +59,8 @@
 
         <div class="grid grid-2" id="searchResults"></div>
 
-        <!-- Empty State -->
         <div id="searchEmpty" hidden style="text-align: center; padding: 4rem 0;">
-          <i class="fas fa-folder-open" style="font-size: 3rem; color: var(--line); margin-bottom: 1rem;"></i>
+          <i class="fas fa-folder-open" style="font-size: 3rem; color: var(--line); margin-bottom: 1rem;" aria-hidden="true"></i>
           <h3>No matching pages</h3>
           <p>Try a broader keyword or browse the main sections.</p>
           <p style="margin-top: 1rem;"><strong>Need help?</strong> Call our UAN: <a href="tel:111000789" style="color: var(--brand-red); font-weight: bold;">111-000-789</a></p>
@@ -64,16 +69,15 @@
     </div>
   </section>
 
-  <!-- Enhanced Result Template -->
   <template id="searchResultTemplate">
     <article class="card search-result-card">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
         <span class="result-badge"></span>
-        <i class="fas fa-arrow-up-right-from-square" style="color: var(--line); font-size: 0.875rem;"></i>
+        <i class="fas fa-arrow-up-right-from-square" style="color: var(--line); font-size: 0.875rem;" aria-hidden="true"></i>
       </div>
       <h3 style="margin: 0 0 0.5rem;"></h3>
       <p style="font-size: 0.875rem; color: var(--muted); margin-bottom: 1.5rem; flex: 1;"></p>
-      <a href="#" class="btn btn--outline" style="width: max-content; margin-top: auto;">Open page <i class="fas fa-arrow-right"></i></a>
+      <a href="#" class="btn btn--outline" style="width: max-content; margin-top: auto;">Open page <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
     </article>
   </template>
 </main>

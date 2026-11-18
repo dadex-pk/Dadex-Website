@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>Quality &amp; Compliance — Dadex Eternit Limited</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quality &amp; Compliance — Dadex Eternit Limited</title>
+  <meta name="description" content="Quality and compliance at Dadex Eternit Limited: international certifications, standards and responsible operations across its manufacturing facilities.">
+  <meta name="theme-color" content="#c90000">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.dadex.com/quality.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,11 +15,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/01-colors-and-fonts.css">
+  <link rel="stylesheet" href="css/02-basic-styles.css">
+  <link rel="stylesheet" href="css/03-page-layout.css">
+  <link rel="stylesheet" href="css/04-header-footer.css">
+  <link rel="stylesheet" href="css/05-shared-parts.css">
+  <link rel="stylesheet" href="css/quality-page.css">
 </head>
 <body>
+<a class="sr-only" href="#main-content">Skip to content</a>
 <div data-component="header"></div>
-<main>
+
+<main id="main-content">
   <section class="page-hero">
     <div class="container">
       <div class="kicker">Quality &amp; Compliance</div>
@@ -22,34 +34,40 @@
       <p>Uncompromising standards, international certifications, and responsible operations across every Dadex manufacturing facility.</p>
     </div>
   </section>
-  <section class="section">
+
+  <section class="section quality-certs">
     <div class="container">
-      <div class="grid grid-2" style="margin-bottom: 4rem;">
+      <div class="quality-certs__grid">
         <div>
           <h2>Certifications</h2>
           <p>Dadex operations and management systems are certified against recognised international and national standards.</p>
         </div>
-        <div class="grid grid-2" style="gap: 1rem;">
+        <div class="quality-certs__cards">
           <div class="card text-center"><h3>ISO 9001</h3><p>Quality Management</p></div>
           <div class="card text-center"><h3>ISO 14001</h3><p>Environmental Management</p></div>
-          <div class="card text-center"><h3>ISO 45001</h3><p>Occupational Health & Safety</p></div>
+          <div class="card text-center"><h3>ISO 45001</h3><p>Occupational Health &amp; Safety</p></div>
           <div class="card text-center"><h3>PSQCA</h3><p>Standards Compliance</p></div>
         </div>
       </div>
+    </div>
+  </section>
 
+  <section class="section quality-she">
+    <div class="container">
       <div class="section-header">
         <h2>Safety, Health &amp; Environment</h2>
         <p>Dadex places priority on employee safety, community wellbeing and environmental responsibility across its manufacturing sites.</p>
       </div>
-      <ul style="list-style: none; padding: 0; max-width: 800px;">
-        <li style="padding: 1rem 0; border-bottom: 1px solid var(--line); display: flex; gap: 1rem;"><i class="fas fa-check-circle" style="color: var(--brand-red); margin-top: 4px;"></i> The Company places tremendous importance towards safety, health of its employees, and the environment as a whole.</li>
-        <li style="padding: 1rem 0; border-bottom: 1px solid var(--line); display: flex; gap: 1rem;"><i class="fas fa-check-circle" style="color: var(--brand-red); margin-top: 4px;"></i> Facilities are maintained in a manner that protects the environment.</li>
-        <li style="padding: 1rem 0; border-bottom: 1px solid var(--line); display: flex; gap: 1rem;"><i class="fas fa-check-circle" style="color: var(--brand-red); margin-top: 4px;"></i> Employees and installers are trained to recognize and reduce environmentally harmful practices.</li>
-        <li style="padding: 1rem 0; border-bottom: 1px solid var(--line); display: flex; gap: 1rem;"><i class="fas fa-check-circle" style="color: var(--brand-red); margin-top: 4px;"></i> Waste recycling, dust control and monitoring systems are operational at all production facilities.</li>
+      <ul class="quality-she__list">
+        <li><i class="fas fa-check-circle" aria-hidden="true"></i> The Company places tremendous importance towards safety, health of its employees, and the environment as a whole.</li>
+        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Facilities are maintained in a manner that protects the environment.</li>
+        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Employees and installers are trained to recognize and reduce environmentally harmful practices.</li>
+        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Waste recycling, dust control and monitoring systems are operational at all production facilities.</li>
       </ul>
     </div>
   </section>
 </main>
+
 <div data-component="footer"></div>
 <script src="js/main.js"></script>
 </body>

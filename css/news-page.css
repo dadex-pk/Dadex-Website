@@ -7,11 +7,14 @@
 
 /* ============================================================
    STICKY TAB NAVIGATION
+   Uses --dadex-header-offset (measured height of full 3-tier
+   header) so the tabs stay flush below the header both when
+   the utility bar is visible and after it collapses.
    ============================================================ */
 
 .news-tabs-wrapper {
   position: sticky;
-  top: var(--header-h, 76px);
+  top: var(--dadex-header-offset, var(--header-h, 76px));
   z-index: 90;
   background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid var(--line);

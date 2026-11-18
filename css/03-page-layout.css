@@ -65,3 +65,20 @@
 .bg-light { background-color: var(--bg-mist); }
 .bg-mist-light { background-color: var(--bg-mist-light); }
 .text-center { text-align: center; }
+
+/* Unstyled list (sitemap, footer-style link lists) */
+.list-unstyled {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.list-unstyled > li {
+  padding: 0.4rem 0;
+}
+
+/* Small spacing utilities */
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mt-5 { margin-top: 3rem; }
+.mt-6 { margin-top: 4rem; }
