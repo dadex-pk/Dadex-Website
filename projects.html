@@ -15,11 +15,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/01-colors-and-fonts.css">
-  <link rel="stylesheet" href="css/02-basic-styles.css">
-  <link rel="stylesheet" href="css/03-page-layout.css">
-  <link rel="stylesheet" href="css/04-header-footer.css">
-  <link rel="stylesheet" href="css/05-shared-parts.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/projects-videos-literature.css">
 </head>
 <body>
@@ -39,115 +36,172 @@
     <div class="container">
       <p style="font-size: 1.125rem; color: var(--muted); margin-bottom: 2rem;">Dadex systems are supplied through project contractors, distributors and technical teams to organisations across Pakistan. The references below reflect <strong>applications and sectors</strong> where Dadex products and technical services have been used.</p>
 
-      <div class="filter-group" id="projectFilter" role="group" aria-label="Filter projects">
+      <!-- Updated Filter Bar -->
+      <div class="filter-group project-filter-bar" id="projectFilter" role="group" aria-label="Filter projects">
         <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">All Projects</button>
-        <button type="button" class="filter-btn" data-filter="water" aria-pressed="false">Water</button>
-        <button type="button" class="filter-btn" data-filter="gas" aria-pressed="false">Gas</button>
-        <button type="button" class="filter-btn" data-filter="drainage" aria-pressed="false">Sewerage &amp; Drainage</button>
-        <button type="button" class="filter-btn" data-filter="ducting" aria-pressed="false">Ducting &amp; Cable</button>
-        <button type="button" class="filter-btn" data-filter="industrial" aria-pressed="false">Industrial</button>
-        <button type="button" class="filter-btn" data-filter="building" aria-pressed="false">Building Services</button>
-        <button type="button" class="filter-btn" data-filter="housing" aria-pressed="false">Housing &amp; Development</button>
+        <button type="button" class="filter-btn" data-filter="societies" aria-pressed="false">Housing Societies</button>
+        <button type="button" class="filter-btn" data-filter="highrise" aria-pressed="false">High-Rise &amp; Commercial</button>
+        <button type="button" class="filter-btn" data-filter="industries" aria-pressed="false">Industries</button>
+        <button type="button" class="filter-btn" data-filter="utilities" aria-pressed="false">Public Utilities</button>
+        <button type="button" class="filter-btn" data-filter="infrastructure" aria-pressed="false">Infrastructure</button>
       </div>
 
       <div class="grid grid-3" id="projectGrid">
 
-        <article class="card project-card" data-category="water">
+        <!-- Card 1 -->
+        <article class="card project-card" data-category="utilities">
           <div class="project-card__media">
             <img src="assets/images/products/aquadex.webp" alt="Aquadex UPVC pressure pipes" loading="lazy" width="400" height="300">
           </div>
           <div class="project-card__body">
-            <span class="project-card__category">Public Utility · Water</span>
+            <span class="project-card__category">Public Utility</span>
             <h3 class="project-card__title">Karachi Water &amp; Sewerage Board</h3>
             <p>Potable water distribution network serving Karachi, using the Aquadex UPVC pressure piping system.</p>
+            <div class="project-card__tags">
+              <span>Aquadex</span>
+            </div>
           </div>
         </article>
 
-        <article class="card project-card" data-category="gas">
+        <!-- Card 2 -->
+        <article class="card project-card" data-category="utilities">
           <div class="project-card__media">
             <img src="assets/images/products/tflex-gas.webp" alt="T-Flex PE gas piping" loading="lazy" width="400" height="300">
           </div>
           <div class="project-card__body">
-            <span class="project-card__category">Gas Infrastructure</span>
+            <span class="project-card__category">Public Utility</span>
             <h3 class="project-card__title">Sui Southern Gas Company</h3>
             <p>Gas distribution infrastructure across Sindh, using T-Flex PE 100 gas piping systems.</p>
+            <div class="project-card__tags">
+              <span>T-Flex Gas</span>
+            </div>
           </div>
         </article>
 
-        <article class="card project-card" data-category="industrial">
+        <!-- Card 3 -->
+        <article class="card project-card" data-category="industries">
           <div class="project-card__media">
             <img src="assets/images/products/tflex-compressed-air.webp" alt="T-Flex PE compressed air piping" loading="lazy" width="400" height="300">
           </div>
           <div class="project-card__body">
-            <span class="project-card__category">Industrial</span>
+            <span class="project-card__category">Industry</span>
             <h3 class="project-card__title">PARCO Refinery Project</h3>
             <p>Specialised piping systems supplied for industrial applications at the Pak-Arab Refinery complex.</p>
+            <div class="project-card__tags">
+              <span>T-Flex Compressed Air</span>
+            </div>
           </div>
         </article>
 
-        <article class="card project-card" data-category="drainage">
+        <!-- Card 4 -->
+        <article class="card project-card" data-category="societies">
           <div class="project-card__media">
             <img src="assets/images/products/flowline.webp" alt="Flow Line UPVC sewerage pipes" loading="lazy" width="400" height="300">
           </div>
           <div class="project-card__body">
-            <span class="project-card__category">Residential · Drainage</span>
+            <span class="project-card__category">Housing Society</span>
             <h3 class="project-card__title">Bahria Town Lahore</h3>
-            <p>Nikasi UPVC SWV and Flowline drainage systems for residential and commercial developments.</p>
+            <p>Complete water supply, drainage, and utility ducting systems for residential phases.</p>
+            <div class="project-card__tags">
+              <span>Nikasi</span>
+              <span>Flowline</span>
+              <span>Polydex</span>
+            </div>
           </div>
         </article>
 
-        <article class="card project-card" data-category="water">
+        <!-- Card 5 -->
+        <article class="card project-card" data-category="utilities">
           <div class="project-card__media">
             <img src="assets/images/products/polydex.webp" alt="Polydex PP-R pipes" loading="lazy" width="400" height="300">
           </div>
           <div class="project-card__body">
-            <span class="project-card__category">Public Utility · Water</span>
+            <span class="project-card__category">Public Utility</span>
             <h3 class="project-card__title">WASA Water Supply Schemes</h3>
             <p>Polydex PP-R and Aquadex systems supplied for multiple water supply schemes across Punjab.</p>
+            <div class="project-card__tags">
+              <span>Polydex</span>
+              <span>Aquadex</span>
+            </div>
           </div>
         </article>
 
-        <article class="card project-card" data-category="ducting">
+        <!-- Card 6 -->
+        <article class="card project-card" data-category="infrastructure">
           <div class="project-card__media">
             <img src="assets/images/products/cable-duct.webp" alt="PE cable duct" loading="lazy" width="400" height="300">
           </div>
           <div class="project-card__body">
-            <span class="project-card__category">Infrastructure · Ducting</span>
+            <span class="project-card__category">Infrastructure</span>
             <h3 class="project-card__title">Civil Aviation Authority</h3>
             <p>Cable ducting and conduit systems supplied for airport infrastructure projects.</p>
+            <div class="project-card__tags">
+              <span>PE Cable Duct</span>
+              <span>Electroduct</span>
+            </div>
           </div>
         </article>
 
-        <article class="card project-card" data-category="gas">
+        <!-- Card 7 -->
+        <article class="card project-card" data-category="utilities">
           <div class="project-card__media">
             <img src="assets/images/products/tflex-gas.webp" alt="T-Flex PE gas piping" loading="lazy" width="400" height="300">
           </div>
           <div class="project-card__body">
-            <span class="project-card__category">Gas Distribution</span>
+            <span class="project-card__category">Public Utility</span>
             <h3 class="project-card__title">Sui Northern Gas Pipelines</h3>
             <p>T-Flex gas piping systems supplied for SNGPL distribution projects.</p>
+            <div class="project-card__tags">
+              <span>T-Flex Gas</span>
+            </div>
           </div>
         </article>
 
-        <article class="card project-card" data-category="housing">
+        <!-- Card 8 -->
+        <article class="card project-card" data-category="societies">
           <div class="project-card__media">
             <img src="assets/images/products/nikasi.webp" alt="Nikasi UPVC soil, waste and vent pipes" loading="lazy" width="400" height="300">
           </div>
           <div class="project-card__body">
-            <span class="project-card__category">Housing &amp; Development</span>
+            <span class="project-card__category">Housing Society</span>
             <h3 class="project-card__title">Eden Garden Housing Scheme</h3>
             <p>Complete SWV and drainage solutions using Nikasi and Flowline systems for the housing development.</p>
+            <div class="project-card__tags">
+              <span>Nikasi</span>
+              <span>Flowline</span>
+            </div>
           </div>
         </article>
 
-        <article class="card project-card" data-category="building">
+        <!-- Card 9 -->
+        <article class="card project-card" data-category="highrise">
           <div class="project-card__media">
             <img src="assets/images/products/polydex-premium.webp" alt="Polydex Premium PP-RCT pipes" loading="lazy" width="400" height="300">
           </div>
           <div class="project-card__body">
-            <span class="project-card__category">Building Services</span>
+            <span class="project-card__category">High-Rise / Commercial</span>
             <h3 class="project-card__title">Aga Khan Housing Network</h3>
-            <p>Hot and cold water plumbing systems supplied using Polydex Premium PP-RCT.</p>
+            <p>Hot and cold water plumbing systems supplied for multi-storey residential towers.</p>
+            <div class="project-card__tags">
+              <span>Polydex Premium</span>
+              <span>Polyduct</span>
+            </div>
+          </div>
+        </article>
+        
+        <!-- Card 10 -->
+        <article class="card project-card" data-category="industries">
+          <div class="project-card__media">
+            <img src="assets/images/products/tflex-compressed-air.webp" alt="T-Flex Compressed Air" loading="lazy" width="400" height="300">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__category">Industry</span>
+            <h3 class="project-card__title">Lucky Cement Plant</h3>
+            <p>Compressed air networks and industrial water lines for heavy manufacturing operations.</p>
+            <div class="project-card__tags">
+              <span>T-Flex Compressed Air</span>
+              <span>T-Flex</span>
+            </div>
           </div>
         </article>
 
@@ -164,11 +218,11 @@
         <p>Dadex systems are engineered for the sectors that shape Pakistan's built environment, from single-family housing to large-scale infrastructure.</p>
       </div>
       <div class="grid grid-5">
-        <div class="card"><h3>Housing</h3><p>Residential plumbing, drainage and roofing systems.</p></div>
-        <div class="card"><h3>Building</h3><p>Water supply, SWV, drainage and ducting systems.</p></div>
-        <div class="card"><h3>High-rise</h3><p>Pressure-rated piping and low-noise drainage systems.</p></div>
-        <div class="card"><h3>Infrastructure</h3><p>Underground water, sewerage, drainage and utility ducting.</p></div>
-        <div class="card"><h3>Specialised Industrial</h3><p>Gas, compressed-air, tubewell and industrial piping.</p></div>
+        <div class="card"><h3>Housing Societies</h3><p>Residential plumbing, drainage and utility ducting systems.</p></div>
+        <div class="card"><h3>High-Rise</h3><p>Pressure-rated piping and low-noise drainage systems.</p></div>
+        <div class="card"><h3>Industries</h3><p>Gas, compressed-air, tubewell and industrial piping.</p></div>
+        <div class="card"><h3>Public Utilities</h3><p>Water, gas, sewerage and municipal networks.</p></div>
+        <div class="card"><h3>Infrastructure</h3><p>Airports, highways, and utility ducting infrastructure.</p></div>
       </div>
     </div>
   </section>
@@ -187,7 +241,7 @@
         <div class="card text-center"><h3>WASA</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Water supply</p></div>
         <div class="card text-center"><h3>CAA</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Infrastructure</p></div>
         <div class="card text-center"><h3>AKDN</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Building services</p></div>
-        <div class="card text-center"><h3>EDEN</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Development</p></div>
+        <div class="card text-center"><h3>Eden Garden</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Development</p></div>
       </div>
     </div>
   </section>
