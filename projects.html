@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Projects – Dadex Eternit Limited</title>
-  <meta name="description" content="Project references where Dadex piping, drainage, ducting and roofing systems serve public utilities, industry, infrastructure and building developments across Pakistan.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Projects | Dadex Eternit Limited</title>
+  <meta name="description" content="Explore selected Dadex project references across housing developments, high-rise buildings, industries, utilities and institutions in Pakistan.">
   <meta name="theme-color" content="#c90000">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.dadex.com/projects.html">
@@ -15,239 +15,637 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/01-colors-and-fonts.css">
+  <link rel="stylesheet" href="css/02-basic-styles.css">
+  <link rel="stylesheet" href="css/03-page-layout.css">
+  <link rel="stylesheet" href="css/04-header-footer.css">
+  <link rel="stylesheet" href="css/05-shared-parts.css">
   <link rel="stylesheet" href="css/projects-videos-literature.css">
+
+  <style>
+    /* =========================================================
+       PROJECTS PAGE — scoped styles
+       ========================================================= */
+    .projects-intro {
+      max-width: 900px;
+      margin: 0 auto 2rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .projects-toolbar {
+      position: sticky;
+      top: var(--header-h-scrolled, 64px);
+      z-index: 20;
+      margin: 0 0 2rem;
+      padding: .85rem 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--line, #e7e7e7);
+      border-bottom: 1px solid var(--line, #e7e7e7);
+    }
+
+    /* Two-line wrapped filter layout */
+    .project-filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .5rem;
+      max-width: 850px;
+      margin-inline: auto;
+      padding: .15rem .1rem .3rem;
+    }
+
+    .project-filter {
+      flex: 0 1 auto;
+      appearance: none;
+      border: 1px solid var(--line, #dedede);
+      border-radius: 999px;
+      background: var(--bg-surface, #fff);
+      color: var(--text, #252525);
+      padding: .45rem 1.1rem;
+      font: inherit;
+      font-size: .8125rem;
+      font-weight: 600;
+      line-height: 1.2;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+    }
+
+    .project-filter:hover {
+      border-color: var(--dadex-red, #c90000);
+      color: var(--dadex-red, #c90000);
+    }
+
+    .project-filter[aria-pressed="true"] {
+      background: var(--dadex-red, #c90000);
+      border-color: var(--dadex-red, #c90000);
+      color: #fff;
+    }
+
+    .project-filter:focus-visible,
+    .project-card a:focus-visible {
+      outline: 3px solid rgba(201, 0, 0, .28);
+      outline-offset: 3px;
+    }
+
+    .projects-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin: 0 0 1.1rem;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .projects-status strong {
+      color: var(--text, #222);
+      font-weight: 700;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.35rem;
+      align-items: stretch;
+    }
+
+    .project-card {
+      min-width: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .project-card[hidden] {
+      display: none !important;
+    }
+
+    .project-card__media {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      background: var(--bg-soft, #f2f3f5);
+    }
+
+    .project-card__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .45s ease;
+    }
+
+    .project-card:hover .project-card__media img {
+      transform: scale(1.035);
+    }
+
+    .project-card__body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1.25rem;
+    }
+
+    .project-card__category {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      margin-bottom: .65rem;
+      color: var(--dadex-red, #c90000);
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .055em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .project-card__title {
+      margin: 0 0 .65rem;
+      color: var(--heading, var(--text, #222));
+      font-family: var(--font-heading, 'Manrope', sans-serif);
+      font-size: 1.18rem;
+      line-height: 1.35;
+    }
+
+    .project-card__description {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.7;
+    }
+
+    .project-card__systems {
+      width: 100%;
+      margin-top: auto;
+      padding-top: .9rem;
+      border-top: 1px solid var(--line, #e7e7e7);
+    }
+
+    .project-card__systems-label {
+      display: block;
+      margin-bottom: .55rem;
+      color: var(--text, #333);
+      font-size: .76rem;
+      font-weight: 700;
+    }
+
+    .system-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+    }
+
+    .system-tag {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line, #e4e4e4);
+      border-radius: 5px;
+      background: var(--bg-soft, #f7f7f7);
+      color: var(--text, #333);
+      padding: .32rem .55rem;
+      font-size: .74rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .projects-empty {
+      grid-column: 1 / -1;
+      padding: 2.5rem 1.25rem;
+      border: 1px dashed var(--line, #ddd);
+      border-radius: 10px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .projects-empty i {
+      display: block;
+      margin-bottom: .75rem;
+      color: var(--dadex-red, #c90000);
+      font-size: 1.5rem;
+    }
+
+    .project-note {
+      margin: 2rem 0 0;
+      padding: 1rem 1.15rem;
+      border-left: 3px solid var(--dadex-red, #c90000);
+      background: var(--bg-soft, #f7f7f7);
+      color: var(--muted);
+      font-size: .86rem;
+      line-height: 1.7;
+    }
+
+    .project-note strong {
+      color: var(--text, #333);
+    }
+
+    .sector-card {
+      height: 100%;
+      padding: 1.25rem;
+    }
+
+    .sector-card__icon {
+      display: inline-flex;
+      width: 2.5rem;
+      height: 2.5rem;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: .8rem;
+      border-radius: 8px;
+      background: rgba(201, 0, 0, .08);
+      color: var(--dadex-red, #c90000);
+      font-size: 1.05rem;
+    }
+
+    .sector-card h3 {
+      margin: 0 0 .45rem;
+      font-size: 1rem;
+    }
+
+    .sector-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .86rem;
+      line-height: 1.65;
+    }
+
+    .projects-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      border-radius: 12px;
+      background: var(--bg-soft, #f5f5f5);
+    }
+
+    .projects-cta h2 {
+      margin: 0 0 .5rem;
+    }
+
+    .projects-cta p {
+      max-width: 650px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 1000px) {
+      .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .projects-toolbar { top: var(--header-h-scrolled, 56px); }
+      .projects-cta { align-items: flex-start; flex-direction: column; }
+      .projects-status { align-items: flex-start; flex-direction: column; gap: .25rem; }
+      .project-filter { padding: .35rem .75rem; font-size: .75rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-card__media img,
+      .project-filter { transition: none; }
+    }
+  </style>
 </head>
+
 <body>
-<a class="sr-only" href="#main-content">Skip to content</a>
-<div data-component="header"></div>
+  <a class="sr-only" href="#main-content">Skip to content</a>
+  <div data-component="header"></div>
 
-<main id="main-content">
-  <section class="page-hero">
-    <div class="container">
-      <div class="kicker">Projects</div>
-      <h1>Our <span>Projects</span></h1>
-      <p>Discover how Dadex systems power public utilities, industrial complexes, infrastructure, and major building developments across Pakistan.</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <p style="font-size: 1.125rem; color: var(--muted); margin-bottom: 2rem;">Dadex systems are supplied through project contractors, distributors and technical teams to organisations across Pakistan. The references below reflect <strong>applications and sectors</strong> where Dadex products and technical services have been used.</p>
-
-      <!-- Updated Filter Bar -->
-      <div class="filter-group project-filter-bar" id="projectFilter" role="group" aria-label="Filter projects">
-        <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">All Projects</button>
-        <button type="button" class="filter-btn" data-filter="societies" aria-pressed="false">Housing Societies</button>
-        <button type="button" class="filter-btn" data-filter="highrise" aria-pressed="false">High-Rise &amp; Commercial</button>
-        <button type="button" class="filter-btn" data-filter="industries" aria-pressed="false">Industries</button>
-        <button type="button" class="filter-btn" data-filter="utilities" aria-pressed="false">Public Utilities</button>
-        <button type="button" class="filter-btn" data-filter="infrastructure" aria-pressed="false">Infrastructure</button>
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <div class="kicker">Our Experience</div>
+        <h1>Our <span>Projects</span></h1>
+        <p>Explore selected project references that demonstrate how Dadex piping and infrastructure systems support developments, buildings, industries and essential utilities across Pakistan.</p>
       </div>
+    </section>
 
-      <div class="grid grid-3" id="projectGrid">
+    <section class="section" aria-labelledby="project-references-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="project-references-heading">Project <span>References</span></h2>
+          <p class="projects-intro">A project may require several piping and utility systems working together. Browse these references by the nature of the project, and see the relevant Dadex systems listed within each project.</p>
+        </div>
 
-        <!-- Card 1 -->
-        <article class="card project-card" data-category="utilities">
-          <div class="project-card__media">
-            <img src="assets/images/products/aquadex.webp" alt="Aquadex UPVC pressure pipes" loading="lazy" width="400" height="300">
+        <div class="projects-toolbar">
+          <!-- Unique ID prevents conflict with global main.js -->
+          <div class="project-filters" id="projectFilterNew" role="group" aria-label="Filter projects by project type">
+            <button class="project-filter" type="button" data-filter="all" aria-pressed="true">All Projects</button>
+            <button class="project-filter" type="button" data-filter="societies" aria-pressed="false">Societies</button>
+            <button class="project-filter" type="button" data-filter="high-rise" aria-pressed="false">High-rise &amp; Commercial</button>
+            <button class="project-filter" type="button" data-filter="industries" aria-pressed="false">Industries</button>
+            <button class="project-filter" type="button" data-filter="utilities" aria-pressed="false">Utilities</button>
+            <button class="project-filter" type="button" data-filter="institutions" aria-pressed="false">Institutions</button>
           </div>
-          <div class="project-card__body">
-            <span class="project-card__category">Public Utility</span>
-            <h3 class="project-card__title">Karachi Water &amp; Sewerage Board</h3>
-            <p>Potable water distribution network serving Karachi, using the Aquadex UPVC pressure piping system.</p>
-            <div class="project-card__tags">
-              <span>Aquadex</span>
+        </div>
+
+        <div class="projects-status" aria-live="polite">
+          <span id="projectCount"><strong>10</strong> project references</span>
+          <span>Browse by project type</span>
+        </div>
+
+        <div class="projects-grid" id="projectGrid">
+          
+          <!-- SOCIETIES -->
+          <article class="card project-card" data-category="societies">
+            <div class="project-card__media">
+              <img src="assets/images/products/flowline.webp" alt="Dadex Flow Line underground sewerage piping system" loading="lazy" width="640" height="400">
             </div>
-          </div>
-        </article>
-
-        <!-- Card 2 -->
-        <article class="card project-card" data-category="utilities">
-          <div class="project-card__media">
-            <img src="assets/images/products/tflex-gas.webp" alt="T-Flex PE gas piping" loading="lazy" width="400" height="300">
-          </div>
-          <div class="project-card__body">
-            <span class="project-card__category">Public Utility</span>
-            <h3 class="project-card__title">Sui Southern Gas Company</h3>
-            <p>Gas distribution infrastructure across Sindh, using T-Flex PE 100 gas piping systems.</p>
-            <div class="project-card__tags">
-              <span>T-Flex Gas</span>
+            <div class="project-card__body">
+              <span class="project-card__category">Housing Society</span>
+              <h3 class="project-card__title">Bahria Town Lahore</h3>
+              <p class="project-card__description">A premier residential development utilizing Dadex Flow Line for underground sewerage networks and Nikasi for building drainage across multiple phases.</p>
+              <div class="project-card__systems">
+                <span class="project-card__systems-label">Dadex systems referenced</span>
+                <div class="system-tags">
+                  <span class="system-tag">Nikasi</span>
+                  <span class="system-tag">Flow Line</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- Card 3 -->
-        <article class="card project-card" data-category="industries">
-          <div class="project-card__media">
-            <img src="assets/images/products/tflex-compressed-air.webp" alt="T-Flex PE compressed air piping" loading="lazy" width="400" height="300">
-          </div>
-          <div class="project-card__body">
-            <span class="project-card__category">Industry</span>
-            <h3 class="project-card__title">PARCO Refinery Project</h3>
-            <p>Specialised piping systems supplied for industrial applications at the Pak-Arab Refinery complex.</p>
-            <div class="project-card__tags">
-              <span>T-Flex Compressed Air</span>
+          <article class="card project-card" data-category="societies">
+            <div class="project-card__media">
+              <img src="assets/images/products/nikasi.webp" alt="Dadex Nikasi soil, waste and vent piping system" loading="lazy" width="640" height="400">
             </div>
-          </div>
-        </article>
+            <div class="project-card__body">
+              <span class="project-card__category">Housing Society</span>
+              <h3 class="project-card__title">Eden Garden Housing Scheme</h3>
+              <p class="project-card__description">Housing development reference providing complete internal SWV and underground sewerage applications for the residential community.</p>
+              <div class="project-card__systems">
+                <span class="project-card__systems-label">Dadex systems referenced</span>
+                <div class="system-tags">
+                  <span class="system-tag">Nikasi</span>
+                  <span class="system-tag">Flow Line</span>
+                </div>
+              </div>
+            </div>
+          </article>
 
-        <!-- Card 4 -->
-        <article class="card project-card" data-category="societies">
-          <div class="project-card__media">
-            <img src="assets/images/products/flowline.webp" alt="Flow Line UPVC sewerage pipes" loading="lazy" width="400" height="300">
-          </div>
-          <div class="project-card__body">
-            <span class="project-card__category">Housing Society</span>
-            <h3 class="project-card__title">Bahria Town Lahore</h3>
-            <p>Complete water supply, drainage, and utility ducting systems for residential phases.</p>
-            <div class="project-card__tags">
-              <span>Nikasi</span>
-              <span>Flowline</span>
-              <span>Polydex</span>
+          <!-- HIGH-RISE & COMMERCIAL -->
+          <article class="card project-card" data-category="high-rise">
+            <div class="project-card__media">
+              <img src="assets/images/products/polydex-premium.webp" alt="Dadex Polydex Premium PP-RCT piping system" loading="lazy" width="640" height="400">
             </div>
-          </div>
-        </article>
+            <div class="project-card__body">
+              <span class="project-card__category">Commercial High-Rise</span>
+              <h3 class="project-card__title">Dolmen Mall Karachi</h3>
+              <p class="project-card__description">High-rise commercial development utilizing Polydex Premium for high-pressure hot and cold water distribution, alongside Polyduct for low-noise sanitary drainage.</p>
+              <div class="project-card__systems">
+                <span class="project-card__systems-label">Dadex systems referenced</span>
+                <div class="system-tags">
+                  <span class="system-tag">Polydex Premium</span>
+                  <span class="system-tag">Polyduct</span>
+                </div>
+              </div>
+            </div>
+          </article>
 
-        <!-- Card 5 -->
-        <article class="card project-card" data-category="utilities">
-          <div class="project-card__media">
-            <img src="assets/images/products/polydex.webp" alt="Polydex PP-R pipes" loading="lazy" width="400" height="300">
-          </div>
-          <div class="project-card__body">
-            <span class="project-card__category">Public Utility</span>
-            <h3 class="project-card__title">WASA Water Supply Schemes</h3>
-            <p>Polydex PP-R and Aquadex systems supplied for multiple water supply schemes across Punjab.</p>
-            <div class="project-card__tags">
-              <span>Polydex</span>
-              <span>Aquadex</span>
+          <!-- INDUSTRIES -->
+          <article class="card project-card" data-category="industries">
+            <div class="project-card__media">
+              <img src="assets/images/products/tflex-compressed-air.webp" alt="Dadex T-Flex compressed air piping system" loading="lazy" width="640" height="400">
             </div>
-          </div>
-        </article>
+            <div class="project-card__body">
+              <span class="project-card__category">Industrial Facility</span>
+              <h3 class="project-card__title">PARCO Refinery Project</h3>
+              <p class="project-card__description">Industrial project reference supplying specialised T-Flex compressed air and process piping networks for refinery operations.</p>
+              <div class="project-card__systems">
+                <span class="project-card__systems-label">Dadex systems referenced</span>
+                <div class="system-tags">
+                  <span class="system-tag">T-Flex Compressed Air</span>
+                  <span class="system-tag">T-Flex Gas</span>
+                </div>
+              </div>
+            </div>
+          </article>
 
-        <!-- Card 6 -->
-        <article class="card project-card" data-category="infrastructure">
-          <div class="project-card__media">
-            <img src="assets/images/products/cable-duct.webp" alt="PE cable duct" loading="lazy" width="400" height="300">
-          </div>
-          <div class="project-card__body">
-            <span class="project-card__category">Infrastructure</span>
-            <h3 class="project-card__title">Civil Aviation Authority</h3>
-            <p>Cable ducting and conduit systems supplied for airport infrastructure projects.</p>
-            <div class="project-card__tags">
-              <span>PE Cable Duct</span>
-              <span>Electroduct</span>
+          <!-- UTILITIES -->
+          <article class="card project-card" data-category="utilities">
+            <div class="project-card__media">
+              <img src="assets/images/products/aquadex.webp" alt="Dadex Aquadex UPVC pressure piping system" loading="lazy" width="640" height="400">
             </div>
-          </div>
-        </article>
+            <div class="project-card__body">
+              <span class="project-card__category">Water Utility</span>
+              <h3 class="project-card__title">Karachi Water &amp; Sewerage Board</h3>
+              <p class="project-card__description">Public water and sewerage utility reference, supplying Aquadex UPVC pressure pipes for large-scale potable water distribution networks.</p>
+              <div class="project-card__systems">
+                <span class="project-card__systems-label">Dadex systems referenced</span>
+                <div class="system-tags">
+                  <span class="system-tag">Aquadex</span>
+                </div>
+              </div>
+            </div>
+          </article>
 
-        <!-- Card 7 -->
-        <article class="card project-card" data-category="utilities">
-          <div class="project-card__media">
-            <img src="assets/images/products/tflex-gas.webp" alt="T-Flex PE gas piping" loading="lazy" width="400" height="300">
-          </div>
-          <div class="project-card__body">
-            <span class="project-card__category">Public Utility</span>
-            <h3 class="project-card__title">Sui Northern Gas Pipelines</h3>
-            <p>T-Flex gas piping systems supplied for SNGPL distribution projects.</p>
-            <div class="project-card__tags">
-              <span>T-Flex Gas</span>
+          <article class="card project-card" data-category="utilities">
+            <div class="project-card__media">
+              <img src="assets/images/products/tflex-gas.webp" alt="Dadex T-Flex PE gas piping system" loading="lazy" width="640" height="400">
             </div>
-          </div>
-        </article>
+            <div class="project-card__body">
+              <span class="project-card__category">Gas Utility</span>
+              <h3 class="project-card__title">Sui Southern Gas Company</h3>
+              <p class="project-card__description">Gas utility reference providing T-Flex Gas PE 100 piping systems for high-integrity distribution networks across the region.</p>
+              <div class="project-card__systems">
+                <span class="project-card__systems-label">Dadex systems referenced</span>
+                <div class="system-tags">
+                  <span class="system-tag">T-Flex Gas</span>
+                </div>
+              </div>
+            </div>
+          </article>
 
-        <!-- Card 8 -->
-        <article class="card project-card" data-category="societies">
-          <div class="project-card__media">
-            <img src="assets/images/products/nikasi.webp" alt="Nikasi UPVC soil, waste and vent pipes" loading="lazy" width="400" height="300">
-          </div>
-          <div class="project-card__body">
-            <span class="project-card__category">Housing Society</span>
-            <h3 class="project-card__title">Eden Garden Housing Scheme</h3>
-            <p>Complete SWV and drainage solutions using Nikasi and Flowline systems for the housing development.</p>
-            <div class="project-card__tags">
-              <span>Nikasi</span>
-              <span>Flowline</span>
+          <article class="card project-card" data-category="utilities">
+            <div class="project-card__media">
+              <img src="assets/images/products/polydex.webp" alt="Dadex Polydex PP-R piping system" loading="lazy" width="640" height="400">
             </div>
-          </div>
-        </article>
+            <div class="project-card__body">
+              <span class="project-card__category">Water Utility</span>
+              <h3 class="project-card__title">WASA Water Supply Schemes</h3>
+              <p class="project-card__description">Water supply scheme reference utilizing Polydex and Aquadex systems for municipal water supply networks across Punjab.</p>
+              <div class="project-card__systems">
+                <span class="project-card__systems-label">Dadex systems referenced</span>
+                <div class="system-tags">
+                  <span class="system-tag">Polydex</span>
+                  <span class="system-tag">Aquadex</span>
+                </div>
+              </div>
+            </div>
+          </article>
 
-        <!-- Card 9 -->
-        <article class="card project-card" data-category="highrise">
-          <div class="project-card__media">
-            <img src="assets/images/products/polydex-premium.webp" alt="Polydex Premium PP-RCT pipes" loading="lazy" width="400" height="300">
-          </div>
-          <div class="project-card__body">
-            <span class="project-card__category">High-Rise / Commercial</span>
-            <h3 class="project-card__title">Aga Khan Housing Network</h3>
-            <p>Hot and cold water plumbing systems supplied for multi-storey residential towers.</p>
-            <div class="project-card__tags">
-              <span>Polydex Premium</span>
-              <span>Polyduct</span>
+          <article class="card project-card" data-category="utilities">
+            <div class="project-card__media">
+              <img src="assets/images/products/tflex-gas.webp" alt="Dadex T-Flex PE gas piping system" loading="lazy" width="640" height="400">
             </div>
-          </div>
-        </article>
-        
-        <!-- Card 10 -->
-        <article class="card project-card" data-category="industries">
-          <div class="project-card__media">
-            <img src="assets/images/products/tflex-compressed-air.webp" alt="T-Flex Compressed Air" loading="lazy" width="400" height="300">
-          </div>
-          <div class="project-card__body">
-            <span class="project-card__category">Industry</span>
-            <h3 class="project-card__title">Lucky Cement Plant</h3>
-            <p>Compressed air networks and industrial water lines for heavy manufacturing operations.</p>
-            <div class="project-card__tags">
-              <span>T-Flex Compressed Air</span>
-              <span>T-Flex</span>
+            <div class="project-card__body">
+              <span class="project-card__category">Gas Utility</span>
+              <h3 class="project-card__title">Sui Northern Gas Pipelines Limited</h3>
+              <p class="project-card__description">Gas distribution reference supplying T-Flex Gas piping for pipeline infrastructure and utility network expansion projects.</p>
+              <div class="project-card__systems">
+                <span class="project-card__systems-label">Dadex systems referenced</span>
+                <div class="system-tags">
+                  <span class="system-tag">T-Flex Gas</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
+          <!-- INSTITUTIONS -->
+          <article class="card project-card" data-category="institutions">
+            <div class="project-card__media">
+              <img src="assets/images/products/cable-duct.webp" alt="Dadex PE cable ducting system" loading="lazy" width="640" height="400">
+            </div>
+            <div class="project-card__body">
+              <span class="project-card__category">Aviation Infrastructure</span>
+              <h3 class="project-card__title">Civil Aviation Authority</h3>
+              <p class="project-card__description">Institutional and aviation infrastructure reference, supplying PE Cable Duct and Electrical Conduits for major airport development packages.</p>
+              <div class="project-card__systems">
+                <span class="project-card__systems-label">Dadex systems referenced</span>
+                <div class="system-tags">
+                  <span class="system-tag">PE Cable Duct</span>
+                  <span class="system-tag">Electrical Conduits</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project-card" data-category="institutions">
+            <div class="project-card__media">
+              <img src="assets/images/products/polydex-premium.webp" alt="Dadex Polydex Premium PP-RCT piping system" loading="lazy" width="640" height="400">
+            </div>
+            <div class="project-card__body">
+              <span class="project-card__category">Institutional Development</span>
+              <h3 class="project-card__title">Aga Khan Development Network</h3>
+              <p class="project-card__description">Institutional development reference utilizing Polydex Premium for reliable high-pressure hot and cold water building services.</p>
+              <div class="project-card__systems">
+                <span class="project-card__systems-label">Dadex systems referenced</span>
+                <div class="system-tags">
+                  <span class="system-tag">Polydex Premium</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- EMPTY STATE -->
+          <div class="projects-empty" id="projectsEmpty" hidden>
+            <i class="fa-regular fa-folder-open" aria-hidden="true"></i>
+            <strong>No project references in this category yet.</strong>
+            <p>Please select another category to explore available references.</p>
+          </div>
+        </div>
+
+        <p class="project-note"><strong>Note:</strong> These are selected project-reference entries. Project scope, quantities and specific system applications can be provided by Dadex Sales and Technical Services where appropriate.</p>
       </div>
+    </section>
 
-      <p class="project-note"><strong>Note on references.</strong> Project references reflect applications and sectors where Dadex systems have been supplied. Project-specific scope, quantities and delivery information can be provided by Dadex Sales and Technical Services where appropriate.</p>
-    </div>
-  </section>
+    <section class="section section--light" aria-labelledby="sectors-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="sectors-heading">Sectors We <span>Serve</span></h2>
+          <p>Dadex systems support a broad range of building, development and infrastructure requirements.</p>
+        </div>
 
-  <section class="section section--light">
-    <div class="container">
-      <div class="section-header">
-        <h2>Sectors we <span>serve</span></h2>
-        <p>Dadex systems are engineered for the sectors that shape Pakistan's built environment, from single-family housing to large-scale infrastructure.</p>
+        <div class="grid grid-5">
+          <div class="card sector-card">
+            <span class="sector-card__icon"><i class="fa-solid fa-house" aria-hidden="true"></i></span>
+            <h3>Housing &amp; Societies</h3>
+            <p>Residential water supply, plumbing, soil, waste, vent and underground drainage systems.</p>
+          </div>
+          <div class="card sector-card">
+            <span class="sector-card__icon"><i class="fa-solid fa-building" aria-hidden="true"></i></span>
+            <h3>High-rise &amp; Buildings</h3>
+            <p>Building water supply, drainage, sewerage and electrical conduit applications.</p>
+          </div>
+          <div class="card sector-card">
+            <span class="sector-card__icon"><i class="fa-solid fa-industry" aria-hidden="true"></i></span>
+            <h3>Industries</h3>
+            <p>Specialised piping for gas, compressed air, process-related and industrial utility applications.</p>
+          </div>
+          <div class="card sector-card">
+            <span class="sector-card__icon"><i class="fa-solid fa-water" aria-hidden="true"></i></span>
+            <h3>Utilities &amp; Infrastructure</h3>
+            <p>Water supply, underground sewerage, drainage and utility ducting networks.</p>
+          </div>
+          <div class="card sector-card">
+            <span class="sector-card__icon"><i class="fa-solid fa-landmark" aria-hidden="true"></i></span>
+            <h3>Institutions</h3>
+            <p>Hospitals, educational facilities, laboratories, airports and public-sector developments.</p>
+          </div>
+        </div>
       </div>
-      <div class="grid grid-5">
-        <div class="card"><h3>Housing Societies</h3><p>Residential plumbing, drainage and utility ducting systems.</p></div>
-        <div class="card"><h3>High-Rise</h3><p>Pressure-rated piping and low-noise drainage systems.</p></div>
-        <div class="card"><h3>Industries</h3><p>Gas, compressed-air, tubewell and industrial piping.</p></div>
-        <div class="card"><h3>Public Utilities</h3><p>Water, gas, sewerage and municipal networks.</p></div>
-        <div class="card"><h3>Infrastructure</h3><p>Airports, highways, and utility ducting infrastructure.</p></div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Organizations we <span>serve</span></h2>
-        <p>A selection of the public utilities, industrial companies, developers and infrastructure organizations associated with Dadex applications.</p>
+    <section class="section">
+      <div class="container">
+        <div class="projects-cta">
+          <div>
+            <h2>Planning a <span>Project?</span></h2>
+            <p>Talk to Dadex for product information, technical guidance and support in identifying suitable piping and infrastructure systems for your project requirements.</p>
+          </div>
+          <a href="contact.html" class="btn btn--primary">Contact Dadex <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
       </div>
-      <div class="grid grid-4">
-        <div class="card text-center"><h3>KWSB</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Water &amp; sewerage</p></div>
-        <div class="card text-center"><h3>SSGC</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Gas infrastructure</p></div>
-        <div class="card text-center"><h3>SNGPL</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Gas distribution</p></div>
-        <div class="card text-center"><h3>PARCO</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Industrial</p></div>
-        <div class="card text-center"><h3>WASA</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Water supply</p></div>
-        <div class="card text-center"><h3>CAA</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Infrastructure</p></div>
-        <div class="card text-center"><h3>AKDN</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Building services</p></div>
-        <div class="card text-center"><h3>Eden Garden</h3><p style="font-size: 0.75rem; text-transform: uppercase;">Development</p></div>
-      </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
 
-<div data-component="footer"></div>
-<script src="js/main.js"></script>
+  <div data-component="footer"></div>
+  <script src="js/main.js"></script>
+
+  <script>
+    /* =========================================================
+       PROJECT FILTER — accessible, dependency-free
+       (Targets the new unique ID to prevent conflict with main.js)
+       ========================================================= */
+    (() => {
+      'use strict';
+
+      const filterGroup = document.getElementById('projectFilterNew');
+      const grid = document.getElementById('projectGrid');
+      const count = document.getElementById('projectCount');
+      const emptyState = document.getElementById('projectsEmpty');
+
+      if (!filterGroup || !grid || !count || !emptyState) return;
+
+      const buttons = Array.from(filterGroup.querySelectorAll('[data-filter]'));
+      const cards = Array.from(grid.querySelectorAll('.project-card'));
+
+      function applyFilter(filter) {
+        let visible = 0;
+
+        cards.forEach((card) => {
+          const categories = (card.dataset.category || '').split(/\s+/).filter(Boolean);
+          const matches = filter === 'all' || categories.includes(filter);
+          card.hidden = !matches;
+          if (matches) visible += 1;
+        });
+
+        buttons.forEach((button) => {
+          const active = button.dataset.filter === filter;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+
+        emptyState.hidden = visible !== 0;
+        count.innerHTML = '<strong>' + visible + '</strong> ' +
+          (visible === 1 ? 'project reference' : 'project references');
+      }
+
+      filterGroup.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-filter]');
+        if (!button || !filterGroup.contains(button)) return;
+        applyFilter(button.dataset.filter);
+      });
+
+      applyFilter('all');
+    })();
+  </script>
 </body>
 </html>
