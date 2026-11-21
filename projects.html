@@ -240,6 +240,59 @@
       color: var(--text, #333);
     }
 
+/* Full-Color Client Logos Section */
+.client-logo-grid {
+  display: grid;
+  /* Auto-fit will create as many columns as fit, wrapping cleanly */
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.client-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Gives the logo space to breathe */
+  padding: 1.5rem 1rem; 
+  height: 110px;
+  background: #fff;
+  border: 1px solid var(--line, #e4e7ea);
+  border-radius: var(--radius-md, 12px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.client-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  /* No filters, keeping original colors */
+}
+
+/* Subtle hover effect to make them feel interactive */
+.client-logo:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--brand-accent-light);
+}
+
+@media (max-width: 768px) {
+  .client-logo-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .client-logo {
+    height: 90px;
+    padding: 1rem 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .client-logo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
     .sector-card {
       height: 100%;
       padding: 1.25rem;
@@ -534,6 +587,33 @@
       </div>
     </section>
 
+<!-- NEW SECTION: CLIENT LOGOS (FULL COLOR) -->
+<section class="section" aria-labelledby="clients-heading">
+  <div class="container">
+    <div class="section-header text-center" style="margin-inline: auto; text-align: center; max-width: 800px;">
+      <h2 id="clients-heading">Trusted by <span>Industry Leaders</span></h2>
+      <p>Public utilities, major developers, and industrial groups rely on Dadex systems for their critical infrastructure.</p>
+    </div>
+
+    <div class="client-logo-grid">
+      <!-- Replace these src paths with your actual logo files -->
+      <div class="client-logo"><img src="assets/images/clients/kwsb.png" alt="Karachi Water & Sewerage Board" loading="lazy"></div>
+      <div class="client-logo"><img src="assets/images/clients/ssgc.png" alt="Sui Southern Gas Company" loading="lazy"></div>
+      <div class="client-logo"><img src="assets/images/clients/sngpl.png" alt="Sui Northern Gas Pipelines" loading="lazy"></div>
+      <div class="client-logo"><img src="assets/images/clients/parco.png" alt="Pak-Arab Refinery" loading="lazy"></div>
+      <div class="client-logo"><img src="assets/images/clients/bahria.png" alt="Bahria Town" loading="lazy"></div>
+      <div class="client-logo"><img src="assets/images/clients/dha.png" alt="Defence Housing Authority" loading="lazy"></div>
+      <div class="client-logo"><img src="assets/images/clients/caa.png" alt="Civil Aviation Authority" loading="lazy"></div>
+      <div class="client-logo"><img src="assets/images/clients/akdn.png" alt="Aga Khan Development Network" loading="lazy"></div>
+      <div class="client-logo"><img src="assets/images/clients/engro.png" alt="Engro Corporation" loading="lazy"></div>
+      <div class="client-logo"><img src="assets/images/clients/lucky-cement.png" alt="Lucky Cement" loading="lazy"></div>
+      <div class="client-logo"><img src="assets/images/clients/wasa.png" alt="WASA" loading="lazy"></div>
+      <div class="client-logo"><img src="assets/images/clients/nespak.png" alt="NESPAK" loading="lazy"></div>
+      <!-- Add the remaining 30-40 logos here. The grid will auto-wrap. -->
+    </div>
+  </div>
+</section>
+
     <section class="section section--light" aria-labelledby="sectors-heading">
       <div class="container">
         <div class="section-header">
@@ -549,7 +629,7 @@
           </div>
           <div class="card sector-card">
             <span class="sector-card__icon"><i class="fa-solid fa-building" aria-hidden="true"></i></span>
-            <h3>High-rise &amp; Buildings</h3>
+            <h3>High-rise &amp;Commercial</h3>
             <p>Building water supply, drainage, sewerage and electrical conduit applications.</p>
           </div>
           <div class="card sector-card">
