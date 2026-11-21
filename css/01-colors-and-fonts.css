@@ -6,10 +6,10 @@
 
 /* --- Mona Sans Variable Font --- */
 @font-face {
-  font-family: 'Mona Sans';
-  src: url('../fonts/MonaSans-Variable.woff2') format('woff2');
+  font-family: 'Poppins';
+  src: url('../fonts/poppins.woff2') format('woff2');
   font-style: normal;
-  font-weight: 200 900;
+  font-weight: 100 900;
   font-display: swap;
 }
 
@@ -64,8 +64,8 @@
   --ease: cubic-bezier(0.2, 0.65, 0.2, 1);
   --transition: 0.25s var(--ease);
 
-  /* Typography — Mona Sans */
-  --font-primary: 'Mona Sans', sans-serif;
+  /* Typography — Poppins */
+  --font-primary: 'Poppins', sans-serif;
   --font-body: var(--font-primary);
   --font-heading: var(--font-primary);
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
