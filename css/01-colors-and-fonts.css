@@ -1,7 +1,17 @@
+
 /* ============================================================
    COLORS & FONTS — Design tokens
    Loaded FIRST on every page. Everything depends on this.
    ============================================================ */
+
+/* --- Mona Sans Variable Font --- */
+@font-face {
+  font-family: 'Mona Sans';
+  src: url('../fonts/MonaSans-Variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+}
 
 :root {
   /* Brand colors */
@@ -16,7 +26,7 @@
   --ink: #292b2e;
   --ink-light: #595a5c;
   --muted: #687078;
-  --muted-light: #8f969d;    
+  --muted-light: #8f969d;
   --muted-on-light: #6f777f;
   --text: var(--ink);
   --text-heading: var(--ink);
@@ -25,9 +35,9 @@
   --bg-body: #fafafa;
   --bg-surface: #ffffff;
   --bg-mist: #f4f5f6;
-  --bg-mist-light:rgba(53, 1, 1, 0.02);
+  --bg-mist-light: rgba(53, 1, 1, 0.02);
   --bg-dark: #17191c;
-  --bg-red-lighter:var(--brand-red-lighter);
+  --bg-red-lighter: var(--brand-red-lighter);
 
   /* Lines */
   --line: #e4e7ea;
@@ -54,15 +64,41 @@
   --ease: cubic-bezier(0.2, 0.65, 0.2, 1);
   --transition: 0.25s var(--ease);
 
-  /* Typography */
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Manrope', 'Inter', sans-serif;
+  /* Typography — Mona Sans */
+  --font-primary: 'Mona Sans', sans-serif;
+  --font-body: var(--font-primary);
+  --font-heading: var(--font-primary);
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 
   /* Header heights */
   --header-h: 72px;
   --header-h-scrolled: 50px;
   --sticky-offset: calc(var(--dadex-header-offset, var(--header-h)) + 0.5rem);
+}
+
+/* --- Global typography --- */
+html {
+  font-family: var(--font-body);
+  font-optical-sizing: auto;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-optical-sizing: auto;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Form elements */
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-body);
 }
 
 body.header-scrolled {
