@@ -13,12 +13,14 @@
   <meta property="og:description" content="Selected Dadex project references across housing, commercial buildings, industry, utilities and institutions in Pakistan.">
   <meta property="og:url" content="https://dadex.com/projects.html">
   <meta property="og:site_name" content="Dadex Eternit Limited">
+  <meta property="og:image" content="https://dadex.com/assets/images/og-projects.jpg">
+  <meta name="twitter:card" content="summary_large_image">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer">
 
   <link rel="stylesheet" href="css/01-colors-and-fonts.css">
   <link rel="stylesheet" href="css/02-basic-styles.css">
@@ -28,13 +30,20 @@
   <link rel="stylesheet" href="css/projects-videos-literature.css">
 
   <style>
+    /* If you want to force Poppins across this page despite the main.css */
+    body { font-family: 'Poppins', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+
     .projects-intro{max-width:900px;margin:0 auto 2rem;color:var(--muted);font-size:1.02rem;line-height:1.8}
     .projects-toolbar{position:sticky;top:var(--header-h-scrolled,64px);z-index:20;margin:0 0 2rem;padding:.8rem 0;background:var(--bg,#fff);border-block:1px solid var(--line,#e7e7e7)}
-    .project-filters{display:flex;align-items:center;gap:.55rem;overflow-x:auto;padding:.15rem .1rem .3rem;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
-    .project-filter{flex:0 0 auto;appearance:none;border:1px solid var(--line,#dedede);border-radius:999px;background:var(--bg-surface,#fff);color:var(--text,#252525);padding:.62rem 1rem;font:inherit;font-size:.86rem;font-weight:600;line-height:1.2;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease}
+    
+    /* FIX: Wrapped flex for 2-line layout, removed horizontal scroll */
+    .project-filters{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;max-width:850px;margin-inline:auto;padding:.45rem .45rem .55rem}
+    
+    .project-filter{flex:0 1 auto;appearance:none;border:1px solid var(--line,#dedede);border-radius:999px;background:var(--bg-surface,#fff);color:var(--text,#252525);padding:.62rem 1rem;font:inherit;font-size:.86rem;font-weight:600;line-height:1.2;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease}
     .project-filter:hover{border-color:var(--dadex-red,#c90000);color:var(--dadex-red,#c90000)}
     .project-filter[aria-pressed="true"]{background:var(--dadex-red,#c90000);border-color:var(--dadex-red,#c90000);color:#fff}
-    .project-filter:focus-visible,.client-marquee:focus-visible{outline:3px solid rgba(201,0,0,.28);outline-offset:3px}
+    .project-filter:focus-visible,.client-marquee:focus-visible,.marquee-toggle:focus-visible{outline:3px solid rgba(201,0,0,.28);outline-offset:3px}
     .projects-status{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin:0 0 1.1rem;color:var(--muted);font-size:.88rem}
     .projects-status strong{color:var(--text,#222);font-weight:700}
     .projects-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.35rem;align-items:stretch}
@@ -45,13 +54,14 @@
     .project-card:hover .project-card__media img{transform:scale(1.035)}
     .project-card__body{display:flex;flex:1;flex-direction:column;align-items:flex-start;padding:1.25rem}
     .project-card__category{display:inline-flex;align-items:center;gap:.4rem;margin-bottom:.65rem;color:var(--dadex-red,#c90000);font-size:.73rem;font-weight:800;letter-spacing:.055em;line-height:1.4;text-transform:uppercase}
-    .project-card__title{margin:0 0 .65rem;color:var(--heading,var(--text,#222));font-family:var(--font-heading,'Poppins',sans-serif);font-size:1.12rem;line-height:1.4}
+    .project-card__title{margin:0 0 .65rem;color:var(--heading,var(--text,#222));font-family:'Poppins',sans-serif;font-size:1.12rem;line-height:1.4}
     .project-card__description{margin:0 0 1rem;color:var(--muted);font-size:.9rem;line-height:1.7}
     .project-card__systems{width:100%;margin-top:auto;padding-top:.9rem;border-top:1px solid var(--line,#e7e7e7)}
     .project-card__systems-label{display:block;margin-bottom:.55rem;color:var(--text,#333);font-size:.75rem;font-weight:700}
     .system-tags{display:flex;flex-wrap:wrap;gap:.4rem}
     .system-tag{display:inline-flex;align-items:center;border:1px solid var(--line,#e4e4e4);border-radius:5px;background:var(--bg-soft,#f7f7f7);color:var(--text,#333);padding:.32rem .55rem;font-size:.72rem;font-weight:600;line-height:1.35}
-    .projects-empty{grid-column:1/-1;padding:2.5rem 1.25rem;border:1px dashed var(--line,#ddd);border-radius:10px;color:var(--muted);text-align:center}
+    .projects-empty{padding:2.5rem 1.25rem;border:1px dashed var(--line,#ddd);border-radius:10px;color:var(--muted);text-align:center}
+    .projects-empty[hidden]{display:none}
     .projects-empty i{display:block;margin-bottom:.75rem;color:var(--dadex-red,#c90000);font-size:1.5rem}
     .project-note{margin:2rem 0 0;padding:1rem 1.15rem;border-left:3px solid var(--dadex-red,#c90000);background:var(--bg-soft,#f7f7f7);color:var(--muted);font-size:.85rem;line-height:1.7}
     .project-note strong{color:var(--text,#333)}
@@ -60,25 +70,32 @@
     .sector-card h3{margin:0 0 .55rem;font-size:1rem;line-height:1.45}
     .sector-card p{margin:0;color:var(--muted);font-size:.85rem;line-height:1.7}
     .clients-section{overflow:hidden}
-    .clients-section__intro{max-width:850px;margin:0 auto 2.3rem;color:var(--muted);line-height:1.8;text-align:center}
+    .clients-section__intro{max-width:850px;margin:0 auto 1.2rem;color:var(--muted);line-height:1.8;text-align:center}
+    .marquee-controls{display:flex;justify-content:center;margin:0 0 1.6rem}
+    .marquee-toggle{display:inline-flex;align-items:center;gap:.5rem;appearance:none;border:1px solid var(--line,#dedede);border-radius:999px;background:var(--bg-surface,#fff);color:var(--text,#252525);padding:.5rem 1rem;font:inherit;font-size:.82rem;font-weight:600;cursor:pointer}
+    .marquee-toggle:hover{border-color:var(--dadex-red,#c90000);color:var(--dadex-red,#c90000)}
     .client-categories{display:grid;gap:1.7rem}
     .client-category{min-width:0}
     .client-category h3{margin:0 0 .75rem;color:var(--heading,var(--text,#222));font-size:.98rem;font-weight:700}
-    .client-marquee{position:relative;overflow:hidden;padding:.35rem 0;mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent)}
+    .client-marquee{position:relative;overflow:hidden;padding:.35rem 0;-webkit-mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent)}
     .client-marquee__track{display:flex;width:max-content;will-change:transform}
     .client-marquee__group{display:flex;flex:0 0 auto;align-items:center;gap:1rem;padding-right:1rem}
     .client-logo{display:flex;flex:0 0 150px;width:150px;height:82px;align-items:center;justify-content:center;padding:.75rem;border:1px solid var(--line,#e8e8e8);border-radius:8px;background:#fff}
     .client-logo img{display:block;max-width:100%;max-height:52px;width:auto;height:auto;object-fit:contain}
-    .client-marquee.is-ready .client-marquee__track{animation:client-marquee-scroll 62s linear infinite}
+    
+    .client-marquee.is-ready .client-marquee__track{animation:client-marquee-scroll var(--dur,60s) linear infinite}
     .client-category:nth-child(even) .client-marquee.is-ready .client-marquee__track{animation-direction:reverse}
-    .client-marquee:hover .client-marquee__track,.client-marquee:focus-within .client-marquee__track{animation-play-state:paused}
-    @keyframes client-marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .client-marquee:hover .client-marquee__track,.client-marquee:focus-within .client-marquee__track,.client-categories.is-paused .client-marquee__track{animation-play-state:paused}
+    @keyframes client-marquee-scroll{from{transform:translateX(0)}to{transform:translateX(calc(var(--shift,0px)*-1))}}
+    
     .projects-cta{display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:clamp(1.5rem,4vw,2.5rem);border-radius:12px;background:var(--bg-soft,#f5f5f5)}
     .projects-cta h2{margin:0 0 .5rem}
     .projects-cta p{max-width:650px;margin:0;color:var(--muted);line-height:1.7}
+    
     @media(max-width:1000px){.projects-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:700px){
-      .client-marquee{overflow-x:auto;mask-image:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x}
+      .marquee-controls{display:none}
+      .client-marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
       .client-marquee::-webkit-scrollbar{display:none}
       .client-marquee.is-ready .client-marquee__track{animation:none}
       .client-marquee__group[aria-hidden="true"]{display:none}
@@ -92,8 +109,10 @@
     }
     @media(prefers-reduced-motion:reduce){
       .project-card__media img,.project-filter{transition:none}
+      .marquee-controls{display:none}
       .client-marquee.is-ready .client-marquee__track{animation:none}
-      .client-marquee{overflow-x:auto;mask-image:none;scrollbar-width:thin}
+      .client-marquee__group[aria-hidden="true"]{display:none}
+      .client-marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none;scrollbar-width:thin}
     }
   </style>
 </head>
@@ -119,7 +138,8 @@
         </div>
 
         <div class="projects-toolbar">
-          <div class="project-filters" id="projectFilter" role="group" aria-label="Filter projects by project type">
+          <!-- FIX 1: Unique ID prevents conflict with main.js -->
+          <div class="project-filters" id="projectFilterNew" role="group" aria-label="Filter projects by project type">
             <button class="project-filter" type="button" data-filter="all" aria-pressed="true">All</button>
             <button class="project-filter" type="button" data-filter="societies" aria-pressed="false">Societies</button>
             <button class="project-filter" type="button" data-filter="high-rise" aria-pressed="false">High-rise &amp; Commercial</button>
@@ -129,14 +149,14 @@
           </div>
         </div>
 
-        <div class="projects-status" aria-live="polite">
-          <span id="projectCount"><strong>10</strong> project references</span>
-          <span>Browse by project type</span>
+        <div class="projects-status">
+          <span id="projectCount" aria-live="polite" aria-atomic="true"><strong>10</strong> project references</span>
+          <span aria-hidden="true">Browse by project type</span>
         </div>
 
         <div class="projects-grid" id="projectGrid">
           <article class="card project-card" data-category="societies">
-            <div class="project-card__media"><img src="assets/images/products/flowline.webp" alt="Dadex Flow Line underground sewerage piping system" loading="lazy" width="640" height="400"></div>
+            <div class="project-card__media"><img src="assets/images/products/flowline.webp" alt="Dadex Flow Line underground sewerage piping system" loading="lazy" decoding="async" width="640" height="400"></div>
             <div class="project-card__body">
               <span class="project-card__category">Housing Society</span>
               <h3 class="project-card__title">Bahria Town Lahore</h3>
@@ -146,7 +166,7 @@
           </article>
 
           <article class="card project-card" data-category="societies">
-            <div class="project-card__media"><img src="assets/images/products/nikasi.webp" alt="Dadex Nikasi soil, waste and vent piping system" loading="lazy" width="640" height="400"></div>
+            <div class="project-card__media"><img src="assets/images/products/nikasi.webp" alt="Dadex Nikasi soil, waste and vent piping system" loading="lazy" decoding="async" width="640" height="400"></div>
             <div class="project-card__body">
               <span class="project-card__category">Housing Society</span>
               <h3 class="project-card__title">Eden Garden Housing Scheme</h3>
@@ -156,7 +176,7 @@
           </article>
 
           <article class="card project-card" data-category="high-rise">
-            <div class="project-card__media"><img src="assets/images/products/polydex-premium.webp" alt="Dadex Polydex Premium piping system" loading="lazy" width="640" height="400"></div>
+            <div class="project-card__media"><img src="assets/images/products/polydex-premium.webp" alt="Dadex Polydex Premium piping system" loading="lazy" decoding="async" width="640" height="400"></div>
             <div class="project-card__body">
               <span class="project-card__category">High-rise &amp; Commercial</span>
               <h3 class="project-card__title">Dolmen Mall Karachi</h3>
@@ -166,7 +186,7 @@
           </article>
 
           <article class="card project-card" data-category="industries">
-            <div class="project-card__media"><img src="assets/images/products/tflex-compressed-air.webp" alt="Dadex T-Flex compressed air piping system" loading="lazy" width="640" height="400"></div>
+            <div class="project-card__media"><img src="assets/images/products/tflex-compressed-air.webp" alt="Dadex T-Flex compressed air piping system" loading="lazy" decoding="async" width="640" height="400"></div>
             <div class="project-card__body">
               <span class="project-card__category">Industrial Facility</span>
               <h3 class="project-card__title">PARCO Refinery Project</h3>
@@ -176,17 +196,17 @@
           </article>
 
           <article class="card project-card" data-category="utilities">
-            <div class="project-card__media"><img src="assets/images/products/aquadex.webp" alt="Dadex Aquadex UPVC pressure piping system" loading="lazy" width="640" height="400"></div>
+            <div class="project-card__media"><img src="assets/images/products/aquadex.webp" alt="Dadex Aquadex UPVC pressure piping system" loading="lazy" decoding="async" width="640" height="400"></div>
             <div class="project-card__body">
               <span class="project-card__category">Water Utility</span>
-              <h3 class="project-card__title">Karachi Water &amp; Sewerage Board</h3>
+              <h3 class="project-card__title">Karachi Water &amp; Sewerage Corporation</h3>
               <p class="project-card__description">A public utility reference associated with municipal water supply infrastructure.</p>
               <div class="project-card__systems"><span class="project-card__systems-label">Associated Dadex systems</span><div class="system-tags"><span class="system-tag">Aquadex</span></div></div>
             </div>
           </article>
 
           <article class="card project-card" data-category="utilities">
-            <div class="project-card__media"><img src="assets/images/products/tflex-gas.webp" alt="Dadex T-Flex PE gas piping system" loading="lazy" width="640" height="400"></div>
+            <div class="project-card__media"><img src="assets/images/products/tflex-gas.webp" alt="Dadex T-Flex PE gas piping system" loading="lazy" decoding="async" width="640" height="400"></div>
             <div class="project-card__body">
               <span class="project-card__category">Gas Utility</span>
               <h3 class="project-card__title">Sui Southern Gas Company</h3>
@@ -196,7 +216,7 @@
           </article>
 
           <article class="card project-card" data-category="utilities">
-            <div class="project-card__media"><img src="assets/images/products/polydex.webp" alt="Dadex Polydex PP-R piping system" loading="lazy" width="640" height="400"></div>
+            <div class="project-card__media"><img src="assets/images/products/polydex.webp" alt="Dadex Polydex PP-R piping system" loading="lazy" decoding="async" width="640" height="400"></div>
             <div class="project-card__body">
               <span class="project-card__category">Water Utility</span>
               <h3 class="project-card__title">WASA Water Supply Schemes</h3>
@@ -206,7 +226,7 @@
           </article>
 
           <article class="card project-card" data-category="utilities">
-            <div class="project-card__media"><img src="assets/images/products/tflex-gas.webp" alt="Dadex T-Flex PE gas piping system" loading="lazy" width="640" height="400"></div>
+            <div class="project-card__media"><img src="assets/images/products/tflex-gas.webp" alt="Dadex T-Flex PE gas piping system" loading="lazy" decoding="async" width="640" height="400"></div>
             <div class="project-card__body">
               <span class="project-card__category">Gas Utility</span>
               <h3 class="project-card__title">Sui Northern Gas Pipelines Limited</h3>
@@ -216,7 +236,7 @@
           </article>
 
           <article class="card project-card" data-category="institutions">
-            <div class="project-card__media"><img src="assets/images/products/cable-duct.webp" alt="Dadex PE cable ducting system" loading="lazy" width="640" height="400"></div>
+            <div class="project-card__media"><img src="assets/images/products/cable-duct.webp" alt="Dadex PE cable ducting system" loading="lazy" decoding="async" width="640" height="400"></div>
             <div class="project-card__body">
               <span class="project-card__category">Aviation Infrastructure</span>
               <h3 class="project-card__title">Civil Aviation Authority</h3>
@@ -226,7 +246,7 @@
           </article>
 
           <article class="card project-card" data-category="institutions">
-            <div class="project-card__media"><img src="assets/images/products/polydex-premium.webp" alt="Dadex Polydex Premium piping system" loading="lazy" width="640" height="400"></div>
+            <div class="project-card__media"><img src="assets/images/products/polydex-premium.webp" alt="Dadex Polydex Premium piping system" loading="lazy" decoding="async" width="640" height="400"></div>
             <div class="project-card__body">
               <span class="project-card__category">Institutional Development</span>
               <h3 class="project-card__title">Aga Khan Development Network</h3>
@@ -235,6 +255,7 @@
             </div>
           </article>
         </div>
+
         <div class="projects-empty" id="projectsEmpty" hidden>
           <i class="fa-regular fa-folder-open" aria-hidden="true"></i>
           <strong>No project references in this category yet.</strong>
@@ -287,98 +308,101 @@
           <h2 id="clients-heading">Our <span>Esteemed Clients</span></h2>
           <p class="clients-section__intro">A selection of organisations represented in Dadex’s project and business portfolio across public utilities, real estate, healthcare, industry, commerce and institutional development.</p>
         </div>
+        <div class="marquee-controls">
+          <button class="marquee-toggle" id="marqueeToggle" type="button" aria-pressed="false"><i class="fa-solid fa-pause" aria-hidden="true"></i><span>Pause scrolling</span></button>
+        </div>
         <div class="client-categories" id="clientCategories">
           <section class="client-category" aria-labelledby="clients-government">
             <h3 id="clients-government">Government &amp; Public Utilities</h3>
             <div class="client-marquee" tabindex="0" role="region" aria-label="Government and public utility client logos"><div class="client-marquee__track"><div class="client-marquee__group" role="list">
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/kwsc.png" alt="Karachi Water &amp; Sewerage Board" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/ssgc.png" alt="Sui Southern Gas Company" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/sngpl.png" alt="Sui Northern Gas Pipelines" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/wasa.png" alt="WASA" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/caa.png" alt="Civil Aviation Authority" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/nespak.jpg" alt="NESPAK" loading="lazy" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/kwsc.png" alt="Karachi Water &amp; Sewerage Corporation" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/ssgc.png" alt="Sui Southern Gas Company" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/sngpl.png" alt="Sui Northern Gas Pipelines" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/wasa.png" alt="WASA" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/caa.png" alt="Civil Aviation Authority" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/nespak.jpg" alt="NESPAK" loading="lazy" decoding="async" width="160" height="80"></div>
             </div></div>
           </section>
 
           <section class="client-category" aria-labelledby="clients-real-estate">
             <h3 id="clients-real-estate">Real Estate &amp; Infrastructure</h3>
             <div class="client-marquee" tabindex="0" role="region" aria-label="Real estate and infrastructure client logos"><div class="client-marquee__track"><div class="client-marquee__group" role="list">
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/bahria.png" alt="Bahria Town" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/BT.png" alt="Bahria Icon Tower" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/dha.png" alt="Defence Housing Authority" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/emaar.png" alt="Emaar" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/creekvista.jpg" alt="Creek Vista Apartments Karachi" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/chapal.png" alt="Chapal Skymark" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/burjismail.png" alt="Burj Ismail" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/hoshang.jpg" alt="Hoshang Pearl Karachi" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/royalorchard.png" alt="Royal Orchard Housing" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/paragon.jpg" alt="Paragon Constructors" loading="lazy" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/bahria.png" alt="Bahria Town" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/BT.png" alt="Bahria Icon Tower" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/dha.png" alt="Defence Housing Authority" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/emaar.png" alt="Emaar" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/creekvista.jpg" alt="Creek Vista Apartments Karachi" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/chapal.png" alt="Chapal Skymark" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/burjismail.png" alt="Burj Ismail" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/hoshang.jpg" alt="Hoshang Pearl Karachi" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/royalorchard.png" alt="Royal Orchard Housing" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/paragon.jpg" alt="Paragon Constructors" loading="lazy" decoding="async" width="160" height="80"></div>
             </div></div>
           </section>
 
           <section class="client-category" aria-labelledby="clients-healthcare">
             <h3 id="clients-healthcare">Hospitality &amp; Healthcare</h3>
             <div class="client-marquee" tabindex="0" role="region" aria-label="Hospitality and healthcare client logos"><div class="client-marquee__track"><div class="client-marquee__group" role="list">
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/pc.png" alt="Pearl Continental Hotels" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/serena.jpg" alt="Faisalabad Serena Hotel" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/siut.jpg" alt="Sindh Institute of Urology &amp; Transplantation (SIUT)" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/ziauddin.png" alt="Dr. Ziauddin Hospital" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/nicd.png" alt="National Institute of Cardiovascular Diseases" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/akuh.png" alt="The Aga Khan University &amp; Hospital" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/indus.png" alt="Indus Hospital" loading="lazy" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/pc.png" alt="Pearl Continental Hotels" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/serena.jpg" alt="Faisalabad Serena Hotel" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/siut.jpg" alt="Sindh Institute of Urology &amp; Transplantation (SIUT)" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/ziauddin.png" alt="Dr. Ziauddin Hospital" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/nicd.png" alt="National Institute of Cardiovascular Diseases" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/akuh.png" alt="The Aga Khan University &amp; Hospital" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/indus.png" alt="Indus Hospital" loading="lazy" decoding="async" width="160" height="80"></div>
             </div></div>
           </section>
 
           <section class="client-category" aria-labelledby="clients-industrial">
             <h3 id="clients-industrial">Industrial &amp; Manufacturing</h3>
             <div class="client-marquee" tabindex="0" role="region" aria-label="Industrial and manufacturing client logos"><div class="client-marquee__track"><div class="client-marquee__group" role="list">
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/parco.svg" alt="Pak-Arab Refinery" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/engro.png" alt="Engro Corporation" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/lucky-cement.png" alt="Lucky Cement" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/uep.png" alt="United Energy Pakistan" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/bp.png" alt="British Petroleum" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/siemens.png" alt="Siemens" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/schneider.png" alt="Schneider Electric" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/abbott.png" alt="Abbott" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/ici.jpg" alt="ICI Pakistan Ltd" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/com3.png" alt="Com3" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/envicrete.png" alt="Envicrete" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/stile.png" alt="Stile" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/ffc.jpg" alt="Fauji Fertilizer Company Limited" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/aghasteel.png" alt="Agha Steel Industries" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/agriauto.jpg" alt="Agriauto Industries Limited" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/amrelisteel.png" alt="Amreli Steels" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/nutrico.jpg" alt="NutriCo" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/ksb.jpg" alt="KSB Pumps" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/sosafe.png" alt="So-Safe Water Technologies" loading="lazy" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/parco.svg" alt="Pak-Arab Refinery" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/engro.png" alt="Engro Corporation" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/lucky-cement.png" alt="Lucky Cement" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/uep.png" alt="United Energy Pakistan" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/bp.png" alt="British Petroleum" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/siemens.png" alt="Siemens" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/schneider.png" alt="Schneider Electric" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/abbott.png" alt="Abbott" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/ici.jpg" alt="ICI Pakistan Ltd" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/com3.png" alt="Com3" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/envicrete.png" alt="Envicrete" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/stile.png" alt="Stile" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/ffc.jpg" alt="Fauji Fertilizer Company Limited" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/aghasteel.png" alt="Agha Steel Industries" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/agriauto.jpg" alt="Agriauto Industries Limited" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/amrelisteel.png" alt="Amreli Steels" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/nutrico.jpg" alt="NutriCo" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/ksb.jpg" alt="KSB Pumps" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/sosafe.png" alt="So-Safe Water Technologies" loading="lazy" decoding="async" width="160" height="80"></div>
             </div></div>
           </section>
 
           <section class="client-category" aria-labelledby="clients-corporate">
             <h3 id="clients-corporate">Corporate, FMCG &amp; Technology</h3>
             <div class="client-marquee" tabindex="0" role="region" aria-label="Corporate, FMCG and technology client logos"><div class="client-marquee__track"><div class="client-marquee__group" role="list">
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/packages.jpg" alt="Packages Limited" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/usdenim.png" alt="US Denim" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/artistic.jpg" alt="Artistic Milliners" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/lsm.png" alt="LSM Fabrics" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/nishat.png" alt="Nishat Group" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/engrofoods.png" alt="Engro Foods" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/shanfoods.png" alt="Shan Foods" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/youngsfoods.png" alt="Young's Food" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/peekfreans.png" alt="Peek Freans" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/cybernet.png" alt="Cybernet" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/wateen.png" alt="Wateen Telecom" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/worldcall.png" alt="WorldCall Telecom" loading="lazy" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/packages.jpg" alt="Packages Limited" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/usdenim.png" alt="US Denim" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/artistic.jpg" alt="Artistic Milliners" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/lsm.png" alt="LSM Fabrics" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/nishat.png" alt="Nishat Group" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/engrofoods.png" alt="Engro Foods" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/shanfoods.png" alt="Shan Foods" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/youngsfoods.png" alt="Young's Food" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/peekfreans.png" alt="Peek Freans" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/cybernet.png" alt="Cybernet" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/wateen.png" alt="Wateen Telecom" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/worldcall.png" alt="WorldCall Telecom" loading="lazy" decoding="async" width="160" height="80"></div>
             </div></div>
           </section>
 
           <section class="client-category" aria-labelledby="clients-development">
             <h3 id="clients-development">Education &amp; Development</h3>
             <div class="client-marquee" tabindex="0" role="region" aria-label="Education and development client logos"><div class="client-marquee__track"><div class="client-marquee__group" role="list">
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/indusuniversity.png" alt="Indus University" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/akdn.png" alt="Aga Khan Development Network" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/usaid.png" alt="USAID" loading="lazy" width="160" height="80"></div>
-              <div class="client-logo" role="listitem"><img src="assets/images/clients/unicef.png" alt="UNICEF" loading="lazy" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/indusuniversity.png" alt="Indus University" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/akdn.png" alt="Aga Khan Development Network" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/usaid.png" alt="USAID" loading="lazy" decoding="async" width="160" height="80"></div>
+              <div class="client-logo" role="listitem"><img src="assets/images/clients/unicef.png" alt="UNICEF" loading="lazy" decoding="async" width="160" height="80"></div>
             </div></div>
           </section>
         </div>
@@ -399,12 +423,14 @@
   </main>
 
   <div data-component="footer"></div>
-  <script src="js/main.js"></script>
+  <script src="js/main.js" defer></script>
   <script>
     (() => {
       'use strict';
 
-      const filterGroup = document.getElementById('projectFilter');
+      /* ---------- Project filter ---------- */
+      // FIX 2: Target the unique ID to avoid conflict with main.js
+      const filterGroup = document.getElementById('projectFilterNew');
       const grid = document.getElementById('projectGrid');
       const count = document.getElementById('projectCount');
       const emptyState = document.getElementById('projectsEmpty');
@@ -413,53 +439,83 @@
         const buttons = Array.from(filterGroup.querySelectorAll('[data-filter]'));
         const cards = Array.from(grid.querySelectorAll('.project-card'));
 
-        function applyFilter(filter) {
+        const applyFilter = (filter) => {
           let visible = 0;
           cards.forEach((card) => {
-            const categories = (card.dataset.category || '').split(/\s+/).filter(Boolean);
-            const matches = filter === 'all' || categories.includes(filter);
-            card.hidden = !matches;
-            if (matches) visible += 1;
+            const cats = (card.dataset.category || '').split(/\s+/);
+            const show = filter === 'all' || cats.includes(filter);
+            card.hidden = !show;
+            if (show) visible++;
           });
-
-          buttons.forEach((button) => {
-            const active = button.dataset.filter === filter;
-            button.classList.toggle('active', active);
-            button.setAttribute('aria-pressed', String(active));
-          });
-
+          buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === filter)));
           emptyState.hidden = visible !== 0;
-          const label = visible === 1 ? 'project reference' : 'project references';
-          const value = document.createElement('strong');
-          value.textContent = String(visible);
-          count.replaceChildren(value, document.createTextNode(' ' + label));
-        }
+          const num = document.createElement('strong');
+          num.textContent = visible;
+          count.replaceChildren(num, document.createTextNode(visible === 1 ? ' project reference' : ' project references'));
+        };
 
-        filterGroup.addEventListener('click', (event) => {
-          const button = event.target.closest('button[data-filter]');
-          if (!button || !filterGroup.contains(button)) return;
-          applyFilter(button.dataset.filter);
+        filterGroup.addEventListener('click', (e) => {
+          const b = e.target.closest('button[data-filter]');
+          if (b && filterGroup.contains(b)) applyFilter(b.dataset.filter);
         });
-
         applyFilter('all');
       }
 
-      document.querySelectorAll('.client-marquee').forEach((marquee) => {
-        const track = marquee.querySelector('.client-marquee__track');
-        const originalGroup = track && track.querySelector('.client-marquee__group');
-        if (!track || !originalGroup) return;
+      /* ---------- Client marquees ---------- */
+      const SPEED = 40;
+      const marquees = Array.from(document.querySelectorAll('.client-marquee'));
 
-        const clone = originalGroup.cloneNode(true);
-        clone.setAttribute('aria-hidden', 'true');
-        clone.removeAttribute('role');
-        clone.querySelectorAll('[role]').forEach((item) => item.removeAttribute('role'));
-        clone.querySelectorAll('img').forEach((img) => {
-          img.alt = '';
-          img.setAttribute('aria-hidden', 'true');
-        });
-        track.appendChild(clone);
+      const buildMarquee = (marquee) => {
+        const track = marquee.querySelector('.client-marquee__track');
+        const original = track && track.querySelector('.client-marquee__group');
+        if (!original) return;
+
+        track.querySelectorAll('.client-marquee__group[aria-hidden="true"]').forEach((c) => c.remove());
+
+        const width = original.getBoundingClientRect().width;
+        if (!width) return;
+
+        const copies = Math.ceil(marquee.clientWidth / width) + 1;
+        for (let i = 1; i < copies; i++) {
+          const clone = original.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.removeAttribute('role');
+          clone.querySelectorAll('[role]').forEach((el) => el.removeAttribute('role'));
+          clone.querySelectorAll('img').forEach((img) => { img.alt = ''; img.setAttribute('aria-hidden', 'true'); img.loading = 'eager'; });
+          track.appendChild(clone);
+        }
+
+        track.style.setProperty('--shift', width + 'px');
+        track.style.setProperty('--dur', (width / SPEED).toFixed(1) + 's');
         marquee.classList.add('is-ready');
-      });
+      };
+
+      let lastWidth = 0;
+      let timer;
+      const rebuildAll = () => {
+        const w = document.documentElement.clientWidth;
+        if (w === lastWidth) return;
+        lastWidth = w;
+        marquees.forEach(buildMarquee);
+      };
+
+      const init = () => { lastWidth = 0; rebuildAll(); };
+      if (document.readyState === 'complete') init(); else window.addEventListener('load', init, { once: true });
+      window.addEventListener('resize', () => { clearTimeout(timer); timer = setTimeout(rebuildAll, 200); });
+
+      /* ---------- Pause / play (WCAG 2.2.2) ---------- */
+      const toggle = document.getElementById('marqueeToggle');
+      const categories = document.getElementById('clientCategories');
+      if (toggle && categories) {
+        const icon = toggle.querySelector('i');
+        const label = toggle.querySelector('span');
+        toggle.addEventListener('click', () => {
+          const paused = categories.classList.toggle('is-paused');
+          toggle.setAttribute('aria-pressed', String(paused));
+          label.textContent = paused ? 'Resume scrolling' : 'Pause scrolling';
+          icon.className = paused ? 'fa-solid fa-play' : 'fa-solid fa-pause';
+        });
+      }
     })();
   </script>
 </body>
