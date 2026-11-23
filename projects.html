@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,6 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://dadex.com/projects.html">
 
-  <!-- FIX 1: Added Google Fonts back -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -22,6 +22,443 @@
   <link rel="stylesheet" href="css/04-header-footer.css">
   <link rel="stylesheet" href="css/05-shared-parts.css">
   <link rel="stylesheet" href="css/projects-videos-literature.css">
+
+  <style>
+    .projects-intro {
+      max-width: 850px;
+      margin: 0 auto;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .projects-toolbar {
+      position: sticky;
+      top: var(--header-h-scrolled, 64px);
+      z-index: 20;
+      margin-bottom: 2rem;
+      padding: .85rem 0;
+      background: var(--bg, #fff);
+      border-top: 1px solid var(--line, #e7e7e7);
+      border-bottom: 1px solid var(--line, #e7e7e7);
+    }
+
+    .project-filters {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      overflow-x: auto;
+      padding: .15rem .1rem .3rem;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .project-filter {
+      flex: 0 0 auto;
+      appearance: none;
+      border: 1px solid var(--line, #dedede);
+      border-radius: 999px;
+      background: var(--bg-surface, #fff);
+      color: var(--text, #252525);
+      padding: .62rem 1rem;
+      font: inherit;
+      font-size: .88rem;
+      font-weight: 600;
+      line-height: 1.2;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease, border-color .2s ease;
+    }
+
+    .project-filter:hover {
+      border-color: var(--dadex-red, #c90000);
+      color: var(--dadex-red, #c90000);
+    }
+
+    .project-filter[aria-pressed="true"] {
+      background: var(--dadex-red, #c90000);
+      border-color: var(--dadex-red, #c90000);
+      color: #fff;
+    }
+
+    .project-filter:focus-visible,
+    .project-card a:focus-visible,
+    .client-logo-track:focus-visible {
+      outline: 3px solid rgba(201, 0, 0, .3);
+      outline-offset: 3px;
+    }
+
+    .projects-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .projects-status strong {
+      color: var(--text, #222);
+      font-weight: 700;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.35rem;
+      align-items: stretch;
+    }
+
+    .project-card {
+      min-width: 0;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card[hidden] {
+      display: none !important;
+    }
+
+    .project-card__media {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      background: var(--bg-soft, #f2f3f5);
+    }
+
+    .project-card__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .45s ease;
+    }
+
+    .project-card:hover .project-card__media img {
+      transform: scale(1.035);
+    }
+
+    .project-card__body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1.25rem;
+    }
+
+    .project-card__category {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      margin-bottom: .65rem;
+      color: var(--dadex-red, #c90000);
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .055em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .project-card__title {
+      margin: 0 0 .65rem;
+      color: var(--heading, var(--text, #222));
+      font-family: var(--font-heading, 'Manrope', sans-serif);
+      font-size: 1.18rem;
+      line-height: 1.35;
+    }
+
+    .project-card__description {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.7;
+    }
+
+    .project-card__systems {
+      width: 100%;
+      margin-top: auto;
+      padding-top: .9rem;
+      border-top: 1px solid var(--line, #e7e7e7);
+    }
+
+    .project-card__systems-label {
+      display: block;
+      margin-bottom: .55rem;
+      color: var(--text, #333);
+      font-size: .76rem;
+      font-weight: 700;
+    }
+
+    .system-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+    }
+
+    .system-tag {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line, #e4e4e4);
+      border-radius: 5px;
+      background: var(--bg-soft, #f7f7f7);
+      color: var(--text, #333);
+      padding: .32rem .55rem;
+      font-size: .74rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .projects-empty {
+      grid-column: 1 / -1;
+      padding: 2.5rem 1.25rem;
+      border: 1px dashed var(--line, #ddd);
+      border-radius: 10px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .projects-empty[hidden] {
+      display: none !important;
+    }
+
+    .projects-empty i {
+      display: block;
+      margin-bottom: .75rem;
+      color: var(--dadex-red, #c90000);
+      font-size: 1.5rem;
+    }
+
+    .client-section-header {
+      max-width: 850px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+
+    .client-section-header p {
+      max-width: 760px;
+      margin: .75rem auto 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .client-logo-category {
+      margin-bottom: 2rem;
+    }
+
+    .client-logo-category:last-child {
+      margin-bottom: 0;
+    }
+
+    .client-logo-category__heading {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      margin: 0 0 .9rem;
+      color: var(--heading, var(--text, #222));
+      font-family: var(--font-heading, 'Manrope', sans-serif);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .client-logo-category__heading::before {
+      content: "";
+      display: block;
+      width: 4px;
+      height: 19px;
+      flex: 0 0 4px;
+      border-radius: 3px;
+      background: var(--dadex-red, #c90000);
+    }
+
+    .client-logo-marquee {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      padding: .45rem 0;
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+    }
+
+    .client-logo-track {
+      display: flex;
+      width: max-content;
+      align-items: center;
+      gap: 1rem;
+      animation: client-logo-scroll 65s linear infinite;
+      will-change: transform;
+    }
+
+    .client-logo-category:nth-of-type(even) .client-logo-track {
+      animation-direction: reverse;
+    }
+
+    .client-logo-marquee:hover .client-logo-track,
+    .client-logo-marquee:focus-within .client-logo-track {
+      animation-play-state: paused;
+    }
+
+    .client-logo-group {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .client-logo {
+      width: 155px;
+      height: 82px;
+      flex: 0 0 155px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: .8rem 1rem;
+      border: 1px solid var(--line, #e9e9e9);
+      border-radius: 8px;
+      background: var(--bg-surface, #fff);
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .client-logo:hover {
+      border-color: rgba(201, 0, 0, .35);
+      box-shadow: 0 5px 18px rgba(0, 0, 0, .055);
+    }
+
+    .client-logo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: 125px;
+      max-height: 52px;
+      object-fit: contain;
+    }
+
+    @keyframes client-logo-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .sector-card {
+      height: 100%;
+      padding: 1.25rem;
+    }
+
+    .sector-card__icon {
+      display: inline-flex;
+      width: 2.5rem;
+      height: 2.5rem;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: .8rem;
+      border-radius: 8px;
+      background: rgba(201, 0, 0, .08);
+      color: var(--dadex-red, #c90000);
+      font-size: 1.05rem;
+    }
+
+    .sector-card h3 {
+      margin: 0 0 .45rem;
+      font-size: 1rem;
+    }
+
+    .sector-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .86rem;
+      line-height: 1.65;
+    }
+
+    .projects-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      border-radius: 12px;
+      background: var(--bg-soft, #f5f5f5);
+    }
+
+    .projects-cta h2 {
+      margin: 0 0 .5rem;
+    }
+
+    .projects-cta p {
+      max-width: 650px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 1000px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .projects-toolbar {
+        top: var(--header-h-scrolled, 56px);
+      }
+
+      .projects-cta {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .projects-status {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: .25rem;
+      }
+
+      .client-logo {
+        width: 135px;
+        height: 74px;
+        flex-basis: 135px;
+      }
+
+      .client-logo-track,
+      .client-logo-group {
+        gap: .75rem;
+      }
+
+      .client-logo-track {
+        animation-duration: 75s;
+      }
+
+      .client-logo-category {
+        margin-bottom: 1.6rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-card__media img,
+      .project-filter,
+      .client-logo {
+        transition: none;
+      }
+
+      .client-logo-marquee {
+        overflow-x: auto;
+        -webkit-mask-image: none;
+        mask-image: none;
+        scrollbar-width: thin;
+      }
+
+      .client-logo-track {
+        animation: none !important;
+        transform: none !important;
+      }
+
+      .client-logo-group[aria-hidden="true"] {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -45,7 +482,6 @@
         </div>
 
         <div class="projects-toolbar">
-          <!-- FIX 3: Changed ID to prevent JS conflict with main.js -->
           <div class="project-filters" id="projectFilterNew" role="group" aria-label="Filter projects by project type">
             <button class="project-filter" type="button" data-filter="all" aria-pressed="true">All</button>
             <button class="project-filter" type="button" data-filter="societies" aria-pressed="false">Societies</button>
@@ -244,90 +680,207 @@
             <p>Please select another category to explore available references.</p>
           </div>
         </div>
-
-
       </div>
     </section>
 
-<!-- CLIENT LOGOS (FULL COLOR) -->
-<section class="section" aria-labelledby="clients-heading">
-  <div class="container">
-    <div class="section-header text-center" style="margin-inline: auto; text-align: center; max-width: 800px;">
-      <h2 id="clients-heading">Trusted by <span>Industry Leaders</span></h2>
-      <p>Public utilities, major developers, and industrial groups rely on Dadex systems for their critical infrastructure.</p>
-    </div>
+    <section class="section" aria-labelledby="clients-heading">
+      <div class="container">
+        <div class="client-section-header">
+          <div class="section-header">
+            <h2 id="clients-heading">Our Esteemed <span>Clients</span></h2>
+          </div>
+          <p>Over the years, Dadex has served a diverse portfolio of organisations across public utilities, real estate, infrastructure, healthcare, industry, commerce and other sectors.</p>
+        </div>
 
-    <div class="client-logo-grid">
-      <!-- Utilities & Government -->
-      <div class="client-logo"><img src="assets/images/clients/kwsc.png" alt="Karachi Water & Sewerage Board" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/ssgc.png" alt="Sui Southern Gas Company" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/sngpl.png" alt="Sui Northern Gas Pipelines" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/wasa.png" alt="WASA" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/caa.png" alt="Civil Aviation Authority" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/nespak.jpg" alt="NESPAK" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/usaid.png" alt="USAID" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/unicef.png" alt="UNICEF" loading="lazy"></div>
+        <div class="client-logo-category">
+          <h3 class="client-logo-category__heading">Government &amp; Public Utilities</h3>
+          <div class="client-logo-marquee" aria-label="Government and public utilities organisations">
+            <div class="client-logo-track">
+              <div class="client-logo-group">
+                <div class="client-logo"><img src="assets/images/clients/kwsc.png" alt="Karachi Water &amp; Sewerage Board" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/ssgc.png" alt="Sui Southern Gas Company" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/sngpl.png" alt="Sui Northern Gas Pipelines" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/wasa.png" alt="WASA" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/caa.png" alt="Civil Aviation Authority" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/nespak.jpg" alt="NESPAK" loading="lazy"></div>
+              </div>
+              <div class="client-logo-group" aria-hidden="true">
+                <div class="client-logo"><img src="assets/images/clients/kwsc.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/ssgc.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/sngpl.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/wasa.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/caa.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/nespak.jpg" alt="" loading="lazy"></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <!-- Real Estate & Development -->
-      <div class="client-logo"><img src="assets/images/clients/bahria.png" alt="Bahria Town" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/BT.png" alt="Bahria Town Icon Karachi" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/dha.png" alt="Defence Housing Authority" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/emaar.png" alt="Emaar" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/akdn.png" alt="Aga Khan Development Network" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/creekvista.jpg" alt="Creek Vista Apartments Karachi" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/chapal.png" alt="Chapal Skymark" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/burjismail.png" alt="Burj Ismail" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/hoshang.jpg" alt="Hoshang Pearl Karachi" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/royalorchard.png" alt="Royal Orchard Housing" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/paragon.jpg" alt="Paragon Constructors" loading="lazy"></div>
+        <div class="client-logo-category">
+          <h3 class="client-logo-category__heading">Real Estate &amp; Infrastructure</h3>
+          <div class="client-logo-marquee" aria-label="Real estate and infrastructure organisations">
+            <div class="client-logo-track">
+              <div class="client-logo-group">
+                <div class="client-logo"><img src="assets/images/clients/bahria.png" alt="Bahria Town" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/BT.png" alt="Bahria Town Icon Karachi" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/dha.png" alt="Defence Housing Authority" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/emaar.png" alt="Emaar" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/creekvista.jpg" alt="Creek Vista Apartments Karachi" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/chapal.png" alt="Chapal Skymark" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/burjismail.png" alt="Burj Ismail" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/hoshang.jpg" alt="Hoshang Pearl Karachi" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/royalorchard.png" alt="Royal Orchard Housing" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/paragon.jpg" alt="Paragon Constructors" loading="lazy"></div>
+              </div>
+              <div class="client-logo-group" aria-hidden="true">
+                <div class="client-logo"><img src="assets/images/clients/bahria.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/BT.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/dha.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/emaar.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/creekvista.jpg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/chapal.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/burjismail.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/hoshang.jpg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/royalorchard.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/paragon.jpg" alt="" loading="lazy"></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <!-- Hospitality & Healthcare -->
-      <div class="client-logo"><img src="assets/images/clients/pc.png" alt="Pearl Continental Hotels" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/serena.jpg" alt="Faisalabad Serena Hotel" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/siut.jpg" alt="Sindh Institute of Urology & Transplantation (SIUT)" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/ziauddin.png" alt="Dr. Ziauddin Hospital" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/nicd.png" alt="National Institute of Cardiovascular Diseases" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/akuh.png" alt="The Aga Khan University & Hospital" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/indus.png" alt="Indus Hospital" loading="lazy"></div>
+        <div class="client-logo-category">
+          <h3 class="client-logo-category__heading">Hospitality &amp; Healthcare</h3>
+          <div class="client-logo-marquee" aria-label="Hospitality and healthcare organisations">
+            <div class="client-logo-track">
+              <div class="client-logo-group">
+                <div class="client-logo"><img src="assets/images/clients/pc.png" alt="Pearl Continental Hotels" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/serena.jpg" alt="Faisalabad Serena Hotel" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/siut.jpg" alt="Sindh Institute of Urology &amp; Transplantation" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/ziauddin.png" alt="Dr. Ziauddin Hospital" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/nicd.png" alt="National Institute of Cardiovascular Diseases" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/akuh.png" alt="The Aga Khan University Hospital" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/indus.png" alt="Indus Hospital" loading="lazy"></div>
+              </div>
+              <div class="client-logo-group" aria-hidden="true">
+                <div class="client-logo"><img src="assets/images/clients/pc.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/serena.jpg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/siut.jpg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/ziauddin.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/nicd.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/akuh.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/indus.png" alt="" loading="lazy"></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <!-- Industrial, Manufacturing & Energy -->
-      <div class="client-logo"><img src="assets/images/clients/parco.svg" alt="Pak-Arab Refinery" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/engro.png" alt="Engro Corporation" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/lucky-cement.png" alt="Lucky Cement" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/uep.png" alt="United Energy Pakistan" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/bp.png" alt="British Petroleum" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/siemens.png" alt="Siemens" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/schneider.png" alt="Schneider Electric" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/abbott.png" alt="Abbott" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/ici.jpg" alt="ICI Pakistan Ltd" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/com3.png" alt="Com3" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/envicrete.png" alt="Envicrete" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/stile.png" alt="Stile" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/ffc.jpg" alt="Fauji Fertilizer Company Limited" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/aghasteel.png" alt="Agha Steel Industries" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/agriauto.jpg" alt="Agriauto Industries Limited" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/amrelisteel.png" alt="Amreli Steels" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/nutrico.jpg" alt="NutriCo" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/packages.jpg" alt="Packages Limited" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/ksb.jpg" alt="KSB Pumps" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/sosafe.png" alt="So-Safe Water Technologies" loading="lazy"></div>
+        <div class="client-logo-category">
+          <h3 class="client-logo-category__heading">Industrial, Manufacturing &amp; Energy</h3>
+          <div class="client-logo-marquee" aria-label="Industrial, manufacturing and energy organisations">
+            <div class="client-logo-track">
+              <div class="client-logo-group">
+                <div class="client-logo"><img src="assets/images/clients/parco.svg" alt="Pak-Arab Refinery" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/engro.png" alt="Engro Corporation" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/lucky-cement.png" alt="Lucky Cement" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/uep.png" alt="United Energy Pakistan" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/bp.png" alt="British Petroleum" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/siemens.png" alt="Siemens" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/schneider.png" alt="Schneider Electric" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/abbott.png" alt="Abbott" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/ici.jpg" alt="ICI Pakistan" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/com3.png" alt="Com3" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/envicrete.png" alt="Envicrete" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/stile.png" alt="Stile" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/ffc.jpg" alt="Fauji Fertilizer Company" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/aghasteel.png" alt="Agha Steel Industries" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/agriauto.jpg" alt="Agriauto Industries" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/amrelisteel.png" alt="Amreli Steels" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/nutrico.jpg" alt="NutriCo" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/ksb.jpg" alt="KSB Pumps" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/sosafe.png" alt="So-Safe Water Technologies" loading="lazy"></div>
+              </div>
+              <div class="client-logo-group" aria-hidden="true">
+                <div class="client-logo"><img src="assets/images/clients/parco.svg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/engro.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/lucky-cement.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/uep.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/bp.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/siemens.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/schneider.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/abbott.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/ici.jpg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/com3.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/envicrete.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/stile.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/ffc.jpg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/aghasteel.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/agriauto.jpg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/amrelisteel.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/nutrico.jpg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/ksb.jpg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/sosafe.png" alt="" loading="lazy"></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <!-- Textiles, FMCG, Food & Education -->
-      <div class="client-logo"><img src="assets/images/clients/usdenim.png" alt="US Denim" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/artistic.jpg" alt="Artistic Milliners" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/lsm.png" alt="LSM Fabrics" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/indusuniversity.png" alt="Indus University" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/nishat.png" alt="Nishat Group" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/engrofoods.png" alt="Engro Foods" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/shanfoods.png" alt="Shan Foods" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/youngsfoods.png" alt="Young's Food" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/peekfreans.png" alt="Peek Freans" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/cybernet.png" alt="Cybernet" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/wateen.png" alt="Wateen Telecom" loading="lazy"></div>
-      <div class="client-logo"><img src="assets/images/clients/worldcall.png" alt="WorldCall Telecom" loading="lazy"></div>
-    </div>
-  </div>
-</section>
+        <div class="client-logo-category">
+          <h3 class="client-logo-category__heading">Corporate, Textiles, FMCG &amp; Technology</h3>
+          <div class="client-logo-marquee" aria-label="Corporate, textiles, FMCG and technology organisations">
+            <div class="client-logo-track">
+              <div class="client-logo-group">
+                <div class="client-logo"><img src="assets/images/clients/packages.jpg" alt="Packages Limited" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/usdenim.png" alt="US Denim" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/artistic.jpg" alt="Artistic Milliners" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/lsm.png" alt="LSM Fabrics" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/nishat.png" alt="Nishat Group" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/engrofoods.png" alt="Engro Foods" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/shanfoods.png" alt="Shan Foods" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/youngsfoods.png" alt="Young's Food" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/peekfreans.png" alt="Peek Freans" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/cybernet.png" alt="Cybernet" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/wateen.png" alt="Wateen Telecom" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/worldcall.png" alt="WorldCall Telecom" loading="lazy"></div>
+              </div>
+              <div class="client-logo-group" aria-hidden="true">
+                <div class="client-logo"><img src="assets/images/clients/packages.jpg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/usdenim.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/artistic.jpg" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/lsm.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/nishat.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/engrofoods.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/shanfoods.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/youngsfoods.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/peekfreans.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/cybernet.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/wateen.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/worldcall.png" alt="" loading="lazy"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-logo-category">
+          <h3 class="client-logo-category__heading">Education &amp; Development</h3>
+          <div class="client-logo-marquee" aria-label="Education and development organisations">
+            <div class="client-logo-track">
+              <div class="client-logo-group">
+                <div class="client-logo"><img src="assets/images/clients/akdn.png" alt="Aga Khan Development Network" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/indusuniversity.png" alt="Indus University" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/usaid.png" alt="USAID" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/unicef.png" alt="UNICEF" loading="lazy"></div>
+              </div>
+              <div class="client-logo-group" aria-hidden="true">
+                <div class="client-logo"><img src="assets/images/clients/akdn.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/indusuniversity.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/usaid.png" alt="" loading="lazy"></div>
+                <div class="client-logo"><img src="assets/images/clients/unicef.png" alt="" loading="lazy"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="section section--light" aria-labelledby="sectors-heading">
       <div class="container">
@@ -386,7 +939,6 @@
     (() => {
       'use strict';
 
-      // FIX 3: Updated ID to prevent JS conflict
       const filterGroup = document.getElementById('projectFilterNew');
       const grid = document.getElementById('projectGrid');
       const count = document.getElementById('projectCount');
@@ -414,8 +966,10 @@
         });
 
         emptyState.hidden = visible !== 0;
+
         const countLabel = visible === 1 ? 'project reference' : 'project references';
         count.replaceChildren();
+
         const countValue = document.createElement('strong');
         countValue.textContent = String(visible);
         count.append(countValue, document.createTextNode(' ' + countLabel));
