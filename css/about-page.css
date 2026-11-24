@@ -370,6 +370,101 @@
   font-size: 1rem;
 }
 
+
+/* WHY DADEX — CUSTOMER TESTIMONIALS */
+
+.about-testimonials {
+  background: #fff;
+}
+
+.about-testimonials .section-header {
+  max-width: 780px;
+  margin: 0 auto 45px;
+  text-align: center;
+}
+
+.testimonials-grid {
+  align-items: stretch;
+  gap: 24px;
+}
+
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 30px;
+  background: #f7f7f7;
+  border: 1px solid #e8e8e8;
+  border-top: 3px solid #c90000;
+  border-radius: 8px;
+}
+
+.testimonial-quote-icon {
+  margin-bottom: 20px;
+  color: #c90000;
+  font-size: 25px;
+}
+
+.testimonial-card blockquote {
+  flex: 1;
+  margin: 0 0 28px;
+  color: #444;
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 18px;
+  border-top: 1px solid #ddd;
+}
+
+.testimonial-author strong {
+  color: #222;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.testimonial-author span {
+  color: #555;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.testimonial-author small {
+  color: #777;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.testimonial-contact {
+  margin-top: 42px;
+  text-align: center;
+}
+
+.testimonial-contact p {
+  margin-bottom: 18px;
+  color: #555;
+}
+
+@media (max-width: 767px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonial-card {
+    padding: 24px;
+  }
+
+  .testimonial-contact {
+    margin-top: 32px;
+  }
+}
+
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */
