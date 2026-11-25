@@ -6,8 +6,6 @@
 /* ============================================================
    CONTACT PAGE
    ============================================================ */
-
-/* --- Contact Layout --- */
 .contact-layout {
   display: grid;
   grid-template-columns: 1fr;
@@ -15,30 +13,44 @@
   align-items: start;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 901px) {
   .contact-layout {
     grid-template-columns: 1.6fr 1fr;
     gap: 4rem;
   }
 }
 
-.section-header h2 {
+/* Blocks (head office / factories / sales offices) */
+.contact-block + .contact-block { margin-top: 3rem; }
+
+.contact-layout .section-header { margin-bottom: 1.75rem; }
+.contact-layout .section-header h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 700;
-  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+.contact-layout .section-header p { font-size: 1rem; }
+
+/* Card grids: reflow instead of squeezing at 900–1100px */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.5rem;
 }
 
-/* --- Contact Cards --- */
+/* --- Contact cards --- */
 .contact-card {
-  background: var(--bg-surface);
+  margin: 0;
+  padding: 1.5rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  background: var(--bg-surface);
+  font-style: normal; /* cards are <address> elements */
 }
 
-.contact-card h3 { 
+.contact-card h3 {
   margin-bottom: 1.25rem;
-  font-size: 1.3rem; 
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
@@ -46,132 +58,165 @@
   display: flex;
   align-items: flex-start;
   gap: 0.63rem;
+  max-width: none;
   margin-bottom: 0.75rem;
+  color: var(--muted);
   font-size: 0.92rem;
   font-weight: 400;
-  color: var(--muted);
   line-height: 1.5;
 }
-
-.contact-card p:last-child {
-  margin-bottom: 0;
-}
+.contact-card p:last-child { margin-bottom: 0; }
 
 .contact-card p i {
   flex-shrink: 0;
-  margin-top: 0.25rem; 
+  width: 1.1rem;
+  margin-top: 0.25rem;
+  color: var(--brand-red);
+  text-align: center;
 }
 
-/* --- Links --- */
-.contact-card a { 
-  color: var(--muted); 
-  font-weight: 500; 
+.contact-card__text {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.6rem;
+  overflow-wrap: anywhere;
 }
+.contact-card__sep { color: var(--muted-light); }
 
+/* Underlined so links are not distinguished by colour alone (WCAG 1.4.1) */
+.contact-card a {
+  color: var(--ink-light);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: rgb(0 0 0 / 25%);
+  text-underline-offset: 0.2em;
+}
 .contact-card a:hover {
   color: var(--brand-red-dark);
-  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
-/* THE DARK FORM WRAPPER */
+/* --- Dark form wrapper --- */
 .contact-form-wrapper {
-  background: var(--bg-dark);
-  color: #fff;
   padding: 2rem;
   border-radius: var(--radius-lg);
+  background: var(--bg-dark);
+  color: #fff;
+  color-scheme: dark; /* native select arrow, scrollbars, autofill */
 }
-.contact-form-wrapper h2 { color:var(--brand-accent-dark); margin-bottom: 2rem; font-size: 2.3rem; }
-.contact-form-wrapper p { color: var(--line); margin-bottom: 2rem; }
+.contact-form-wrapper h2 {
+  margin-bottom: 1.25rem;
+  color: var(--brand-accent-dark);
+  font-size: clamp(1.75rem, 3vw, 2.3rem);
+}
+.contact-form-wrapper p {
+  margin-bottom: 2rem;
+  color: var(--line);
+}
 
-/* FORM ELEMENTS */
-.form-group {margin-bottom: 1.5rem;}
+/* Keep the form in view beside the long address column (desktop, tall screens) */
+@media (min-width: 901px) and (min-height: 820px) {
+  .contact-form-wrapper {
+    position: sticky;
+    top: calc(var(--sticky-offset, 5rem) + 0.5rem);
+  }
+}
+
+/* --- Form elements --- */
+.form-group { margin-bottom: 1.5rem; }
 
 .form-group label {
   display: block;
+  margin-bottom: 0.5rem;
+  color: #ececec;
   font-size: 0.875rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #ececec !important;
 }
 
-/* The Inputs, Selects, and Textareas */
-.form-group input, 
-.form-group select, 
+.form-group input,
+.form-group select,
 .form-group textarea {
   width: 100%;
   padding: 0.875rem 1rem;
+  border: 1px solid rgb(255 255 255 / 40%); /* >3:1 against the dark panel */
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
+  background: rgb(255 255 255 / 5%);
   color: #fff;
   font-family: inherit;
-  font-size: 0.9375rem;
-  transition: all var(--transition);
+  font-size: 1rem; /* 16px stops iOS zoom-on-focus */
+  transition: border-color var(--transition), background-color var(--transition);
 }
 
-/* Focus states for inputs */
-.form-group input:focus, 
-.form-group select:focus, 
+.form-group input:focus,
+.form-group select:focus,
 .form-group textarea:focus {
-  outline: none;
-  border-color: var(--brand-red);
-  background: rgba(255,255,255,0.1);
+  border-color: var(--brand-accent-dark);
+  background: rgb(255 255 255 / 10%);
+}
+.form-group :is(input, select, textarea):focus-visible {
+  outline: 2px solid var(--brand-accent-dark);
+  outline-offset: 2px;
 }
 
-/* Textarea specific fix */
-.form-group textarea { 
-  min-height: 140px; 
-  resize: vertical; 
+/* Chrome/Safari autofill paints a light background; keep text readable */
+.form-group input:-webkit-autofill,
+.form-group textarea:-webkit-autofill {
+  -webkit-text-fill-color: #fff;
+  caret-color: #fff;
+  box-shadow: 0 0 0 1000px #23262a inset;
+}
+
+.form-group textarea {
   display: block;
+  min-height: 140px;
+  resize: vertical;
 }
 
-/* Dropdown option fix for dark mode */
 .form-group select option {
   background: var(--bg-dark);
   color: #fff;
 }
 
-/* Full width button */
-.contact-form-wrapper .btn { 
-  width: 100%; 
+.contact-form-wrapper .btn {
+  width: 100%;
   margin-top: 1rem;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 900px) {
-  .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
-  .contact-form-wrapper { padding: 2rem; }
-  .section-header h2 { font-weight: 700; font-size: 1.5rem;}
-  .section-header p {font-size: 1em;}
-
+  .contact-form-wrapper { padding: 1.5rem; }
 }
 
 /* ============================================================
    DEALERS PAGE
    ============================================================ */
+
+/* Full-width sticky bar. The bar is a direct child of <main>, with a
+   .container inside, so no 100vw / negative-margin tricks are needed. */
+.dealer-filters-bar {
+  position: sticky;
+  top: var(--sticky-offset, 5rem);
+  z-index: 100;
+  border-block: 1px solid var(--brand-red-light);
+  background: rgb(255 255 255 / 94%);
+  -webkit-backdrop-filter: blur(1.6rem) saturate(160%);
+  backdrop-filter: blur(1.6rem) saturate(160%);
+}
+
 .dealer-filters {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
   padding-block: 1.25rem;
-  padding-inline: max(2rem, calc((100vw - var(--container)) / 2 + 2rem));
-  border-radius: 0;
-  border-left: 0;
-  border-right: 0;
-  border-top: 1px solid var(--brand-red-light);
-  border-bottom: 1px solid var(--brand-red-light);
-  background: var(--bg-mist-light);
-  margin-bottom: 2rem;
-  position: sticky;
-  top: var(--sticky-offset, 10rem);
-  z-index: 100;
-  backdrop-filter: blur(2rem) saturate(160%);
-  -webkit-backdrop-filter: blur(1.625rem) saturate(160%);
+}
+
+.dealer-filters label {
+  display: block;
+  margin-bottom: 0.35rem;
   color: var(--brand-red);
-  font-size: 1rem;
-  font-weight: 700; 
+  font-size: 0.875rem;
+  font-weight: 700;
 }
 
 .dealer-filters select,
@@ -180,14 +225,27 @@
   padding: 0.75rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
+  background: var(--bg-surface);
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 .dealer-filters select:focus,
-.dealer-filters input:focus {
-  outline: none;
-  border-color: var(--brand-red);
+.dealer-filters input:focus { border-color: var(--brand-red); }
+
+.dealer-filters__reset {
+  display: flex;
+  align-items: flex-end;
 }
+.dealer-filters__reset .btn { width: 100%; }
+
+/* On phones the bar would stay pinned over 2–3 rows of controls */
+@media (max-width: 767px) {
+  .dealer-filters-bar { position: static; }
+}
+
+.dealer-results { padding-block: 2rem var(--section-pad); }
+
+.dealer-results__summary { margin: 0 0 1.5rem; color: var(--muted); }
 
 .active-filter-summary {
   display: flex;
@@ -195,301 +253,272 @@
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
-.active-filter-summary[hidden] { display: none !important; }
+.active-filter-summary[hidden] { display: none; }
+
 .active-filter {
   display: inline-flex;
   align-items: center;
   padding: 0.25rem 0.75rem;
-  background: var(--bg-mist);
   border: 1px solid var(--line);
   border-radius: var(--radius-pill);
-  font-size: 0.8125rem;
+  background: var(--bg-mist);
   color: var(--ink-light);
+  font-size: 0.8125rem;
 }
 .active-filter strong { margin-right: 0.25rem; }
 
-.dealer-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem;
-  margin-top: 1rem;
-}
-.dealer-tags span {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
-  background: var(--bg-mist-light);
-  color: var(--muted);
-}
-.dealer-context-link,
-.dealer-map {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: var(--brand-red);
-  text-decoration: none;
-}
-.dealer-context-link { margin-right: 1rem; }
-.dealer-context-link:hover,
-.dealer-map:hover { text-decoration: underline; }
-
 .dealer-empty {
   grid-column: 1 / -1;
-  text-align: center;
   padding: 4rem 2rem;
-  background: #fff;
   border: 1px dashed var(--line);
   border-radius: var(--radius-lg);
+  background: var(--bg-surface);
   color: var(--muted);
+  text-align: center;
 }
 .dealer-empty i {
-  font-size: 2.5rem;
-  color: var(--line);
   margin-bottom: 1rem;
+  color: var(--muted-light);
+  font-size: 2.5rem;
 }
 .dealer-empty h3 { margin-bottom: 0.5rem; color: var(--ink); }
 
-/* ============================================================
-   DEALER CARD TEMPLATE STYLES
-   ============================================================ */
+/* --- Dealer card --- */
 .dealer-card {
   display: flex;
-  flex-direction: column;
   height: 100%;
+  flex-direction: column;
   padding: 2rem;
 }
+/* Cards are not links: no lift on hover */
+.dealer-card:hover {
+  border-color: var(--line);
+  box-shadow: none;
+  transform: none;
+}
+
 .dealer-card__header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 1rem;
-  padding: 0 1rem 0 0;
+  padding-right: 1rem;
 }
 
 .dealer-type {
-  font-size: 0.92rem;
-  background: var(--brand-red-light);
   padding: 0.25rem 0.92rem;
   border-radius: var(--radius-pill);
-  font-weight: 600;
+  background: var(--brand-red-light);
   color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 600;
 }
 
 .dealer-store-icon {
   color: var(--brand-red);
   font-size: 1.5rem;
-  opacity: 0.72; 
+  opacity: 0.72;
 }
 
 .dealer-card__name {
-  margin-bottom: 0.25rem;
-  color: var(--brand-red);
-  font-size: 1.5rem;
+  margin-bottom: 0.4rem;
   padding-top: 1.2rem;
   border-top: 1px solid var(--line-soft);
-  margin-bottom: 0.4rem;
+  color: var(--brand-red);
+  font-size: 1.5rem;
 }
 
 .dealer-card .dealer-contact-name {
+  margin-bottom: 0.5rem;
   color: var(--ink);
   font-size: 0.9rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;}
+}
 
 .dealer-card__location {
+  margin-block: 1rem;
   font-size: 0.875rem;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
 }
-
 .dealer-card__location p {
-  margin-bottom: 0;
   display: flex;
   align-items: flex-start;
+  margin-bottom: 0;
   color: var(--ink);
 }
-
 .dealer-card__location i {
-  color: var(--brand-red);
   width: 1.72rem;
-  margin-top: 0.2rem;
   flex-shrink: 0;
+  margin-top: 0.2rem;
+  color: var(--brand-red);
 }
 
 .dealer-card__contact {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  font-size: 0.875rem;
   margin-bottom: 1rem;
+  font-size: 0.875rem;
 }
-
 .dealer-card__contact a {
-  color: var(--ink);
-  text-decoration: none;
   display: flex;
   align-items: center;
+  color: var(--ink);
+  overflow-wrap: anywhere;
   transition: color var(--transition);
 }
-
-.dealer-card__contact a:hover {
-  color: var(--brand-red);
-}
-
+.dealer-card__contact a:hover { color: var(--brand-red); }
 .dealer-card__contact i {
-  color: var(--brand-red);
   width: 1.72rem;
   flex-shrink: 0;
+  color: var(--brand-red);
 }
 
 .dealer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
   margin-top: auto;
+  margin-bottom: 0.4rem;
   padding-top: 1.2rem;
   border-top: 1px solid var(--line-soft);
-  margin-bottom: 0.4rem;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;}
-
-.dealer-card__footer {
-  padding-top: 0;
-  margin-top: 0.5rem;
 }
-
 .dealer-tags span {
-  font-size: 0.72rem;
   padding: 0.2rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--bg-mist);
+  color: var(--muted);
+  font-size: 0.72rem;
 }
 
-/* ============================================================
-   DEALER HELP BOX
-   ============================================================ */
+.dealer-card__footer { margin-top: 0.5rem; }
+
+.dealer-context-link,
+.dealer-map {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  color: var(--brand-red);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+.dealer-context-link { margin-right: 1rem; }
+.dealer-context-link:hover,
+.dealer-map:hover { text-decoration: underline; }
+
+/* --- Help box --- */
 .dealer-help-box {
   display: flex;
   align-items: center;
   gap: 2rem;
   margin-top: 3rem;
   padding: 2rem;
-  background: var(--bg-mist);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
+  background: var(--bg-mist);
 }
-
 .dealer-help-icon {
-  font-size: 3rem;
-  color: var(--brand-red);
   flex-shrink: 0;
+  color: var(--brand-red);
+  font-size: 3rem;
 }
-
-.dealer-help-content {
-  flex: 1;
-}
-
+.dealer-help-content { flex: 1; }
 .dealer-help-content h3 {
   margin-bottom: 0.25rem;
   font-size: 1.25rem;
 }
-
 .dealer-help-content p {
+  max-width: 65ch;
   margin: 0;
   color: var(--muted);
-  max-width: 65ch;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .dealer-help-box {
     flex-direction: column;
-    text-align: center;
     gap: 1.5rem;
+    text-align: center;
   }
 }
+
 /* ============================================================
    SEARCH PAGE
    ============================================================ */
-
 .search-bar {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
 }
 .search-bar input {
-  flex: 1;
   min-width: 250px;
+  flex: 1;
   padding: 1rem;
-  border-radius: var(--radius-sm);
   border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
   font-size: 1rem;
 }
-.search-bar input:focus {
-  outline: none;
-  border-color: var(--brand-red);
-}
+.search-bar input:focus { border-color: var(--brand-red); }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .search-bar { flex-direction: column; }
   .search-bar button { width: 100%; }
 }
 
-/* --- Enhanced Search Bar --- */
+/* --- Enhanced search bar --- */
 .search-input-wrapper {
   position: relative;
   margin-bottom: 1.5rem;
 }
-
 .search-input-wrapper input {
   width: 100%;
-  padding: 1.25rem 3rem 1.25rem 3rem;
-  font-size: 1.125rem;
+  padding: 1.25rem 3rem;
   border: 2px solid var(--line);
   border-radius: var(--radius-pill);
-  transition: all var(--transition);
   font-family: inherit;
+  font-size: 1.125rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
 }
-
 .search-input-wrapper input:focus {
-  outline: none;
   border-color: var(--brand-red);
-  box-shadow: 0 0 0 4px rgba(229, 0, 0, 0.1);
+  box-shadow: 0 0 0 4px rgb(229 0 0 / 15%);
 }
 
 .search-icon {
   position: absolute;
-  left: 1.25rem;
   top: 50%;
-  transform: translateY(-50%);
+  left: 1.25rem;
   color: var(--muted);
   font-size: 1.125rem;
+  transform: translateY(-50%);
 }
 
 .search-clear-btn {
   position: absolute;
-  right: 1rem;
   top: 50%;
-  transform: translateY(-50%);
-  background: var(--bg-mist);
-  border: none;
+  right: 1rem;
+  display: none; /* shown by JS when the field has text */
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  display: grid;
   place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--bg-mist);
   color: var(--muted);
   cursor: pointer;
-  display: none; /* Hidden by default */
+  transform: translateY(-50%);
 }
-
 .search-clear-btn:hover {
   background: var(--line);
   color: var(--ink);
 }
 
-/* --- Popular Searches --- */
+/* --- Popular searches --- */
 .popular-searches {
   display: flex;
   flex-wrap: wrap;
@@ -497,31 +526,30 @@
   gap: 0.5rem;
   margin-bottom: 2rem;
 }
-
 .popular-searches span {
+  margin-right: 0.5rem;
+  color: var(--muted);
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--muted);
-  margin-right: 0.5rem;
 }
 
-/* --- Result Card Enhancements --- */
+/* --- Result card enhancements --- */
 .result-badge {
   display: inline-block;
   padding: 0.2rem 0.6rem;
+  border-radius: 4px;
   background: var(--brand-red-light);
   color: var(--brand-red);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 800;
-  border-radius: 4px;
-  text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .search-result-card mark {
-  background: rgba(229, 0, 0, 0.15);
-  color: var(--brand-red-dark);
-  font-weight: 700;
   padding: 0 2px;
   border-radius: 2px;
+  background: rgb(229 0 0 / 15%);
+  color: var(--brand-red-dark);
+  font-weight: 700;
 }

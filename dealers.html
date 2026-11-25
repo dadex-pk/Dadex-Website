@@ -2,15 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Find a Dealer | Dadex Eternit Limited</title>
-<meta name="theme-color" content="#c90000">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.dadex.com/dealers.html">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="description" content="Locate an authorised Dadex dealer or distributor near you. Filter by province, city, area or product.">
+  <meta name="theme-color" content="#e50000">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.dadex.com/dealers.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Find a Dealer | Dadex Eternit Limited">
+  <meta property="og:description" content="Locate an authorised Dadex dealer or distributor near you across Pakistan.">
+  <meta property="og:url" content="https://www.dadex.com/dealers.html">
+  <meta property="og:site_name" content="Dadex Eternit Limited">
+  <meta name="twitter:card" content="summary">
+
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
   <link rel="stylesheet" href="css/main.css">
@@ -28,12 +34,11 @@
       <p>Locate an authorised Dadex dealer or distributor near you. Filter by region, city, or specific product requirement.</p>
     </div>
   </section>
-  
-  <section class="section">
+
+  <!-- Filters (full-width sticky bar; not a <form>, so Enter in the search box cannot reload the page) -->
+  <div class="dealer-filters-bar">
     <div class="container">
-      
-      <!-- Filters -->
-      <div class="dealer-filters">
+      <div class="dealer-filters" role="search" aria-label="Filter dealers">
         <div>
           <label for="provinceFilter">Province / Region</label>
           <select id="provinceFilter"><option value="">All Provinces</option></select>
@@ -42,7 +47,6 @@
           <label for="cityFilter">City</label>
           <select id="cityFilter"><option value="">All Cities</option></select>
         </div>
-        <!-- Restored Area Filter -->
         <div>
           <label for="areaFilter">Area</label>
           <select id="areaFilter"><option value="">All Areas</option></select>
@@ -53,27 +57,31 @@
         </div>
         <div>
           <label for="nameSearch">Dealer Name</label>
-          <input type="search" id="nameSearch" placeholder="Search dealer...">
+          <input type="search" id="nameSearch" placeholder="Search dealer…">
         </div>
-        <div style="display: flex; align-items: flex-end;">
-          <button class="btn btn--outline" id="resetFilters" style="width: 100%;">Clear Filters</button>
+        <div class="dealer-filters__reset">
+          <button class="btn btn--outline" id="resetFilters" type="button">Clear Filters</button>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!-- Active Filter Summary -->
-      <div class="active-filter-summary" id="activeFilterSummary" hidden></div>
+  <section class="dealer-results" aria-labelledby="dealer-results-title">
+    <div class="container">
+      <h2 class="sr-only" id="dealer-results-title">Dealer listings</h2>
 
-      <!-- Results Meta -->
-      <div class="flex-between" style="margin-bottom: 2rem;">
-        <p id="resultsSummary" style="margin: 0; color: var(--muted);">Showing all listings.</p>
-      </div>
+      <!-- Active filter summary (announced to screen readers when it changes) -->
+      <div class="active-filter-summary" id="activeFilterSummary" role="status" hidden></div>
 
-      <!-- Dealer Grid -->
+      <!-- Results meta -->
+      <p class="dealer-results__summary" id="resultsSummary" role="status">Showing all listings.</p>
+
+      <!-- Dealer grid (populated by js/dealers.js) -->
       <div class="grid grid-3" id="dealerGrid">
-        <!-- JS populates this -->
+        <noscript><p>Please enable JavaScript to browse dealer listings, or <a href="contact.html#sales-offices">contact a Dadex sales office</a>.</p></noscript>
       </div>
-      
-      <!-- Help Box -->
+
+      <!-- Help box -->
       <div class="dealer-help-box">
         <i class="fas fa-headset dealer-help-icon" aria-hidden="true"></i>
         <div class="dealer-help-content">
@@ -82,38 +90,38 @@
         </div>
         <a href="contact.html#sales-offices" class="btn btn--primary">Contact Sales</a>
       </div>
+    </div>
   </section>
 
-
-  <!-- Dealer Card Template -->
+  <!-- Dealer card template -->
   <template id="dealerCardTemplate">
     <article class="card dealer-card">
-      
+
       <div class="dealer-card__header">
         <span class="dealer-type" data-field="type"></span>
         <span class="dealer-store-icon" data-field="icon" aria-hidden="true"></span>
       </div>
-      
+
       <h3 data-field="name" class="dealer-card__name"></h3>
       <p class="dealer-contact-name" data-field="contact-name"></p>
 
       <div class="dealer-card__location">
-        <p data-field="address"><i class="fas fa-map-marker-alt"></i> <span></span></p>
+        <p data-field="address"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> <span></span></p>
       </div>
 
       <div class="dealer-card__contact">
-        <a data-field="phone" href="#"><i class="fas fa-phone"></i> <span></span></a>
-        <a data-field="email" href="#"><i class="fas fa-envelope"></i> <span></span></a>
+        <a data-field="phone" href="#"><i class="fas fa-phone" aria-hidden="true"></i> <span></span></a>
+        <a data-field="email" href="#"><i class="fas fa-envelope" aria-hidden="true"></i> <span></span></a>
       </div>
 
       <div class="dealer-tags" data-field="tags"></div>
-      
+
       <div class="dealer-card__footer">
         <a class="dealer-context-link" data-field="context-link" href="#">
-          <span></span> <i class="fas fa-arrow-right"></i>
+          <span></span> <i class="fas fa-arrow-right" aria-hidden="true"></i>
         </a>
         <a class="dealer-map" data-field="map" href="#" rel="noopener" target="_blank">
-          View location <i class="fas fa-arrow-up-right-from-square"></i>
+          View location <span class="sr-only">(opens in a new tab)</span> <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
         </a>
       </div>
     </article>
